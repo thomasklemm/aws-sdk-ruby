@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.106.0 (2024-12-17)
+------------------
+
+* Feature - This feature allows AWS Batch on Amazon EKS to support configuration of Pod Annotations, overriding Namespace on which the Batch job's Pod runs on, and allows Subpath and Persistent Volume claim to be set for AWS Batch on Amazon EKS jobs.
+
 1.105.0 (2024-11-08)
 ------------------
 

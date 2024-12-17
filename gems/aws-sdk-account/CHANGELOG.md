@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.36.0 (2024-12-17)
+------------------
+
+* Feature - Update endpoint configuration.
+
 1.35.0 (2024-10-18)
 ------------------
 

@@ -3869,9 +3869,10 @@ module Aws::ECS
     #
     #    </note>
     #
-    #   If the tasks in the service use the Fargate launch type, the maximum
-    #   percent value is not used, although it is returned when describing
-    #   your service.
+    #   If the service uses either the blue/green (`CODE_DEPLOY`) or
+    #   `EXTERNAL` deployment types, and the tasks in the service use the
+    #   Fargate launch type, the maximum percent value is not used. The
+    #   value is still returned when describing your service.
     #
     #
     #
@@ -6148,7 +6149,7 @@ module Aws::ECS
     #   name or ARN. Starting April 15, 2023, Amazon Web Services will not
     #   onboard new customers to Amazon Elastic Inference (EI), and will
     #   help current customers migrate their workloads to options that offer
-    #   better price and performanceIf you don't specify a cluster,
+    #   better price and performance. If you don't specify a cluster,
     #   `default` is used.
     #   @return [String]
     #
@@ -7019,7 +7020,8 @@ module Aws::ECS
     #   When you export logs to Amazon OpenSearch Service, you can specify
     #   options like `Name`, `Host` (OpenSearch Service endpoint without
     #   protocol), `Port`, `Index`, `Type`, `Aws_auth`, `Aws_region`,
-    #   `Suppress_Type_Name`, and `tls`.
+    #   `Suppress_Type_Name`, and `tls`. For more information, see [Under
+    #   the hood: FireLens for Amazon ECS Tasks][4].
     #
     #   When you export logs to Amazon S3, you can specify the bucket using
     #   the `bucket` option. You can also specify `region`,
@@ -7037,6 +7039,7 @@ module Aws::ECS
     #   [1]: https://docs.docker.com/config/containers/logging/awslogs/#awslogs-datetime-format
     #   [2]: https://docs.docker.com/config/containers/logging/awslogs/#awslogs-multiline-pattern
     #   [3]: http://aws.amazon.com/blogs/containers/preventing-log-loss-with-non-blocking-mode-in-the-awslogs-container-log-driver/
+    #   [4]: http://aws.amazon.com/blogs/containers/under-the-hood-firelens-for-amazon-ecs-tasks/
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] secret_options
@@ -8713,6 +8716,12 @@ module Aws::ECS
     #   family is specified only for tasks using the Fargate launch type.
     #   @return [Types::RuntimePlatform]
     #
+    # @!attribute [rw] enable_fault_injection
+    #   Enables fault injection when you register your task definition and
+    #   allows for fault injection requests to be accepted from the task's
+    #   containers. The default value is `false`.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/RegisterTaskDefinitionRequest AWS API Documentation
     #
     class RegisterTaskDefinitionRequest < Struct.new(
@@ -8732,7 +8741,8 @@ module Aws::ECS
       :proxy_configuration,
       :inference_accelerators,
       :ephemeral_storage,
-      :runtime_platform)
+      :runtime_platform,
+      :enable_fault_injection)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12138,6 +12148,12 @@ module Aws::ECS
     #   definition.
     #   @return [Types::EphemeralStorage]
     #
+    # @!attribute [rw] enable_fault_injection
+    #   Enables fault injection and allows for fault injection requests to
+    #   be accepted from the task's containers. The default value is
+    #   `false`.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/TaskDefinition AWS API Documentation
     #
     class TaskDefinition < Struct.new(
@@ -12164,7 +12180,8 @@ module Aws::ECS
       :registered_at,
       :deregistered_at,
       :registered_by,
-      :ephemeral_storage)
+      :ephemeral_storage,
+      :enable_fault_injection)
       SENSITIVE = []
       include Aws::Structure
     end

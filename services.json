@@ -117,6 +117,9 @@
   "BackupGateway": {
     "models": "backup-gateway/2021-01-01"
   },
+  "BackupSearch": {
+    "models": "backupsearch/2018-05-10"
+  },
   "Batch": {
     "models": "batch/2016-08-10"
   },

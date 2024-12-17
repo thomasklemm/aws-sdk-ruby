@@ -158,6 +158,8 @@ module Aws::Backup
     GetBackupVaultNotificationsOutput = Shapes::StructureShape.new(name: 'GetBackupVaultNotificationsOutput')
     GetLegalHoldInput = Shapes::StructureShape.new(name: 'GetLegalHoldInput')
     GetLegalHoldOutput = Shapes::StructureShape.new(name: 'GetLegalHoldOutput')
+    GetRecoveryPointIndexDetailsInput = Shapes::StructureShape.new(name: 'GetRecoveryPointIndexDetailsInput')
+    GetRecoveryPointIndexDetailsOutput = Shapes::StructureShape.new(name: 'GetRecoveryPointIndexDetailsOutput')
     GetRecoveryPointRestoreMetadataInput = Shapes::StructureShape.new(name: 'GetRecoveryPointRestoreMetadataInput')
     GetRecoveryPointRestoreMetadataOutput = Shapes::StructureShape.new(name: 'GetRecoveryPointRestoreMetadataOutput')
     GetRestoreJobMetadataInput = Shapes::StructureShape.new(name: 'GetRestoreJobMetadataInput')
@@ -174,6 +176,12 @@ module Aws::Backup
     GlobalSettingsValue = Shapes::StringShape.new(name: 'GlobalSettingsValue')
     IAMPolicy = Shapes::StringShape.new(name: 'IAMPolicy')
     IAMRoleArn = Shapes::StringShape.new(name: 'IAMRoleArn')
+    Index = Shapes::StringShape.new(name: 'Index')
+    IndexAction = Shapes::StructureShape.new(name: 'IndexAction')
+    IndexActions = Shapes::ListShape.new(name: 'IndexActions')
+    IndexStatus = Shapes::StringShape.new(name: 'IndexStatus')
+    IndexedRecoveryPoint = Shapes::StructureShape.new(name: 'IndexedRecoveryPoint')
+    IndexedRecoveryPointList = Shapes::ListShape.new(name: 'IndexedRecoveryPointList')
     InvalidParameterValueException = Shapes::StructureShape.new(name: 'InvalidParameterValueException')
     InvalidRequestException = Shapes::StructureShape.new(name: 'InvalidRequestException')
     InvalidResourceStateException = Shapes::StructureShape.new(name: 'InvalidResourceStateException')
@@ -205,6 +213,8 @@ module Aws::Backup
     ListCopyJobsOutput = Shapes::StructureShape.new(name: 'ListCopyJobsOutput')
     ListFrameworksInput = Shapes::StructureShape.new(name: 'ListFrameworksInput')
     ListFrameworksOutput = Shapes::StructureShape.new(name: 'ListFrameworksOutput')
+    ListIndexedRecoveryPointsInput = Shapes::StructureShape.new(name: 'ListIndexedRecoveryPointsInput')
+    ListIndexedRecoveryPointsOutput = Shapes::StructureShape.new(name: 'ListIndexedRecoveryPointsOutput')
     ListLegalHoldsInput = Shapes::StructureShape.new(name: 'ListLegalHoldsInput')
     ListLegalHoldsOutput = Shapes::StructureShape.new(name: 'ListLegalHoldsOutput')
     ListOfTags = Shapes::ListShape.new(name: 'ListOfTags')
@@ -331,6 +341,8 @@ module Aws::Backup
     UpdateFrameworkInput = Shapes::StructureShape.new(name: 'UpdateFrameworkInput')
     UpdateFrameworkOutput = Shapes::StructureShape.new(name: 'UpdateFrameworkOutput')
     UpdateGlobalSettingsInput = Shapes::StructureShape.new(name: 'UpdateGlobalSettingsInput')
+    UpdateRecoveryPointIndexSettingsInput = Shapes::StructureShape.new(name: 'UpdateRecoveryPointIndexSettingsInput')
+    UpdateRecoveryPointIndexSettingsOutput = Shapes::StructureShape.new(name: 'UpdateRecoveryPointIndexSettingsOutput')
     UpdateRecoveryPointLifecycleInput = Shapes::StructureShape.new(name: 'UpdateRecoveryPointLifecycleInput')
     UpdateRecoveryPointLifecycleOutput = Shapes::StructureShape.new(name: 'UpdateRecoveryPointLifecycleOutput')
     UpdateRegionSettingsInput = Shapes::StructureShape.new(name: 'UpdateRegionSettingsInput')
@@ -455,6 +467,7 @@ module Aws::Backup
     BackupRule.add_member(:copy_actions, Shapes::ShapeRef.new(shape: CopyActions, location_name: "CopyActions"))
     BackupRule.add_member(:enable_continuous_backup, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnableContinuousBackup"))
     BackupRule.add_member(:schedule_expression_timezone, Shapes::ShapeRef.new(shape: Timezone, location_name: "ScheduleExpressionTimezone"))
+    BackupRule.add_member(:index_actions, Shapes::ShapeRef.new(shape: IndexActions, location_name: "IndexActions"))
     BackupRule.struct_class = Types::BackupRule
 
     BackupRuleInput.add_member(:rule_name, Shapes::ShapeRef.new(shape: BackupRuleName, required: true, location_name: "RuleName"))
@@ -467,6 +480,7 @@ module Aws::Backup
     BackupRuleInput.add_member(:copy_actions, Shapes::ShapeRef.new(shape: CopyActions, location_name: "CopyActions"))
     BackupRuleInput.add_member(:enable_continuous_backup, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnableContinuousBackup"))
     BackupRuleInput.add_member(:schedule_expression_timezone, Shapes::ShapeRef.new(shape: Timezone, location_name: "ScheduleExpressionTimezone"))
+    BackupRuleInput.add_member(:index_actions, Shapes::ShapeRef.new(shape: IndexActions, location_name: "IndexActions"))
     BackupRuleInput.struct_class = Types::BackupRuleInput
 
     BackupRules.member = Shapes::ShapeRef.new(shape: BackupRule)
@@ -880,6 +894,8 @@ module Aws::Backup
     DescribeRecoveryPointOutput.add_member(:is_parent, Shapes::ShapeRef.new(shape: boolean, location_name: "IsParent"))
     DescribeRecoveryPointOutput.add_member(:resource_name, Shapes::ShapeRef.new(shape: string, location_name: "ResourceName"))
     DescribeRecoveryPointOutput.add_member(:vault_type, Shapes::ShapeRef.new(shape: VaultType, location_name: "VaultType"))
+    DescribeRecoveryPointOutput.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    DescribeRecoveryPointOutput.add_member(:index_status_message, Shapes::ShapeRef.new(shape: string, location_name: "IndexStatusMessage"))
     DescribeRecoveryPointOutput.struct_class = Types::DescribeRecoveryPointOutput
 
     DescribeRegionSettingsInput.struct_class = Types::DescribeRegionSettingsInput
@@ -1027,6 +1043,21 @@ module Aws::Backup
     GetLegalHoldOutput.add_member(:recovery_point_selection, Shapes::ShapeRef.new(shape: RecoveryPointSelection, location_name: "RecoveryPointSelection"))
     GetLegalHoldOutput.struct_class = Types::GetLegalHoldOutput
 
+    GetRecoveryPointIndexDetailsInput.add_member(:backup_vault_name, Shapes::ShapeRef.new(shape: BackupVaultName, required: true, location: "uri", location_name: "backupVaultName"))
+    GetRecoveryPointIndexDetailsInput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "recoveryPointArn"))
+    GetRecoveryPointIndexDetailsInput.struct_class = Types::GetRecoveryPointIndexDetailsInput
+
+    GetRecoveryPointIndexDetailsOutput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "RecoveryPointArn"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:backup_vault_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "BackupVaultArn"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:source_resource_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "SourceResourceArn"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:index_creation_date, Shapes::ShapeRef.new(shape: timestamp, location_name: "IndexCreationDate"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:index_deletion_date, Shapes::ShapeRef.new(shape: timestamp, location_name: "IndexDeletionDate"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:index_completion_date, Shapes::ShapeRef.new(shape: timestamp, location_name: "IndexCompletionDate"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:index_status_message, Shapes::ShapeRef.new(shape: string, location_name: "IndexStatusMessage"))
+    GetRecoveryPointIndexDetailsOutput.add_member(:total_items_indexed, Shapes::ShapeRef.new(shape: Long, location_name: "TotalItemsIndexed"))
+    GetRecoveryPointIndexDetailsOutput.struct_class = Types::GetRecoveryPointIndexDetailsOutput
+
     GetRecoveryPointRestoreMetadataInput.add_member(:backup_vault_name, Shapes::ShapeRef.new(shape: BackupVaultName, required: true, location: "uri", location_name: "backupVaultName"))
     GetRecoveryPointRestoreMetadataInput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "recoveryPointArn"))
     GetRecoveryPointRestoreMetadataInput.add_member(:backup_vault_account_id, Shapes::ShapeRef.new(shape: AccountId, location: "querystring", location_name: "backupVaultAccountId"))
@@ -1071,6 +1102,24 @@ module Aws::Backup
 
     GlobalSettings.key = Shapes::ShapeRef.new(shape: GlobalSettingsName)
     GlobalSettings.value = Shapes::ShapeRef.new(shape: GlobalSettingsValue)
+
+    IndexAction.add_member(:resource_types, Shapes::ShapeRef.new(shape: ResourceTypes, location_name: "ResourceTypes"))
+    IndexAction.struct_class = Types::IndexAction
+
+    IndexActions.member = Shapes::ShapeRef.new(shape: IndexAction)
+
+    IndexedRecoveryPoint.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "RecoveryPointArn"))
+    IndexedRecoveryPoint.add_member(:source_resource_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "SourceResourceArn"))
+    IndexedRecoveryPoint.add_member(:iam_role_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "IamRoleArn"))
+    IndexedRecoveryPoint.add_member(:backup_creation_date, Shapes::ShapeRef.new(shape: timestamp, location_name: "BackupCreationDate"))
+    IndexedRecoveryPoint.add_member(:resource_type, Shapes::ShapeRef.new(shape: ResourceType, location_name: "ResourceType"))
+    IndexedRecoveryPoint.add_member(:index_creation_date, Shapes::ShapeRef.new(shape: timestamp, location_name: "IndexCreationDate"))
+    IndexedRecoveryPoint.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    IndexedRecoveryPoint.add_member(:index_status_message, Shapes::ShapeRef.new(shape: string, location_name: "IndexStatusMessage"))
+    IndexedRecoveryPoint.add_member(:backup_vault_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "BackupVaultArn"))
+    IndexedRecoveryPoint.struct_class = Types::IndexedRecoveryPoint
+
+    IndexedRecoveryPointList.member = Shapes::ShapeRef.new(shape: IndexedRecoveryPoint)
 
     InvalidParameterValueException.add_member(:code, Shapes::ShapeRef.new(shape: string, location_name: "Code"))
     InvalidParameterValueException.add_member(:message, Shapes::ShapeRef.new(shape: string, location_name: "Message"))
@@ -1236,6 +1285,19 @@ module Aws::Backup
     ListFrameworksOutput.add_member(:frameworks, Shapes::ShapeRef.new(shape: FrameworkList, location_name: "Frameworks"))
     ListFrameworksOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: string, location_name: "NextToken"))
     ListFrameworksOutput.struct_class = Types::ListFrameworksOutput
+
+    ListIndexedRecoveryPointsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: string, location: "querystring", location_name: "nextToken"))
+    ListIndexedRecoveryPointsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListIndexedRecoveryPointsInput.add_member(:source_resource_arn, Shapes::ShapeRef.new(shape: ARN, location: "querystring", location_name: "sourceResourceArn"))
+    ListIndexedRecoveryPointsInput.add_member(:created_before, Shapes::ShapeRef.new(shape: timestamp, location: "querystring", location_name: "createdBefore"))
+    ListIndexedRecoveryPointsInput.add_member(:created_after, Shapes::ShapeRef.new(shape: timestamp, location: "querystring", location_name: "createdAfter"))
+    ListIndexedRecoveryPointsInput.add_member(:resource_type, Shapes::ShapeRef.new(shape: ResourceType, location: "querystring", location_name: "resourceType"))
+    ListIndexedRecoveryPointsInput.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location: "querystring", location_name: "indexStatus"))
+    ListIndexedRecoveryPointsInput.struct_class = Types::ListIndexedRecoveryPointsInput
+
+    ListIndexedRecoveryPointsOutput.add_member(:indexed_recovery_points, Shapes::ShapeRef.new(shape: IndexedRecoveryPointList, location_name: "IndexedRecoveryPoints"))
+    ListIndexedRecoveryPointsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: string, location_name: "NextToken"))
+    ListIndexedRecoveryPointsOutput.struct_class = Types::ListIndexedRecoveryPointsOutput
 
     ListLegalHoldsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: string, location: "querystring", location_name: "nextToken"))
     ListLegalHoldsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
@@ -1453,6 +1515,8 @@ module Aws::Backup
     RecoveryPointByBackupVault.add_member(:is_parent, Shapes::ShapeRef.new(shape: boolean, location_name: "IsParent"))
     RecoveryPointByBackupVault.add_member(:resource_name, Shapes::ShapeRef.new(shape: string, location_name: "ResourceName"))
     RecoveryPointByBackupVault.add_member(:vault_type, Shapes::ShapeRef.new(shape: VaultType, location_name: "VaultType"))
+    RecoveryPointByBackupVault.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    RecoveryPointByBackupVault.add_member(:index_status_message, Shapes::ShapeRef.new(shape: string, location_name: "IndexStatusMessage"))
     RecoveryPointByBackupVault.struct_class = Types::RecoveryPointByBackupVault
 
     RecoveryPointByBackupVaultList.member = Shapes::ShapeRef.new(shape: RecoveryPointByBackupVault)
@@ -1468,6 +1532,8 @@ module Aws::Backup
     RecoveryPointByResource.add_member(:parent_recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "ParentRecoveryPointArn"))
     RecoveryPointByResource.add_member(:resource_name, Shapes::ShapeRef.new(shape: string, location_name: "ResourceName"))
     RecoveryPointByResource.add_member(:vault_type, Shapes::ShapeRef.new(shape: VaultType, location_name: "VaultType"))
+    RecoveryPointByResource.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    RecoveryPointByResource.add_member(:index_status_message, Shapes::ShapeRef.new(shape: string, location_name: "IndexStatusMessage"))
     RecoveryPointByResource.struct_class = Types::RecoveryPointByResource
 
     RecoveryPointByResourceList.member = Shapes::ShapeRef.new(shape: RecoveryPointByResource)
@@ -1692,6 +1758,7 @@ module Aws::Backup
     StartBackupJobInput.add_member(:lifecycle, Shapes::ShapeRef.new(shape: Lifecycle, location_name: "Lifecycle"))
     StartBackupJobInput.add_member(:recovery_point_tags, Shapes::ShapeRef.new(shape: Tags, location_name: "RecoveryPointTags"))
     StartBackupJobInput.add_member(:backup_options, Shapes::ShapeRef.new(shape: BackupOptions, location_name: "BackupOptions"))
+    StartBackupJobInput.add_member(:index, Shapes::ShapeRef.new(shape: Index, location_name: "Index"))
     StartBackupJobInput.struct_class = Types::StartBackupJobInput
 
     StartBackupJobOutput.add_member(:backup_job_id, Shapes::ShapeRef.new(shape: string, location_name: "BackupJobId"))
@@ -1771,6 +1838,18 @@ module Aws::Backup
 
     UpdateGlobalSettingsInput.add_member(:global_settings, Shapes::ShapeRef.new(shape: GlobalSettings, location_name: "GlobalSettings"))
     UpdateGlobalSettingsInput.struct_class = Types::UpdateGlobalSettingsInput
+
+    UpdateRecoveryPointIndexSettingsInput.add_member(:backup_vault_name, Shapes::ShapeRef.new(shape: BackupVaultName, required: true, location: "uri", location_name: "backupVaultName"))
+    UpdateRecoveryPointIndexSettingsInput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "recoveryPointArn"))
+    UpdateRecoveryPointIndexSettingsInput.add_member(:iam_role_arn, Shapes::ShapeRef.new(shape: IAMRoleArn, location_name: "IamRoleArn"))
+    UpdateRecoveryPointIndexSettingsInput.add_member(:index, Shapes::ShapeRef.new(shape: Index, required: true, location_name: "Index"))
+    UpdateRecoveryPointIndexSettingsInput.struct_class = Types::UpdateRecoveryPointIndexSettingsInput
+
+    UpdateRecoveryPointIndexSettingsOutput.add_member(:backup_vault_name, Shapes::ShapeRef.new(shape: BackupVaultName, location_name: "BackupVaultName"))
+    UpdateRecoveryPointIndexSettingsOutput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "RecoveryPointArn"))
+    UpdateRecoveryPointIndexSettingsOutput.add_member(:index_status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "IndexStatus"))
+    UpdateRecoveryPointIndexSettingsOutput.add_member(:index, Shapes::ShapeRef.new(shape: Index, location_name: "Index"))
+    UpdateRecoveryPointIndexSettingsOutput.struct_class = Types::UpdateRecoveryPointIndexSettingsOutput
 
     UpdateRecoveryPointLifecycleInput.add_member(:backup_vault_name, Shapes::ShapeRef.new(shape: BackupVaultName, required: true, location: "uri", location_name: "backupVaultName"))
     UpdateRecoveryPointLifecycleInput.add_member(:recovery_point_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "recoveryPointArn"))
@@ -2366,6 +2445,18 @@ module Aws::Backup
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
+      api.add_operation(:get_recovery_point_index_details, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRecoveryPointIndexDetails"
+        o.http_method = "GET"
+        o.http_request_uri = "/backup-vaults/{backupVaultName}/recovery-points/{recoveryPointArn}/index"
+        o.input = Shapes::ShapeRef.new(shape: GetRecoveryPointIndexDetailsInput)
+        o.output = Shapes::ShapeRef.new(shape: GetRecoveryPointIndexDetailsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: MissingParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
       api.add_operation(:get_recovery_point_restore_metadata, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetRecoveryPointRestoreMetadata"
         o.http_method = "GET"
@@ -2592,6 +2683,23 @@ module Aws::Backup
         o.input = Shapes::ShapeRef.new(shape: ListFrameworksInput)
         o.output = Shapes::ShapeRef.new(shape: ListFrameworksOutput)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_indexed_recovery_points, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListIndexedRecoveryPoints"
+        o.http_method = "GET"
+        o.http_request_uri = "/indexes/recovery-point/"
+        o.input = Shapes::ShapeRef.new(shape: ListIndexedRecoveryPointsInput)
+        o.output = Shapes::ShapeRef.new(shape: ListIndexedRecoveryPointsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
@@ -3017,6 +3125,19 @@ module Aws::Backup
         o.errors << Shapes::ShapeRef.new(shape: MissingParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+      end)
+
+      api.add_operation(:update_recovery_point_index_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateRecoveryPointIndexSettings"
+        o.http_method = "POST"
+        o.http_request_uri = "/backup-vaults/{backupVaultName}/recovery-points/{recoveryPointArn}/index"
+        o.input = Shapes::ShapeRef.new(shape: UpdateRecoveryPointIndexSettingsInput)
+        o.output = Shapes::ShapeRef.new(shape: UpdateRecoveryPointIndexSettingsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: MissingParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
       end)
 
       api.add_operation(:update_recovery_point_lifecycle, Seahorse::Model::Operation.new.tap do |o|

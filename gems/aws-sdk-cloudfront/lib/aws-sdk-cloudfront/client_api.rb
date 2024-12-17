@@ -3338,6 +3338,8 @@ module Aws::CloudFront
     VpcOrigin.struct_class = Types::VpcOrigin
 
     VpcOriginConfig.add_member(:vpc_origin_id, Shapes::ShapeRef.new(shape: string, required: true, location_name: "VpcOriginId"))
+    VpcOriginConfig.add_member(:origin_read_timeout, Shapes::ShapeRef.new(shape: integer, location_name: "OriginReadTimeout"))
+    VpcOriginConfig.add_member(:origin_keepalive_timeout, Shapes::ShapeRef.new(shape: integer, location_name: "OriginKeepaliveTimeout"))
     VpcOriginConfig.struct_class = Types::VpcOriginConfig
 
     VpcOriginEndpointConfig.add_member(:name, Shapes::ShapeRef.new(shape: string, required: true, location_name: "Name"))

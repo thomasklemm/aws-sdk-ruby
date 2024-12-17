@@ -283,6 +283,7 @@ module Aws
             'BCMPricingCalculator' => 'bcm-pricing-calculator',
             'Backup' => 'backup',
             'BackupGateway' => 'backup-gateway',
+            'BackupSearch' => 'backup-search',
             'Batch' => 'batch',
             'Bedrock' => 'bedrock',
             'BedrockAgent' => 'bedrock-agent',

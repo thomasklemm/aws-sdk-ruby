@@ -865,6 +865,8 @@ module Aws::CodePipeline
     #   * Invoke
     #
     #   * Approval
+    #
+    #   * Compute
     #   @return [String]
     #
     # @!attribute [rw] owner
@@ -1354,7 +1356,14 @@ module Aws::CodePipeline
     end
 
     # The condition for the stage. A condition is made up of the rules and
-    # the result for the condition.
+    # the result for the condition. For more information about conditions,
+    # see [Stage conditions][1]. For more information about rules, see the
+    # [CodePipeline rule reference][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @!attribute [rw] result
     #   The action to be done when the condition is met. For example,
@@ -1942,6 +1951,8 @@ module Aws::CodePipeline
     #   * `Approval`
     #
     #   * `Invoke`
+    #
+    #   * `Compute`
     #   @return [String]
     #
     # @!attribute [rw] owner
@@ -4371,11 +4382,18 @@ module Aws::CodePipeline
     # Represents information about the rule to be created for an associated
     # condition. An example would be creating a new rule for an entry
     # condition, such as a rule that checks for a test result before
-    # allowing the run to enter the deployment stage.
+    # allowing the run to enter the deployment stage. For more information
+    # about conditions, see [Stage conditions][1]. For more information
+    # about rules, see the [CodePipeline rule reference][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @!attribute [rw] name
     #   The name of the rule that is created for the condition, such as
-    #   CheckAllResults.
+    #   `VariableCheck`.
     #   @return [String]
     #
     # @!attribute [rw] rule_type_id
@@ -4386,6 +4404,18 @@ module Aws::CodePipeline
     # @!attribute [rw] configuration
     #   The action configuration fields for the rule.
     #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] commands
+    #   The shell commands to run with your commands rule in CodePipeline.
+    #   All commands are supported except multi-line formats. While
+    #   CodeBuild logs and permissions are used, you do not need to create
+    #   any resources in CodeBuild.
+    #
+    #   <note markdown="1"> Using compute time for this action will incur separate charges in
+    #   CodeBuild.
+    #
+    #    </note>
+    #   @return [Array<String>]
     #
     # @!attribute [rw] input_artifacts
     #   The input artifacts fields for the rule, such as specifying an input
@@ -4410,6 +4440,7 @@ module Aws::CodePipeline
       :name,
       :rule_type_id,
       :configuration,
+      :commands,
       :input_artifacts,
       :role_arn,
       :region,

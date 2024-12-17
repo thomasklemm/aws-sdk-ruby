@@ -604,6 +604,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -1097,6 +1099,8 @@ module Aws::CloudFront
     #             },
     #             vpc_origin_config: {
     #               vpc_origin_id: "string", # required
+    #               origin_read_timeout: 1,
+    #               origin_keepalive_timeout: 1,
     #             },
     #             connection_attempts: 1,
     #             connection_timeout: 1,
@@ -1372,6 +1376,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -1593,6 +1599,8 @@ module Aws::CloudFront
     #               },
     #               vpc_origin_config: {
     #                 vpc_origin_id: "string", # required
+    #                 origin_read_timeout: 1,
+    #                 origin_keepalive_timeout: 1,
     #               },
     #               connection_attempts: 1,
     #               connection_timeout: 1,
@@ -1877,6 +1885,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -4432,6 +4442,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -4636,6 +4648,8 @@ module Aws::CloudFront
     #   resp.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -6195,6 +6209,8 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -6408,6 +6424,8 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -6804,6 +6822,8 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -7147,6 +7167,8 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -8700,6 +8722,8 @@ module Aws::CloudFront
     #             },
     #             vpc_origin_config: {
     #               vpc_origin_id: "string", # required
+    #               origin_read_timeout: 1,
+    #               origin_keepalive_timeout: 1,
     #             },
     #             connection_attempts: 1,
     #             connection_timeout: 1,
@@ -8977,6 +9001,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -9232,6 +9258,8 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.origin_keepalive_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -10468,7 +10496,7 @@ module Aws::CloudFront
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudfront'
-      context[:gem_version] = '1.107.0'
+      context[:gem_version] = '1.108.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

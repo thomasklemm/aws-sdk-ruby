@@ -525,6 +525,7 @@ module Aws::Batch
     class EksContainerVolumeMount
       attr_accessor name: ::String
       attr_accessor mount_path: ::String
+      attr_accessor sub_path: ::String
       attr_accessor read_only: bool
       SENSITIVE: []
     end
@@ -542,6 +543,14 @@ module Aws::Batch
 
     class EksMetadata
       attr_accessor labels: ::Hash[::String, ::String]
+      attr_accessor annotations: ::Hash[::String, ::String]
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class EksPersistentVolumeClaim
+      attr_accessor claim_name: ::String
+      attr_accessor read_only: bool
       SENSITIVE: []
     end
 
@@ -606,6 +615,7 @@ module Aws::Batch
       attr_accessor host_path: Types::EksHostPath
       attr_accessor empty_dir: Types::EksEmptyDir
       attr_accessor secret: Types::EksSecret
+      attr_accessor persistent_volume_claim: Types::EksPersistentVolumeClaim
       SENSITIVE: []
     end
 

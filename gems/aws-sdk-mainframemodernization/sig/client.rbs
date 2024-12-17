@@ -200,6 +200,7 @@ module Aws
                                 instance_type: ::String,
                                 ?kms_key_id: ::String,
                                 name: ::String,
+                                ?network_type: ("ipv4" | "dual"),
                                 ?preferred_maintenance_window: ::String,
                                 ?publicly_accessible: bool,
                                 ?security_group_ids: Array[::String],
@@ -380,6 +381,7 @@ module Aws
         def kms_key_id: () -> ::String
         def load_balancer_arn: () -> ::String
         def name: () -> ::String
+        def network_type: () -> ("ipv4" | "dual")
         def pending_maintenance: () -> Types::PendingMaintenance
         def preferred_maintenance_window: () -> ::String
         def publicly_accessible: () -> bool

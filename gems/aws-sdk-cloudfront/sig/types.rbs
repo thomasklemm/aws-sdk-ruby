@@ -3361,6 +3361,8 @@ module Aws::CloudFront
 
     class VpcOriginConfig
       attr_accessor vpc_origin_id: ::String
+      attr_accessor origin_read_timeout: ::Integer
+      attr_accessor origin_keepalive_timeout: ::Integer
       SENSITIVE: []
     end
 

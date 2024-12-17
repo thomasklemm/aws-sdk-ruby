@@ -737,6 +737,9 @@ module Aws::MainframeModernization
     #   The name of the runtime environment. Must be unique within the
     #   account.
     #
+    # @option params [String] :network_type
+    #   The network type required for the runtime environment.
+    #
     # @option params [String] :preferred_maintenance_window
     #   Configures the maintenance window that you want for the runtime
     #   environment. The maintenance window must have the format
@@ -781,6 +784,7 @@ module Aws::MainframeModernization
     #     instance_type: "String20", # required
     #     kms_key_id: "String",
     #     name: "EntityName", # required
+    #     network_type: "ipv4", # accepts ipv4, dual
     #     preferred_maintenance_window: "String50",
     #     publicly_accessible: false,
     #     security_group_ids: ["String50"],
@@ -1257,6 +1261,7 @@ module Aws::MainframeModernization
     #   * {Types::GetEnvironmentResponse#kms_key_id #kms_key_id} => String
     #   * {Types::GetEnvironmentResponse#load_balancer_arn #load_balancer_arn} => String
     #   * {Types::GetEnvironmentResponse#name #name} => String
+    #   * {Types::GetEnvironmentResponse#network_type #network_type} => String
     #   * {Types::GetEnvironmentResponse#pending_maintenance #pending_maintenance} => Types::PendingMaintenance
     #   * {Types::GetEnvironmentResponse#preferred_maintenance_window #preferred_maintenance_window} => String
     #   * {Types::GetEnvironmentResponse#publicly_accessible #publicly_accessible} => Boolean
@@ -1288,6 +1293,7 @@ module Aws::MainframeModernization
     #   resp.kms_key_id #=> String
     #   resp.load_balancer_arn #=> String
     #   resp.name #=> String
+    #   resp.network_type #=> String, one of "ipv4", "dual"
     #   resp.pending_maintenance.engine_version #=> String
     #   resp.pending_maintenance.schedule.end_time #=> Time
     #   resp.pending_maintenance.schedule.start_time #=> Time
@@ -1881,6 +1887,7 @@ module Aws::MainframeModernization
     #   resp.environments[0].environment_id #=> String
     #   resp.environments[0].instance_type #=> String
     #   resp.environments[0].name #=> String
+    #   resp.environments[0].network_type #=> String, one of "ipv4", "dual"
     #   resp.environments[0].status #=> String, one of "Creating", "Available", "Updating", "Deleting", "Failed", "UnHealthy"
     #   resp.next_token #=> String
     #
@@ -2241,7 +2248,7 @@ module Aws::MainframeModernization
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mainframemodernization'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

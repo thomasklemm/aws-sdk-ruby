@@ -117,12 +117,18 @@ module Aws::CleanRoomsML
     #   The protected SQL query parameters.
     #   @return [Types::ProtectedQuerySQLParameters]
     #
+    # @!attribute [rw] sql_compute_configuration
+    #   Provides configuration information for the instances that will
+    #   perform the compute work.
+    #   @return [Types::ComputeConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cleanroomsml-2023-09-06/AudienceGenerationJobDataSource AWS API Documentation
     #
     class AudienceGenerationJobDataSource < Struct.new(
       :data_source,
       :role_arn,
-      :sql_parameters)
+      :sql_parameters,
+      :sql_compute_configuration)
       SENSITIVE = [:sql_parameters]
       include Aws::Structure
     end
@@ -4676,7 +4682,7 @@ module Aws::CleanRoomsML
     #   @return [Types::InferenceOutputConfiguration]
     #
     # @!attribute [rw] data_source
-    #   Defines he data source that is used for the trained model inference
+    #   Defines the data source that is used for the trained model inference
     #   job.
     #   @return [Types::ModelInferenceDataSource]
     #

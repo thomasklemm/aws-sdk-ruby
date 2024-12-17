@@ -43,6 +43,7 @@ module Aws
   autoload :BCMPricingCalculator, 'aws-sdk-bcmpricingcalculator'
   autoload :Backup, 'aws-sdk-backup'
   autoload :BackupGateway, 'aws-sdk-backupgateway'
+  autoload :BackupSearch, 'aws-sdk-backupsearch'
   autoload :Batch, 'aws-sdk-batch'
   autoload :Bedrock, 'aws-sdk-bedrock'
   autoload :BedrockAgent, 'aws-sdk-bedrockagent'

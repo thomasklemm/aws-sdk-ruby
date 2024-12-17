@@ -110,6 +110,7 @@ module Aws::Backup
       attr_accessor copy_actions: ::Array[Types::CopyAction]
       attr_accessor enable_continuous_backup: bool
       attr_accessor schedule_expression_timezone: ::String
+      attr_accessor index_actions: ::Array[Types::IndexAction]
       SENSITIVE: [:recovery_point_tags]
     end
 
@@ -124,6 +125,7 @@ module Aws::Backup
       attr_accessor copy_actions: ::Array[Types::CopyAction]
       attr_accessor enable_continuous_backup: bool
       attr_accessor schedule_expression_timezone: ::String
+      attr_accessor index_actions: ::Array[Types::IndexAction]
       SENSITIVE: [:recovery_point_tags]
     end
 
@@ -632,6 +634,8 @@ module Aws::Backup
       attr_accessor is_parent: bool
       attr_accessor resource_name: ::String
       attr_accessor vault_type: ("BACKUP_VAULT" | "LOGICALLY_AIR_GAPPED_BACKUP_VAULT")
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index_status_message: ::String
       SENSITIVE: []
     end
 
@@ -829,6 +833,25 @@ module Aws::Backup
       SENSITIVE: []
     end
 
+    class GetRecoveryPointIndexDetailsInput
+      attr_accessor backup_vault_name: ::String
+      attr_accessor recovery_point_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetRecoveryPointIndexDetailsOutput
+      attr_accessor recovery_point_arn: ::String
+      attr_accessor backup_vault_arn: ::String
+      attr_accessor source_resource_arn: ::String
+      attr_accessor index_creation_date: ::Time
+      attr_accessor index_deletion_date: ::Time
+      attr_accessor index_completion_date: ::Time
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index_status_message: ::String
+      attr_accessor total_items_indexed: ::Integer
+      SENSITIVE: []
+    end
+
     class GetRecoveryPointRestoreMetadataInput
       attr_accessor backup_vault_name: ::String
       attr_accessor recovery_point_arn: ::String
@@ -890,6 +913,24 @@ module Aws::Backup
 
     class GetSupportedResourceTypesOutput
       attr_accessor resource_types: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class IndexAction
+      attr_accessor resource_types: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class IndexedRecoveryPoint
+      attr_accessor recovery_point_arn: ::String
+      attr_accessor source_resource_arn: ::String
+      attr_accessor iam_role_arn: ::String
+      attr_accessor backup_creation_date: ::Time
+      attr_accessor resource_type: ::String
+      attr_accessor index_creation_date: ::Time
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index_status_message: ::String
+      attr_accessor backup_vault_arn: ::String
       SENSITIVE: []
     end
 
@@ -1104,6 +1145,23 @@ module Aws::Backup
 
     class ListFrameworksOutput
       attr_accessor frameworks: ::Array[Types::Framework]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListIndexedRecoveryPointsInput
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor source_resource_arn: ::String
+      attr_accessor created_before: ::Time
+      attr_accessor created_after: ::Time
+      attr_accessor resource_type: ::String
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      SENSITIVE: []
+    end
+
+    class ListIndexedRecoveryPointsOutput
+      attr_accessor indexed_recovery_points: ::Array[Types::IndexedRecoveryPoint]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -1388,6 +1446,8 @@ module Aws::Backup
       attr_accessor is_parent: bool
       attr_accessor resource_name: ::String
       attr_accessor vault_type: ("BACKUP_VAULT" | "LOGICALLY_AIR_GAPPED_BACKUP_VAULT")
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index_status_message: ::String
       SENSITIVE: []
     end
 
@@ -1403,6 +1463,8 @@ module Aws::Backup
       attr_accessor parent_recovery_point_arn: ::String
       attr_accessor resource_name: ::String
       attr_accessor vault_type: ("BACKUP_VAULT" | "LOGICALLY_AIR_GAPPED_BACKUP_VAULT")
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index_status_message: ::String
       SENSITIVE: []
     end
 
@@ -1638,6 +1700,7 @@ module Aws::Backup
       attr_accessor lifecycle: Types::Lifecycle
       attr_accessor recovery_point_tags: ::Hash[::String, ::String]
       attr_accessor backup_options: ::Hash[::String, ::String]
+      attr_accessor index: ("ENABLED" | "DISABLED")
       SENSITIVE: [:recovery_point_tags]
     end
 
@@ -1741,6 +1804,22 @@ module Aws::Backup
 
     class UpdateGlobalSettingsInput
       attr_accessor global_settings: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class UpdateRecoveryPointIndexSettingsInput
+      attr_accessor backup_vault_name: ::String
+      attr_accessor recovery_point_arn: ::String
+      attr_accessor iam_role_arn: ::String
+      attr_accessor index: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class UpdateRecoveryPointIndexSettingsOutput
+      attr_accessor backup_vault_name: ::String
+      attr_accessor recovery_point_arn: ::String
+      attr_accessor index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+      attr_accessor index: ("ENABLED" | "DISABLED")
       SENSITIVE: []
     end
 

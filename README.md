@@ -320,6 +320,7 @@ RubyGems.org page under "LINKS" section.
 | AWS B2B Data Interchange                              | Aws::B2bi                                | aws-sdk-b2bi                                | 2022-06-23  |
 | AWS Backup                                            | Aws::Backup                              | aws-sdk-backup                              | 2018-11-15  |
 | AWS Backup Gateway                                    | Aws::BackupGateway                       | aws-sdk-backupgateway                       | 2021-01-01  |
+| AWS Backup Search                                     | Aws::BackupSearch                        | aws-sdk-backupsearch                        | 2018-05-10  |
 | AWS Batch                                             | Aws::Batch                               | aws-sdk-batch                               | 2016-08-10  |
 | AWS Billing                                           | Aws::Billing                             | aws-sdk-billing                             | 2023-09-07  |
 | AWS Billing and Cost Management Data Exports          | Aws::BCMDataExports                      | aws-sdk-bcmdataexports                      | 2023-11-26  |

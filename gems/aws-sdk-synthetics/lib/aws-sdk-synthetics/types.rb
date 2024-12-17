@@ -1918,7 +1918,9 @@ module Aws::Synthetics
     #   are `nextrun` to use the screenshots from the next run after this
     #   update is made, `lastrun` to use the screenshots from the most
     #   recent run before this update was made, or the value of `Id` in the
-    #   [ CanaryRun][1] from any past run of this canary.
+    #   [ CanaryRun][1] from a run of this a canary in the past 31 days. If
+    #   you specify the `Id` of a canary run older than 31 days, the
+    #   operation returns a 400 validation exception error..
     #
     #
     #
@@ -1977,11 +1979,17 @@ module Aws::Synthetics
     #   The IDs of the security groups for this canary.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] ipv_6_allowed_for_dual_stack
+    #   Set this to `true` to allow outbound IPv6 traffic on VPC canaries
+    #   that are connected to dual-stack subnets. The default is `false`
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/VpcConfigInput AWS API Documentation
     #
     class VpcConfigInput < Struct.new(
       :subnet_ids,
-      :security_group_ids)
+      :security_group_ids,
+      :ipv_6_allowed_for_dual_stack)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2006,12 +2014,18 @@ module Aws::Synthetics
     #   The IDs of the security groups for this canary.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] ipv_6_allowed_for_dual_stack
+    #   Indicates whether this canary allows outbound IPv6 traffic if it is
+    #   connected to dual-stack subnets.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/synthetics-2017-10-11/VpcConfigOutput AWS API Documentation
     #
     class VpcConfigOutput < Struct.new(
       :vpc_id,
       :subnet_ids,
-      :security_group_ids)
+      :security_group_ids,
+      :ipv_6_allowed_for_dual_stack)
       SENSITIVE = []
       include Aws::Structure
     end

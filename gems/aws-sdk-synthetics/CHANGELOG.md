@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.58.0 (2024-12-17)
+------------------
+
+* Feature - Add support to toggle outbound IPv6 traffic on canaries connected to dualstack subnets.  This behavior can be controlled via the new Ipv6AllowedForDualStack parameter of the VpcConfig input object in CreateCanary and UpdateCanary APIs.
+
 1.57.0 (2024-11-07)
 ------------------
 

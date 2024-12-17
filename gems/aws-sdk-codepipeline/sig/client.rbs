@@ -226,6 +226,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String
@@ -253,6 +254,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String
@@ -280,6 +282,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String
@@ -993,6 +996,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String
@@ -1020,6 +1024,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String
@@ -1047,6 +1052,7 @@ module Aws
                                                version: ::String?
                                              },
                                              configuration: Hash[::String, ::String]?,
+                                             commands: Array[::String]?,
                                              input_artifacts: Array[
                                                {
                                                  name: ::String

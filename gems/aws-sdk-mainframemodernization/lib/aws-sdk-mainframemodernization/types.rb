@@ -570,6 +570,10 @@ module Aws::MainframeModernization
     #   account.
     #   @return [String]
     #
+    # @!attribute [rw] network_type
+    #   The network type required for the runtime environment.
+    #   @return [String]
+    #
     # @!attribute [rw] preferred_maintenance_window
     #   Configures the maintenance window that you want for the runtime
     #   environment. The maintenance window must have the format
@@ -614,6 +618,7 @@ module Aws::MainframeModernization
       :instance_type,
       :kms_key_id,
       :name,
+      :network_type,
       :preferred_maintenance_window,
       :publicly_accessible,
       :security_group_ids,
@@ -1127,6 +1132,10 @@ module Aws::MainframeModernization
     #   The name of the runtime environment.
     #   @return [String]
     #
+    # @!attribute [rw] network_type
+    #   The network type supported by the runtime environment.
+    #   @return [String]
+    #
     # @!attribute [rw] status
     #   The status of the runtime environment
     #   @return [String]
@@ -1141,6 +1150,7 @@ module Aws::MainframeModernization
       :environment_id,
       :instance_type,
       :name,
+      :network_type,
       :status)
       SENSITIVE = []
       include Aws::Structure
@@ -1816,6 +1826,10 @@ module Aws::MainframeModernization
     #   account.
     #   @return [String]
     #
+    # @!attribute [rw] network_type
+    #   The network type supported by the runtime environment.
+    #   @return [String]
+    #
     # @!attribute [rw] pending_maintenance
     #   Indicates the pending maintenance scheduled on this environment.
     #   @return [Types::PendingMaintenance]
@@ -1879,6 +1893,7 @@ module Aws::MainframeModernization
       :kms_key_id,
       :load_balancer_arn,
       :name,
+      :network_type,
       :pending_maintenance,
       :preferred_maintenance_window,
       :publicly_accessible,

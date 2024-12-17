@@ -760,6 +760,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -789,6 +790,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -818,6 +820,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -942,6 +945,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].role_arn #=> String
@@ -957,6 +962,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].role_arn #=> String
@@ -972,6 +979,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].role_arn #=> String
@@ -1237,6 +1246,8 @@ module Aws::CodePipeline
     #
     #   * `Invoke`
     #
+    #   * `Compute`
+    #
     # @option params [required, String] :owner
     #   The creator of an action type that was created with any supported
     #   integration model. There are two valid values: `AWS` and `ThirdParty`.
@@ -1446,6 +1457,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].role_arn #=> String
@@ -1461,6 +1474,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].role_arn #=> String
@@ -1476,6 +1491,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].role_arn #=> String
@@ -2168,7 +2185,14 @@ module Aws::CodePipeline
       req.send_request(options)
     end
 
-    # Lists the rules for the condition.
+    # Lists the rules for the condition. For more information about
+    # conditions, see [Stage conditions][1]. For more information about
+    # rules, see the [CodePipeline rule reference][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html
+    # [2]: https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html
     #
     # @option params [String] :rule_owner_filter
     #   The rule owner to filter on.
@@ -3334,6 +3358,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -3363,6 +3388,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -3392,6 +3418,7 @@ module Aws::CodePipeline
     #                     configuration: {
     #                       "RuleConfigurationKey" => "RuleConfigurationValue",
     #                     },
+    #                     commands: ["Command"],
     #                     input_artifacts: [
     #                       {
     #                         name: "ArtifactName", # required
@@ -3510,6 +3537,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_failure.conditions[0].rules[0].role_arn #=> String
@@ -3525,6 +3554,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].on_success.conditions[0].rules[0].role_arn #=> String
@@ -3540,6 +3571,8 @@ module Aws::CodePipeline
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].rule_type_id.version #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration #=> Hash
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].configuration["RuleConfigurationKey"] #=> String
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands #=> Array
+    #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].commands[0] #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts #=> Array
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].input_artifacts[0].name #=> String
     #   resp.pipeline.stages[0].before_entry.conditions[0].rules[0].role_arn #=> String
@@ -3607,7 +3640,7 @@ module Aws::CodePipeline
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codepipeline'
-      context[:gem_version] = '1.91.0'
+      context[:gem_version] = '1.92.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1795,6 +1795,7 @@ module Aws::Batch
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts #=> Array
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].name #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].sub_path #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].security_context.run_as_user #=> Integer
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].security_context.run_as_group #=> Integer
@@ -1820,6 +1821,7 @@ module Aws::Batch
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts #=> Array
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].name #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].sub_path #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_user #=> Integer
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_group #=> Integer
@@ -1834,8 +1836,13 @@ module Aws::Batch
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].empty_dir.size_limit #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].secret.secret_name #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].secret.optional #=> Boolean
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.claim_name #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.read_only #=> Boolean
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.labels #=> Hash
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.labels["String"] #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations #=> Hash
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
+    #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.job_definitions[0].node_properties.node_range_properties[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
     #   resp.job_definitions[0].tags #=> Hash
     #   resp.job_definitions[0].tags["TagKey"] #=> String
@@ -1934,6 +1941,7 @@ module Aws::Batch
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].volume_mounts #=> Array
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].volume_mounts[0].name #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].volume_mounts[0].sub_path #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].security_context.run_as_user #=> Integer
     #   resp.job_definitions[0].eks_properties.pod_properties.containers[0].security_context.run_as_group #=> Integer
@@ -1959,6 +1967,7 @@ module Aws::Batch
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].volume_mounts #=> Array
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].name #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].sub_path #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_user #=> Integer
     #   resp.job_definitions[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_group #=> Integer
@@ -1973,8 +1982,13 @@ module Aws::Batch
     #   resp.job_definitions[0].eks_properties.pod_properties.volumes[0].empty_dir.size_limit #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.volumes[0].secret.secret_name #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.volumes[0].secret.optional #=> Boolean
+    #   resp.job_definitions[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.claim_name #=> String
+    #   resp.job_definitions[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.read_only #=> Boolean
     #   resp.job_definitions[0].eks_properties.pod_properties.metadata.labels #=> Hash
     #   resp.job_definitions[0].eks_properties.pod_properties.metadata.labels["String"] #=> String
+    #   resp.job_definitions[0].eks_properties.pod_properties.metadata.annotations #=> Hash
+    #   resp.job_definitions[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
+    #   resp.job_definitions[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.job_definitions[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
     #   resp.job_definitions[0].container_orchestration_type #=> String, one of "ECS", "EKS"
     #   resp.next_token #=> String
@@ -2444,6 +2458,7 @@ module Aws::Batch
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts #=> Array
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].name #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].sub_path #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].security_context.run_as_user #=> Integer
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.containers[0].security_context.run_as_group #=> Integer
@@ -2469,6 +2484,7 @@ module Aws::Batch
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts #=> Array
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].name #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].sub_path #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_user #=> Integer
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_group #=> Integer
@@ -2483,8 +2499,13 @@ module Aws::Batch
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].empty_dir.size_limit #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].secret.secret_name #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].secret.optional #=> Boolean
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.claim_name #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.read_only #=> Boolean
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.labels #=> Hash
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.labels["String"] #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations #=> Hash
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
+    #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.jobs[0].node_properties.node_range_properties[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
     #   resp.jobs[0].array_properties.status_summary #=> Hash
     #   resp.jobs[0].array_properties.status_summary["String"] #=> Integer
@@ -2521,6 +2542,7 @@ module Aws::Batch
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].volume_mounts #=> Array
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].volume_mounts[0].name #=> String
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.jobs[0].eks_properties.pod_properties.containers[0].volume_mounts[0].sub_path #=> String
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].security_context.run_as_user #=> Integer
     #   resp.jobs[0].eks_properties.pod_properties.containers[0].security_context.run_as_group #=> Integer
@@ -2548,6 +2570,7 @@ module Aws::Batch
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].volume_mounts #=> Array
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].name #=> String
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].mount_path #=> String
+    #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].sub_path #=> String
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].volume_mounts[0].read_only #=> Boolean
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_user #=> Integer
     #   resp.jobs[0].eks_properties.pod_properties.init_containers[0].security_context.run_as_group #=> Integer
@@ -2562,10 +2585,15 @@ module Aws::Batch
     #   resp.jobs[0].eks_properties.pod_properties.volumes[0].empty_dir.size_limit #=> String
     #   resp.jobs[0].eks_properties.pod_properties.volumes[0].secret.secret_name #=> String
     #   resp.jobs[0].eks_properties.pod_properties.volumes[0].secret.optional #=> Boolean
+    #   resp.jobs[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.claim_name #=> String
+    #   resp.jobs[0].eks_properties.pod_properties.volumes[0].persistent_volume_claim.read_only #=> Boolean
     #   resp.jobs[0].eks_properties.pod_properties.pod_name #=> String
     #   resp.jobs[0].eks_properties.pod_properties.node_name #=> String
     #   resp.jobs[0].eks_properties.pod_properties.metadata.labels #=> Hash
     #   resp.jobs[0].eks_properties.pod_properties.metadata.labels["String"] #=> String
+    #   resp.jobs[0].eks_properties.pod_properties.metadata.annotations #=> Hash
+    #   resp.jobs[0].eks_properties.pod_properties.metadata.annotations["String"] #=> String
+    #   resp.jobs[0].eks_properties.pod_properties.metadata.namespace #=> String
     #   resp.jobs[0].eks_properties.pod_properties.share_process_namespace #=> Boolean
     #   resp.jobs[0].eks_attempts #=> Array
     #   resp.jobs[0].eks_attempts[0].containers #=> Array
@@ -3663,6 +3691,7 @@ module Aws::Batch
     #                     {
     #                       name: "String",
     #                       mount_path: "String",
+    #                       sub_path: "String",
     #                       read_only: false,
     #                     },
     #                   ],
@@ -3701,6 +3730,7 @@ module Aws::Batch
     #                     {
     #                       name: "String",
     #                       mount_path: "String",
+    #                       sub_path: "String",
     #                       read_only: false,
     #                     },
     #                   ],
@@ -3728,12 +3758,20 @@ module Aws::Batch
     #                     secret_name: "String", # required
     #                     optional: false,
     #                   },
+    #                   persistent_volume_claim: {
+    #                     claim_name: "String", # required
+    #                     read_only: false,
+    #                   },
     #                 },
     #               ],
     #               metadata: {
     #                 labels: {
     #                   "String" => "String",
     #                 },
+    #                 annotations: {
+    #                   "String" => "String",
+    #                 },
+    #                 namespace: "String",
     #               },
     #               share_process_namespace: false,
     #             },
@@ -3795,6 +3833,7 @@ module Aws::Batch
     #               {
     #                 name: "String",
     #                 mount_path: "String",
+    #                 sub_path: "String",
     #                 read_only: false,
     #               },
     #             ],
@@ -3833,6 +3872,7 @@ module Aws::Batch
     #               {
     #                 name: "String",
     #                 mount_path: "String",
+    #                 sub_path: "String",
     #                 read_only: false,
     #               },
     #             ],
@@ -3860,12 +3900,20 @@ module Aws::Batch
     #               secret_name: "String", # required
     #               optional: false,
     #             },
+    #             persistent_volume_claim: {
+    #               claim_name: "String", # required
+    #               read_only: false,
+    #             },
     #           },
     #         ],
     #         metadata: {
     #           labels: {
     #             "String" => "String",
     #           },
+    #           annotations: {
+    #             "String" => "String",
+    #           },
+    #           namespace: "String",
     #         },
     #         share_process_namespace: false,
     #       },
@@ -4318,6 +4366,10 @@ module Aws::Batch
     #                 labels: {
     #                   "String" => "String",
     #                 },
+    #                 annotations: {
+    #                   "String" => "String",
+    #                 },
+    #                 namespace: "String",
     #               },
     #             },
     #           },
@@ -4392,6 +4444,10 @@ module Aws::Batch
     #           labels: {
     #             "String" => "String",
     #           },
+    #           annotations: {
+    #             "String" => "String",
+    #           },
+    #           namespace: "String",
     #         },
     #       },
     #     },
@@ -4941,7 +4997,7 @@ module Aws::Batch
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-batch'
-      context[:gem_version] = '1.105.0'
+      context[:gem_version] = '1.106.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

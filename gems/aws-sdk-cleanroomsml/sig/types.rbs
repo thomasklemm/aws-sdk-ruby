@@ -35,6 +35,7 @@ module Aws::CleanRoomsML
       attr_accessor data_source: Types::S3ConfigMap
       attr_accessor role_arn: ::String
       attr_accessor sql_parameters: Types::ProtectedQuerySQLParameters
+      attr_accessor sql_compute_configuration: Types::ComputeConfiguration
       SENSITIVE: [:sql_parameters]
     end
 

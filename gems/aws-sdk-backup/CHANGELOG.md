@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.83.0 (2024-12-17)
+------------------
+
+* Feature - Add Support for Backup Indexing
+
 1.82.0 (2024-11-06)
 ------------------
 

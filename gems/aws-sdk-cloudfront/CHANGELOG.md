@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.108.0 (2024-12-17)
+------------------
+
+* Feature - Adds support for OriginReadTimeout and OriginKeepaliveTimeout to create CloudFront Distributions with VPC Origins.
+
 1.107.0 (2024-11-21)
 ------------------
 

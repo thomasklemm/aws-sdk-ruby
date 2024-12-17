@@ -944,6 +944,12 @@ module Aws
                                                query_string: ::String?,
                                                analysis_template_arn: ::String?,
                                                parameters: Hash[::String, ::String]?
+                                             }?,
+                                             sql_compute_configuration: {
+                                               worker: {
+                                                 type: ("CR.1X" | "CR.4X")?,
+                                                 number: ::Integer?
+                                               }?
                                              }?
                                            },
                                            ?include_seed_in_output: bool,

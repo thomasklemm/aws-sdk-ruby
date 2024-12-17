@@ -1114,6 +1114,7 @@ module Aws::CodePipeline
       attr_accessor name: ::String
       attr_accessor rule_type_id: Types::RuleTypeId
       attr_accessor configuration: ::Hash[::String, ::String]
+      attr_accessor commands: ::Array[::String]
       attr_accessor input_artifacts: ::Array[Types::InputArtifact]
       attr_accessor role_arn: ::String
       attr_accessor region: ::String

@@ -615,6 +615,17 @@ module Aws::Backup
     #   timezone.
     #   @return [String]
     #
+    # @!attribute [rw] index_actions
+    #   IndexActions is an array you use to specify how backup data should
+    #   be indexed.
+    #
+    #   eEach BackupRule can have 0 or 1 IndexAction, as each backup can
+    #   have up to one index associated with it.
+    #
+    #   Within the array is ResourceType. Only one will be accepted for each
+    #   BackupRule.
+    #   @return [Array<Types::IndexAction>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupRule AWS API Documentation
     #
     class BackupRule < Struct.new(
@@ -628,7 +639,8 @@ module Aws::Backup
       :rule_id,
       :copy_actions,
       :enable_continuous_backup,
-      :schedule_expression_timezone)
+      :schedule_expression_timezone,
+      :index_actions)
       SENSITIVE = [:recovery_point_tags]
       include Aws::Structure
     end
@@ -721,6 +733,18 @@ module Aws::Backup
     #   timezone.
     #   @return [String]
     #
+    # @!attribute [rw] index_actions
+    #   There can up to one IndexAction in each BackupRule, as each backup
+    #   can have 0 or 1 backup index associated with it.
+    #
+    #   Within the array is ResourceTypes. Only 1 resource type will be
+    #   accepted for each BackupRule. Valid values:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #   @return [Array<Types::IndexAction>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupRuleInput AWS API Documentation
     #
     class BackupRuleInput < Struct.new(
@@ -733,7 +757,8 @@ module Aws::Backup
       :recovery_point_tags,
       :copy_actions,
       :enable_continuous_backup,
-      :schedule_expression_timezone)
+      :schedule_expression_timezone,
+      :index_actions)
       SENSITIVE = [:recovery_point_tags]
       include Aws::Structure
     end
@@ -3180,6 +3205,21 @@ module Aws::Backup
     #   The type of vault in which the described recovery point is stored.
     #   @return [String]
     #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status_message
+    #   A string in the form of a detailed message explaining the status of
+    #   a backup index associated with the recovery point.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/DescribeRecoveryPointOutput AWS API Documentation
     #
     class DescribeRecoveryPointOutput < Struct.new(
@@ -3206,7 +3246,9 @@ module Aws::Backup
       :composite_member_identifier,
       :is_parent,
       :resource_name,
-      :vault_type)
+      :vault_type,
+      :index_status,
+      :index_status_message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3951,6 +3993,103 @@ module Aws::Backup
     # @!attribute [rw] backup_vault_name
     #   The name of a logical container where backups are stored. Backup
     #   vaults are identified by names that are unique to the account used
+    #   to create them and the Region where they are created.
+    #
+    #   Accepted characters include lowercase letters, numbers, and hyphens.
+    #   @return [String]
+    #
+    # @!attribute [rw] recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/GetRecoveryPointIndexDetailsInput AWS API Documentation
+    #
+    class GetRecoveryPointIndexDetailsInput < Struct.new(
+      :backup_vault_name,
+      :recovery_point_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #   @return [String]
+    #
+    # @!attribute [rw] backup_vault_arn
+    #   An ARN that uniquely identifies the backup vault where the recovery
+    #   point index is stored.
+    #
+    #   For example,
+    #   `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_resource_arn
+    #   A string of the Amazon Resource Name (ARN) that uniquely identifies
+    #   the source resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_creation_date
+    #   The date and time that a backup index was created, in Unix format
+    #   and Coordinated Universal Time (UTC). The value of `CreationDate` is
+    #   accurate to milliseconds. For example, the value 1516925490.087
+    #   represents Friday, January 26, 2018 12:11:30.087 AM.
+    #   @return [Time]
+    #
+    # @!attribute [rw] index_deletion_date
+    #   The date and time that a backup index was deleted, in Unix format
+    #   and Coordinated Universal Time (UTC). The value of `CreationDate` is
+    #   accurate to milliseconds. For example, the value 1516925490.087
+    #   represents Friday, January 26, 2018 12:11:30.087 AM.
+    #   @return [Time]
+    #
+    # @!attribute [rw] index_completion_date
+    #   The date and time that a backup index finished creation, in Unix
+    #   format and Coordinated Universal Time (UTC). The value of
+    #   `CreationDate` is accurate to milliseconds. For example, the value
+    #   1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.
+    #   @return [Time]
+    #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status_message
+    #   A detailed message explaining the status of a backup index
+    #   associated with the recovery point.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_items_indexed
+    #   Count of items within the backup index associated with the recovery
+    #   point.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/GetRecoveryPointIndexDetailsOutput AWS API Documentation
+    #
+    class GetRecoveryPointIndexDetailsOutput < Struct.new(
+      :recovery_point_arn,
+      :backup_vault_arn,
+      :source_resource_arn,
+      :index_creation_date,
+      :index_deletion_date,
+      :index_completion_date,
+      :index_status,
+      :index_status_message,
+      :total_items_indexed)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] backup_vault_name
+    #   The name of a logical container where backups are stored. Backup
+    #   vaults are identified by names that are unique to the account used
     #   to create them and the Amazon Web Services Region where they are
     #   created.
     #   @return [String]
@@ -4170,6 +4309,109 @@ module Aws::Backup
     #
     class GetSupportedResourceTypesOutput < Struct.new(
       :resource_types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This is an optional array within a BackupRule.
+    #
+    # IndexAction consists of one ResourceTypes.
+    #
+    # @!attribute [rw] resource_types
+    #   0 or 1 index action will be accepted for each BackupRule.
+    #
+    #   Valid values:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/IndexAction AWS API Documentation
+    #
+    class IndexAction < Struct.new(
+      :resource_types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This is a recovery point that has an associated backup index.
+    #
+    # Only recovery points with a backup index can be included in a search.
+    #
+    # @!attribute [rw] recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`
+    #   @return [String]
+    #
+    # @!attribute [rw] source_resource_arn
+    #   A string of the Amazon Resource Name (ARN) that uniquely identifies
+    #   the source resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] iam_role_arn
+    #   This specifies the IAM role ARN used for this operation.
+    #
+    #   For example, arn:aws:iam::123456789012:role/S3Access
+    #   @return [String]
+    #
+    # @!attribute [rw] backup_creation_date
+    #   The date and time that a backup was created, in Unix format and
+    #   Coordinated Universal Time (UTC). The value of `CreationDate` is
+    #   accurate to milliseconds. For example, the value 1516925490.087
+    #   represents Friday, January 26, 2018 12:11:30.087 AM.
+    #   @return [Time]
+    #
+    # @!attribute [rw] resource_type
+    #   The resource type of the indexed recovery point.
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #   @return [String]
+    #
+    # @!attribute [rw] index_creation_date
+    #   The date and time that a backup index was created, in Unix format
+    #   and Coordinated Universal Time (UTC). The value of `CreationDate` is
+    #   accurate to milliseconds. For example, the value 1516925490.087
+    #   represents Friday, January 26, 2018 12:11:30.087 AM.
+    #   @return [Time]
+    #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status_message
+    #   A string in the form of a detailed message explaining the status of
+    #   a backup index associated with the recovery point.
+    #   @return [String]
+    #
+    # @!attribute [rw] backup_vault_arn
+    #   An ARN that uniquely identifies the backup vault where the recovery
+    #   point index is stored.
+    #
+    #   For example,
+    #   `arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/IndexedRecoveryPoint AWS API Documentation
+    #
+    class IndexedRecoveryPoint < Struct.new(
+      :recovery_point_arn,
+      :source_resource_arn,
+      :iam_role_arn,
+      :backup_creation_date,
+      :resource_type,
+      :index_creation_date,
+      :index_status,
+      :index_status_message,
+      :backup_vault_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5259,6 +5501,90 @@ module Aws::Backup
     #
     class ListFrameworksOutput < Struct.new(
       :frameworks,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The next item following a partial list of returned recovery points.
+    #
+    #   For example, if a request is made to return `MaxResults` number of
+    #   indexed recovery points, `NextToken` allows you to return more items
+    #   in your list starting at the location pointed to by the next token.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of resource list items to be returned.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] source_resource_arn
+    #   A string of the Amazon Resource Name (ARN) that uniquely identifies
+    #   the source resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_before
+    #   Returns only indexed recovery points that were created before the
+    #   specified date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_after
+    #   Returns only indexed recovery points that were created after the
+    #   specified date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] resource_type
+    #   Returns a list of indexed recovery points for the specified resource
+    #   type(s).
+    #
+    #   Accepted values include:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status
+    #   Include this parameter to filter the returned list by the indicated
+    #   statuses.
+    #
+    #   Accepted values: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/ListIndexedRecoveryPointsInput AWS API Documentation
+    #
+    class ListIndexedRecoveryPointsInput < Struct.new(
+      :next_token,
+      :max_results,
+      :source_resource_arn,
+      :created_before,
+      :created_after,
+      :resource_type,
+      :index_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] indexed_recovery_points
+    #   This is a list of recovery points that have an associated index,
+    #   belonging to the specified account.
+    #   @return [Array<Types::IndexedRecoveryPoint>]
+    #
+    # @!attribute [rw] next_token
+    #   The next item following a partial list of returned recovery points.
+    #
+    #   For example, if a request is made to return `MaxResults` number of
+    #   indexed recovery points, `NextToken` allows you to return more items
+    #   in your list starting at the location pointed to by the next token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/ListIndexedRecoveryPointsOutput AWS API Documentation
+    #
+    class ListIndexedRecoveryPointsOutput < Struct.new(
+      :indexed_recovery_points,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -6604,6 +6930,21 @@ module Aws::Backup
     #   The type of vault in which the described recovery point is stored.
     #   @return [String]
     #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status_message
+    #   A string in the form of a detailed message explaining the status of
+    #   a backup index associated with the recovery point.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/RecoveryPointByBackupVault AWS API Documentation
     #
     class RecoveryPointByBackupVault < Struct.new(
@@ -6629,7 +6970,9 @@ module Aws::Backup
       :composite_member_identifier,
       :is_parent,
       :resource_name,
-      :vault_type)
+      :vault_type,
+      :index_status,
+      :index_status_message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6693,6 +7036,21 @@ module Aws::Backup
     #   The type of vault in which the described recovery point is stored.
     #   @return [String]
     #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status_message
+    #   A string in the form of a detailed message explaining the status of
+    #   a backup index associated with the recovery point.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/RecoveryPointByResource AWS API Documentation
     #
     class RecoveryPointByResource < Struct.new(
@@ -6706,7 +7064,9 @@ module Aws::Backup
       :is_parent,
       :parent_recovery_point_arn,
       :resource_name,
-      :vault_type)
+      :vault_type,
+      :index_status,
+      :index_status_message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8041,6 +8401,25 @@ module Aws::Backup
     #   `WindowsVSS` option is not enabled by default.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] index
+    #   Include this parameter to enable index creation if your backup job
+    #   has a resource type that supports backup indexes.
+    #
+    #   Resource types that support backup indexes include:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #
+    #   Index can have 1 of 2 possible values, either `ENABLED` or
+    #   `DISABLED`.
+    #
+    #   To create a backup index for an eligible `ACTIVE` recovery point
+    #   that does not yet have a backup index, set value to `ENABLED`.
+    #
+    #   To delete a backup index, set value to `DISABLED`.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/StartBackupJobInput AWS API Documentation
     #
     class StartBackupJobInput < Struct.new(
@@ -8052,7 +8431,8 @@ module Aws::Backup
       :complete_window_minutes,
       :lifecycle,
       :recovery_point_tags,
-      :backup_options)
+      :backup_options,
+      :index)
       SENSITIVE = [:recovery_point_tags]
       include Aws::Structure
     end
@@ -8563,6 +8943,88 @@ module Aws::Backup
     #
     class UpdateGlobalSettingsInput < Struct.new(
       :global_settings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] backup_vault_name
+    #   The name of a logical container where backups are stored. Backup
+    #   vaults are identified by names that are unique to the account used
+    #   to create them and the Region where they are created.
+    #
+    #   Accepted characters include lowercase letters, numbers, and hyphens.
+    #   @return [String]
+    #
+    # @!attribute [rw] recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #   @return [String]
+    #
+    # @!attribute [rw] iam_role_arn
+    #   This specifies the IAM role ARN used for this operation.
+    #
+    #   For example, arn:aws:iam::123456789012:role/S3Access
+    #   @return [String]
+    #
+    # @!attribute [rw] index
+    #   Index can have 1 of 2 possible values, either `ENABLED` or
+    #   `DISABLED`.
+    #
+    #   To create a backup index for an eligible `ACTIVE` recovery point
+    #   that does not yet have a backup index, set value to `ENABLED`.
+    #
+    #   To delete a backup index, set value to `DISABLED`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/UpdateRecoveryPointIndexSettingsInput AWS API Documentation
+    #
+    class UpdateRecoveryPointIndexSettingsInput < Struct.new(
+      :backup_vault_name,
+      :recovery_point_arn,
+      :iam_role_arn,
+      :index)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] backup_vault_name
+    #   The name of a logical container where backups are stored. Backup
+    #   vaults are identified by names that are unique to the account used
+    #   to create them and the Region where they are created.
+    #   @return [String]
+    #
+    # @!attribute [rw] recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_status
+    #   This is the current status for the backup index associated with the
+    #   specified recovery point.
+    #
+    #   Statuses are: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can
+    #   be included in a search.
+    #   @return [String]
+    #
+    # @!attribute [rw] index
+    #   Index can have 1 of 2 possible values, either `ENABLED` or
+    #   `DISABLED`.
+    #
+    #   A value of `ENABLED` means a backup index for an eligible `ACTIVE`
+    #   recovery point has been created.
+    #
+    #   A value of `DISABLED` means a backup index was deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/UpdateRecoveryPointIndexSettingsOutput AWS API Documentation
+    #
+    class UpdateRecoveryPointIndexSettingsOutput < Struct.new(
+      :backup_vault_name,
+      :recovery_point_arn,
+      :index_status,
+      :index)
       SENSITIVE = []
       include Aws::Structure
     end

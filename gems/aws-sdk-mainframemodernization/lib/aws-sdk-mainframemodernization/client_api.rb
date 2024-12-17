@@ -144,6 +144,7 @@ module Aws::MainframeModernization
     Long = Shapes::IntegerShape.new(name: 'Long')
     MaintenanceSchedule = Shapes::StructureShape.new(name: 'MaintenanceSchedule')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    NetworkType = Shapes::StringShape.new(name: 'NetworkType')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     PendingMaintenance = Shapes::StructureShape.new(name: 'PendingMaintenance')
     PoAttributes = Shapes::StructureShape.new(name: 'PoAttributes')
@@ -330,6 +331,7 @@ module Aws::MainframeModernization
     CreateEnvironmentRequest.add_member(:instance_type, Shapes::ShapeRef.new(shape: String20, required: true, location_name: "instanceType"))
     CreateEnvironmentRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "kmsKeyId"))
     CreateEnvironmentRequest.add_member(:name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "name"))
+    CreateEnvironmentRequest.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     CreateEnvironmentRequest.add_member(:preferred_maintenance_window, Shapes::ShapeRef.new(shape: String50, location_name: "preferredMaintenanceWindow"))
     CreateEnvironmentRequest.add_member(:publicly_accessible, Shapes::ShapeRef.new(shape: Boolean, location_name: "publiclyAccessible"))
     CreateEnvironmentRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: String50List, location_name: "securityGroupIds"))
@@ -470,6 +472,7 @@ module Aws::MainframeModernization
     EnvironmentSummary.add_member(:environment_id, Shapes::ShapeRef.new(shape: Identifier, required: true, location_name: "environmentId"))
     EnvironmentSummary.add_member(:instance_type, Shapes::ShapeRef.new(shape: String20, required: true, location_name: "instanceType"))
     EnvironmentSummary.add_member(:name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "name"))
+    EnvironmentSummary.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     EnvironmentSummary.add_member(:status, Shapes::ShapeRef.new(shape: EnvironmentLifecycle, required: true, location_name: "status"))
     EnvironmentSummary.struct_class = Types::EnvironmentSummary
 
@@ -613,6 +616,7 @@ module Aws::MainframeModernization
     GetEnvironmentResponse.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String, location_name: "kmsKeyId"))
     GetEnvironmentResponse.add_member(:load_balancer_arn, Shapes::ShapeRef.new(shape: String, location_name: "loadBalancerArn"))
     GetEnvironmentResponse.add_member(:name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "name"))
+    GetEnvironmentResponse.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     GetEnvironmentResponse.add_member(:pending_maintenance, Shapes::ShapeRef.new(shape: PendingMaintenance, location_name: "pendingMaintenance"))
     GetEnvironmentResponse.add_member(:preferred_maintenance_window, Shapes::ShapeRef.new(shape: String50, location_name: "preferredMaintenanceWindow"))
     GetEnvironmentResponse.add_member(:publicly_accessible, Shapes::ShapeRef.new(shape: Boolean, location_name: "publiclyAccessible"))

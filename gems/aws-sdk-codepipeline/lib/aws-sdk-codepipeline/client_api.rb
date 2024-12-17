@@ -1312,6 +1312,7 @@ module Aws::CodePipeline
     RuleDeclaration.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, required: true, location_name: "name"))
     RuleDeclaration.add_member(:rule_type_id, Shapes::ShapeRef.new(shape: RuleTypeId, required: true, location_name: "ruleTypeId"))
     RuleDeclaration.add_member(:configuration, Shapes::ShapeRef.new(shape: RuleConfigurationMap, location_name: "configuration"))
+    RuleDeclaration.add_member(:commands, Shapes::ShapeRef.new(shape: CommandList, location_name: "commands"))
     RuleDeclaration.add_member(:input_artifacts, Shapes::ShapeRef.new(shape: InputArtifactList, location_name: "inputArtifacts"))
     RuleDeclaration.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     RuleDeclaration.add_member(:region, Shapes::ShapeRef.new(shape: AWSRegionName, location_name: "region"))

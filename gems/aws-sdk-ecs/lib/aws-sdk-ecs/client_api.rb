@@ -1437,6 +1437,7 @@ module Aws::ECS
     RegisterTaskDefinitionRequest.add_member(:inference_accelerators, Shapes::ShapeRef.new(shape: InferenceAccelerators, location_name: "inferenceAccelerators"))
     RegisterTaskDefinitionRequest.add_member(:ephemeral_storage, Shapes::ShapeRef.new(shape: EphemeralStorage, location_name: "ephemeralStorage"))
     RegisterTaskDefinitionRequest.add_member(:runtime_platform, Shapes::ShapeRef.new(shape: RuntimePlatform, location_name: "runtimePlatform"))
+    RegisterTaskDefinitionRequest.add_member(:enable_fault_injection, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enableFaultInjection"))
     RegisterTaskDefinitionRequest.struct_class = Types::RegisterTaskDefinitionRequest
 
     RegisterTaskDefinitionResponse.add_member(:task_definition, Shapes::ShapeRef.new(shape: TaskDefinition, location_name: "taskDefinition"))
@@ -1872,6 +1873,7 @@ module Aws::ECS
     TaskDefinition.add_member(:deregistered_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "deregisteredAt"))
     TaskDefinition.add_member(:registered_by, Shapes::ShapeRef.new(shape: String, location_name: "registeredBy"))
     TaskDefinition.add_member(:ephemeral_storage, Shapes::ShapeRef.new(shape: EphemeralStorage, location_name: "ephemeralStorage"))
+    TaskDefinition.add_member(:enable_fault_injection, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enableFaultInjection"))
     TaskDefinition.struct_class = Types::TaskDefinition
 
     TaskDefinitionFieldList.member = Shapes::ShapeRef.new(shape: TaskDefinitionField)

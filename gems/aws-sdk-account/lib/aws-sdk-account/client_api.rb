@@ -212,9 +212,11 @@ module Aws::Account
 
       api.metadata = {
         "apiVersion" => "2021-02-01",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "account",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceFullName" => "AWS Account",
         "serviceId" => "Account",
         "signatureVersion" => "v4",

@@ -254,7 +254,9 @@ module Aws
                                            origin_keepalive_timeout: ::Integer?
                                          }?,
                                          vpc_origin_config: {
-                                           vpc_origin_id: ::String
+                                           vpc_origin_id: ::String,
+                                           origin_read_timeout: ::Integer?,
+                                           origin_keepalive_timeout: ::Integer?
                                          }?,
                                          connection_attempts: ::Integer?,
                                          connection_timeout: ::Integer?,
@@ -532,7 +534,9 @@ module Aws
                                                        origin_keepalive_timeout: ::Integer?
                                                      }?,
                                                      vpc_origin_config: {
-                                                       vpc_origin_id: ::String
+                                                       vpc_origin_id: ::String,
+                                                       origin_read_timeout: ::Integer?,
+                                                       origin_keepalive_timeout: ::Integer?
                                                      }?,
                                                      connection_attempts: ::Integer?,
                                                      connection_timeout: ::Integer?,
@@ -2217,7 +2221,9 @@ module Aws
                                            origin_keepalive_timeout: ::Integer?
                                          }?,
                                          vpc_origin_config: {
-                                           vpc_origin_id: ::String
+                                           vpc_origin_id: ::String,
+                                           origin_read_timeout: ::Integer?,
+                                           origin_keepalive_timeout: ::Integer?
                                          }?,
                                          connection_attempts: ::Integer?,
                                          connection_timeout: ::Integer?,

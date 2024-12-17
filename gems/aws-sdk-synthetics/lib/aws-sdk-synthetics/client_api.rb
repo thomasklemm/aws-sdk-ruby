@@ -503,11 +503,13 @@ module Aws::Synthetics
 
     VpcConfigInput.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetIds, location_name: "SubnetIds"))
     VpcConfigInput.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupIds, location_name: "SecurityGroupIds"))
+    VpcConfigInput.add_member(:ipv_6_allowed_for_dual_stack, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "Ipv6AllowedForDualStack"))
     VpcConfigInput.struct_class = Types::VpcConfigInput
 
     VpcConfigOutput.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "VpcId"))
     VpcConfigOutput.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetIds, location_name: "SubnetIds"))
     VpcConfigOutput.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupIds, location_name: "SecurityGroupIds"))
+    VpcConfigOutput.add_member(:ipv_6_allowed_for_dual_stack, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "Ipv6AllowedForDualStack"))
     VpcConfigOutput.struct_class = Types::VpcConfigOutput
 
 

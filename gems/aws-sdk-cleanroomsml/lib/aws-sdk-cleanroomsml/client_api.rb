@@ -336,6 +336,7 @@ module Aws::CleanRoomsML
     AudienceGenerationJobDataSource.add_member(:data_source, Shapes::ShapeRef.new(shape: S3ConfigMap, location_name: "dataSource"))
     AudienceGenerationJobDataSource.add_member(:role_arn, Shapes::ShapeRef.new(shape: IamRoleArn, required: true, location_name: "roleArn"))
     AudienceGenerationJobDataSource.add_member(:sql_parameters, Shapes::ShapeRef.new(shape: ProtectedQuerySQLParameters, location_name: "sqlParameters"))
+    AudienceGenerationJobDataSource.add_member(:sql_compute_configuration, Shapes::ShapeRef.new(shape: ComputeConfiguration, location_name: "sqlComputeConfiguration"))
     AudienceGenerationJobDataSource.struct_class = Types::AudienceGenerationJobDataSource
 
     AudienceGenerationJobList.member = Shapes::ShapeRef.new(shape: AudienceGenerationJobSummary)

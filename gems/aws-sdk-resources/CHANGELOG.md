@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.221.0 (2024-12-17)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-backupsearch` gem.
+
 3.220.0 (2024-12-04)
 ------------------
 

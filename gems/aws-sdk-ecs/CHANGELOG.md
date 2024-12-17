@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.173.0 (2024-12-17)
+------------------
+
+* Feature - Added support for enableFaultInjection task definition parameter which can be used to enable Fault Injection feature on ECS tasks.
+
 1.172.0 (2024-12-09)
 ------------------
 

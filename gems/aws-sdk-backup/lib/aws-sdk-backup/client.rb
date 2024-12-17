@@ -541,6 +541,11 @@ module Aws::Backup
     #           ],
     #           enable_continuous_backup: false,
     #           schedule_expression_timezone: "Timezone",
+    #           index_actions: [
+    #             {
+    #               resource_types: ["ResourceType"],
+    #             },
+    #           ],
     #         },
     #       ],
     #       advanced_backup_settings: [
@@ -1900,6 +1905,8 @@ module Aws::Backup
     #   * {Types::DescribeRecoveryPointOutput#is_parent #is_parent} => Boolean
     #   * {Types::DescribeRecoveryPointOutput#resource_name #resource_name} => String
     #   * {Types::DescribeRecoveryPointOutput#vault_type #vault_type} => String
+    #   * {Types::DescribeRecoveryPointOutput#index_status #index_status} => String
+    #   * {Types::DescribeRecoveryPointOutput#index_status_message #index_status_message} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1941,6 +1948,8 @@ module Aws::Backup
     #   resp.is_parent #=> Boolean
     #   resp.resource_name #=> String
     #   resp.vault_type #=> String, one of "BACKUP_VAULT", "LOGICALLY_AIR_GAPPED_BACKUP_VAULT"
+    #   resp.index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.index_status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/DescribeRecoveryPoint AWS API Documentation
     #
@@ -2279,6 +2288,9 @@ module Aws::Backup
     #   resp.backup_plan.rules[0].copy_actions[0].destination_backup_vault_arn #=> String
     #   resp.backup_plan.rules[0].enable_continuous_backup #=> Boolean
     #   resp.backup_plan.rules[0].schedule_expression_timezone #=> String
+    #   resp.backup_plan.rules[0].index_actions #=> Array
+    #   resp.backup_plan.rules[0].index_actions[0].resource_types #=> Array
+    #   resp.backup_plan.rules[0].index_actions[0].resource_types[0] #=> String
     #   resp.backup_plan.advanced_backup_settings #=> Array
     #   resp.backup_plan.advanced_backup_settings[0].resource_type #=> String
     #   resp.backup_plan.advanced_backup_settings[0].backup_options #=> Hash
@@ -2341,6 +2353,9 @@ module Aws::Backup
     #   resp.backup_plan.rules[0].copy_actions[0].destination_backup_vault_arn #=> String
     #   resp.backup_plan.rules[0].enable_continuous_backup #=> Boolean
     #   resp.backup_plan.rules[0].schedule_expression_timezone #=> String
+    #   resp.backup_plan.rules[0].index_actions #=> Array
+    #   resp.backup_plan.rules[0].index_actions[0].resource_types #=> Array
+    #   resp.backup_plan.rules[0].index_actions[0].resource_types[0] #=> String
     #   resp.backup_plan.advanced_backup_settings #=> Array
     #   resp.backup_plan.advanced_backup_settings[0].resource_type #=> String
     #   resp.backup_plan.advanced_backup_settings[0].backup_options #=> Hash
@@ -2392,6 +2407,9 @@ module Aws::Backup
     #   resp.backup_plan_document.rules[0].copy_actions[0].destination_backup_vault_arn #=> String
     #   resp.backup_plan_document.rules[0].enable_continuous_backup #=> Boolean
     #   resp.backup_plan_document.rules[0].schedule_expression_timezone #=> String
+    #   resp.backup_plan_document.rules[0].index_actions #=> Array
+    #   resp.backup_plan_document.rules[0].index_actions[0].resource_types #=> Array
+    #   resp.backup_plan_document.rules[0].index_actions[0].resource_types[0] #=> String
     #   resp.backup_plan_document.advanced_backup_settings #=> Array
     #   resp.backup_plan_document.advanced_backup_settings[0].resource_type #=> String
     #   resp.backup_plan_document.advanced_backup_settings[0].backup_options #=> Hash
@@ -2590,6 +2608,60 @@ module Aws::Backup
     # @param [Hash] params ({})
     def get_legal_hold(params = {}, options = {})
       req = build_request(:get_legal_hold, params)
+      req.send_request(options)
+    end
+
+    # This operation returns the metadata and details specific to the backup
+    # index associated with the specified recovery point.
+    #
+    # @option params [required, String] :backup_vault_name
+    #   The name of a logical container where backups are stored. Backup
+    #   vaults are identified by names that are unique to the account used to
+    #   create them and the Region where they are created.
+    #
+    #   Accepted characters include lowercase letters, numbers, and hyphens.
+    #
+    # @option params [required, String] :recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #
+    # @return [Types::GetRecoveryPointIndexDetailsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#recovery_point_arn #recovery_point_arn} => String
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#backup_vault_arn #backup_vault_arn} => String
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#source_resource_arn #source_resource_arn} => String
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#index_creation_date #index_creation_date} => Time
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#index_deletion_date #index_deletion_date} => Time
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#index_completion_date #index_completion_date} => Time
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#index_status #index_status} => String
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#index_status_message #index_status_message} => String
+    #   * {Types::GetRecoveryPointIndexDetailsOutput#total_items_indexed #total_items_indexed} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_recovery_point_index_details({
+    #     backup_vault_name: "BackupVaultName", # required
+    #     recovery_point_arn: "ARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.recovery_point_arn #=> String
+    #   resp.backup_vault_arn #=> String
+    #   resp.source_resource_arn #=> String
+    #   resp.index_creation_date #=> Time
+    #   resp.index_deletion_date #=> Time
+    #   resp.index_completion_date #=> Time
+    #   resp.index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.index_status_message #=> String
+    #   resp.total_items_indexed #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/GetRecoveryPointIndexDetails AWS API Documentation
+    #
+    # @overload get_recovery_point_index_details(params = {})
+    # @param [Hash] params ({})
+    def get_recovery_point_index_details(params = {}, options = {})
+      req = build_request(:get_recovery_point_index_details, params)
       req.send_request(options)
     end
 
@@ -3756,6 +3828,95 @@ module Aws::Backup
       req.send_request(options)
     end
 
+    # This operation returns a list of recovery points that have an
+    # associated index, belonging to the specified account.
+    #
+    # Optional parameters you can include are: MaxResults; NextToken;
+    # SourceResourceArns; CreatedBefore; CreatedAfter; and ResourceType.
+    #
+    # @option params [String] :next_token
+    #   The next item following a partial list of returned recovery points.
+    #
+    #   For example, if a request is made to return `MaxResults` number of
+    #   indexed recovery points, `NextToken` allows you to return more items
+    #   in your list starting at the location pointed to by the next token.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of resource list items to be returned.
+    #
+    # @option params [String] :source_resource_arn
+    #   A string of the Amazon Resource Name (ARN) that uniquely identifies
+    #   the source resource.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :created_before
+    #   Returns only indexed recovery points that were created before the
+    #   specified date.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :created_after
+    #   Returns only indexed recovery points that were created after the
+    #   specified date.
+    #
+    # @option params [String] :resource_type
+    #   Returns a list of indexed recovery points for the specified resource
+    #   type(s).
+    #
+    #   Accepted values include:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #
+    # @option params [String] :index_status
+    #   Include this parameter to filter the returned list by the indicated
+    #   statuses.
+    #
+    #   Accepted values: `PENDING` \| `ACTIVE` \| `FAILED` \| `DELETING`
+    #
+    #   A recovery point with an index that has the status of `ACTIVE` can be
+    #   included in a search.
+    #
+    # @return [Types::ListIndexedRecoveryPointsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListIndexedRecoveryPointsOutput#indexed_recovery_points #indexed_recovery_points} => Array&lt;Types::IndexedRecoveryPoint&gt;
+    #   * {Types::ListIndexedRecoveryPointsOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_indexed_recovery_points({
+    #     next_token: "string",
+    #     max_results: 1,
+    #     source_resource_arn: "ARN",
+    #     created_before: Time.now,
+    #     created_after: Time.now,
+    #     resource_type: "ResourceType",
+    #     index_status: "PENDING", # accepts PENDING, ACTIVE, FAILED, DELETING
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.indexed_recovery_points #=> Array
+    #   resp.indexed_recovery_points[0].recovery_point_arn #=> String
+    #   resp.indexed_recovery_points[0].source_resource_arn #=> String
+    #   resp.indexed_recovery_points[0].iam_role_arn #=> String
+    #   resp.indexed_recovery_points[0].backup_creation_date #=> Time
+    #   resp.indexed_recovery_points[0].resource_type #=> String
+    #   resp.indexed_recovery_points[0].index_creation_date #=> Time
+    #   resp.indexed_recovery_points[0].index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.indexed_recovery_points[0].index_status_message #=> String
+    #   resp.indexed_recovery_points[0].backup_vault_arn #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/ListIndexedRecoveryPoints AWS API Documentation
+    #
+    # @overload list_indexed_recovery_points(params = {})
+    # @param [Hash] params ({})
+    def list_indexed_recovery_points(params = {}, options = {})
+      req = build_request(:list_indexed_recovery_points, params)
+      req.send_request(options)
+    end
+
     # This action returns metadata about active and previous legal holds.
     #
     # @option params [String] :next_token
@@ -4041,6 +4202,8 @@ module Aws::Backup
     #   resp.recovery_points[0].is_parent #=> Boolean
     #   resp.recovery_points[0].resource_name #=> String
     #   resp.recovery_points[0].vault_type #=> String, one of "BACKUP_VAULT", "LOGICALLY_AIR_GAPPED_BACKUP_VAULT"
+    #   resp.recovery_points[0].index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.recovery_points[0].index_status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/ListRecoveryPointsByBackupVault AWS API Documentation
     #
@@ -4166,6 +4329,8 @@ module Aws::Backup
     #   resp.recovery_points[0].parent_recovery_point_arn #=> String
     #   resp.recovery_points[0].resource_name #=> String
     #   resp.recovery_points[0].vault_type #=> String, one of "BACKUP_VAULT", "LOGICALLY_AIR_GAPPED_BACKUP_VAULT"
+    #   resp.recovery_points[0].index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.recovery_points[0].index_status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/ListRecoveryPointsByResource AWS API Documentation
     #
@@ -5090,6 +5255,23 @@ module Aws::Backup
     #   `"WindowsVSS""disabled"` to create a regular backup. The `WindowsVSS`
     #   option is not enabled by default.
     #
+    # @option params [String] :index
+    #   Include this parameter to enable index creation if your backup job has
+    #   a resource type that supports backup indexes.
+    #
+    #   Resource types that support backup indexes include:
+    #
+    #   * `EBS` for Amazon Elastic Block Store
+    #
+    #   * `S3` for Amazon Simple Storage Service (Amazon S3)
+    #
+    #   Index can have 1 of 2 possible values, either `ENABLED` or `DISABLED`.
+    #
+    #   To create a backup index for an eligible `ACTIVE` recovery point that
+    #   does not yet have a backup index, set value to `ENABLED`.
+    #
+    #   To delete a backup index, set value to `DISABLED`.
+    #
     # @return [Types::StartBackupJobOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartBackupJobOutput#backup_job_id #backup_job_id} => String
@@ -5117,6 +5299,7 @@ module Aws::Backup
     #     backup_options: {
     #       "BackupOptionKey" => "BackupOptionValue",
     #     },
+    #     index: "ENABLED", # accepts ENABLED, DISABLED
     #   })
     #
     # @example Response structure
@@ -5567,6 +5750,11 @@ module Aws::Backup
     #           ],
     #           enable_continuous_backup: false,
     #           schedule_expression_timezone: "Timezone",
+    #           index_actions: [
+    #             {
+    #               resource_types: ["ResourceType"],
+    #             },
+    #           ],
     #         },
     #       ],
     #       advanced_backup_settings: [
@@ -5697,6 +5885,66 @@ module Aws::Backup
     # @param [Hash] params ({})
     def update_global_settings(params = {}, options = {})
       req = build_request(:update_global_settings, params)
+      req.send_request(options)
+    end
+
+    # This operation updates the settings of a recovery point index.
+    #
+    # Required: BackupVaultName, RecoveryPointArn, and IAMRoleArn
+    #
+    # @option params [required, String] :backup_vault_name
+    #   The name of a logical container where backups are stored. Backup
+    #   vaults are identified by names that are unique to the account used to
+    #   create them and the Region where they are created.
+    #
+    #   Accepted characters include lowercase letters, numbers, and hyphens.
+    #
+    # @option params [required, String] :recovery_point_arn
+    #   An ARN that uniquely identifies a recovery point; for example,
+    #   `arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45`.
+    #
+    # @option params [String] :iam_role_arn
+    #   This specifies the IAM role ARN used for this operation.
+    #
+    #   For example, arn:aws:iam::123456789012:role/S3Access
+    #
+    # @option params [required, String] :index
+    #   Index can have 1 of 2 possible values, either `ENABLED` or `DISABLED`.
+    #
+    #   To create a backup index for an eligible `ACTIVE` recovery point that
+    #   does not yet have a backup index, set value to `ENABLED`.
+    #
+    #   To delete a backup index, set value to `DISABLED`.
+    #
+    # @return [Types::UpdateRecoveryPointIndexSettingsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateRecoveryPointIndexSettingsOutput#backup_vault_name #backup_vault_name} => String
+    #   * {Types::UpdateRecoveryPointIndexSettingsOutput#recovery_point_arn #recovery_point_arn} => String
+    #   * {Types::UpdateRecoveryPointIndexSettingsOutput#index_status #index_status} => String
+    #   * {Types::UpdateRecoveryPointIndexSettingsOutput#index #index} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_recovery_point_index_settings({
+    #     backup_vault_name: "BackupVaultName", # required
+    #     recovery_point_arn: "ARN", # required
+    #     iam_role_arn: "IAMRoleArn",
+    #     index: "ENABLED", # required, accepts ENABLED, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.backup_vault_name #=> String
+    #   resp.recovery_point_arn #=> String
+    #   resp.index_status #=> String, one of "PENDING", "ACTIVE", "FAILED", "DELETING"
+    #   resp.index #=> String, one of "ENABLED", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/UpdateRecoveryPointIndexSettings AWS API Documentation
+    #
+    # @overload update_recovery_point_index_settings(params = {})
+    # @param [Hash] params ({})
+    def update_recovery_point_index_settings(params = {}, options = {})
+      req = build_request(:update_recovery_point_index_settings, params)
       req.send_request(options)
     end
 
@@ -6070,7 +6318,7 @@ module Aws::Backup
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-backup'
-      context[:gem_version] = '1.82.0'
+      context[:gem_version] = '1.83.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

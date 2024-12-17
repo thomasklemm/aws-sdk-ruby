@@ -469,6 +469,7 @@ module Aws::Synthetics
     class VpcConfigInput
       attr_accessor subnet_ids: ::Array[::String]
       attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor ipv_6_allowed_for_dual_stack: bool
       SENSITIVE: []
     end
 
@@ -476,6 +477,7 @@ module Aws::Synthetics
       attr_accessor vpc_id: ::String
       attr_accessor subnet_ids: ::Array[::String]
       attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor ipv_6_allowed_for_dual_stack: bool
       SENSITIVE: []
     end
   end

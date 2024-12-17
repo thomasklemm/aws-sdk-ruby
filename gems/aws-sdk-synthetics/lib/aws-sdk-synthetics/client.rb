@@ -662,6 +662,7 @@ module Aws::Synthetics
     #     vpc_config: {
     #       subnet_ids: ["SubnetId"],
     #       security_group_ids: ["SecurityGroupId"],
+    #       ipv_6_allowed_for_dual_stack: false,
     #     },
     #     resources_to_replicate_tags: ["lambda-function"], # accepts lambda-function
     #     provisioned_resource_cleanup: "AUTOMATIC", # accepts AUTOMATIC, OFF
@@ -705,6 +706,7 @@ module Aws::Synthetics
     #   resp.canary.vpc_config.subnet_ids[0] #=> String
     #   resp.canary.vpc_config.security_group_ids #=> Array
     #   resp.canary.vpc_config.security_group_ids[0] #=> String
+    #   resp.canary.vpc_config.ipv_6_allowed_for_dual_stack #=> Boolean
     #   resp.canary.visual_reference.base_screenshots #=> Array
     #   resp.canary.visual_reference.base_screenshots[0].screenshot_name #=> String
     #   resp.canary.visual_reference.base_screenshots[0].ignore_coordinates #=> Array
@@ -986,6 +988,7 @@ module Aws::Synthetics
     #   resp.canaries[0].vpc_config.subnet_ids[0] #=> String
     #   resp.canaries[0].vpc_config.security_group_ids #=> Array
     #   resp.canaries[0].vpc_config.security_group_ids[0] #=> String
+    #   resp.canaries[0].vpc_config.ipv_6_allowed_for_dual_stack #=> Boolean
     #   resp.canaries[0].visual_reference.base_screenshots #=> Array
     #   resp.canaries[0].visual_reference.base_screenshots[0].screenshot_name #=> String
     #   resp.canaries[0].visual_reference.base_screenshots[0].ignore_coordinates #=> Array
@@ -1220,6 +1223,7 @@ module Aws::Synthetics
     #   resp.canary.vpc_config.subnet_ids[0] #=> String
     #   resp.canary.vpc_config.security_group_ids #=> Array
     #   resp.canary.vpc_config.security_group_ids[0] #=> String
+    #   resp.canary.vpc_config.ipv_6_allowed_for_dual_stack #=> Boolean
     #   resp.canary.visual_reference.base_screenshots #=> Array
     #   resp.canary.visual_reference.base_screenshots[0].screenshot_name #=> String
     #   resp.canary.visual_reference.base_screenshots[0].ignore_coordinates #=> Array
@@ -1801,6 +1805,7 @@ module Aws::Synthetics
     #     vpc_config: {
     #       subnet_ids: ["SubnetId"],
     #       security_group_ids: ["SecurityGroupId"],
+    #       ipv_6_allowed_for_dual_stack: false,
     #     },
     #     visual_reference: {
     #       base_screenshots: [
@@ -1848,7 +1853,7 @@ module Aws::Synthetics
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-synthetics'
-      context[:gem_version] = '1.57.0'
+      context[:gem_version] = '1.58.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

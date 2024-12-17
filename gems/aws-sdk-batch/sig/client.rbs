@@ -732,6 +732,7 @@ module Aws
                                                      {
                                                        name: ::String?,
                                                        mount_path: ::String?,
+                                                       sub_path: ::String?,
                                                        read_only: bool?
                                                      },
                                                    ]?,
@@ -766,6 +767,7 @@ module Aws
                                                      {
                                                        name: ::String?,
                                                        mount_path: ::String?,
+                                                       sub_path: ::String?,
                                                        read_only: bool?
                                                      },
                                                    ]?,
@@ -792,11 +794,17 @@ module Aws
                                                    secret: {
                                                      secret_name: ::String,
                                                      optional: bool?
+                                                   }?,
+                                                   persistent_volume_claim: {
+                                                     claim_name: ::String,
+                                                     read_only: bool?
                                                    }?
                                                  },
                                                ]?,
                                                metadata: {
-                                                 labels: Hash[::String, ::String]?
+                                                 labels: Hash[::String, ::String]?,
+                                                 annotations: Hash[::String, ::String]?,
+                                                 namespace: ::String?
                                                }?,
                                                share_process_namespace: bool?
                                              }?
@@ -852,6 +860,7 @@ module Aws
                                                {
                                                  name: ::String?,
                                                  mount_path: ::String?,
+                                                 sub_path: ::String?,
                                                  read_only: bool?
                                                },
                                              ]?,
@@ -886,6 +895,7 @@ module Aws
                                                {
                                                  name: ::String?,
                                                  mount_path: ::String?,
+                                                 sub_path: ::String?,
                                                  read_only: bool?
                                                },
                                              ]?,
@@ -912,11 +922,17 @@ module Aws
                                              secret: {
                                                secret_name: ::String,
                                                optional: bool?
+                                             }?,
+                                             persistent_volume_claim: {
+                                               claim_name: ::String,
+                                               read_only: bool?
                                              }?
                                            },
                                          ]?,
                                          metadata: {
-                                           labels: Hash[::String, ::String]?
+                                           labels: Hash[::String, ::String]?,
+                                           annotations: Hash[::String, ::String]?,
+                                           namespace: ::String?
                                          }?,
                                          share_process_namespace: bool?
                                        }?
@@ -1173,7 +1189,9 @@ module Aws
                                     },
                                   ]?,
                                   metadata: {
-                                    labels: Hash[::String, ::String]?
+                                    labels: Hash[::String, ::String]?,
+                                    annotations: Hash[::String, ::String]?,
+                                    namespace: ::String?
                                   }?
                                 }?
                               }?
@@ -1235,7 +1253,9 @@ module Aws
                               },
                             ]?,
                             metadata: {
-                              labels: Hash[::String, ::String]?
+                              labels: Hash[::String, ::String]?,
+                              annotations: Hash[::String, ::String]?,
+                              namespace: ::String?
                             }?
                           }?
                         },

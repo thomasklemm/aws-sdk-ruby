@@ -10,10 +10,10 @@
 module Aws::Account
   class EndpointProvider
     def resolve_endpoint(parameters)
-      region = parameters.region
       use_dual_stack = parameters.use_dual_stack
       use_fips = parameters.use_fips
       endpoint = parameters.endpoint
+      region = parameters.region
       if Aws::Endpoints::Matchers.set?(endpoint)
         if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
           raise ArgumentError, "Invalid Configuration: FIPS and custom endpoint are not supported"
@@ -25,31 +25,25 @@ module Aws::Account
       end
       if Aws::Endpoints::Matchers.set?(region)
         if (partition_result = Aws::Endpoints::Matchers.aws_partition(region))
-          if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
-            return Aws::Endpoints::Endpoint.new(url: "https://account.us-east-1.amazonaws.com", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"account", "signingRegion"=>"us-east-1"}]})
-          end
-          if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws-cn") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
-            return Aws::Endpoints::Endpoint.new(url: "https://account.cn-northwest-1.amazonaws.com.cn", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"account", "signingRegion"=>"cn-northwest-1"}]})
-          end
           if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
             if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsFIPS")) && Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-              return Aws::Endpoints::Endpoint.new(url: "https://account-fips.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
+              return Aws::Endpoints::Endpoint.new(url: "https://account-fips.#{partition_result['implicitGlobalRegion']}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingRegion"=>"#{partition_result['implicitGlobalRegion']}"}]})
             end
             raise ArgumentError, "FIPS and DualStack are enabled, but this partition does not support one or both"
           end
-          if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+          if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
             if Aws::Endpoints::Matchers.boolean_equals?(Aws::Endpoints::Matchers.attr(partition_result, "supportsFIPS"), true)
-              return Aws::Endpoints::Endpoint.new(url: "https://account-fips.#{region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {})
+              return Aws::Endpoints::Endpoint.new(url: "https://account-fips.#{partition_result['implicitGlobalRegion']}.#{partition_result['dnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingRegion"=>"#{partition_result['implicitGlobalRegion']}"}]})
             end
             raise ArgumentError, "FIPS is enabled but this partition does not support FIPS"
           end
-          if Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
+          if Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
             if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-              return Aws::Endpoints::Endpoint.new(url: "https://account.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
+              return Aws::Endpoints::Endpoint.new(url: "https://account.#{partition_result['implicitGlobalRegion']}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingRegion"=>"#{partition_result['implicitGlobalRegion']}"}]})
             end
             raise ArgumentError, "DualStack is enabled but this partition does not support DualStack"
           end
-          return Aws::Endpoints::Endpoint.new(url: "https://account.#{region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {})
+          return Aws::Endpoints::Endpoint.new(url: "https://account.#{partition_result['implicitGlobalRegion']}.#{partition_result['dnsSuffix']}", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingRegion"=>"#{partition_result['implicitGlobalRegion']}"}]})
         end
       end
       raise ArgumentError, "Invalid Configuration: Missing Region"

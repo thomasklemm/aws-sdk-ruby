@@ -1,0 +1,375 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::BackupSearch
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class BackupCreationTimeFilter
+      attr_accessor created_after: ::Time
+      attr_accessor created_before: ::Time
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class CurrentSearchProgress
+      attr_accessor recovery_points_scanned_count: ::Integer
+      attr_accessor items_scanned_count: ::Integer
+      attr_accessor items_matched_count: ::Integer
+      SENSITIVE: []
+    end
+
+    class EBSItemFilter
+      attr_accessor file_paths: ::Array[Types::StringCondition]
+      attr_accessor sizes: ::Array[Types::LongCondition]
+      attr_accessor creation_times: ::Array[Types::TimeCondition]
+      attr_accessor last_modification_times: ::Array[Types::TimeCondition]
+      SENSITIVE: []
+    end
+
+    class EBSResultItem
+      attr_accessor backup_resource_arn: ::String
+      attr_accessor source_resource_arn: ::String
+      attr_accessor backup_vault_name: ::String
+      attr_accessor file_system_identifier: ::String
+      attr_accessor file_path: ::String
+      attr_accessor file_size: ::Integer
+      attr_accessor creation_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      SENSITIVE: [:file_path]
+    end
+
+    class ExportJobSummary
+      attr_accessor export_job_identifier: ::String
+      attr_accessor export_job_arn: ::String
+      attr_accessor status: ("RUNNING" | "FAILED" | "COMPLETED")
+      attr_accessor creation_time: ::Time
+      attr_accessor completion_time: ::Time
+      attr_accessor status_message: ::String
+      attr_accessor search_job_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ExportSpecification
+      attr_accessor s3_export_specification: Types::S3ExportSpecification
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class S3ExportSpecification < ExportSpecification
+      end
+      class Unknown < ExportSpecification
+      end
+    end
+
+    class GetSearchJobInput
+      attr_accessor search_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetSearchJobOutput
+      attr_accessor name: ::String
+      attr_accessor search_scope_summary: Types::SearchScopeSummary
+      attr_accessor current_search_progress: Types::CurrentSearchProgress
+      attr_accessor status_message: ::String
+      attr_accessor encryption_key_arn: ::String
+      attr_accessor completion_time: ::Time
+      attr_accessor status: ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED")
+      attr_accessor search_scope: Types::SearchScope
+      attr_accessor item_filters: Types::ItemFilters
+      attr_accessor creation_time: ::Time
+      attr_accessor search_job_identifier: ::String
+      attr_accessor search_job_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetSearchResultExportJobInput
+      attr_accessor export_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetSearchResultExportJobOutput
+      attr_accessor export_job_identifier: ::String
+      attr_accessor export_job_arn: ::String
+      attr_accessor status: ("RUNNING" | "FAILED" | "COMPLETED")
+      attr_accessor creation_time: ::Time
+      attr_accessor completion_time: ::Time
+      attr_accessor status_message: ::String
+      attr_accessor export_specification: Types::ExportSpecification
+      attr_accessor search_job_arn: ::String
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class ItemFilters
+      attr_accessor s3_item_filters: ::Array[Types::S3ItemFilter]
+      attr_accessor ebs_item_filters: ::Array[Types::EBSItemFilter]
+      SENSITIVE: []
+    end
+
+    class ListSearchJobBackupsInput
+      attr_accessor search_job_identifier: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSearchJobBackupsOutput
+      attr_accessor results: ::Array[Types::SearchJobBackupsResult]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSearchJobResultsInput
+      attr_accessor search_job_identifier: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSearchJobResultsOutput
+      attr_accessor results: ::Array[Types::ResultItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSearchJobsInput
+      attr_accessor by_status: ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED")
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSearchJobsOutput
+      attr_accessor search_jobs: ::Array[Types::SearchJobSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSearchResultExportJobsInput
+      attr_accessor status: ("RUNNING" | "FAILED" | "COMPLETED")
+      attr_accessor search_job_identifier: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSearchResultExportJobsOutput
+      attr_accessor export_jobs: ::Array[Types::ExportJobSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceRequest
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceResponse
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class LongCondition
+      attr_accessor value: ::Integer
+      attr_accessor operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class ResultItem
+      attr_accessor s3_result_item: Types::S3ResultItem
+      attr_accessor ebs_result_item: Types::EBSResultItem
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class S3ResultItem < ResultItem
+      end
+      class EbsResultItem < ResultItem
+      end
+      class Unknown < ResultItem
+      end
+    end
+
+    class S3ExportSpecification
+      attr_accessor destination_bucket: ::String
+      attr_accessor destination_prefix: ::String
+      SENSITIVE: []
+    end
+
+    class S3ItemFilter
+      attr_accessor object_keys: ::Array[Types::StringCondition]
+      attr_accessor sizes: ::Array[Types::LongCondition]
+      attr_accessor creation_times: ::Array[Types::TimeCondition]
+      attr_accessor version_ids: ::Array[Types::StringCondition]
+      attr_accessor etags: ::Array[Types::StringCondition]
+      SENSITIVE: []
+    end
+
+    class S3ResultItem
+      attr_accessor backup_resource_arn: ::String
+      attr_accessor source_resource_arn: ::String
+      attr_accessor backup_vault_name: ::String
+      attr_accessor object_key: ::String
+      attr_accessor object_size: ::Integer
+      attr_accessor creation_time: ::Time
+      attr_accessor etag: ::String
+      attr_accessor version_id: ::String
+      SENSITIVE: [:object_key]
+    end
+
+    class SearchJobBackupsResult
+      attr_accessor status: ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED")
+      attr_accessor status_message: ::String
+      attr_accessor resource_type: ("S3" | "EBS")
+      attr_accessor backup_resource_arn: ::String
+      attr_accessor source_resource_arn: ::String
+      attr_accessor index_creation_time: ::Time
+      attr_accessor backup_creation_time: ::Time
+      SENSITIVE: []
+    end
+
+    class SearchJobSummary
+      attr_accessor search_job_identifier: ::String
+      attr_accessor search_job_arn: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED")
+      attr_accessor creation_time: ::Time
+      attr_accessor completion_time: ::Time
+      attr_accessor search_scope_summary: Types::SearchScopeSummary
+      attr_accessor status_message: ::String
+      SENSITIVE: []
+    end
+
+    class SearchScope
+      attr_accessor backup_resource_types: ::Array[("S3" | "EBS")]
+      attr_accessor backup_resource_creation_time: Types::BackupCreationTimeFilter
+      attr_accessor source_resource_arns: ::Array[::String]
+      attr_accessor backup_resource_arns: ::Array[::String]
+      attr_accessor backup_resource_tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class SearchScopeSummary
+      attr_accessor total_recovery_points_to_scan_count: ::Integer
+      attr_accessor total_items_to_scan_count: ::Integer
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      SENSITIVE: []
+    end
+
+    class StartSearchJobInput
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor name: ::String
+      attr_accessor encryption_key_arn: ::String
+      attr_accessor client_token: ::String
+      attr_accessor search_scope: Types::SearchScope
+      attr_accessor item_filters: Types::ItemFilters
+      SENSITIVE: []
+    end
+
+    class StartSearchJobOutput
+      attr_accessor search_job_arn: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor search_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class StartSearchResultExportJobInput
+      attr_accessor search_job_identifier: ::String
+      attr_accessor export_specification: Types::ExportSpecification
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor role_arn: ::String
+      SENSITIVE: []
+    end
+
+    class StartSearchResultExportJobOutput
+      attr_accessor export_job_arn: ::String
+      attr_accessor export_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class StopSearchJobInput
+      attr_accessor search_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class StopSearchJobOutput < Aws::EmptyStructure
+    end
+
+    class StringCondition
+      attr_accessor value: ::String
+      attr_accessor operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "CONTAINS" | "DOES_NOT_CONTAIN" | "BEGINS_WITH" | "ENDS_WITH" | "DOES_NOT_BEGIN_WITH" | "DOES_NOT_END_WITH")
+      SENSITIVE: []
+    end
+
+    class TagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class TimeCondition
+      attr_accessor value: ::Time
+      attr_accessor operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")
+      SENSITIVE: []
+    end
+
+    class UntagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+  end
+end

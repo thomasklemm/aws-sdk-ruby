@@ -1570,6 +1570,8 @@ module Aws::CleanRoomsML
     #   resp.seed_audience.sql_parameters.analysis_template_arn #=> String
     #   resp.seed_audience.sql_parameters.parameters #=> Hash
     #   resp.seed_audience.sql_parameters.parameters["ParameterKey"] #=> String
+    #   resp.seed_audience.sql_compute_configuration.worker.type #=> String, one of "CR.1X", "CR.4X"
+    #   resp.seed_audience.sql_compute_configuration.worker.number #=> Integer
     #   resp.include_seed_in_output #=> Boolean
     #   resp.collaboration_id #=> String
     #   resp.metrics.relevance_metrics #=> Array
@@ -3400,6 +3402,12 @@ module Aws::CleanRoomsML
     #           "ParameterKey" => "ParameterValue",
     #         },
     #       },
+    #       sql_compute_configuration: {
+    #         worker: {
+    #           type: "CR.1X", # accepts CR.1X, CR.4X
+    #           number: 1,
+    #         },
+    #       },
     #     },
     #     include_seed_in_output: false,
     #     collaboration_id: "UUID",
@@ -3496,7 +3504,7 @@ module Aws::CleanRoomsML
     #   inference job.
     #
     # @option params [required, Types::ModelInferenceDataSource] :data_source
-    #   Defines he data source that is used for the trained model inference
+    #   Defines the data source that is used for the trained model inference
     #   job.
     #
     # @option params [String] :description
@@ -3767,7 +3775,7 @@ module Aws::CleanRoomsML
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cleanroomsml'
-      context[:gem_version] = '1.19.0'
+      context[:gem_version] = '1.20.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

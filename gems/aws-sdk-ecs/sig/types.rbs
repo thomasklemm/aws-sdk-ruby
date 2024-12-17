@@ -1221,6 +1221,7 @@ module Aws::ECS
       attr_accessor inference_accelerators: ::Array[Types::InferenceAccelerator]
       attr_accessor ephemeral_storage: Types::EphemeralStorage
       attr_accessor runtime_platform: Types::RuntimePlatform
+      attr_accessor enable_fault_injection: bool
       SENSITIVE: []
     end
 
@@ -1702,6 +1703,7 @@ module Aws::ECS
       attr_accessor deregistered_at: ::Time
       attr_accessor registered_by: ::String
       attr_accessor ephemeral_storage: Types::EphemeralStorage
+      attr_accessor enable_fault_injection: bool
       SENSITIVE: []
     end
 

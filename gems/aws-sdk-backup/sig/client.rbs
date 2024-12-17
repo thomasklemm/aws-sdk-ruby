@@ -122,7 +122,12 @@ module Aws
                                         },
                                       ]?,
                                       enable_continuous_backup: bool?,
-                                      schedule_expression_timezone: ::String?
+                                      schedule_expression_timezone: ::String?,
+                                      index_actions: Array[
+                                        {
+                                          resource_types: Array[::String]?
+                                        },
+                                      ]?
                                     },
                                   ],
                                   advanced_backup_settings: Array[
@@ -583,6 +588,8 @@ module Aws
         def is_parent: () -> bool
         def resource_name: () -> ::String
         def vault_type: () -> ("BACKUP_VAULT" | "LOGICALLY_AIR_GAPPED_BACKUP_VAULT")
+        def index_status: () -> ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+        def index_status_message: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Backup/Client.html#describe_recovery_point-instance_method
       def describe_recovery_point: (
@@ -771,6 +778,25 @@ module Aws
                             legal_hold_id: ::String
                           ) -> _GetLegalHoldResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetLegalHoldResponseSuccess
+
+      interface _GetRecoveryPointIndexDetailsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetRecoveryPointIndexDetailsOutput]
+        def recovery_point_arn: () -> ::String
+        def backup_vault_arn: () -> ::String
+        def source_resource_arn: () -> ::String
+        def index_creation_date: () -> ::Time
+        def index_deletion_date: () -> ::Time
+        def index_completion_date: () -> ::Time
+        def index_status: () -> ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+        def index_status_message: () -> ::String
+        def total_items_indexed: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Backup/Client.html#get_recovery_point_index_details-instance_method
+      def get_recovery_point_index_details: (
+                                              backup_vault_name: ::String,
+                                              recovery_point_arn: ::String
+                                            ) -> _GetRecoveryPointIndexDetailsResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRecoveryPointIndexDetailsResponseSuccess
 
       interface _GetRecoveryPointRestoreMetadataResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetRecoveryPointRestoreMetadataOutput]
@@ -997,6 +1023,23 @@ module Aws
                              ?next_token: ::String
                            ) -> _ListFrameworksResponseSuccess
                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListFrameworksResponseSuccess
+
+      interface _ListIndexedRecoveryPointsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListIndexedRecoveryPointsOutput]
+        def indexed_recovery_points: () -> ::Array[Types::IndexedRecoveryPoint]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Backup/Client.html#list_indexed_recovery_points-instance_method
+      def list_indexed_recovery_points: (
+                                          ?next_token: ::String,
+                                          ?max_results: ::Integer,
+                                          ?source_resource_arn: ::String,
+                                          ?created_before: ::Time,
+                                          ?created_after: ::Time,
+                                          ?resource_type: ::String,
+                                          ?index_status: ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+                                        ) -> _ListIndexedRecoveryPointsResponseSuccess
+                                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListIndexedRecoveryPointsResponseSuccess
 
       interface _ListLegalHoldsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListLegalHoldsOutput]
@@ -1255,7 +1298,8 @@ module Aws
                                 opt_in_to_archive_for_supported_resources: bool?
                               },
                               ?recovery_point_tags: Hash[::String, ::String],
-                              ?backup_options: Hash[::String, ::String]
+                              ?backup_options: Hash[::String, ::String],
+                              ?index: ("ENABLED" | "DISABLED")
                             ) -> _StartBackupJobResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartBackupJobResponseSuccess
 
@@ -1363,7 +1407,12 @@ module Aws
                                         },
                                       ]?,
                                       enable_continuous_backup: bool?,
-                                      schedule_expression_timezone: ::String?
+                                      schedule_expression_timezone: ::String?,
+                                      index_actions: Array[
+                                        {
+                                          resource_types: Array[::String]?
+                                        },
+                                      ]?
                                     },
                                   ],
                                   advanced_backup_settings: Array[
@@ -1411,6 +1460,22 @@ module Aws
                                     ?global_settings: Hash[::String, ::String]
                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _UpdateRecoveryPointIndexSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateRecoveryPointIndexSettingsOutput]
+        def backup_vault_name: () -> ::String
+        def recovery_point_arn: () -> ::String
+        def index_status: () -> ("PENDING" | "ACTIVE" | "FAILED" | "DELETING")
+        def index: () -> ("ENABLED" | "DISABLED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Backup/Client.html#update_recovery_point_index_settings-instance_method
+      def update_recovery_point_index_settings: (
+                                                  backup_vault_name: ::String,
+                                                  recovery_point_arn: ::String,
+                                                  ?iam_role_arn: ::String,
+                                                  index: ("ENABLED" | "DISABLED")
+                                                ) -> _UpdateRecoveryPointIndexSettingsResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateRecoveryPointIndexSettingsResponseSuccess
 
       interface _UpdateRecoveryPointLifecycleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateRecoveryPointLifecycleOutput]

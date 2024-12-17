@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.20.0 (2024-12-17)
+------------------
+
+* Feature - Add support for SQL compute configuration for StartAudienceGenerationJob API.
+
 1.19.0 (2024-11-07)
 ------------------
 

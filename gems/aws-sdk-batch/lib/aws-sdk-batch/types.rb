@@ -3989,6 +3989,10 @@ module Aws::Batch
     #   The path on the container where the volume is mounted.
     #   @return [String]
     #
+    # @!attribute [rw] sub_path
+    #   A sub-path inside the referenced volume instead of its root.
+    #   @return [String]
+    #
     # @!attribute [rw] read_only
     #   If this value is `true`, the container has read-only access to the
     #   volume. Otherwise, the container can write to the volume. The
@@ -4000,6 +4004,7 @@ module Aws::Batch
     class EksContainerVolumeMount < Struct.new(
       :name,
       :mount_path,
+      :sub_path,
       :read_only)
       SENSITIVE = []
       include Aws::Structure
@@ -4073,7 +4078,7 @@ module Aws::Batch
 
     # Describes and uniquely identifies Kubernetes resources. For example,
     # the compute environment that a pod runs in or the `jobID` for a job
-    # running in the pod. For more information, see [Understanding
+    # running in the pod. For more information, see [ Understanding
     # Kubernetes Objects][1] in the *Kubernetes documentation*.
     #
     #
@@ -4088,10 +4093,103 @@ module Aws::Batch
     #   must be unique for a given object.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] annotations
+    #   Key-value pairs used to attach arbitrary, non-identifying metadata
+    #   to Kubernetes objects. Valid annotation keys have two segments: an
+    #   optional prefix and a name, separated by a slash (/).
+    #
+    #   * The prefix is optional and must be 253 characters or less. If
+    #     specified, the prefix must be a DNS subdomain− a series of DNS
+    #     labels separated by dots (.), and it must end with a slash (/).
+    #
+    #   * The name segment is required and must be 63 characters or less. It
+    #     can include alphanumeric characters (\[a-z0-9A-Z\]), dashes (-),
+    #     underscores (\_), and dots (.), but must begin and end with an
+    #     alphanumeric character.
+    #
+    #   <note markdown="1"> Annotation values must be 255 characters or less.
+    #
+    #    </note>
+    #
+    #   Annotations can be added or modified at any time. Each resource can
+    #   have multiple annotations.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the Amazon EKS cluster. In Kubernetes, namespaces
+    #   provide a mechanism for isolating groups of resources within a
+    #   single cluster. Names of resources need to be unique within a
+    #   namespace, but not across namespaces. Batch places Batch Job pods in
+    #   this namespace. If this field is provided, the value can't be empty
+    #   or null. It must meet the following requirements:
+    #
+    #   * 1-63 characters long
+    #
+    #   * Can't be set to default
+    #
+    #   * Can't start with `kube`
+    #
+    #   * Must match the following regular expression:
+    #     `^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+    #
+    #   For more information, see [Namespaces][1] in the *Kubernetes
+    #   documentation*. This namespace can be different from the
+    #   `kubernetesNamespace` set in the compute environment's
+    #   `EksConfiguration`, but must have identical role-based access
+    #   control (RBAC) roles as the compute environment's
+    #   `kubernetesNamespace`. For multi-node parallel jobs, the same value
+    #   must be provided across all the node ranges.
+    #
+    #
+    #
+    #   [1]: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/EksMetadata AWS API Documentation
     #
     class EksMetadata < Struct.new(
-      :labels)
+      :labels,
+      :annotations,
+      :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A `persistentVolumeClaim` volume is used to mount a
+    # [PersistentVolume][1] into a Pod. PersistentVolumeClaims are a way for
+    # users to "claim" durable storage without knowing the details of the
+    # particular cloud environment. See the information about
+    # [PersistentVolumes][1] in the *Kubernetes documentation*.
+    #
+    #
+    #
+    # [1]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+    #
+    # @!attribute [rw] claim_name
+    #   The name of the `persistentVolumeClaim` bounded to a
+    #   `persistentVolume`. For more information, see [ Persistent Volume
+    #   Claims][1] in the *Kubernetes documentation*.
+    #
+    #
+    #
+    #   [1]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
+    #   @return [String]
+    #
+    # @!attribute [rw] read_only
+    #   An optional boolean value indicating if the mount is read only.
+    #   Default is false. For more information, see [ Read Only Mounts][1]
+    #   in the *Kubernetes documentation*.
+    #
+    #
+    #
+    #   [1]: https://kubernetes.io/docs/concepts/storage/volumes/#read-only-mounts
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/EksPersistentVolumeClaim AWS API Documentation
+    #
+    class EksPersistentVolumeClaim < Struct.new(
+      :claim_name,
+      :read_only)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4494,13 +4592,24 @@ module Aws::Batch
     #   [1]: https://kubernetes.io/docs/concepts/storage/volumes/#secret
     #   @return [Types::EksSecret]
     #
+    # @!attribute [rw] persistent_volume_claim
+    #   Specifies the configuration of a Kubernetes `persistentVolumeClaim`
+    #   bounded to a `persistentVolume`. For more information, see [
+    #   Persistent Volume Claims][1] in the *Kubernetes documentation*.
+    #
+    #
+    #
+    #   [1]: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
+    #   @return [Types::EksPersistentVolumeClaim]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/EksVolume AWS API Documentation
     #
     class EksVolume < Struct.new(
       :name,
       :host_path,
       :empty_dir,
-      :secret)
+      :secret,
+      :persistent_volume_claim)
       SENSITIVE = []
       include Aws::Structure
     end

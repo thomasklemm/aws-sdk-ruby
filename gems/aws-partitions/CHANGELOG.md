@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1024.0 (2024-12-17)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::BackupSearch`.
+
 1.1023.0 (2024-12-13)
 ------------------
 

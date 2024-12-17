@@ -2820,6 +2820,7 @@ module Aws::ECS
     #   resp.task_definitions[0].deregistered_at #=> Time
     #   resp.task_definitions[0].registered_by #=> String
     #   resp.task_definitions[0].ephemeral_storage.size_in_gi_b #=> Integer
+    #   resp.task_definitions[0].enable_fault_injection #=> Boolean
     #   resp.failures #=> Array
     #   resp.failures[0].arn #=> String
     #   resp.failures[0].reason #=> String
@@ -3282,6 +3283,7 @@ module Aws::ECS
     #   resp.task_definition.deregistered_at #=> Time
     #   resp.task_definition.registered_by #=> String
     #   resp.task_definition.ephemeral_storage.size_in_gi_b #=> Integer
+    #   resp.task_definition.enable_fault_injection #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DeregisterTaskDefinition AWS API Documentation
     #
@@ -4453,6 +4455,7 @@ module Aws::ECS
     #   resp.task_definition.deregistered_at #=> Time
     #   resp.task_definition.registered_by #=> String
     #   resp.task_definition.ephemeral_storage.size_in_gi_b #=> Integer
+    #   resp.task_definition.enable_fault_injection #=> Boolean
     #   resp.tags #=> Array
     #   resp.tags[0].key #=> String
     #   resp.tags[0].value #=> String
@@ -5396,7 +5399,7 @@ module Aws::ECS
     #   name or ARN. Starting April 15, 2023, Amazon Web Services will not
     #   onboard new customers to Amazon Elastic Inference (EI), and will help
     #   current customers migrate their workloads to options that offer better
-    #   price and performanceIf you don't specify a cluster, `default` is
+    #   price and performance. If you don't specify a cluster, `default` is
     #   used.
     #
     # @option params [Array<String>] :status
@@ -7193,6 +7196,11 @@ module Aws::ECS
     #   The operating system that your tasks definitions run on. A platform
     #   family is specified only for tasks using the Fargate launch type.
     #
+    # @option params [Boolean] :enable_fault_injection
+    #   Enables fault injection when you register your task definition and
+    #   allows for fault injection requests to be accepted from the task's
+    #   containers. The default value is `false`.
+    #
     # @return [Types::RegisterTaskDefinitionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::RegisterTaskDefinitionResponse#task_definition #task_definition} => Types::TaskDefinition
@@ -7500,6 +7508,7 @@ module Aws::ECS
     #       cpu_architecture: "X86_64", # accepts X86_64, ARM64
     #       operating_system_family: "WINDOWS_SERVER_2019_FULL", # accepts WINDOWS_SERVER_2019_FULL, WINDOWS_SERVER_2019_CORE, WINDOWS_SERVER_2016_FULL, WINDOWS_SERVER_2004_CORE, WINDOWS_SERVER_2022_CORE, WINDOWS_SERVER_2022_FULL, WINDOWS_SERVER_20H2_CORE, LINUX
     #     },
+    #     enable_fault_injection: false,
     #   })
     #
     # @example Response structure
@@ -7673,6 +7682,7 @@ module Aws::ECS
     #   resp.task_definition.deregistered_at #=> Time
     #   resp.task_definition.registered_by #=> String
     #   resp.task_definition.ephemeral_storage.size_in_gi_b #=> Integer
+    #   resp.task_definition.enable_fault_injection #=> Boolean
     #   resp.tags #=> Array
     #   resp.tags[0].key #=> String
     #   resp.tags[0].value #=> String
@@ -10839,7 +10849,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.172.0'
+      context[:gem_version] = '1.173.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.92.0 (2024-12-17)
+------------------
+
+* Feature - AWS CodePipeline V2 type pipelines now support Managed Compute Rule.
+
 1.91.0 (2024-11-22)
 ------------------
 

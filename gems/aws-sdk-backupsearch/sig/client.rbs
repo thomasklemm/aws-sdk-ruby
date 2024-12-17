@@ -1,0 +1,319 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module BackupSearch
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _GetSearchJobResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetSearchJobOutput]
+        def name: () -> ::String
+        def search_scope_summary: () -> Types::SearchScopeSummary
+        def current_search_progress: () -> Types::CurrentSearchProgress
+        def status_message: () -> ::String
+        def encryption_key_arn: () -> ::String
+        def completion_time: () -> ::Time
+        def status: () -> ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED")
+        def search_scope: () -> Types::SearchScope
+        def item_filters: () -> Types::ItemFilters
+        def creation_time: () -> ::Time
+        def search_job_identifier: () -> ::String
+        def search_job_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#get_search_job-instance_method
+      def get_search_job: (
+                            search_job_identifier: ::String
+                          ) -> _GetSearchJobResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetSearchJobResponseSuccess
+
+      interface _GetSearchResultExportJobResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetSearchResultExportJobOutput]
+        def export_job_identifier: () -> ::String
+        def export_job_arn: () -> ::String
+        def status: () -> ("RUNNING" | "FAILED" | "COMPLETED")
+        def creation_time: () -> ::Time
+        def completion_time: () -> ::Time
+        def status_message: () -> ::String
+        def export_specification: () -> Types::ExportSpecification
+        def search_job_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#get_search_result_export_job-instance_method
+      def get_search_result_export_job: (
+                                          export_job_identifier: ::String
+                                        ) -> _GetSearchResultExportJobResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetSearchResultExportJobResponseSuccess
+
+      interface _ListSearchJobBackupsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSearchJobBackupsOutput]
+        def results: () -> ::Array[Types::SearchJobBackupsResult]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#list_search_job_backups-instance_method
+      def list_search_job_backups: (
+                                     search_job_identifier: ::String,
+                                     ?next_token: ::String,
+                                     ?max_results: ::Integer
+                                   ) -> _ListSearchJobBackupsResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSearchJobBackupsResponseSuccess
+
+      interface _ListSearchJobResultsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSearchJobResultsOutput]
+        def results: () -> ::Array[Types::ResultItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#list_search_job_results-instance_method
+      def list_search_job_results: (
+                                     search_job_identifier: ::String,
+                                     ?next_token: ::String,
+                                     ?max_results: ::Integer
+                                   ) -> _ListSearchJobResultsResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSearchJobResultsResponseSuccess
+
+      interface _ListSearchJobsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSearchJobsOutput]
+        def search_jobs: () -> ::Array[Types::SearchJobSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#list_search_jobs-instance_method
+      def list_search_jobs: (
+                              ?by_status: ("RUNNING" | "COMPLETED" | "STOPPING" | "STOPPED" | "FAILED"),
+                              ?next_token: ::String,
+                              ?max_results: ::Integer
+                            ) -> _ListSearchJobsResponseSuccess
+                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSearchJobsResponseSuccess
+
+      interface _ListSearchResultExportJobsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSearchResultExportJobsOutput]
+        def export_jobs: () -> ::Array[Types::ExportJobSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#list_search_result_export_jobs-instance_method
+      def list_search_result_export_jobs: (
+                                            ?status: ("RUNNING" | "FAILED" | "COMPLETED"),
+                                            ?search_job_identifier: ::String,
+                                            ?next_token: ::String,
+                                            ?max_results: ::Integer
+                                          ) -> _ListSearchResultExportJobsResponseSuccess
+                                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSearchResultExportJobsResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    resource_arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _StartSearchJobResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartSearchJobOutput]
+        def search_job_arn: () -> ::String
+        def creation_time: () -> ::Time
+        def search_job_identifier: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#start_search_job-instance_method
+      def start_search_job: (
+                              ?tags: Hash[::String, ::String],
+                              ?name: ::String,
+                              ?encryption_key_arn: ::String,
+                              ?client_token: ::String,
+                              search_scope: {
+                                backup_resource_types: Array[("S3" | "EBS")],
+                                backup_resource_creation_time: {
+                                  created_after: ::Time?,
+                                  created_before: ::Time?
+                                }?,
+                                source_resource_arns: Array[::String]?,
+                                backup_resource_arns: Array[::String]?,
+                                backup_resource_tags: Hash[::String, ::String]?
+                              },
+                              ?item_filters: {
+                                s3_item_filters: Array[
+                                  {
+                                    object_keys: Array[
+                                      {
+                                        value: ::String,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "CONTAINS" | "DOES_NOT_CONTAIN" | "BEGINS_WITH" | "ENDS_WITH" | "DOES_NOT_BEGIN_WITH" | "DOES_NOT_END_WITH")?
+                                      },
+                                    ]?,
+                                    sizes: Array[
+                                      {
+                                        value: ::Integer,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")?
+                                      },
+                                    ]?,
+                                    creation_times: Array[
+                                      {
+                                        value: ::Time,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")?
+                                      },
+                                    ]?,
+                                    version_ids: Array[
+                                      {
+                                        value: ::String,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "CONTAINS" | "DOES_NOT_CONTAIN" | "BEGINS_WITH" | "ENDS_WITH" | "DOES_NOT_BEGIN_WITH" | "DOES_NOT_END_WITH")?
+                                      },
+                                    ]?,
+                                    etags: Array[
+                                      {
+                                        value: ::String,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "CONTAINS" | "DOES_NOT_CONTAIN" | "BEGINS_WITH" | "ENDS_WITH" | "DOES_NOT_BEGIN_WITH" | "DOES_NOT_END_WITH")?
+                                      },
+                                    ]?
+                                  },
+                                ]?,
+                                ebs_item_filters: Array[
+                                  {
+                                    file_paths: Array[
+                                      {
+                                        value: ::String,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "CONTAINS" | "DOES_NOT_CONTAIN" | "BEGINS_WITH" | "ENDS_WITH" | "DOES_NOT_BEGIN_WITH" | "DOES_NOT_END_WITH")?
+                                      },
+                                    ]?,
+                                    sizes: Array[
+                                      {
+                                        value: ::Integer,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")?
+                                      },
+                                    ]?,
+                                    creation_times: Array[
+                                      {
+                                        value: ::Time,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")?
+                                      },
+                                    ]?,
+                                    last_modification_times: Array[
+                                      {
+                                        value: ::Time,
+                                        operator: ("EQUALS_TO" | "NOT_EQUALS_TO" | "LESS_THAN_EQUAL_TO" | "GREATER_THAN_EQUAL_TO")?
+                                      },
+                                    ]?
+                                  },
+                                ]?
+                              }
+                            ) -> _StartSearchJobResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartSearchJobResponseSuccess
+
+      interface _StartSearchResultExportJobResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartSearchResultExportJobOutput]
+        def export_job_arn: () -> ::String
+        def export_job_identifier: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#start_search_result_export_job-instance_method
+      def start_search_result_export_job: (
+                                            search_job_identifier: ::String,
+                                            export_specification: {
+                                              s3_export_specification: {
+                                                destination_bucket: ::String,
+                                                destination_prefix: ::String?
+                                              }?
+                                            },
+                                            ?client_token: ::String,
+                                            ?tags: Hash[::String, ::String],
+                                            ?role_arn: ::String
+                                          ) -> _StartSearchResultExportJobResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartSearchResultExportJobResponseSuccess
+
+      interface _StopSearchJobResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopSearchJobOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#stop_search_job-instance_method
+      def stop_search_job: (
+                             search_job_identifier: ::String
+                           ) -> _StopSearchJobResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopSearchJobResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          resource_arn: ::String,
+                          tags: Hash[::String, ::String]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BackupSearch/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            resource_arn: ::String,
+                            tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+    end
+  end
+end
+

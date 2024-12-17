@@ -84,6 +84,7 @@ module Aws::Batch
     EcsPropertiesOverride = Shapes::StructureShape.new(name: 'EcsPropertiesOverride')
     EcsTaskDetails = Shapes::StructureShape.new(name: 'EcsTaskDetails')
     EcsTaskProperties = Shapes::StructureShape.new(name: 'EcsTaskProperties')
+    EksAnnotationsMap = Shapes::MapShape.new(name: 'EksAnnotationsMap')
     EksAttemptContainerDetail = Shapes::StructureShape.new(name: 'EksAttemptContainerDetail')
     EksAttemptContainerDetails = Shapes::ListShape.new(name: 'EksAttemptContainerDetails')
     EksAttemptDetail = Shapes::StructureShape.new(name: 'EksAttemptDetail')
@@ -106,6 +107,7 @@ module Aws::Batch
     EksLabelsMap = Shapes::MapShape.new(name: 'EksLabelsMap')
     EksLimits = Shapes::MapShape.new(name: 'EksLimits')
     EksMetadata = Shapes::StructureShape.new(name: 'EksMetadata')
+    EksPersistentVolumeClaim = Shapes::StructureShape.new(name: 'EksPersistentVolumeClaim')
     EksPodProperties = Shapes::StructureShape.new(name: 'EksPodProperties')
     EksPodPropertiesDetail = Shapes::StructureShape.new(name: 'EksPodPropertiesDetail')
     EksPodPropertiesOverride = Shapes::StructureShape.new(name: 'EksPodPropertiesOverride')
@@ -596,6 +598,9 @@ module Aws::Batch
     EcsTaskProperties.add_member(:volumes, Shapes::ShapeRef.new(shape: Volumes, location_name: "volumes"))
     EcsTaskProperties.struct_class = Types::EcsTaskProperties
 
+    EksAnnotationsMap.key = Shapes::ShapeRef.new(shape: String)
+    EksAnnotationsMap.value = Shapes::ShapeRef.new(shape: String)
+
     EksAttemptContainerDetail.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
     EksAttemptContainerDetail.add_member(:container_id, Shapes::ShapeRef.new(shape: String, location_name: "containerID"))
     EksAttemptContainerDetail.add_member(:exit_code, Shapes::ShapeRef.new(shape: Integer, location_name: "exitCode"))
@@ -677,6 +682,7 @@ module Aws::Batch
 
     EksContainerVolumeMount.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
     EksContainerVolumeMount.add_member(:mount_path, Shapes::ShapeRef.new(shape: String, location_name: "mountPath"))
+    EksContainerVolumeMount.add_member(:sub_path, Shapes::ShapeRef.new(shape: String, location_name: "subPath"))
     EksContainerVolumeMount.add_member(:read_only, Shapes::ShapeRef.new(shape: Boolean, location_name: "readOnly"))
     EksContainerVolumeMount.struct_class = Types::EksContainerVolumeMount
 
@@ -698,7 +704,13 @@ module Aws::Batch
     EksLimits.value = Shapes::ShapeRef.new(shape: Quantity)
 
     EksMetadata.add_member(:labels, Shapes::ShapeRef.new(shape: EksLabelsMap, location_name: "labels"))
+    EksMetadata.add_member(:annotations, Shapes::ShapeRef.new(shape: EksAnnotationsMap, location_name: "annotations"))
+    EksMetadata.add_member(:namespace, Shapes::ShapeRef.new(shape: String, location_name: "namespace"))
     EksMetadata.struct_class = Types::EksMetadata
+
+    EksPersistentVolumeClaim.add_member(:claim_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "claimName"))
+    EksPersistentVolumeClaim.add_member(:read_only, Shapes::ShapeRef.new(shape: Boolean, location_name: "readOnly"))
+    EksPersistentVolumeClaim.struct_class = Types::EksPersistentVolumeClaim
 
     EksPodProperties.add_member(:service_account_name, Shapes::ShapeRef.new(shape: String, location_name: "serviceAccountName"))
     EksPodProperties.add_member(:host_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "hostNetwork"))
@@ -749,6 +761,7 @@ module Aws::Batch
     EksVolume.add_member(:host_path, Shapes::ShapeRef.new(shape: EksHostPath, location_name: "hostPath"))
     EksVolume.add_member(:empty_dir, Shapes::ShapeRef.new(shape: EksEmptyDir, location_name: "emptyDir"))
     EksVolume.add_member(:secret, Shapes::ShapeRef.new(shape: EksSecret, location_name: "secret"))
+    EksVolume.add_member(:persistent_volume_claim, Shapes::ShapeRef.new(shape: EksPersistentVolumeClaim, location_name: "persistentVolumeClaim"))
     EksVolume.struct_class = Types::EksVolume
 
     EksVolumes.member = Shapes::ShapeRef.new(shape: EksVolume)
