@@ -331,7 +331,7 @@ module Aws::Connect
     end
 
     class Attribute
-      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING")
+      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING" | "MULTI_PARTY_CHAT_CONFERENCE")
       attr_accessor value: ::String
       SENSITIVE: []
     end
@@ -577,6 +577,7 @@ module Aws::Connect
       attr_accessor scheduled_timestamp: ::Time
       attr_accessor related_contact_id: ::String
       attr_accessor wisdom_info: Types::WisdomInfo
+      attr_accessor customer_id: ::String
       attr_accessor customer_endpoint: Types::EndpointInfo
       attr_accessor system_endpoint: Types::EndpointInfo
       attr_accessor queue_time_adjustment_seconds: ::Integer
@@ -949,7 +950,7 @@ module Aws::Connect
 
     class CreateIntegrationAssociationRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR" | "COGNITO_USER_POOL")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -1666,7 +1667,7 @@ module Aws::Connect
 
     class DescribeInstanceAttributeRequest
       attr_accessor instance_id: ::String
-      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING")
+      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING" | "MULTI_PARTY_CHAT_CONFERENCE")
       SENSITIVE: []
     end
 
@@ -2865,7 +2866,7 @@ module Aws::Connect
       attr_accessor integration_association_id: ::String
       attr_accessor integration_association_arn: ::String
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR" | "COGNITO_USER_POOL")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -3242,7 +3243,7 @@ module Aws::Connect
 
     class ListIntegrationAssociationsRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR" | "COGNITO_USER_POOL")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor integration_arn: ::String
@@ -5030,7 +5031,8 @@ module Aws::Connect
       attr_accessor persistent_chat: Types::PersistentChat
       attr_accessor related_contact_id: ::String
       attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
-      SENSITIVE: []
+      attr_accessor customer_id: ::String
+      SENSITIVE: [:customer_id]
     end
 
     class StartChatContactResponse
@@ -5704,7 +5706,7 @@ module Aws::Connect
 
     class UpdateInstanceAttributeRequest
       attr_accessor instance_id: ::String
-      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING")
+      attr_accessor attribute_type: ("INBOUND_CALLS" | "OUTBOUND_CALLS" | "CONTACTFLOW_LOGS" | "CONTACT_LENS" | "AUTO_RESOLVE_BEST_VOICES" | "USE_CUSTOM_TTS_VOICES" | "EARLY_MEDIA" | "MULTI_PARTY_CONFERENCE" | "HIGH_VOLUME_OUTBOUND" | "ENHANCED_CONTACT_MONITORING" | "ENHANCED_CHAT_MONITORING" | "MULTI_PARTY_CHAT_CONFERENCE")
       attr_accessor value: ::String
       SENSITIVE: []
     end
@@ -5715,6 +5717,18 @@ module Aws::Connect
       attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor storage_config: Types::InstanceStorageConfig
       SENSITIVE: []
+    end
+
+    class UpdateParticipantAuthenticationRequest
+      attr_accessor state: ::String
+      attr_accessor instance_id: ::String
+      attr_accessor code: ::String
+      attr_accessor error: ::String
+      attr_accessor error_description: ::String
+      SENSITIVE: [:code, :error, :error_description]
+    end
+
+    class UpdateParticipantAuthenticationResponse < Aws::EmptyStructure
     end
 
     class UpdateParticipantRoleConfigChannelInfo

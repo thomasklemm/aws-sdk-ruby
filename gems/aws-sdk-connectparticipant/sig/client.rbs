@@ -75,6 +75,16 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _CancelParticipantAuthenticationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CancelParticipantAuthenticationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ConnectParticipant/Client.html#cancel_participant_authentication-instance_method
+      def cancel_participant_authentication: (
+                                               session_id: ::String,
+                                               connection_token: ::String
+                                             ) -> _CancelParticipantAuthenticationResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelParticipantAuthenticationResponseSuccess
+
       interface _CompleteAttachmentUploadResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CompleteAttachmentUploadResponse]
       end
@@ -124,13 +134,27 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAttachmentResponse]
         def url: () -> ::String
         def url_expiry: () -> ::String
+        def attachment_size_in_bytes: () -> ::Integer
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ConnectParticipant/Client.html#get_attachment-instance_method
       def get_attachment: (
                             attachment_id: ::String,
-                            connection_token: ::String
+                            connection_token: ::String,
+                            ?url_expiry_in_seconds: ::Integer
                           ) -> _GetAttachmentResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAttachmentResponseSuccess
+
+      interface _GetAuthenticationUrlResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAuthenticationUrlResponse]
+        def authentication_url: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ConnectParticipant/Client.html#get_authentication_url-instance_method
+      def get_authentication_url: (
+                                    session_id: ::String,
+                                    redirect_uri: ::String,
+                                    connection_token: ::String
+                                  ) -> _GetAuthenticationUrlResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAuthenticationUrlResponseSuccess
 
       interface _GetTranscriptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTranscriptResponse]

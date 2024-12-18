@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.76.0 (2024-12-18)
+------------------
+
+* Feature - Added WAF Configuration to Amplify Apps
+
 1.75.0 (2024-10-18)
 ------------------
 

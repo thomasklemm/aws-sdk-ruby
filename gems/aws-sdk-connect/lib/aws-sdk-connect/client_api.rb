@@ -118,12 +118,15 @@ module Aws::Connect
     AudioFeatures = Shapes::StructureShape.new(name: 'AudioFeatures')
     AudioQualityMetricsInfo = Shapes::StructureShape.new(name: 'AudioQualityMetricsInfo')
     AudioQualityScore = Shapes::FloatShape.new(name: 'AudioQualityScore')
+    AuthenticationError = Shapes::StringShape.new(name: 'AuthenticationError')
+    AuthenticationErrorDescription = Shapes::StringShape.new(name: 'AuthenticationErrorDescription')
     AuthenticationProfile = Shapes::StructureShape.new(name: 'AuthenticationProfile')
     AuthenticationProfileDescription = Shapes::StringShape.new(name: 'AuthenticationProfileDescription')
     AuthenticationProfileId = Shapes::StringShape.new(name: 'AuthenticationProfileId')
     AuthenticationProfileName = Shapes::StringShape.new(name: 'AuthenticationProfileName')
     AuthenticationProfileSummary = Shapes::StructureShape.new(name: 'AuthenticationProfileSummary')
     AuthenticationProfileSummaryList = Shapes::ListShape.new(name: 'AuthenticationProfileSummaryList')
+    AuthorizationCode = Shapes::StringShape.new(name: 'AuthorizationCode')
     AutoAccept = Shapes::BooleanShape.new(name: 'AutoAccept')
     AvailableNumberSummary = Shapes::StructureShape.new(name: 'AvailableNumberSummary')
     AvailableNumbersList = Shapes::ListShape.new(name: 'AvailableNumbersList')
@@ -309,6 +312,8 @@ module Aws::Connect
     CurrentMetricSortCriteriaMaxOne = Shapes::ListShape.new(name: 'CurrentMetricSortCriteriaMaxOne')
     CurrentMetrics = Shapes::ListShape.new(name: 'CurrentMetrics')
     Customer = Shapes::StructureShape.new(name: 'Customer')
+    CustomerId = Shapes::StringShape.new(name: 'CustomerId')
+    CustomerIdNonEmpty = Shapes::StringShape.new(name: 'CustomerIdNonEmpty')
     CustomerProfileAttributesSerialized = Shapes::StringShape.new(name: 'CustomerProfileAttributesSerialized')
     CustomerQualityMetrics = Shapes::StructureShape.new(name: 'CustomerQualityMetrics')
     CustomerVoiceActivity = Shapes::StructureShape.new(name: 'CustomerVoiceActivity')
@@ -1389,6 +1394,8 @@ module Aws::Connect
     UpdateHoursOfOperationRequest = Shapes::StructureShape.new(name: 'UpdateHoursOfOperationRequest')
     UpdateInstanceAttributeRequest = Shapes::StructureShape.new(name: 'UpdateInstanceAttributeRequest')
     UpdateInstanceStorageConfigRequest = Shapes::StructureShape.new(name: 'UpdateInstanceStorageConfigRequest')
+    UpdateParticipantAuthenticationRequest = Shapes::StructureShape.new(name: 'UpdateParticipantAuthenticationRequest')
+    UpdateParticipantAuthenticationResponse = Shapes::StructureShape.new(name: 'UpdateParticipantAuthenticationResponse')
     UpdateParticipantRoleConfigChannelInfo = Shapes::UnionShape.new(name: 'UpdateParticipantRoleConfigChannelInfo')
     UpdateParticipantRoleConfigRequest = Shapes::StructureShape.new(name: 'UpdateParticipantRoleConfigRequest')
     UpdateParticipantRoleConfigResponse = Shapes::StructureShape.new(name: 'UpdateParticipantRoleConfigResponse')
@@ -1983,6 +1990,7 @@ module Aws::Connect
     Contact.add_member(:scheduled_timestamp, Shapes::ShapeRef.new(shape: timestamp, location_name: "ScheduledTimestamp"))
     Contact.add_member(:related_contact_id, Shapes::ShapeRef.new(shape: ContactId, location_name: "RelatedContactId"))
     Contact.add_member(:wisdom_info, Shapes::ShapeRef.new(shape: WisdomInfo, location_name: "WisdomInfo"))
+    Contact.add_member(:customer_id, Shapes::ShapeRef.new(shape: CustomerId, location_name: "CustomerId"))
     Contact.add_member(:customer_endpoint, Shapes::ShapeRef.new(shape: EndpointInfo, location_name: "CustomerEndpoint"))
     Contact.add_member(:system_endpoint, Shapes::ShapeRef.new(shape: EndpointInfo, location_name: "SystemEndpoint"))
     Contact.add_member(:queue_time_adjustment_seconds, Shapes::ShapeRef.new(shape: QueueTimeAdjustmentSeconds, location_name: "QueueTimeAdjustmentSeconds"))
@@ -5487,6 +5495,7 @@ module Aws::Connect
     StartChatContactRequest.add_member(:persistent_chat, Shapes::ShapeRef.new(shape: PersistentChat, location_name: "PersistentChat"))
     StartChatContactRequest.add_member(:related_contact_id, Shapes::ShapeRef.new(shape: ContactId, location_name: "RelatedContactId"))
     StartChatContactRequest.add_member(:segment_attributes, Shapes::ShapeRef.new(shape: SegmentAttributes, location_name: "SegmentAttributes"))
+    StartChatContactRequest.add_member(:customer_id, Shapes::ShapeRef.new(shape: CustomerIdNonEmpty, location_name: "CustomerId"))
     StartChatContactRequest.struct_class = Types::StartChatContactRequest
 
     StartChatContactResponse.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, location_name: "ContactId"))
@@ -6028,6 +6037,15 @@ module Aws::Connect
     UpdateInstanceStorageConfigRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: InstanceStorageResourceType, required: true, location: "querystring", location_name: "resourceType"))
     UpdateInstanceStorageConfigRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: InstanceStorageConfig, required: true, location_name: "StorageConfig"))
     UpdateInstanceStorageConfigRequest.struct_class = Types::UpdateInstanceStorageConfigRequest
+
+    UpdateParticipantAuthenticationRequest.add_member(:state, Shapes::ShapeRef.new(shape: ParticipantToken, required: true, location_name: "State"))
+    UpdateParticipantAuthenticationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
+    UpdateParticipantAuthenticationRequest.add_member(:code, Shapes::ShapeRef.new(shape: AuthorizationCode, location_name: "Code"))
+    UpdateParticipantAuthenticationRequest.add_member(:error, Shapes::ShapeRef.new(shape: AuthenticationError, location_name: "Error"))
+    UpdateParticipantAuthenticationRequest.add_member(:error_description, Shapes::ShapeRef.new(shape: AuthenticationErrorDescription, location_name: "ErrorDescription"))
+    UpdateParticipantAuthenticationRequest.struct_class = Types::UpdateParticipantAuthenticationRequest
+
+    UpdateParticipantAuthenticationResponse.struct_class = Types::UpdateParticipantAuthenticationResponse
 
     UpdateParticipantRoleConfigChannelInfo.add_member(:chat, Shapes::ShapeRef.new(shape: ChatParticipantRoleConfig, location_name: "Chat"))
     UpdateParticipantRoleConfigChannelInfo.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
@@ -10227,6 +10245,20 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:update_participant_authentication, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateParticipantAuthentication"
+        o.http_method = "POST"
+        o.http_request_uri = "/contact/update-participant-authentication"
+        o.input = Shapes::ShapeRef.new(shape: UpdateParticipantAuthenticationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateParticipantAuthenticationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:update_participant_role_config, Seahorse::Model::Operation.new.tap do |o|

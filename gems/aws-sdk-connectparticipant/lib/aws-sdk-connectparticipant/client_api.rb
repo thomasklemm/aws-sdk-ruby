@@ -23,7 +23,10 @@ module Aws::ConnectParticipant
     AttachmentName = Shapes::StringShape.new(name: 'AttachmentName')
     AttachmentSizeInBytes = Shapes::IntegerShape.new(name: 'AttachmentSizeInBytes')
     Attachments = Shapes::ListShape.new(name: 'Attachments')
+    AuthenticationUrl = Shapes::StringShape.new(name: 'AuthenticationUrl')
     Bool = Shapes::BooleanShape.new(name: 'Bool')
+    CancelParticipantAuthenticationRequest = Shapes::StructureShape.new(name: 'CancelParticipantAuthenticationRequest')
+    CancelParticipantAuthenticationResponse = Shapes::StructureShape.new(name: 'CancelParticipantAuthenticationResponse')
     ChatContent = Shapes::StringShape.new(name: 'ChatContent')
     ChatContentType = Shapes::StringShape.new(name: 'ChatContentType')
     ChatItemId = Shapes::StringShape.new(name: 'ChatItemId')
@@ -46,6 +49,8 @@ module Aws::ConnectParticipant
     DisplayName = Shapes::StringShape.new(name: 'DisplayName')
     GetAttachmentRequest = Shapes::StructureShape.new(name: 'GetAttachmentRequest')
     GetAttachmentResponse = Shapes::StructureShape.new(name: 'GetAttachmentResponse')
+    GetAuthenticationUrlRequest = Shapes::StructureShape.new(name: 'GetAuthenticationUrlRequest')
+    GetAuthenticationUrlResponse = Shapes::StructureShape.new(name: 'GetAuthenticationUrlResponse')
     GetTranscriptRequest = Shapes::StructureShape.new(name: 'GetTranscriptRequest')
     GetTranscriptResponse = Shapes::StructureShape.new(name: 'GetTranscriptResponse')
     ISO8601Datetime = Shapes::StringShape.new(name: 'ISO8601Datetime')
@@ -66,6 +71,7 @@ module Aws::ConnectParticipant
     Reason = Shapes::StringShape.new(name: 'Reason')
     Receipt = Shapes::StructureShape.new(name: 'Receipt')
     Receipts = Shapes::ListShape.new(name: 'Receipts')
+    RedirectURI = Shapes::StringShape.new(name: 'RedirectURI')
     ResourceId = Shapes::StringShape.new(name: 'ResourceId')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceType = Shapes::StringShape.new(name: 'ResourceType')
@@ -75,12 +81,14 @@ module Aws::ConnectParticipant
     SendMessageRequest = Shapes::StructureShape.new(name: 'SendMessageRequest')
     SendMessageResponse = Shapes::StructureShape.new(name: 'SendMessageResponse')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SessionId = Shapes::StringShape.new(name: 'SessionId')
     SortKey = Shapes::StringShape.new(name: 'SortKey')
     StartAttachmentUploadRequest = Shapes::StructureShape.new(name: 'StartAttachmentUploadRequest')
     StartAttachmentUploadResponse = Shapes::StructureShape.new(name: 'StartAttachmentUploadResponse')
     StartPosition = Shapes::StructureShape.new(name: 'StartPosition')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Transcript = Shapes::ListShape.new(name: 'Transcript')
+    URLExpiryInSeconds = Shapes::IntegerShape.new(name: 'URLExpiryInSeconds')
     UploadMetadata = Shapes::StructureShape.new(name: 'UploadMetadata')
     UploadMetadataSignedHeaders = Shapes::MapShape.new(name: 'UploadMetadataSignedHeaders')
     UploadMetadataSignedHeadersKey = Shapes::StringShape.new(name: 'UploadMetadataSignedHeadersKey')
@@ -111,6 +119,12 @@ module Aws::ConnectParticipant
     AttachmentItem.struct_class = Types::AttachmentItem
 
     Attachments.member = Shapes::ShapeRef.new(shape: AttachmentItem)
+
+    CancelParticipantAuthenticationRequest.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, required: true, location_name: "SessionId"))
+    CancelParticipantAuthenticationRequest.add_member(:connection_token, Shapes::ShapeRef.new(shape: ParticipantToken, required: true, location: "header", location_name: "X-Amz-Bearer"))
+    CancelParticipantAuthenticationRequest.struct_class = Types::CancelParticipantAuthenticationRequest
+
+    CancelParticipantAuthenticationResponse.struct_class = Types::CancelParticipantAuthenticationResponse
 
     CompleteAttachmentUploadRequest.add_member(:attachment_ids, Shapes::ShapeRef.new(shape: AttachmentIdList, required: true, location_name: "AttachmentIds"))
     CompleteAttachmentUploadRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: NonEmptyClientToken, required: true, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
@@ -152,11 +166,21 @@ module Aws::ConnectParticipant
 
     GetAttachmentRequest.add_member(:attachment_id, Shapes::ShapeRef.new(shape: ArtifactId, required: true, location_name: "AttachmentId"))
     GetAttachmentRequest.add_member(:connection_token, Shapes::ShapeRef.new(shape: ParticipantToken, required: true, location: "header", location_name: "X-Amz-Bearer"))
+    GetAttachmentRequest.add_member(:url_expiry_in_seconds, Shapes::ShapeRef.new(shape: URLExpiryInSeconds, location_name: "UrlExpiryInSeconds"))
     GetAttachmentRequest.struct_class = Types::GetAttachmentRequest
 
     GetAttachmentResponse.add_member(:url, Shapes::ShapeRef.new(shape: PreSignedAttachmentUrl, location_name: "Url"))
     GetAttachmentResponse.add_member(:url_expiry, Shapes::ShapeRef.new(shape: ISO8601Datetime, location_name: "UrlExpiry"))
+    GetAttachmentResponse.add_member(:attachment_size_in_bytes, Shapes::ShapeRef.new(shape: AttachmentSizeInBytes, required: true, location_name: "AttachmentSizeInBytes", metadata: {"box"=>true}))
     GetAttachmentResponse.struct_class = Types::GetAttachmentResponse
+
+    GetAuthenticationUrlRequest.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, required: true, location_name: "SessionId"))
+    GetAuthenticationUrlRequest.add_member(:redirect_uri, Shapes::ShapeRef.new(shape: RedirectURI, required: true, location_name: "RedirectUri"))
+    GetAuthenticationUrlRequest.add_member(:connection_token, Shapes::ShapeRef.new(shape: ParticipantToken, required: true, location: "header", location_name: "X-Amz-Bearer"))
+    GetAuthenticationUrlRequest.struct_class = Types::GetAuthenticationUrlRequest
+
+    GetAuthenticationUrlResponse.add_member(:authentication_url, Shapes::ShapeRef.new(shape: AuthenticationUrl, location_name: "AuthenticationUrl"))
+    GetAuthenticationUrlResponse.struct_class = Types::GetAuthenticationUrlResponse
 
     GetTranscriptRequest.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, location_name: "ContactId"))
     GetTranscriptRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults", metadata: {"box"=>true}))
@@ -299,6 +323,18 @@ module Aws::ConnectParticipant
         "uid" => "connectparticipant-2018-09-07",
       }
 
+      api.add_operation(:cancel_participant_authentication, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CancelParticipantAuthentication"
+        o.http_method = "POST"
+        o.http_request_uri = "/participant/cancel-authentication"
+        o.input = Shapes::ShapeRef.new(shape: CancelParticipantAuthenticationRequest)
+        o.output = Shapes::ShapeRef.new(shape: CancelParticipantAuthenticationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
       api.add_operation(:complete_attachment_upload, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CompleteAttachmentUpload"
         o.http_method = "POST"
@@ -356,6 +392,18 @@ module Aws::ConnectParticipant
         o.http_request_uri = "/participant/attachment"
         o.input = Shapes::ShapeRef.new(shape: GetAttachmentRequest)
         o.output = Shapes::ShapeRef.new(shape: GetAttachmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
+      api.add_operation(:get_authentication_url, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAuthenticationUrl"
+        o.http_method = "POST"
+        o.http_request_uri = "/participant/authentication-url"
+        o.input = Shapes::ShapeRef.new(shape: GetAuthenticationUrlRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAuthenticationUrlResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)

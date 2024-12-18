@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.140.0 (2024-12-18)
+------------------
+
+* Feature - Add support for PerformanceConfiguration attribute to Dataset entity. Allow PerformanceConfiguration specification in CreateDataset and UpdateDataset APIs.
+
 1.139.0 (2024-12-03)
 ------------------
 

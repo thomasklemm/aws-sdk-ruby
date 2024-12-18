@@ -2252,6 +2252,10 @@ module Aws::QuickSight
     #   When you create the dataset, Amazon QuickSight adds the dataset to
     #   these folders.
     #
+    # @option params [Types::PerformanceConfiguration] :performance_configuration
+    #   The configuration for the performance optimization of the dataset that
+    #   contains a `UniqueKey` configuration.
+    #
     # @return [Types::CreateDataSetResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateDataSetResponse#arn #arn} => String
@@ -2485,6 +2489,13 @@ module Aws::QuickSight
     #       },
     #     ],
     #     folder_arns: ["Arn"],
+    #     performance_configuration: {
+    #       unique_keys: [
+    #         {
+    #           column_names: ["ColumnName"], # required
+    #         },
+    #       ],
+    #     },
     #   })
     #
     # @example Response structure
@@ -7124,6 +7135,9 @@ module Aws::QuickSight
     #   resp.data_set.dataset_parameters[0].date_time_dataset_parameter.time_granularity #=> String, one of "YEAR", "QUARTER", "MONTH", "WEEK", "DAY", "HOUR", "MINUTE", "SECOND", "MILLISECOND"
     #   resp.data_set.dataset_parameters[0].date_time_dataset_parameter.default_values.static_values #=> Array
     #   resp.data_set.dataset_parameters[0].date_time_dataset_parameter.default_values.static_values[0] #=> Time
+    #   resp.data_set.performance_configuration.unique_keys #=> Array
+    #   resp.data_set.performance_configuration.unique_keys[0].column_names #=> Array
+    #   resp.data_set.performance_configuration.unique_keys[0].column_names[0] #=> String
     #   resp.request_id #=> String
     #   resp.status #=> Integer
     #
@@ -14935,6 +14949,10 @@ module Aws::QuickSight
     # @option params [Array<Types::DatasetParameter>] :dataset_parameters
     #   The parameter declarations of the dataset.
     #
+    # @option params [Types::PerformanceConfiguration] :performance_configuration
+    #   The configuration for the performance optimization of the dataset that
+    #   contains a `UniqueKey` configuration.
+    #
     # @return [Types::UpdateDataSetResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateDataSetResponse#arn #arn} => String
@@ -15155,6 +15173,13 @@ module Aws::QuickSight
     #         },
     #       },
     #     ],
+    #     performance_configuration: {
+    #       unique_keys: [
+    #         {
+    #           column_names: ["ColumnName"], # required
+    #         },
+    #       ],
+    #     },
     #   })
     #
     # @example Response structure
@@ -17490,7 +17515,7 @@ module Aws::QuickSight
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-quicksight'
-      context[:gem_version] = '1.139.0'
+      context[:gem_version] = '1.140.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

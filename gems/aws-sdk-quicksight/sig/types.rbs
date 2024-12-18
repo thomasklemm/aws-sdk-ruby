@@ -1521,6 +1521,7 @@ module Aws::QuickSight
       attr_accessor data_set_usage_configuration: Types::DataSetUsageConfiguration
       attr_accessor dataset_parameters: ::Array[Types::DatasetParameter]
       attr_accessor folder_arns: ::Array[::String]
+      attr_accessor performance_configuration: Types::PerformanceConfiguration
       SENSITIVE: []
     end
 
@@ -2222,6 +2223,7 @@ module Aws::QuickSight
       attr_accessor column_level_permission_rules: ::Array[Types::ColumnLevelPermissionRule]
       attr_accessor data_set_usage_configuration: Types::DataSetUsageConfiguration
       attr_accessor dataset_parameters: ::Array[Types::DatasetParameter]
+      attr_accessor performance_configuration: Types::PerformanceConfiguration
       SENSITIVE: []
     end
 
@@ -6549,6 +6551,11 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class PerformanceConfiguration
+      attr_accessor unique_keys: ::Array[Types::UniqueKey]
+      SENSITIVE: []
+    end
+
     class PeriodOverPeriodComputation
       attr_accessor computation_id: ::String
       attr_accessor name: ::String
@@ -9052,6 +9059,11 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class UniqueKey
+      attr_accessor column_names: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class UniqueValuesComputation
       attr_accessor computation_id: ::String
       attr_accessor name: ::String
@@ -9340,6 +9352,7 @@ module Aws::QuickSight
       attr_accessor column_level_permission_rules: ::Array[Types::ColumnLevelPermissionRule]
       attr_accessor data_set_usage_configuration: Types::DataSetUsageConfiguration
       attr_accessor dataset_parameters: ::Array[Types::DatasetParameter]
+      attr_accessor performance_configuration: Types::PerformanceConfiguration
       SENSITIVE: []
     end
 

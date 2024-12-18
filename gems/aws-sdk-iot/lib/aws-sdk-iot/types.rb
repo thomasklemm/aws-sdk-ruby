@@ -2795,7 +2795,11 @@ module Aws::IoT
     #   @return [Array<Types::CommandParameter>]
     #
     # @!attribute [rw] role_arn
-    #   The IAM role that allows access to create the command.
+    #   The IAM role that you must provide when using the
+    #   `AWS-IoT-FleetWise` namespace. The role grants IoT Device Management
+    #   the permission to access IoT FleetWise resources for generating the
+    #   payload for the command. This field is not required when you use the
+    #   `AWS-IoT` namespace.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -8084,7 +8088,9 @@ module Aws::IoT
     #   @return [Time]
     #
     # @!attribute [rw] time_to_live
-    #   The time to live (TTL) parameter for the `GetCommandExecution` API.
+    #   The time to live (TTL) parameter that indicates the duration for
+    #   which executions will be retained in your account. The default value
+    #   is six months.
     #   @return [Time]
     #
     class GetCommandExecutionResponse < Struct.new(
@@ -8146,8 +8152,8 @@ module Aws::IoT
     #   @return [Types::CommandPayload]
     #
     # @!attribute [rw] role_arn
-    #   The IAM role that allows access to retrieve information about the
-    #   command.
+    #   The IAM role that you provided when creating the command with
+    #   `AWS-IoT-FleetWise` as the namespace.
     #   @return [String]
     #
     # @!attribute [rw] created_at
@@ -8669,6 +8675,41 @@ module Aws::IoT
     class GetStatisticsResponse < Struct.new(
       :statistics)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] thing_name
+    #   The name of your IoT thing.
+    #   @return [String]
+    #
+    class GetThingConnectivityDataRequest < Struct.new(
+      :thing_name)
+      SENSITIVE = [:thing_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] thing_name
+    #   The name of your IoT thing.
+    #   @return [String]
+    #
+    # @!attribute [rw] connected
+    #   A Boolean that indicates the connectivity status.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp of when the event occurred.
+    #   @return [Time]
+    #
+    # @!attribute [rw] disconnect_reason
+    #   The reason why the client is disconnecting.
+    #   @return [String]
+    #
+    class GetThingConnectivityDataResponse < Struct.new(
+      :thing_name,
+      :connected,
+      :timestamp,
+      :disconnect_reason)
+      SENSITIVE = [:thing_name]
       include Aws::Structure
     end
 

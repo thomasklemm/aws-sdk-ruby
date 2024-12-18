@@ -659,6 +659,20 @@ module Aws::DataSync
       SENSITIVE: [:password]
     end
 
+    class FsxUpdateProtocol
+      attr_accessor nfs: Types::FsxProtocolNfs
+      attr_accessor smb: Types::FsxUpdateProtocolSmb
+      SENSITIVE: []
+    end
+
+    class FsxUpdateProtocolSmb
+      attr_accessor domain: ::String
+      attr_accessor mount_options: Types::SmbMountOptions
+      attr_accessor password: ::String
+      attr_accessor user: ::String
+      SENSITIVE: [:password]
+    end
+
     class GenerateRecommendationsRequest
       attr_accessor discovery_job_arn: ::String
       attr_accessor resource_ids: ::Array[::String]
@@ -1199,6 +1213,59 @@ module Aws::DataSync
     class UpdateLocationAzureBlobResponse < Aws::EmptyStructure
     end
 
+    class UpdateLocationEfsRequest
+      attr_accessor location_arn: ::String
+      attr_accessor subdirectory: ::String
+      attr_accessor access_point_arn: ::String
+      attr_accessor file_system_access_role_arn: ::String
+      attr_accessor in_transit_encryption: ("NONE" | "TLS1_2")
+      SENSITIVE: []
+    end
+
+    class UpdateLocationEfsResponse < Aws::EmptyStructure
+    end
+
+    class UpdateLocationFsxLustreRequest
+      attr_accessor location_arn: ::String
+      attr_accessor subdirectory: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateLocationFsxLustreResponse < Aws::EmptyStructure
+    end
+
+    class UpdateLocationFsxOntapRequest
+      attr_accessor location_arn: ::String
+      attr_accessor protocol: Types::FsxUpdateProtocol
+      attr_accessor subdirectory: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateLocationFsxOntapResponse < Aws::EmptyStructure
+    end
+
+    class UpdateLocationFsxOpenZfsRequest
+      attr_accessor location_arn: ::String
+      attr_accessor protocol: Types::FsxProtocol
+      attr_accessor subdirectory: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateLocationFsxOpenZfsResponse < Aws::EmptyStructure
+    end
+
+    class UpdateLocationFsxWindowsRequest
+      attr_accessor location_arn: ::String
+      attr_accessor subdirectory: ::String
+      attr_accessor domain: ::String
+      attr_accessor user: ::String
+      attr_accessor password: ::String
+      SENSITIVE: [:password]
+    end
+
+    class UpdateLocationFsxWindowsResponse < Aws::EmptyStructure
+    end
+
     class UpdateLocationHdfsRequest
       attr_accessor location_arn: ::String
       attr_accessor subdirectory: ::String
@@ -1243,6 +1310,17 @@ module Aws::DataSync
     end
 
     class UpdateLocationObjectStorageResponse < Aws::EmptyStructure
+    end
+
+    class UpdateLocationS3Request
+      attr_accessor location_arn: ::String
+      attr_accessor subdirectory: ::String
+      attr_accessor s3_storage_class: ("STANDARD" | "STANDARD_IA" | "ONEZONE_IA" | "INTELLIGENT_TIERING" | "GLACIER" | "DEEP_ARCHIVE" | "OUTPOSTS" | "GLACIER_INSTANT_RETRIEVAL")
+      attr_accessor s3_config: Types::S3Config
+      SENSITIVE: []
+    end
+
+    class UpdateLocationS3Response < Aws::EmptyStructure
     end
 
     class UpdateLocationSmbRequest

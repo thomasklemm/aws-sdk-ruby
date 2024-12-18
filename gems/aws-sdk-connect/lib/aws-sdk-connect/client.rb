@@ -2487,7 +2487,7 @@ module Aws::Connect
     #
     #   resp = client.create_integration_association({
     #     instance_id: "InstanceId", # required
-    #     integration_type: "EVENT", # required, accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY, ANALYTICS_CONNECTOR, CALL_TRANSFER_CONNECTOR
+    #     integration_type: "EVENT", # required, accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY, ANALYTICS_CONNECTOR, CALL_TRANSFER_CONNECTOR, COGNITO_USER_POOL
     #     integration_arn: "ARN", # required
     #     source_application_url: "URI",
     #     source_application_name: "SourceApplicationName",
@@ -2820,7 +2820,7 @@ module Aws::Connect
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/set-up-push-notifications-for-mobile-chat.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/enable-push-notifications-for-mobile-chat.html
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -5210,6 +5210,7 @@ module Aws::Connect
     #   resp.contact.scheduled_timestamp #=> Time
     #   resp.contact.related_contact_id #=> String
     #   resp.contact.wisdom_info.session_arn #=> String
+    #   resp.contact.customer_id #=> String
     #   resp.contact.customer_endpoint.type #=> String, one of "TELEPHONE_NUMBER", "VOIP", "CONTACT_FLOW", "CONNECT_PHONENUMBER_ARN", "EMAIL_ADDRESS"
     #   resp.contact.customer_endpoint.address #=> String
     #   resp.contact.customer_endpoint.display_name #=> String
@@ -5817,12 +5818,12 @@ module Aws::Connect
     #
     #   resp = client.describe_instance_attribute({
     #     instance_id: "InstanceId", # required
-    #     attribute_type: "INBOUND_CALLS", # required, accepts INBOUND_CALLS, OUTBOUND_CALLS, CONTACTFLOW_LOGS, CONTACT_LENS, AUTO_RESOLVE_BEST_VOICES, USE_CUSTOM_TTS_VOICES, EARLY_MEDIA, MULTI_PARTY_CONFERENCE, HIGH_VOLUME_OUTBOUND, ENHANCED_CONTACT_MONITORING, ENHANCED_CHAT_MONITORING
+    #     attribute_type: "INBOUND_CALLS", # required, accepts INBOUND_CALLS, OUTBOUND_CALLS, CONTACTFLOW_LOGS, CONTACT_LENS, AUTO_RESOLVE_BEST_VOICES, USE_CUSTOM_TTS_VOICES, EARLY_MEDIA, MULTI_PARTY_CONFERENCE, HIGH_VOLUME_OUTBOUND, ENHANCED_CONTACT_MONITORING, ENHANCED_CHAT_MONITORING, MULTI_PARTY_CHAT_CONFERENCE
     #   })
     #
     # @example Response structure
     #
-    #   resp.attribute.attribute_type #=> String, one of "INBOUND_CALLS", "OUTBOUND_CALLS", "CONTACTFLOW_LOGS", "CONTACT_LENS", "AUTO_RESOLVE_BEST_VOICES", "USE_CUSTOM_TTS_VOICES", "EARLY_MEDIA", "MULTI_PARTY_CONFERENCE", "HIGH_VOLUME_OUTBOUND", "ENHANCED_CONTACT_MONITORING", "ENHANCED_CHAT_MONITORING"
+    #   resp.attribute.attribute_type #=> String, one of "INBOUND_CALLS", "OUTBOUND_CALLS", "CONTACTFLOW_LOGS", "CONTACT_LENS", "AUTO_RESOLVE_BEST_VOICES", "USE_CUSTOM_TTS_VOICES", "EARLY_MEDIA", "MULTI_PARTY_CONFERENCE", "HIGH_VOLUME_OUTBOUND", "ENHANCED_CONTACT_MONITORING", "ENHANCED_CHAT_MONITORING", "MULTI_PARTY_CHAT_CONFERENCE"
     #   resp.attribute.value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeInstanceAttribute AWS API Documentation
@@ -10292,7 +10293,7 @@ module Aws::Connect
     #
     # For the specified version of Amazon Lex, returns a paginated list of
     # all the Amazon Lex bots currently associated with the instance. Use
-    # this API to returns both Amazon Lex V1 and V2 bots.
+    # this API to return both Amazon Lex V1 and V2 bots.
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -11060,7 +11061,7 @@ module Aws::Connect
     # @example Response structure
     #
     #   resp.attributes #=> Array
-    #   resp.attributes[0].attribute_type #=> String, one of "INBOUND_CALLS", "OUTBOUND_CALLS", "CONTACTFLOW_LOGS", "CONTACT_LENS", "AUTO_RESOLVE_BEST_VOICES", "USE_CUSTOM_TTS_VOICES", "EARLY_MEDIA", "MULTI_PARTY_CONFERENCE", "HIGH_VOLUME_OUTBOUND", "ENHANCED_CONTACT_MONITORING", "ENHANCED_CHAT_MONITORING"
+    #   resp.attributes[0].attribute_type #=> String, one of "INBOUND_CALLS", "OUTBOUND_CALLS", "CONTACTFLOW_LOGS", "CONTACT_LENS", "AUTO_RESOLVE_BEST_VOICES", "USE_CUSTOM_TTS_VOICES", "EARLY_MEDIA", "MULTI_PARTY_CONFERENCE", "HIGH_VOLUME_OUTBOUND", "ENHANCED_CONTACT_MONITORING", "ENHANCED_CHAT_MONITORING", "MULTI_PARTY_CHAT_CONFERENCE"
     #   resp.attributes[0].value #=> String
     #   resp.next_token #=> String
     #
@@ -11230,7 +11231,7 @@ module Aws::Connect
     #
     #   resp = client.list_integration_associations({
     #     instance_id: "InstanceId", # required
-    #     integration_type: "EVENT", # accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY, ANALYTICS_CONNECTOR, CALL_TRANSFER_CONNECTOR
+    #     integration_type: "EVENT", # accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY, ANALYTICS_CONNECTOR, CALL_TRANSFER_CONNECTOR, COGNITO_USER_POOL
     #     next_token: "NextToken",
     #     max_results: 1,
     #     integration_arn: "ARN",
@@ -11242,7 +11243,7 @@ module Aws::Connect
     #   resp.integration_association_summary_list[0].integration_association_id #=> String
     #   resp.integration_association_summary_list[0].integration_association_arn #=> String
     #   resp.integration_association_summary_list[0].instance_id #=> String
-    #   resp.integration_association_summary_list[0].integration_type #=> String, one of "EVENT", "VOICE_ID", "PINPOINT_APP", "WISDOM_ASSISTANT", "WISDOM_KNOWLEDGE_BASE", "WISDOM_QUICK_RESPONSES", "Q_MESSAGE_TEMPLATES", "CASES_DOMAIN", "APPLICATION", "FILE_SCANNER", "SES_IDENTITY", "ANALYTICS_CONNECTOR", "CALL_TRANSFER_CONNECTOR"
+    #   resp.integration_association_summary_list[0].integration_type #=> String, one of "EVENT", "VOICE_ID", "PINPOINT_APP", "WISDOM_ASSISTANT", "WISDOM_KNOWLEDGE_BASE", "WISDOM_QUICK_RESPONSES", "Q_MESSAGE_TEMPLATES", "CASES_DOMAIN", "APPLICATION", "FILE_SCANNER", "SES_IDENTITY", "ANALYTICS_CONNECTOR", "CALL_TRANSFER_CONNECTOR", "COGNITO_USER_POOL"
     #   resp.integration_association_summary_list[0].integration_arn #=> String
     #   resp.integration_association_summary_list[0].source_application_url #=> String
     #   resp.integration_association_summary_list[0].source_application_name #=> String
@@ -15726,6 +15727,10 @@ module Aws::Connect
     #
     #    </note>
     #
+    # @option params [String] :customer_id
+    #   The customer's identification number. For example, the `CustomerId`
+    #   may be a customer number from your CRM.
+    #
     # @return [Types::StartChatContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartChatContactResponse#contact_id #contact_id} => String
@@ -15767,6 +15772,7 @@ module Aws::Connect
     #         value_integer: 1,
     #       },
     #     },
+    #     customer_id: "CustomerIdNonEmpty",
     #   })
     #
     # @example Response structure
@@ -18679,7 +18685,7 @@ module Aws::Connect
     #
     #   resp = client.update_instance_attribute({
     #     instance_id: "InstanceId", # required
-    #     attribute_type: "INBOUND_CALLS", # required, accepts INBOUND_CALLS, OUTBOUND_CALLS, CONTACTFLOW_LOGS, CONTACT_LENS, AUTO_RESOLVE_BEST_VOICES, USE_CUSTOM_TTS_VOICES, EARLY_MEDIA, MULTI_PARTY_CONFERENCE, HIGH_VOLUME_OUTBOUND, ENHANCED_CONTACT_MONITORING, ENHANCED_CHAT_MONITORING
+    #     attribute_type: "INBOUND_CALLS", # required, accepts INBOUND_CALLS, OUTBOUND_CALLS, CONTACTFLOW_LOGS, CONTACT_LENS, AUTO_RESOLVE_BEST_VOICES, USE_CUSTOM_TTS_VOICES, EARLY_MEDIA, MULTI_PARTY_CONFERENCE, HIGH_VOLUME_OUTBOUND, ENHANCED_CONTACT_MONITORING, ENHANCED_CHAT_MONITORING, MULTI_PARTY_CHAT_CONFERENCE
     #     value: "InstanceAttributeValue", # required
     #   })
     #
@@ -18758,6 +18764,70 @@ module Aws::Connect
     # @param [Hash] params ({})
     def update_instance_storage_config(params = {}, options = {})
       req = build_request(:update_instance_storage_config, params)
+      req.send_request(options)
+    end
+
+    # Instructs Amazon Connect to resume the authentication process. The
+    # subsequent actions depend on the request body contents:
+    #
+    # * **If a code is provided**: Connect retrieves the identity
+    #   information from Amazon Cognito and imports it into Connect Customer
+    #   Profiles.
+    #
+    # * **If an error is provided**: The error branch of the Authenticate
+    #   Customer block is executed.
+    #
+    # <note markdown="1"> The API returns a success response to acknowledge the request.
+    # However, the interaction and exchange of identity information occur
+    # asynchronously after the response is returned.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :state
+    #   The `state` query parameter that was provided by Cognito in the
+    #   `redirectUri`. This will also match the `state` parameter provided in
+    #   the `AuthenticationUrl` from the [GetAuthenticationUrl][1] response.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_GetAuthenticationUrl.html
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #
+    # @option params [String] :code
+    #   The `code` query parameter provided by Cognito in the `redirectUri`.
+    #
+    # @option params [String] :error
+    #   The `error` query parameter provided by Cognito in the `redirectUri`.
+    #
+    # @option params [String] :error_description
+    #   The `error_description` parameter provided by Cognito in the
+    #   `redirectUri`.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_participant_authentication({
+    #     state: "ParticipantToken", # required
+    #     instance_id: "InstanceId", # required
+    #     code: "AuthorizationCode",
+    #     error: "AuthenticationError",
+    #     error_description: "AuthenticationErrorDescription",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateParticipantAuthentication AWS API Documentation
+    #
+    # @overload update_participant_authentication(params = {})
+    # @param [Hash] params ({})
+    def update_participant_authentication(params = {}, options = {})
+      req = build_request(:update_participant_authentication, params)
       req.send_request(options)
     end
 
@@ -20500,7 +20570,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.190.0'
+      context[:gem_version] = '1.191.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

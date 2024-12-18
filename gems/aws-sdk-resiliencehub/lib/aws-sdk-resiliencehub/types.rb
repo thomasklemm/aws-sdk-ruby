@@ -155,6 +155,29 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # Indicates the Amazon CloudWatch alarm detected while running an
+    # assessment.
+    #
+    # @!attribute [rw] alarm_arn
+    #   Amazon Resource Name (ARN) of the Amazon CloudWatch alarm.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   Indicates the source of the Amazon CloudWatch alarm. That is, it
+    #   indicates if the alarm was created using Resilience Hub
+    #   recommendation (`AwsResilienceHub`), or if you had created the alarm
+    #   in Amazon CloudWatch (`Customer`).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/Alarm AWS API Documentation
+    #
+    class Alarm < Struct.new(
+      :alarm_arn,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Defines a recommendation for a CloudWatch alarm.
     #
     # @!attribute [rw] app_component_name
@@ -846,7 +869,7 @@ module Aws::ResilienceHub
     #
     # @!attribute [rw] app_components
     #   Indicates the Application Components (AppComponents) that were
-    #   assessed as part of the assessnent and are associated with the
+    #   assessed as part of the assessment and are associated with the
     #   identified risk and recommendation.
     #
     #   <note markdown="1"> This property is available only in the US East (N. Virginia) Region.
@@ -1005,6 +1028,10 @@ module Aws::ResilienceHub
     # List of operational recommendations that were successfully included or
     # excluded.
     #
+    # @!attribute [rw] app_component_id
+    #   Indicates the identifier of an AppComponent.
+    #   @return [String]
+    #
     # @!attribute [rw] entry_id
     #   An identifier for an entry in this batch that is used to communicate
     #   the result.
@@ -1035,6 +1062,7 @@ module Aws::ResilienceHub
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/BatchUpdateRecommendationStatusSuccessfulEntry AWS API Documentation
     #
     class BatchUpdateRecommendationStatusSuccessfulEntry < Struct.new(
+      :app_component_id,
       :entry_id,
       :exclude_reason,
       :excluded,
@@ -3149,6 +3177,25 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # Indicates the FIS experiment detected while running an assessment.
+    #
+    # @!attribute [rw] experiment_arn
+    #   Amazon Resource Name (ARN) of the FIS experiment.
+    #   @return [String]
+    #
+    # @!attribute [rw] experiment_template_id
+    #   Identifier of the FIS experiment template.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/Experiment AWS API Documentation
+    #
+    class Experiment < Struct.new(
+      :experiment_arn,
+      :experiment_template_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Indicates the accepted grouping recommendation whose implementation
     # failed.
     #
@@ -4724,6 +4771,11 @@ module Aws::ResilienceHub
     #   Principle to obtain a read-only access to your application resources
     #   while running an assessment.
     #
+    #   If your IAM role includes a path, you must include the path in the
+    #   `invokerRoleName` parameter. For example, if your IAM role's ARN is
+    #   `arn:aws:iam:123456789012:role/my-path/role-name`, you should pass
+    #   `my-path/role-name`.
+    #
     #   <note markdown="1"> * You must have `iam:passRole` permission for this role while
     #     creating or updating the application.
     #
@@ -5298,6 +5350,11 @@ module Aws::ResilienceHub
     #   Specifies if the recommendation has already been implemented.
     #   @return [Boolean]
     #
+    # @!attribute [rw] discovered_alarm
+    #   Indicates the previously implemented Amazon CloudWatch alarm
+    #   discovered by Resilience Hub.
+    #   @return [Types::Alarm]
+    #
     # @!attribute [rw] exclude_reason
     #   Indicates the reason for excluding an operational recommendation.
     #   @return [String]
@@ -5305,6 +5362,11 @@ module Aws::ResilienceHub
     # @!attribute [rw] excluded
     #   Indicates if an operational recommendation item is excluded.
     #   @return [Boolean]
+    #
+    # @!attribute [rw] latest_discovered_experiment
+    #   Indicates the experiment created in FIS that was discovered by
+    #   Resilience Hub, which matches the recommendation.
+    #   @return [Types::Experiment]
     #
     # @!attribute [rw] resource_id
     #   Identifier of the resource.
@@ -5322,8 +5384,10 @@ module Aws::ResilienceHub
     #
     class RecommendationItem < Struct.new(
       :already_implemented,
+      :discovered_alarm,
       :exclude_reason,
       :excluded,
+      :latest_discovered_experiment,
       :resource_id,
       :target_account_id,
       :target_region)
@@ -6317,6 +6381,10 @@ module Aws::ResilienceHub
 
     # Defines a test recommendation.
     #
+    # @!attribute [rw] app_component_id
+    #   Indicates the identifier of the AppComponent.
+    #   @return [String]
+    #
     # @!attribute [rw] app_component_name
     #   Name of the Application Component.
     #   @return [String]
@@ -6369,6 +6437,7 @@ module Aws::ResilienceHub
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/TestRecommendation AWS API Documentation
     #
     class TestRecommendation < Struct.new(
+      :app_component_id,
       :app_component_name,
       :depends_on_alarms,
       :description,
@@ -6824,6 +6893,10 @@ module Aws::ResilienceHub
     # Defines the operational recommendation item that is to be included or
     # excluded.
     #
+    # @!attribute [rw] app_component_id
+    #   Indicates the identifier of the AppComponent.
+    #   @return [String]
+    #
     # @!attribute [rw] entry_id
     #   An identifier for an entry in this batch that is used to communicate
     #   the result.
@@ -6854,6 +6927,7 @@ module Aws::ResilienceHub
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/UpdateRecommendationStatusRequestEntry AWS API Documentation
     #
     class UpdateRecommendationStatusRequestEntry < Struct.new(
+      :app_component_id,
       :entry_id,
       :exclude_reason,
       :excluded,

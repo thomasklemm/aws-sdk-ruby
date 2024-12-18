@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.52.0 (2024-12-18)
+------------------
+
+* Feature - Added support for Apache Airflow version 2.10.3 to MWAA.
+
 1.51.0 (2024-11-19)
 ------------------
 

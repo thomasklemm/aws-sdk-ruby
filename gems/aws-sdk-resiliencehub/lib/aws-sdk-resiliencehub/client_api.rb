@@ -23,6 +23,7 @@ module Aws::ResilienceHub
     AddDraftAppVersionResourceMappingsResponse = Shapes::StructureShape.new(name: 'AddDraftAppVersionResourceMappingsResponse')
     AdditionalInfoMap = Shapes::MapShape.new(name: 'AdditionalInfoMap')
     AdditionalInfoValueList = Shapes::ListShape.new(name: 'AdditionalInfoValueList')
+    Alarm = Shapes::StructureShape.new(name: 'Alarm')
     AlarmRecommendation = Shapes::StructureShape.new(name: 'AlarmRecommendation')
     AlarmRecommendationList = Shapes::ListShape.new(name: 'AlarmRecommendationList')
     AlarmReferenceIdList = Shapes::ListShape.new(name: 'AlarmReferenceIdList')
@@ -156,6 +157,7 @@ module Aws::ResilienceHub
     EventSubscriptionList = Shapes::ListShape.new(name: 'EventSubscriptionList')
     EventType = Shapes::StringShape.new(name: 'EventType')
     ExcludeRecommendationReason = Shapes::StringShape.new(name: 'ExcludeRecommendationReason')
+    Experiment = Shapes::StructureShape.new(name: 'Experiment')
     FailedGroupingRecommendationEntries = Shapes::ListShape.new(name: 'FailedGroupingRecommendationEntries')
     FailedGroupingRecommendationEntry = Shapes::StructureShape.new(name: 'FailedGroupingRecommendationEntry')
     FailurePolicy = Shapes::StructureShape.new(name: 'FailurePolicy')
@@ -373,6 +375,10 @@ module Aws::ResilienceHub
 
     AdditionalInfoValueList.member = Shapes::ShapeRef.new(shape: String1024)
 
+    Alarm.add_member(:alarm_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "alarmArn"))
+    Alarm.add_member(:source, Shapes::ShapeRef.new(shape: String255, location_name: "source"))
+    Alarm.struct_class = Types::Alarm
+
     AlarmRecommendation.add_member(:app_component_name, Shapes::ShapeRef.new(shape: EntityId, deprecated: true, location_name: "appComponentName", metadata: {"deprecatedMessage"=>"An alarm recommendation can be attached to multiple Application Components, hence this property will be replaced by the new property 'appComponentNames'."}))
     AlarmRecommendation.add_member(:app_component_names, Shapes::ShapeRef.new(shape: AppComponentNameList, location_name: "appComponentNames"))
     AlarmRecommendation.add_member(:description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "description"))
@@ -537,6 +543,7 @@ module Aws::ResilienceHub
 
     BatchUpdateRecommendationStatusSuccessfulEntries.member = Shapes::ShapeRef.new(shape: BatchUpdateRecommendationStatusSuccessfulEntry)
 
+    BatchUpdateRecommendationStatusSuccessfulEntry.add_member(:app_component_id, Shapes::ShapeRef.new(shape: EntityName255, location_name: "appComponentId"))
     BatchUpdateRecommendationStatusSuccessfulEntry.add_member(:entry_id, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "entryId"))
     BatchUpdateRecommendationStatusSuccessfulEntry.add_member(:exclude_reason, Shapes::ShapeRef.new(shape: ExcludeRecommendationReason, location_name: "excludeReason"))
     BatchUpdateRecommendationStatusSuccessfulEntry.add_member(:excluded, Shapes::ShapeRef.new(shape: BooleanOptional, required: true, location_name: "excluded"))
@@ -878,6 +885,10 @@ module Aws::ResilienceHub
 
     EventSubscriptionList.member = Shapes::ShapeRef.new(shape: EventSubscription)
 
+    Experiment.add_member(:experiment_arn, Shapes::ShapeRef.new(shape: String255, location_name: "experimentArn"))
+    Experiment.add_member(:experiment_template_id, Shapes::ShapeRef.new(shape: String255, location_name: "experimentTemplateId"))
+    Experiment.struct_class = Types::Experiment
+
     FailedGroupingRecommendationEntries.member = Shapes::ShapeRef.new(shape: FailedGroupingRecommendationEntry)
 
     FailedGroupingRecommendationEntry.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "errorMessage"))
@@ -1218,8 +1229,10 @@ module Aws::ResilienceHub
     RecommendationIdList.member = Shapes::ShapeRef.new(shape: Uuid)
 
     RecommendationItem.add_member(:already_implemented, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "alreadyImplemented"))
+    RecommendationItem.add_member(:discovered_alarm, Shapes::ShapeRef.new(shape: Alarm, location_name: "discoveredAlarm"))
     RecommendationItem.add_member(:exclude_reason, Shapes::ShapeRef.new(shape: ExcludeRecommendationReason, location_name: "excludeReason"))
     RecommendationItem.add_member(:excluded, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "excluded"))
+    RecommendationItem.add_member(:latest_discovered_experiment, Shapes::ShapeRef.new(shape: Experiment, location_name: "latestDiscoveredExperiment"))
     RecommendationItem.add_member(:resource_id, Shapes::ShapeRef.new(shape: String500, location_name: "resourceId"))
     RecommendationItem.add_member(:target_account_id, Shapes::ShapeRef.new(shape: CustomerId, location_name: "targetAccountId"))
     RecommendationItem.add_member(:target_region, Shapes::ShapeRef.new(shape: AwsRegion, location_name: "targetRegion"))
@@ -1431,6 +1444,7 @@ module Aws::ResilienceHub
 
     TerraformSourceList.member = Shapes::ShapeRef.new(shape: TerraformSource)
 
+    TestRecommendation.add_member(:app_component_id, Shapes::ShapeRef.new(shape: EntityName255, location_name: "appComponentId"))
     TestRecommendation.add_member(:app_component_name, Shapes::ShapeRef.new(shape: EntityId, location_name: "appComponentName"))
     TestRecommendation.add_member(:depends_on_alarms, Shapes::ShapeRef.new(shape: AlarmReferenceIdList, location_name: "dependsOnAlarms"))
     TestRecommendation.add_member(:description, Shapes::ShapeRef.new(shape: String500, location_name: "description"))
@@ -1522,6 +1536,7 @@ module Aws::ResilienceHub
 
     UpdateRecommendationStatusRequestEntries.member = Shapes::ShapeRef.new(shape: UpdateRecommendationStatusRequestEntry)
 
+    UpdateRecommendationStatusRequestEntry.add_member(:app_component_id, Shapes::ShapeRef.new(shape: EntityName255, location_name: "appComponentId"))
     UpdateRecommendationStatusRequestEntry.add_member(:entry_id, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "entryId"))
     UpdateRecommendationStatusRequestEntry.add_member(:exclude_reason, Shapes::ShapeRef.new(shape: ExcludeRecommendationReason, location_name: "excludeReason"))
     UpdateRecommendationStatusRequestEntry.add_member(:excluded, Shapes::ShapeRef.new(shape: BooleanOptional, required: true, location_name: "excluded"))

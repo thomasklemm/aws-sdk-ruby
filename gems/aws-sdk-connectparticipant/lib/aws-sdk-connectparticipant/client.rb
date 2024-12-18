@@ -447,10 +447,46 @@ module Aws::ConnectParticipant
 
     # @!group API Operations
 
+    # Cancels the authentication session. The opted out branch of the
+    # Authenticate Customer flow block will be taken.
+    #
+    # <note markdown="1"> The current supported channel is chat. This API is not supported for
+    # Apple Messages for Business, WhatsApp, or SMS chats.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :session_id
+    #   The `sessionId` provided in the `authenticationInitiated` event.
+    #
+    # @option params [required, String] :connection_token
+    #   The authentication token associated with the participant's
+    #   connection.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.cancel_participant_authentication({
+    #     session_id: "SessionId", # required
+    #     connection_token: "ParticipantToken", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/CancelParticipantAuthentication AWS API Documentation
+    #
+    # @overload cancel_participant_authentication(params = {})
+    # @param [Hash] params ({})
+    def cancel_participant_authentication(params = {}, options = {})
+      req = build_request(:cancel_participant_authentication, params)
+      req.send_request(options)
+    end
+
     # Allows you to confirm that the attachment has been uploaded using the
     # pre-signed URL provided in StartAttachmentUpload API. A conflict
     # exception is thrown when an attachment with that identifier is already
     # being uploaded.
+    #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
     #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
@@ -458,11 +494,12 @@ module Aws::ConnectParticipant
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][1].
+    # Version 4 authentication][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [required, Array<String>] :attachment_ids
     #   A list of unique identifiers for the attachments.
@@ -505,6 +542,9 @@ module Aws::ConnectParticipant
 
     # Creates the participant's connection.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
     # <note markdown="1"> `ParticipantToken` is used for invoking this API instead of
     # `ConnectionToken`.
     #
@@ -527,27 +567,28 @@ module Aws::ConnectParticipant
     # obtain a new websocket URL and perform the same steps as before.
     #
     # **Message streaming support**: This API can also be used together with
-    # the [StartContactStreaming][1] API to create a participant connection
+    # the [StartContactStreaming][2] API to create a participant connection
     # for chat contacts that are not using a websocket. For more information
-    # about message streaming, [Enable real-time chat message streaming][2]
+    # about message streaming, [Enable real-time chat message streaming][3]
     # in the *Amazon Connect Administrator Guide*.
     #
     # **Feature specifications**: For information about feature
     # specifications, such as the allowed number of open websocket
-    # connections per participant, see [Feature specifications][3] in the
+    # connections per participant, see [Feature specifications][4] in the
     # *Amazon Connect Administrator Guide*.
     #
     # <note markdown="1"> The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][4].
+    # Version 4 authentication][5].
     #
     #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_StartContactStreaming.html
-    # [2]: https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html
-    # [3]: https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits
-    # [4]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/connect/latest/APIReference/API_StartContactStreaming.html
+    # [3]: https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html
+    # [4]: https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits
+    # [5]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [Array<String>] :type
     #   Type of connection information required. If you need
@@ -600,6 +641,13 @@ module Aws::ConnectParticipant
 
     # Retrieves the view for the specified view token.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    #
     # @option params [required, String] :view_token
     #   An encrypted token originating from the interactive message of a
     #   ShowView block operation. Represents the desired view.
@@ -640,17 +688,21 @@ module Aws::ConnectParticipant
 
     # Disconnects a participant.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
     #
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][1].
+    # Version 4 authentication][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [String] :client_token
     #   A unique, case-sensitive identifier that you provide to ensure the
@@ -690,17 +742,21 @@ module Aws::ConnectParticipant
     # Provides a pre-signed URL for download of a completed attachment. This
     # is an asynchronous API for use with active contacts.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
     #
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][1].
+    # Version 4 authentication][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [required, String] :attachment_id
     #   A unique identifier for the attachment.
@@ -709,22 +765,30 @@ module Aws::ConnectParticipant
     #   The authentication token associated with the participant's
     #   connection.
     #
+    # @option params [Integer] :url_expiry_in_seconds
+    #   The expiration time of the URL in ISO timestamp. It's specified in
+    #   ISO 8601 format: yyyy-MM-ddThh:mm:ss.SSSZ. For example,
+    #   2019-11-08T02:41:28.172Z.
+    #
     # @return [Types::GetAttachmentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetAttachmentResponse#url #url} => String
     #   * {Types::GetAttachmentResponse#url_expiry #url_expiry} => String
+    #   * {Types::GetAttachmentResponse#attachment_size_in_bytes #attachment_size_in_bytes} => Integer
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_attachment({
     #     attachment_id: "ArtifactId", # required
     #     connection_token: "ParticipantToken", # required
+    #     url_expiry_in_seconds: 1,
     #   })
     #
     # @example Response structure
     #
     #   resp.url #=> String
     #   resp.url_expiry #=> String
+    #   resp.attachment_size_in_bytes #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAttachment AWS API Documentation
     #
@@ -735,9 +799,66 @@ module Aws::ConnectParticipant
       req.send_request(options)
     end
 
+    # Retrieves the AuthenticationUrl for the current authentication session
+    # for the AuthenticateCustomer flow block.
+    #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
+    # <note markdown="1"> * This API can only be called within one minute of receiving the
+    #   authenticationInitiated event.
+    #
+    # * The current supported channel is chat. This API is not supported for
+    #   Apple Messages for Business, WhatsApp, or SMS chats.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    #
+    # @option params [required, String] :session_id
+    #   The sessionId provided in the authenticationInitiated event.
+    #
+    # @option params [required, String] :redirect_uri
+    #   The URL where the customer will be redirected after Amazon Cognito
+    #   authorizes the user.
+    #
+    # @option params [required, String] :connection_token
+    #   The authentication token associated with the participant's
+    #   connection.
+    #
+    # @return [Types::GetAuthenticationUrlResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAuthenticationUrlResponse#authentication_url #authentication_url} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_authentication_url({
+    #     session_id: "SessionId", # required
+    #     redirect_uri: "RedirectURI", # required
+    #     connection_token: "ParticipantToken", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.authentication_url #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAuthenticationUrl AWS API Documentation
+    #
+    # @overload get_authentication_url(params = {})
+    # @param [Hash] params ({})
+    def get_authentication_url(params = {}, options = {})
+      req = build_request(:get_authentication_url, params)
+      req.send_request(options)
+    end
+
     # Retrieves a transcript of the session, including details about any
     # attachments. For information about accessing past chat contact
     # transcripts for a persistent chat, see [Enable persistent chat][1].
+    #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][2].
     #
     # If you have a process that consumes events in the transcript of an
     # chat that has ended, note that chat transcripts contain the following
@@ -759,12 +880,13 @@ module Aws::ConnectParticipant
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][2].
+    # Version 4 authentication][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html
-    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [2]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [3]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [String] :contact_id
     #   The contactId from the current contact chain for which transcript is
@@ -863,18 +985,22 @@ module Aws::ConnectParticipant
     # message receipts when a supervisor is barged-in will result in a
     # conflict exception.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][2].
+    #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
     #
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][2].
+    # Version 4 authentication][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html
-    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [2]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [3]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [required, String] :content_type
     #   The content type of the request. Supported types are:
@@ -943,17 +1069,21 @@ module Aws::ConnectParticipant
 
     # Sends a message.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
     #
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][1].
+    # Version 4 authentication][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [required, String] :content_type
     #   The type of the content. Supported types are `text/plain`,
@@ -1020,17 +1150,21 @@ module Aws::ConnectParticipant
     # Provides a pre-signed Amazon S3 URL in response for uploading the file
     # directly to S3.
     #
+    # For security recommendations, see [Amazon Connect Chat security best
+    # practices][1].
+    #
     # <note markdown="1"> `ConnectionToken` is used for invoking this API instead of
     # `ParticipantToken`.
     #
     #  </note>
     #
     # The Amazon Connect Participant Service APIs do not use [Signature
-    # Version 4 authentication][1].
+    # Version 4 authentication][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat
+    # [2]: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
     #
     # @option params [required, String] :content_type
     #   Describes the MIME file type of the attachment. For a list of
@@ -1114,7 +1248,7 @@ module Aws::ConnectParticipant
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connectparticipant'
-      context[:gem_version] = '1.57.0'
+      context[:gem_version] = '1.58.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

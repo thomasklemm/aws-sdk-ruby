@@ -147,6 +147,9 @@ module Aws::DataSync
     FsxProtocol = Shapes::StructureShape.new(name: 'FsxProtocol')
     FsxProtocolNfs = Shapes::StructureShape.new(name: 'FsxProtocolNfs')
     FsxProtocolSmb = Shapes::StructureShape.new(name: 'FsxProtocolSmb')
+    FsxUpdateProtocol = Shapes::StructureShape.new(name: 'FsxUpdateProtocol')
+    FsxUpdateProtocolSmb = Shapes::StructureShape.new(name: 'FsxUpdateProtocolSmb')
+    FsxUpdateSmbDomain = Shapes::StringShape.new(name: 'FsxUpdateSmbDomain')
     FsxWindowsSubdirectory = Shapes::StringShape.new(name: 'FsxWindowsSubdirectory')
     GenerateRecommendationsRequest = Shapes::StructureShape.new(name: 'GenerateRecommendationsRequest')
     GenerateRecommendationsResponse = Shapes::StructureShape.new(name: 'GenerateRecommendationsResponse')
@@ -333,12 +336,24 @@ module Aws::DataSync
     UpdateDiscoveryJobResponse = Shapes::StructureShape.new(name: 'UpdateDiscoveryJobResponse')
     UpdateLocationAzureBlobRequest = Shapes::StructureShape.new(name: 'UpdateLocationAzureBlobRequest')
     UpdateLocationAzureBlobResponse = Shapes::StructureShape.new(name: 'UpdateLocationAzureBlobResponse')
+    UpdateLocationEfsRequest = Shapes::StructureShape.new(name: 'UpdateLocationEfsRequest')
+    UpdateLocationEfsResponse = Shapes::StructureShape.new(name: 'UpdateLocationEfsResponse')
+    UpdateLocationFsxLustreRequest = Shapes::StructureShape.new(name: 'UpdateLocationFsxLustreRequest')
+    UpdateLocationFsxLustreResponse = Shapes::StructureShape.new(name: 'UpdateLocationFsxLustreResponse')
+    UpdateLocationFsxOntapRequest = Shapes::StructureShape.new(name: 'UpdateLocationFsxOntapRequest')
+    UpdateLocationFsxOntapResponse = Shapes::StructureShape.new(name: 'UpdateLocationFsxOntapResponse')
+    UpdateLocationFsxOpenZfsRequest = Shapes::StructureShape.new(name: 'UpdateLocationFsxOpenZfsRequest')
+    UpdateLocationFsxOpenZfsResponse = Shapes::StructureShape.new(name: 'UpdateLocationFsxOpenZfsResponse')
+    UpdateLocationFsxWindowsRequest = Shapes::StructureShape.new(name: 'UpdateLocationFsxWindowsRequest')
+    UpdateLocationFsxWindowsResponse = Shapes::StructureShape.new(name: 'UpdateLocationFsxWindowsResponse')
     UpdateLocationHdfsRequest = Shapes::StructureShape.new(name: 'UpdateLocationHdfsRequest')
     UpdateLocationHdfsResponse = Shapes::StructureShape.new(name: 'UpdateLocationHdfsResponse')
     UpdateLocationNfsRequest = Shapes::StructureShape.new(name: 'UpdateLocationNfsRequest')
     UpdateLocationNfsResponse = Shapes::StructureShape.new(name: 'UpdateLocationNfsResponse')
     UpdateLocationObjectStorageRequest = Shapes::StructureShape.new(name: 'UpdateLocationObjectStorageRequest')
     UpdateLocationObjectStorageResponse = Shapes::StructureShape.new(name: 'UpdateLocationObjectStorageResponse')
+    UpdateLocationS3Request = Shapes::StructureShape.new(name: 'UpdateLocationS3Request')
+    UpdateLocationS3Response = Shapes::StructureShape.new(name: 'UpdateLocationS3Response')
     UpdateLocationSmbRequest = Shapes::StructureShape.new(name: 'UpdateLocationSmbRequest')
     UpdateLocationSmbResponse = Shapes::StructureShape.new(name: 'UpdateLocationSmbResponse')
     UpdateStorageSystemRequest = Shapes::StructureShape.new(name: 'UpdateStorageSystemRequest')
@@ -347,6 +362,8 @@ module Aws::DataSync
     UpdateTaskExecutionResponse = Shapes::StructureShape.new(name: 'UpdateTaskExecutionResponse')
     UpdateTaskRequest = Shapes::StructureShape.new(name: 'UpdateTaskRequest')
     UpdateTaskResponse = Shapes::StructureShape.new(name: 'UpdateTaskResponse')
+    UpdatedEfsAccessPointArn = Shapes::StringShape.new(name: 'UpdatedEfsAccessPointArn')
+    UpdatedEfsIamRoleArn = Shapes::StringShape.new(name: 'UpdatedEfsIamRoleArn')
     VerifyMode = Shapes::StringShape.new(name: 'VerifyMode')
     VpcEndpointId = Shapes::StringShape.new(name: 'VpcEndpointId')
     long = Shapes::IntegerShape.new(name: 'long')
@@ -861,6 +878,16 @@ module Aws::DataSync
     FsxProtocolSmb.add_member(:user, Shapes::ShapeRef.new(shape: SmbUser, required: true, location_name: "User"))
     FsxProtocolSmb.struct_class = Types::FsxProtocolSmb
 
+    FsxUpdateProtocol.add_member(:nfs, Shapes::ShapeRef.new(shape: FsxProtocolNfs, location_name: "NFS"))
+    FsxUpdateProtocol.add_member(:smb, Shapes::ShapeRef.new(shape: FsxUpdateProtocolSmb, location_name: "SMB"))
+    FsxUpdateProtocol.struct_class = Types::FsxUpdateProtocol
+
+    FsxUpdateProtocolSmb.add_member(:domain, Shapes::ShapeRef.new(shape: FsxUpdateSmbDomain, location_name: "Domain"))
+    FsxUpdateProtocolSmb.add_member(:mount_options, Shapes::ShapeRef.new(shape: SmbMountOptions, location_name: "MountOptions"))
+    FsxUpdateProtocolSmb.add_member(:password, Shapes::ShapeRef.new(shape: SmbPassword, location_name: "Password"))
+    FsxUpdateProtocolSmb.add_member(:user, Shapes::ShapeRef.new(shape: SmbUser, location_name: "User"))
+    FsxUpdateProtocolSmb.struct_class = Types::FsxUpdateProtocolSmb
+
     GenerateRecommendationsRequest.add_member(:discovery_job_arn, Shapes::ShapeRef.new(shape: DiscoveryJobArn, required: true, location_name: "DiscoveryJobArn"))
     GenerateRecommendationsRequest.add_member(:resource_ids, Shapes::ShapeRef.new(shape: ResourceIds, required: true, location_name: "ResourceIds"))
     GenerateRecommendationsRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: DiscoveryResourceType, required: true, location_name: "ResourceType"))
@@ -1299,6 +1326,44 @@ module Aws::DataSync
 
     UpdateLocationAzureBlobResponse.struct_class = Types::UpdateLocationAzureBlobResponse
 
+    UpdateLocationEfsRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationEfsRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: EfsSubdirectory, location_name: "Subdirectory"))
+    UpdateLocationEfsRequest.add_member(:access_point_arn, Shapes::ShapeRef.new(shape: UpdatedEfsAccessPointArn, location_name: "AccessPointArn"))
+    UpdateLocationEfsRequest.add_member(:file_system_access_role_arn, Shapes::ShapeRef.new(shape: UpdatedEfsIamRoleArn, location_name: "FileSystemAccessRoleArn"))
+    UpdateLocationEfsRequest.add_member(:in_transit_encryption, Shapes::ShapeRef.new(shape: EfsInTransitEncryption, location_name: "InTransitEncryption"))
+    UpdateLocationEfsRequest.struct_class = Types::UpdateLocationEfsRequest
+
+    UpdateLocationEfsResponse.struct_class = Types::UpdateLocationEfsResponse
+
+    UpdateLocationFsxLustreRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationFsxLustreRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: SmbSubdirectory, location_name: "Subdirectory"))
+    UpdateLocationFsxLustreRequest.struct_class = Types::UpdateLocationFsxLustreRequest
+
+    UpdateLocationFsxLustreResponse.struct_class = Types::UpdateLocationFsxLustreResponse
+
+    UpdateLocationFsxOntapRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationFsxOntapRequest.add_member(:protocol, Shapes::ShapeRef.new(shape: FsxUpdateProtocol, location_name: "Protocol"))
+    UpdateLocationFsxOntapRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: FsxOntapSubdirectory, location_name: "Subdirectory"))
+    UpdateLocationFsxOntapRequest.struct_class = Types::UpdateLocationFsxOntapRequest
+
+    UpdateLocationFsxOntapResponse.struct_class = Types::UpdateLocationFsxOntapResponse
+
+    UpdateLocationFsxOpenZfsRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationFsxOpenZfsRequest.add_member(:protocol, Shapes::ShapeRef.new(shape: FsxProtocol, location_name: "Protocol"))
+    UpdateLocationFsxOpenZfsRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: SmbSubdirectory, location_name: "Subdirectory"))
+    UpdateLocationFsxOpenZfsRequest.struct_class = Types::UpdateLocationFsxOpenZfsRequest
+
+    UpdateLocationFsxOpenZfsResponse.struct_class = Types::UpdateLocationFsxOpenZfsResponse
+
+    UpdateLocationFsxWindowsRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationFsxWindowsRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: FsxWindowsSubdirectory, location_name: "Subdirectory"))
+    UpdateLocationFsxWindowsRequest.add_member(:domain, Shapes::ShapeRef.new(shape: FsxUpdateSmbDomain, location_name: "Domain"))
+    UpdateLocationFsxWindowsRequest.add_member(:user, Shapes::ShapeRef.new(shape: SmbUser, location_name: "User"))
+    UpdateLocationFsxWindowsRequest.add_member(:password, Shapes::ShapeRef.new(shape: SmbPassword, location_name: "Password"))
+    UpdateLocationFsxWindowsRequest.struct_class = Types::UpdateLocationFsxWindowsRequest
+
+    UpdateLocationFsxWindowsResponse.struct_class = Types::UpdateLocationFsxWindowsResponse
+
     UpdateLocationHdfsRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
     UpdateLocationHdfsRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: HdfsSubdirectory, location_name: "Subdirectory"))
     UpdateLocationHdfsRequest.add_member(:name_nodes, Shapes::ShapeRef.new(shape: HdfsNameNodeList, location_name: "NameNodes"))
@@ -1335,6 +1400,14 @@ module Aws::DataSync
     UpdateLocationObjectStorageRequest.struct_class = Types::UpdateLocationObjectStorageRequest
 
     UpdateLocationObjectStorageResponse.struct_class = Types::UpdateLocationObjectStorageResponse
+
+    UpdateLocationS3Request.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
+    UpdateLocationS3Request.add_member(:subdirectory, Shapes::ShapeRef.new(shape: S3Subdirectory, location_name: "Subdirectory"))
+    UpdateLocationS3Request.add_member(:s3_storage_class, Shapes::ShapeRef.new(shape: S3StorageClass, location_name: "S3StorageClass"))
+    UpdateLocationS3Request.add_member(:s3_config, Shapes::ShapeRef.new(shape: S3Config, location_name: "S3Config"))
+    UpdateLocationS3Request.struct_class = Types::UpdateLocationS3Request
+
+    UpdateLocationS3Response.struct_class = Types::UpdateLocationS3Response
 
     UpdateLocationSmbRequest.add_member(:location_arn, Shapes::ShapeRef.new(shape: LocationArn, required: true, location_name: "LocationArn"))
     UpdateLocationSmbRequest.add_member(:subdirectory, Shapes::ShapeRef.new(shape: SmbSubdirectory, location_name: "Subdirectory"))
@@ -2018,6 +2091,56 @@ module Aws::DataSync
         o.errors << Shapes::ShapeRef.new(shape: InternalException)
       end)
 
+      api.add_operation(:update_location_efs, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationEfs"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationEfsRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationEfsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
+      api.add_operation(:update_location_fsx_lustre, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationFsxLustre"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationFsxLustreRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationFsxLustreResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
+      api.add_operation(:update_location_fsx_ontap, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationFsxOntap"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationFsxOntapRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationFsxOntapResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
+      api.add_operation(:update_location_fsx_open_zfs, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationFsxOpenZfs"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationFsxOpenZfsRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationFsxOpenZfsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
+      api.add_operation(:update_location_fsx_windows, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationFsxWindows"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationFsxWindowsRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationFsxWindowsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
       api.add_operation(:update_location_hdfs, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateLocationHdfs"
         o.http_method = "POST"
@@ -2044,6 +2167,16 @@ module Aws::DataSync
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: UpdateLocationObjectStorageRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateLocationObjectStorageResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+      end)
+
+      api.add_operation(:update_location_s3, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateLocationS3"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateLocationS3Request)
+        o.output = Shapes::ShapeRef.new(shape: UpdateLocationS3Response)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InternalException)
       end)

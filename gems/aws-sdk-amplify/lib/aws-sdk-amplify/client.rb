@@ -677,6 +677,10 @@ module Aws::Amplify
     #   resp.app.auto_branch_creation_config.pull_request_environment_name #=> String
     #   resp.app.repository_clone_method #=> String, one of "SSH", "TOKEN", "SIGV4"
     #   resp.app.cache_config.type #=> String, one of "AMPLIFY_MANAGED", "AMPLIFY_MANAGED_NO_COOKIES"
+    #   resp.app.webhook_create_time #=> Time
+    #   resp.app.waf_configuration.web_acl_arn #=> String
+    #   resp.app.waf_configuration.waf_status #=> String, one of "ASSOCIATING", "ASSOCIATION_FAILED", "ASSOCIATION_SUCCESS", "DISASSOCIATING", "DISASSOCIATION_FAILED"
+    #   resp.app.waf_configuration.status_reason #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateApp AWS API Documentation
     #
@@ -1130,6 +1134,10 @@ module Aws::Amplify
     #   resp.app.auto_branch_creation_config.pull_request_environment_name #=> String
     #   resp.app.repository_clone_method #=> String, one of "SSH", "TOKEN", "SIGV4"
     #   resp.app.cache_config.type #=> String, one of "AMPLIFY_MANAGED", "AMPLIFY_MANAGED_NO_COOKIES"
+    #   resp.app.webhook_create_time #=> Time
+    #   resp.app.waf_configuration.web_acl_arn #=> String
+    #   resp.app.waf_configuration.waf_status #=> String, one of "ASSOCIATING", "ASSOCIATION_FAILED", "ASSOCIATION_SUCCESS", "DISASSOCIATING", "DISASSOCIATION_FAILED"
+    #   resp.app.waf_configuration.status_reason #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/DeleteApp AWS API Documentation
     #
@@ -1326,7 +1334,7 @@ module Aws::Amplify
     #   resp.job_summary.commit_message #=> String
     #   resp.job_summary.commit_time #=> Time
     #   resp.job_summary.start_time #=> Time
-    #   resp.job_summary.status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job_summary.status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job_summary.end_time #=> Time
     #   resp.job_summary.job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job_summary.source_url #=> String
@@ -1480,6 +1488,10 @@ module Aws::Amplify
     #   resp.app.auto_branch_creation_config.pull_request_environment_name #=> String
     #   resp.app.repository_clone_method #=> String, one of "SSH", "TOKEN", "SIGV4"
     #   resp.app.cache_config.type #=> String, one of "AMPLIFY_MANAGED", "AMPLIFY_MANAGED_NO_COOKIES"
+    #   resp.app.webhook_create_time #=> Time
+    #   resp.app.waf_configuration.web_acl_arn #=> String
+    #   resp.app.waf_configuration.waf_status #=> String, one of "ASSOCIATING", "ASSOCIATION_FAILED", "ASSOCIATION_SUCCESS", "DISASSOCIATING", "DISASSOCIATION_FAILED"
+    #   resp.app.waf_configuration.status_reason #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/GetApp AWS API Documentation
     #
@@ -1706,7 +1718,7 @@ module Aws::Amplify
     #   resp.job.summary.commit_message #=> String
     #   resp.job.summary.commit_time #=> Time
     #   resp.job.summary.start_time #=> Time
-    #   resp.job.summary.status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job.summary.status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job.summary.end_time #=> Time
     #   resp.job.summary.job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job.summary.source_url #=> String
@@ -1714,7 +1726,7 @@ module Aws::Amplify
     #   resp.job.steps #=> Array
     #   resp.job.steps[0].step_name #=> String
     #   resp.job.steps[0].start_time #=> Time
-    #   resp.job.steps[0].status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job.steps[0].status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job.steps[0].end_time #=> Time
     #   resp.job.steps[0].log_url #=> String
     #   resp.job.steps[0].artifacts_url #=> String
@@ -1840,6 +1852,10 @@ module Aws::Amplify
     #   resp.apps[0].auto_branch_creation_config.pull_request_environment_name #=> String
     #   resp.apps[0].repository_clone_method #=> String, one of "SSH", "TOKEN", "SIGV4"
     #   resp.apps[0].cache_config.type #=> String, one of "AMPLIFY_MANAGED", "AMPLIFY_MANAGED_NO_COOKIES"
+    #   resp.apps[0].webhook_create_time #=> Time
+    #   resp.apps[0].waf_configuration.web_acl_arn #=> String
+    #   resp.apps[0].waf_configuration.waf_status #=> String, one of "ASSOCIATING", "ASSOCIATION_FAILED", "ASSOCIATION_SUCCESS", "DISASSOCIATING", "DISASSOCIATION_FAILED"
+    #   resp.apps[0].waf_configuration.status_reason #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/ListApps AWS API Documentation
@@ -2132,7 +2148,7 @@ module Aws::Amplify
     #   resp.job_summaries[0].commit_message #=> String
     #   resp.job_summaries[0].commit_time #=> Time
     #   resp.job_summaries[0].start_time #=> Time
-    #   resp.job_summaries[0].status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job_summaries[0].status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job_summaries[0].end_time #=> Time
     #   resp.job_summaries[0].job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job_summaries[0].source_url #=> String
@@ -2276,7 +2292,7 @@ module Aws::Amplify
     #   resp.job_summary.commit_message #=> String
     #   resp.job_summary.commit_time #=> Time
     #   resp.job_summary.start_time #=> Time
-    #   resp.job_summary.status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job_summary.status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job_summary.end_time #=> Time
     #   resp.job_summary.job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job_summary.source_url #=> String
@@ -2348,7 +2364,7 @@ module Aws::Amplify
     #   resp.job_summary.commit_message #=> String
     #   resp.job_summary.commit_time #=> Time
     #   resp.job_summary.start_time #=> Time
-    #   resp.job_summary.status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job_summary.status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job_summary.end_time #=> Time
     #   resp.job_summary.job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job_summary.source_url #=> String
@@ -2394,7 +2410,7 @@ module Aws::Amplify
     #   resp.job_summary.commit_message #=> String
     #   resp.job_summary.commit_time #=> Time
     #   resp.job_summary.start_time #=> Time
-    #   resp.job_summary.status #=> String, one of "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
+    #   resp.job_summary.status #=> String, one of "CREATED", "PENDING", "PROVISIONING", "RUNNING", "FAILED", "SUCCEED", "CANCELLING", "CANCELLED"
     #   resp.job_summary.end_time #=> Time
     #   resp.job_summary.job_type #=> String, one of "RELEASE", "RETRY", "MANUAL", "WEB_HOOK"
     #   resp.job_summary.source_url #=> String
@@ -2677,6 +2693,10 @@ module Aws::Amplify
     #   resp.app.auto_branch_creation_config.pull_request_environment_name #=> String
     #   resp.app.repository_clone_method #=> String, one of "SSH", "TOKEN", "SIGV4"
     #   resp.app.cache_config.type #=> String, one of "AMPLIFY_MANAGED", "AMPLIFY_MANAGED_NO_COOKIES"
+    #   resp.app.webhook_create_time #=> Time
+    #   resp.app.waf_configuration.web_acl_arn #=> String
+    #   resp.app.waf_configuration.waf_status #=> String, one of "ASSOCIATING", "ASSOCIATION_FAILED", "ASSOCIATION_SUCCESS", "DISASSOCIATING", "DISASSOCIATION_FAILED"
+    #   resp.app.waf_configuration.status_reason #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/UpdateApp AWS API Documentation
     #
@@ -2974,7 +2994,7 @@ module Aws::Amplify
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-amplify'
-      context[:gem_version] = '1.75.0'
+      context[:gem_version] = '1.76.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

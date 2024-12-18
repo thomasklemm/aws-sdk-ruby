@@ -122,7 +122,9 @@ module Aws
                                   key: ::String,
                                   value: ::String
                                 },
-                              ]
+                              ],
+                              ?preserve_filename: ("ENABLED" | "DISABLED"),
+                              ?enforce_message_signing: ("ENABLED" | "DISABLED")
                             ) -> _CreateAgreementResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAgreementResponseSuccess
 
@@ -142,7 +144,8 @@ module Aws
                                 signing_algorithm: ("SHA256" | "SHA384" | "SHA512" | "SHA1" | "NONE")?,
                                 mdn_signing_algorithm: ("SHA256" | "SHA384" | "SHA512" | "SHA1" | "NONE" | "DEFAULT")?,
                                 mdn_response: ("SYNC" | "NONE")?,
-                                basic_auth_secret_id: ::String?
+                                basic_auth_secret_id: ::String?,
+                                preserve_content_type: ("ENABLED" | "DISABLED")?
                               },
                               access_role: ::String,
                               ?logging_role: ::String,
@@ -1023,7 +1026,9 @@ module Aws
                               ?local_profile_id: ::String,
                               ?partner_profile_id: ::String,
                               ?base_directory: ::String,
-                              ?access_role: ::String
+                              ?access_role: ::String,
+                              ?preserve_filename: ("ENABLED" | "DISABLED"),
+                              ?enforce_message_signing: ("ENABLED" | "DISABLED")
                             ) -> _UpdateAgreementResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAgreementResponseSuccess
 
@@ -1057,7 +1062,8 @@ module Aws
                                 signing_algorithm: ("SHA256" | "SHA384" | "SHA512" | "SHA1" | "NONE")?,
                                 mdn_signing_algorithm: ("SHA256" | "SHA384" | "SHA512" | "SHA1" | "NONE" | "DEFAULT")?,
                                 mdn_response: ("SYNC" | "NONE")?,
-                                basic_auth_secret_id: ::String?
+                                basic_auth_secret_id: ::String?,
+                                preserve_content_type: ("ENABLED" | "DISABLED")?
                               },
                               ?access_role: ::String,
                               ?logging_role: ::String,

@@ -1356,6 +1356,7 @@ module Aws::QuickSight
     PercentageDisplayFormatConfiguration = Shapes::StructureShape.new(name: 'PercentageDisplayFormatConfiguration')
     PercentileAggregation = Shapes::StructureShape.new(name: 'PercentileAggregation')
     PercentileValue = Shapes::FloatShape.new(name: 'PercentileValue')
+    PerformanceConfiguration = Shapes::StructureShape.new(name: 'PerformanceConfiguration')
     PeriodOverPeriodComputation = Shapes::StructureShape.new(name: 'PeriodOverPeriodComputation')
     PeriodToDateComputation = Shapes::StructureShape.new(name: 'PeriodToDateComputation')
     PeriodsBackward = Shapes::IntegerShape.new(name: 'PeriodsBackward')
@@ -1955,6 +1956,9 @@ module Aws::QuickSight
     UnaggregatedFieldList = Shapes::ListShape.new(name: 'UnaggregatedFieldList')
     UndefinedSpecifiedValueType = Shapes::StringShape.new(name: 'UndefinedSpecifiedValueType')
     UnicodeIcon = Shapes::StringShape.new(name: 'UnicodeIcon')
+    UniqueKey = Shapes::StructureShape.new(name: 'UniqueKey')
+    UniqueKeyColumnNameList = Shapes::ListShape.new(name: 'UniqueKeyColumnNameList')
+    UniqueKeyList = Shapes::ListShape.new(name: 'UniqueKeyList')
     UniqueValuesComputation = Shapes::StructureShape.new(name: 'UniqueValuesComputation')
     UnlimitedPixelLength = Shapes::StringShape.new(name: 'UnlimitedPixelLength')
     UnsupportedPricingPlanException = Shapes::StructureShape.new(name: 'UnsupportedPricingPlanException')
@@ -3423,6 +3427,7 @@ module Aws::QuickSight
     CreateDataSetRequest.add_member(:data_set_usage_configuration, Shapes::ShapeRef.new(shape: DataSetUsageConfiguration, location_name: "DataSetUsageConfiguration"))
     CreateDataSetRequest.add_member(:dataset_parameters, Shapes::ShapeRef.new(shape: DatasetParameterList, location_name: "DatasetParameters"))
     CreateDataSetRequest.add_member(:folder_arns, Shapes::ShapeRef.new(shape: FolderArnList, location_name: "FolderArns"))
+    CreateDataSetRequest.add_member(:performance_configuration, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "PerformanceConfiguration"))
     CreateDataSetRequest.struct_class = Types::CreateDataSetRequest
 
     CreateDataSetResponse.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, location_name: "Arn"))
@@ -3982,6 +3987,7 @@ module Aws::QuickSight
     DataSet.add_member(:column_level_permission_rules, Shapes::ShapeRef.new(shape: ColumnLevelPermissionRuleList, location_name: "ColumnLevelPermissionRules"))
     DataSet.add_member(:data_set_usage_configuration, Shapes::ShapeRef.new(shape: DataSetUsageConfiguration, location_name: "DataSetUsageConfiguration"))
     DataSet.add_member(:dataset_parameters, Shapes::ShapeRef.new(shape: DatasetParameterList, location_name: "DatasetParameters"))
+    DataSet.add_member(:performance_configuration, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "PerformanceConfiguration"))
     DataSet.struct_class = Types::DataSet
 
     DataSetArnsList.member = Shapes::ShapeRef.new(shape: Arn)
@@ -7334,6 +7340,9 @@ module Aws::QuickSight
     PercentileAggregation.add_member(:percentile_value, Shapes::ShapeRef.new(shape: PercentileValue, location_name: "PercentileValue"))
     PercentileAggregation.struct_class = Types::PercentileAggregation
 
+    PerformanceConfiguration.add_member(:unique_keys, Shapes::ShapeRef.new(shape: UniqueKeyList, location_name: "UniqueKeys"))
+    PerformanceConfiguration.struct_class = Types::PerformanceConfiguration
+
     PeriodOverPeriodComputation.add_member(:computation_id, Shapes::ShapeRef.new(shape: ShortRestrictiveResourceId, required: true, location_name: "ComputationId"))
     PeriodOverPeriodComputation.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "Name"))
     PeriodOverPeriodComputation.add_member(:time, Shapes::ShapeRef.new(shape: DimensionField, location_name: "Time"))
@@ -9371,6 +9380,13 @@ module Aws::QuickSight
 
     UnaggregatedFieldList.member = Shapes::ShapeRef.new(shape: UnaggregatedField)
 
+    UniqueKey.add_member(:column_names, Shapes::ShapeRef.new(shape: UniqueKeyColumnNameList, required: true, location_name: "ColumnNames"))
+    UniqueKey.struct_class = Types::UniqueKey
+
+    UniqueKeyColumnNameList.member = Shapes::ShapeRef.new(shape: ColumnName)
+
+    UniqueKeyList.member = Shapes::ShapeRef.new(shape: UniqueKey)
+
     UniqueValuesComputation.add_member(:computation_id, Shapes::ShapeRef.new(shape: ShortRestrictiveResourceId, required: true, location_name: "ComputationId"))
     UniqueValuesComputation.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "Name"))
     UniqueValuesComputation.add_member(:category, Shapes::ShapeRef.new(shape: DimensionField, location_name: "Category"))
@@ -9586,6 +9602,7 @@ module Aws::QuickSight
     UpdateDataSetRequest.add_member(:column_level_permission_rules, Shapes::ShapeRef.new(shape: ColumnLevelPermissionRuleList, location_name: "ColumnLevelPermissionRules"))
     UpdateDataSetRequest.add_member(:data_set_usage_configuration, Shapes::ShapeRef.new(shape: DataSetUsageConfiguration, location_name: "DataSetUsageConfiguration"))
     UpdateDataSetRequest.add_member(:dataset_parameters, Shapes::ShapeRef.new(shape: DatasetParameterList, location_name: "DatasetParameters"))
+    UpdateDataSetRequest.add_member(:performance_configuration, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "PerformanceConfiguration"))
     UpdateDataSetRequest.struct_class = Types::UpdateDataSetRequest
 
     UpdateDataSetResponse.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, location_name: "Arn"))

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.141.0 (2024-12-18)
+------------------
+
+* Feature - Release connectivity status query API which is a dedicated high throughput(TPS) API to query a specific device's most recent connectivity state and metadata.
+
 1.140.0 (2024-11-21)
 ------------------
 

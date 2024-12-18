@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.79.0 (2024-12-18)
+------------------
+
+* Feature - Releasing minor partition endpoint updates
+
 1.78.0 (2024-10-18)
 ------------------
 

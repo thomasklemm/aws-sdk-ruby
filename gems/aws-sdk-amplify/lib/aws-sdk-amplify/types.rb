@@ -49,11 +49,11 @@ module Aws::Amplify
     #   @return [String]
     #
     # @!attribute [rw] create_time
-    #   Creates a date and time for the Amplify app.
+    #   A timestamp of when Amplify created the application.
     #   @return [Time]
     #
     # @!attribute [rw] update_time
-    #   Updates the date and time for the Amplify app.
+    #   A timestamp of when Amplify updated the application.
     #   @return [Time]
     #
     # @!attribute [rw] iam_service_role_arn
@@ -146,6 +146,17 @@ module Aws::Amplify
     #   `AMPLIFY_MANAGED` setting.
     #   @return [Types::CacheConfig]
     #
+    # @!attribute [rw] webhook_create_time
+    #   A timestamp of when Amplify created the webhook in your Git
+    #   repository.
+    #   @return [Time]
+    #
+    # @!attribute [rw] waf_configuration
+    #   Describes the Firewall configuration for the Amplify app. Firewall
+    #   support enables you to protect your hosted applications with a
+    #   direct integration with WAF.
+    #   @return [Types::WafConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/App AWS API Documentation
     #
     class App < Struct.new(
@@ -173,7 +184,9 @@ module Aws::Amplify
       :auto_branch_creation_patterns,
       :auto_branch_creation_config,
       :repository_clone_method,
-      :cache_config)
+      :cache_config,
+      :webhook_create_time,
+      :waf_configuration)
       SENSITIVE = [:basic_auth_credentials, :build_spec]
       include Aws::Structure
     end
@@ -372,13 +385,11 @@ module Aws::Amplify
     #   @return [Boolean]
     #
     # @!attribute [rw] create_time
-    #   The creation date and time for a branch that is part of an Amplify
-    #   app.
+    #   A timestamp of when Amplify created the branch.
     #   @return [Time]
     #
     # @!attribute [rw] update_time
-    #   The last updated date and time for a branch that is part of an
-    #   Amplify app.
+    #   A timestamp for the last updated time for a branch.
     #   @return [Time]
     #
     # @!attribute [rw] environment_variables
@@ -3089,6 +3100,40 @@ module Aws::Amplify
       include Aws::Structure
     end
 
+    # Describes the Firewall configuration for a hosted Amplify application.
+    # Firewall support enables you to protect your web applications with a
+    # direct integration with WAF. For more information about using WAF
+    # protections for an Amplify application, see [Firewall support for
+    # hosted sites][1] in the *Amplify User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amplify/latest/userguide/WAF-integration.html
+    #
+    # @!attribute [rw] web_acl_arn
+    #   The Amazon Resource Name (ARN) for the web ACL associated with an
+    #   Amplify app.
+    #   @return [String]
+    #
+    # @!attribute [rw] waf_status
+    #   The status of the process to associate or disassociate a web ACL to
+    #   an Amplify app.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason for the current status of the Firewall configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/WafConfiguration AWS API Documentation
+    #
+    class WafConfiguration < Struct.new(
+      :web_acl_arn,
+      :waf_status,
+      :status_reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes a webhook that connects repository events to an Amplify app.
     #
     # @!attribute [rw] webhook_arn
@@ -3112,11 +3157,13 @@ module Aws::Amplify
     #   @return [String]
     #
     # @!attribute [rw] create_time
-    #   The create date and time for a webhook.
+    #   A timestamp of when Amplify created the webhook in your Git
+    #   repository.
     #   @return [Time]
     #
     # @!attribute [rw] update_time
-    #   Updates the date and time for a webhook.
+    #   A timestamp of when Amplify updated the webhook in your Git
+    #   repository.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/Webhook AWS API Documentation

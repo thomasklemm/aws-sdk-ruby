@@ -2809,6 +2809,19 @@ module Aws
                           ) -> _GetStatisticsResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetStatisticsResponseSuccess
 
+      interface _GetThingConnectivityDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetThingConnectivityDataResponse]
+        def thing_name: () -> ::String
+        def connected: () -> bool
+        def timestamp: () -> ::Time
+        def disconnect_reason: () -> ("AUTH_ERROR" | "CLIENT_INITIATED_DISCONNECT" | "CLIENT_ERROR" | "CONNECTION_LOST" | "DUPLICATE_CLIENTID" | "FORBIDDEN_ACCESS" | "MQTT_KEEP_ALIVE_TIMEOUT" | "SERVER_ERROR" | "SERVER_INITIATED_DISCONNECT" | "THROTTLED" | "WEBSOCKET_TTL_EXPIRATION" | "CUSTOMAUTH_TTL_EXPIRATION" | "UNKNOWN" | "NONE")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#get_thing_connectivity_data-instance_method
+      def get_thing_connectivity_data: (
+                                         thing_name: ::String
+                                       ) -> _GetThingConnectivityDataResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetThingConnectivityDataResponseSuccess
+
       interface _GetTopicRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTopicRuleResponse]
         def rule_arn: () -> ::String

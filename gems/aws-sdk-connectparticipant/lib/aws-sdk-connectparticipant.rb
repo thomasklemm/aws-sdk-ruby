@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:connectparticipant)
 # structure.
 #
 #     connect_participant = Aws::ConnectParticipant::Client.new
-#     resp = connect_participant.complete_attachment_upload(params)
+#     resp = connect_participant.cancel_participant_authentication(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::ConnectParticipant
   autoload :EndpointProvider, 'aws-sdk-connectparticipant/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-connectparticipant/endpoints'
 
-  GEM_VERSION = '1.57.0'
+  GEM_VERSION = '1.58.0'
 
 end
 

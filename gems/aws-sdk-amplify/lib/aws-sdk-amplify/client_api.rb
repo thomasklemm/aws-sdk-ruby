@@ -229,11 +229,15 @@ module Aws::Amplify
     UpdateWebhookResult = Shapes::StructureShape.new(name: 'UpdateWebhookResult')
     UploadUrl = Shapes::StringShape.new(name: 'UploadUrl')
     Verified = Shapes::BooleanShape.new(name: 'Verified')
+    WafConfiguration = Shapes::StructureShape.new(name: 'WafConfiguration')
+    WafStatus = Shapes::StringShape.new(name: 'WafStatus')
+    WebAclArn = Shapes::StringShape.new(name: 'WebAclArn')
     Webhook = Shapes::StructureShape.new(name: 'Webhook')
     WebhookArn = Shapes::StringShape.new(name: 'WebhookArn')
     WebhookId = Shapes::StringShape.new(name: 'WebhookId')
     WebhookUrl = Shapes::StringShape.new(name: 'WebhookUrl')
     Webhooks = Shapes::ListShape.new(name: 'Webhooks')
+    webhookCreateTime = Shapes::TimestampShape.new(name: 'webhookCreateTime')
 
     App.add_member(:app_id, Shapes::ShapeRef.new(shape: AppId, required: true, location_name: "appId"))
     App.add_member(:app_arn, Shapes::ShapeRef.new(shape: AppArn, required: true, location_name: "appArn"))
@@ -260,6 +264,8 @@ module Aws::Amplify
     App.add_member(:auto_branch_creation_config, Shapes::ShapeRef.new(shape: AutoBranchCreationConfig, location_name: "autoBranchCreationConfig"))
     App.add_member(:repository_clone_method, Shapes::ShapeRef.new(shape: RepositoryCloneMethod, location_name: "repositoryCloneMethod"))
     App.add_member(:cache_config, Shapes::ShapeRef.new(shape: CacheConfig, location_name: "cacheConfig"))
+    App.add_member(:webhook_create_time, Shapes::ShapeRef.new(shape: webhookCreateTime, location_name: "webhookCreateTime"))
+    App.add_member(:waf_configuration, Shapes::ShapeRef.new(shape: WafConfiguration, location_name: "wafConfiguration"))
     App.struct_class = Types::App
 
     Apps.member = Shapes::ShapeRef.new(shape: App)
@@ -830,6 +836,11 @@ module Aws::Amplify
 
     UpdateWebhookResult.add_member(:webhook, Shapes::ShapeRef.new(shape: Webhook, required: true, location_name: "webhook"))
     UpdateWebhookResult.struct_class = Types::UpdateWebhookResult
+
+    WafConfiguration.add_member(:web_acl_arn, Shapes::ShapeRef.new(shape: WebAclArn, location_name: "webAclArn"))
+    WafConfiguration.add_member(:waf_status, Shapes::ShapeRef.new(shape: WafStatus, location_name: "wafStatus"))
+    WafConfiguration.add_member(:status_reason, Shapes::ShapeRef.new(shape: StatusReason, location_name: "statusReason"))
+    WafConfiguration.struct_class = Types::WafConfiguration
 
     Webhook.add_member(:webhook_arn, Shapes::ShapeRef.new(shape: WebhookArn, required: true, location_name: "webhookArn"))
     Webhook.add_member(:webhook_id, Shapes::ShapeRef.new(shape: WebhookId, required: true, location_name: "webhookId"))

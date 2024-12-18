@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.94.0 (2024-12-18)
+------------------
+
+* Feature - AWS DataSync introduces the ability to update attributes for in-cloud locations.
+
 1.93.0 (2024-11-18)
 ------------------
 

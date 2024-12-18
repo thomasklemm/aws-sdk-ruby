@@ -771,8 +771,8 @@ module Aws::DataSync
     #
     # @option params [String] :subdirectory
     #   Specifies a mount path for your Amazon EFS file system. This is where
-    #   DataSync reads or writes data (depending on if this is a source or
-    #   destination location) on your file system.
+    #   DataSync reads or writes data on your file system (depending on if
+    #   this is a source or destination location).
     #
     #   By default, DataSync uses the root directory (or [access point][1] if
     #   you provide one by using `AccessPointArn`). You can also include
@@ -878,22 +878,35 @@ module Aws::DataSync
     # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-lustre-location.html#create-lustre-location-access
     #
     # @option params [required, String] :fsx_filesystem_arn
-    #   The Amazon Resource Name (ARN) for the FSx for Lustre file system.
+    #   Specifies the Amazon Resource Name (ARN) of the FSx for Lustre file
+    #   system.
     #
     # @option params [required, Array<String>] :security_group_arns
-    #   The Amazon Resource Names (ARNs) of the security groups that are used
-    #   to configure the FSx for Lustre file system.
+    #   Specifies the Amazon Resource Names (ARNs) of up to five security
+    #   groups that provide access to your FSx for Lustre file system.
+    #
+    #   The security groups must be able to access the file system's ports.
+    #   The file system must also allow access from the security groups. For
+    #   information about file system access, see the [ *Amazon FSx for Lustre
+    #   User Guide* ][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html
     #
     # @option params [String] :subdirectory
-    #   A subdirectory in the location's path. This subdirectory in the FSx
-    #   for Lustre file system is used to read data from the FSx for Lustre
-    #   source location or write data to the FSx for Lustre destination.
+    #   Specifies a mount path for your FSx for Lustre file system. The path
+    #   can include subdirectories.
+    #
+    #   When the location is used as a source, DataSync reads data from the
+    #   mount path. When the location is used as a destination, DataSync
+    #   writes data to the mount path. If you don't include this parameter,
+    #   DataSync uses the file system's root directory (`/`).
     #
     # @option params [Array<Types::TagListEntry>] :tags
-    #   The key-value pair that represents a tag that you want to add to the
-    #   resource. The value can be an empty string. This value helps you
-    #   manage, filter, and search for your resources. We recommend that you
-    #   create a name tag for your location.
+    #   Specifies labels that help you categorize, filter, and search for your
+    #   Amazon Web Services resources. We recommend creating at least a name
+    #   tag for your location.
     #
     # @return [Types::CreateLocationFsxLustreResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -960,8 +973,8 @@ module Aws::DataSync
     #   system where you want to copy data to or from.
     #
     # @option params [String] :subdirectory
-    #   Specifies a path to the file share in the SVM where you'll copy your
-    #   data.
+    #   Specifies a path to the file share in the SVM where you want to
+    #   transfer data to or from.
     #
     #   You can specify a junction path (also known as a mount point), qtree
     #   path (for NFS file shares), or share name (for SMB file shares). For
@@ -1175,8 +1188,8 @@ module Aws::DataSync
     #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions
     #
     # @option params [String] :domain
-    #   Specifies the name of the Microsoft Active Directory domain that the
-    #   FSx for Windows File Server file system belongs to.
+    #   Specifies the name of the Windows domain that the FSx for Windows File
+    #   Server file system belongs to.
     #
     #   If you have multiple Active Directory domains in your environment,
     #   configuring this parameter makes sure that DataSync connects to the
@@ -1372,16 +1385,9 @@ module Aws::DataSync
     # Before you begin, make sure that you understand how DataSync [accesses
     # NFS file servers][1].
     #
-    # <note markdown="1"> If you're copying data to or from an Snowcone device, you can also
-    # use `CreateLocationNfs` to create your transfer location. For more
-    # information, see [Configuring transfers with Snowcone][2].
-    #
-    #  </note>
-    #
     #
     #
     # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs
-    # [2]: https://docs.aws.amazon.com/datasync/latest/userguide/nfs-on-snowcone.html
     #
     # @option params [required, String] :subdirectory
     #   Specifies the export path in your NFS file server that you want
@@ -1635,7 +1641,8 @@ module Aws::DataSync
     #   Specifies the Amazon Resource Name (ARN) of the Identity and Access
     #   Management (IAM) role that DataSync uses to access your S3 bucket.
     #
-    #   For more information, see [Accessing S3 buckets][1].
+    #   For more information, see [Providing DataSync access to S3
+    #   buckets][1].
     #
     #
     #
@@ -4040,8 +4047,15 @@ module Aws::DataSync
       req.send_request(options)
     end
 
-    # Modifies some configurations of the Microsoft Azure Blob Storage
-    # transfer location that you're using with DataSync.
+    # Modifies the following configurations of the Microsoft Azure Blob
+    # Storage transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with Azure
+    # Blob Storage][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html
     #
     # @option params [required, String] :location_arn
     #   Specifies the ARN of the Azure Blob Storage transfer location that
@@ -4116,8 +4130,335 @@ module Aws::DataSync
       req.send_request(options)
     end
 
-    # Updates some parameters of a previously created location for a Hadoop
-    # Distributed File System cluster.
+    # Modifies the following configuration parameters of the Amazon EFS
+    # transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with Amazon
+    # EFS][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the Amazon Resource Name (ARN) of the Amazon EFS transfer
+    #   location that you're updating.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a mount path for your Amazon EFS file system. This is where
+    #   DataSync reads or writes data on your file system (depending on if
+    #   this is a source or destination location).
+    #
+    #   By default, DataSync uses the root directory (or [access point][1] if
+    #   you provide one by using `AccessPointArn`). You can also include
+    #   subdirectories using forward slashes (for example, `/path/to/folder`).
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/efs/latest/ug/efs-access-points.html
+    #
+    # @option params [String] :access_point_arn
+    #   Specifies the Amazon Resource Name (ARN) of the access point that
+    #   DataSync uses to mount your Amazon EFS file system.
+    #
+    #   For more information, see [Accessing restricted Amazon EFS file
+    #   systems][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-iam
+    #
+    # @option params [String] :file_system_access_role_arn
+    #   Specifies an Identity and Access Management (IAM) role that allows
+    #   DataSync to access your Amazon EFS file system.
+    #
+    #   For information on creating this role, see [Creating a DataSync IAM
+    #   role for Amazon EFS file system access][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-iam-role
+    #
+    # @option params [String] :in_transit_encryption
+    #   Specifies whether you want DataSync to use Transport Layer Security
+    #   (TLS) 1.2 encryption when it transfers data to or from your Amazon EFS
+    #   file system.
+    #
+    #   If you specify an access point using `AccessPointArn` or an IAM role
+    #   using `FileSystemAccessRoleArn`, you must set this parameter to
+    #   `TLS1_2`.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_efs({
+    #     location_arn: "LocationArn", # required
+    #     subdirectory: "EfsSubdirectory",
+    #     access_point_arn: "UpdatedEfsAccessPointArn",
+    #     file_system_access_role_arn: "UpdatedEfsIamRoleArn",
+    #     in_transit_encryption: "NONE", # accepts NONE, TLS1_2
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationEfs AWS API Documentation
+    #
+    # @overload update_location_efs(params = {})
+    # @param [Hash] params ({})
+    def update_location_efs(params = {}, options = {})
+      req = build_request(:update_location_efs, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Amazon FSx for
+    # Lustre transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with FSx for
+    # Lustre][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-lustre-location.html
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the Amazon Resource Name (ARN) of the FSx for Lustre
+    #   transfer location that you're updating.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a mount path for your FSx for Lustre file system. The path
+    #   can include subdirectories.
+    #
+    #   When the location is used as a source, DataSync reads data from the
+    #   mount path. When the location is used as a destination, DataSync
+    #   writes data to the mount path. If you don't include this parameter,
+    #   DataSync uses the file system's root directory (`/`).
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_fsx_lustre({
+    #     location_arn: "LocationArn", # required
+    #     subdirectory: "SmbSubdirectory",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationFsxLustre AWS API Documentation
+    #
+    # @overload update_location_fsx_lustre(params = {})
+    # @param [Hash] params ({})
+    def update_location_fsx_lustre(params = {}, options = {})
+      req = build_request(:update_location_fsx_lustre, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Amazon FSx for
+    # NetApp ONTAP transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with FSx for
+    # ONTAP][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the Amazon Resource Name (ARN) of the FSx for ONTAP transfer
+    #   location that you're updating.
+    #
+    # @option params [Types::FsxUpdateProtocol] :protocol
+    #   Specifies the data transfer protocol that DataSync uses to access your
+    #   Amazon FSx file system.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a path to the file share in the storage virtual machine
+    #   (SVM) where you want to transfer data to or from.
+    #
+    #   You can specify a junction path (also known as a mount point), qtree
+    #   path (for NFS file shares), or share name (for SMB file shares). For
+    #   example, your mount path might be `/vol1`, `/vol1/tree1`, or
+    #   `/share1`.
+    #
+    #   <note markdown="1"> Don't specify a junction path in the SVM's root volume. For more
+    #   information, see [Managing FSx for ONTAP storage virtual machines][1]
+    #   in the *Amazon FSx for NetApp ONTAP User Guide*.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/managing-svms.html
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_fsx_ontap({
+    #     location_arn: "LocationArn", # required
+    #     protocol: {
+    #       nfs: {
+    #         mount_options: {
+    #           version: "AUTOMATIC", # accepts AUTOMATIC, NFS3, NFS4_0, NFS4_1
+    #         },
+    #       },
+    #       smb: {
+    #         domain: "FsxUpdateSmbDomain",
+    #         mount_options: {
+    #           version: "AUTOMATIC", # accepts AUTOMATIC, SMB2, SMB3, SMB1, SMB2_0
+    #         },
+    #         password: "SmbPassword",
+    #         user: "SmbUser",
+    #       },
+    #     },
+    #     subdirectory: "FsxOntapSubdirectory",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationFsxOntap AWS API Documentation
+    #
+    # @overload update_location_fsx_ontap(params = {})
+    # @param [Hash] params ({})
+    def update_location_fsx_ontap(params = {}, options = {})
+      req = build_request(:update_location_fsx_ontap, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Amazon FSx for
+    # OpenZFS transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with FSx for
+    # OpenZFS][1].
+    #
+    # <note markdown="1"> Request parameters related to `SMB` aren't supported with the
+    # `UpdateLocationFsxOpenZfs` operation.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the Amazon Resource Name (ARN) of the FSx for OpenZFS
+    #   transfer location that you're updating.
+    #
+    # @option params [Types::FsxProtocol] :protocol
+    #   Specifies the data transfer protocol that DataSync uses to access your
+    #   Amazon FSx file system.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a subdirectory in the location's path that must begin with
+    #   `/fsx`. DataSync uses this subdirectory to read or write data
+    #   (depending on whether the file system is a source or destination
+    #   location).
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_fsx_open_zfs({
+    #     location_arn: "LocationArn", # required
+    #     protocol: {
+    #       nfs: {
+    #         mount_options: {
+    #           version: "AUTOMATIC", # accepts AUTOMATIC, NFS3, NFS4_0, NFS4_1
+    #         },
+    #       },
+    #       smb: {
+    #         domain: "SmbDomain",
+    #         mount_options: {
+    #           version: "AUTOMATIC", # accepts AUTOMATIC, SMB2, SMB3, SMB1, SMB2_0
+    #         },
+    #         password: "SmbPassword", # required
+    #         user: "SmbUser", # required
+    #       },
+    #     },
+    #     subdirectory: "SmbSubdirectory",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationFsxOpenZfs AWS API Documentation
+    #
+    # @overload update_location_fsx_open_zfs(params = {})
+    # @param [Hash] params ({})
+    def update_location_fsx_open_zfs(params = {}, options = {})
+      req = build_request(:update_location_fsx_open_zfs, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Amazon FSx for
+    # Windows File Server transfer location that you're using with
+    # DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with FSx for
+    # Windows File Server][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the ARN of the FSx for Windows File Server transfer location
+    #   that you're updating.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a mount path for your file system using forward slashes.
+    #   DataSync uses this subdirectory to read or write data (depending on
+    #   whether the file system is a source or destination location).
+    #
+    # @option params [String] :domain
+    #   Specifies the name of the Windows domain that your FSx for Windows
+    #   File Server file system belongs to.
+    #
+    #   If you have multiple Active Directory domains in your environment,
+    #   configuring this parameter makes sure that DataSync connects to the
+    #   right file system.
+    #
+    # @option params [String] :user
+    #   Specifies the user with the permissions to mount and access the files,
+    #   folders, and file metadata in your FSx for Windows File Server file
+    #   system.
+    #
+    #   For information about choosing a user with the right level of access
+    #   for your transfer, see [required permissions][1] for FSx for Windows
+    #   File Server locations.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions
+    #
+    # @option params [String] :password
+    #   Specifies the password of the user with the permissions to mount and
+    #   access the files, folders, and file metadata in your FSx for Windows
+    #   File Server file system.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_fsx_windows({
+    #     location_arn: "LocationArn", # required
+    #     subdirectory: "FsxWindowsSubdirectory",
+    #     domain: "FsxUpdateSmbDomain",
+    #     user: "SmbUser",
+    #     password: "SmbPassword",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationFsxWindows AWS API Documentation
+    #
+    # @overload update_location_fsx_windows(params = {})
+    # @param [Hash] params ({})
+    def update_location_fsx_windows(params = {}, options = {})
+      req = build_request(:update_location_fsx_windows, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Hadoop
+    # Distributed File System (HDFS) transfer location that you're using
+    # with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with an HDFS
+    # cluster][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-hdfs-location.html
     #
     # @option params [required, String] :location_arn
     #   The Amazon Resource Name (ARN) of the source HDFS cluster location.
@@ -4212,11 +4553,11 @@ module Aws::DataSync
       req.send_request(options)
     end
 
-    # Modifies some configurations of the Network File System (NFS) transfer
-    # location that you're using with DataSync.
+    # Modifies the following configuration parameters of the Network File
+    # System (NFS) transfer location that you're using with DataSync.
     #
-    # For more information, see [Configuring transfers to or from an NFS
-    # file server][1].
+    # For more information, see [Configuring transfers with an NFS file
+    # server][1].
     #
     #
     #
@@ -4269,8 +4610,15 @@ module Aws::DataSync
       req.send_request(options)
     end
 
-    # Updates some parameters of an existing DataSync location for an object
-    # storage system.
+    # Modifies the following configuration parameters of the object storage
+    # transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with an
+    # object storage system][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html
     #
     # @option params [required, String] :location_arn
     #   Specifies the ARN of the object storage system location that you're
@@ -4354,8 +4702,99 @@ module Aws::DataSync
       req.send_request(options)
     end
 
-    # Updates some of the parameters of a Server Message Block (SMB) file
-    # server location that you can use for DataSync transfers.
+    # Modifies the following configuration parameters of the Amazon S3
+    # transfer location that you're using with DataSync.
+    #
+    # Before you begin, make sure that you read the following topics:
+    #
+    #  * [Storage class considerations with Amazon S3 locations][1]
+    #
+    # * [Evaluating S3 request costs when using DataSync][2]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes
+    # [2]: https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests
+    #
+    # @option params [required, String] :location_arn
+    #   Specifies the Amazon Resource Name (ARN) of the Amazon S3 transfer
+    #   location that you're updating.
+    #
+    # @option params [String] :subdirectory
+    #   Specifies a prefix in the S3 bucket that DataSync reads from or writes
+    #   to (depending on whether the bucket is a source or destination
+    #   location).
+    #
+    #   <note markdown="1"> DataSync can't transfer objects with a prefix that begins with a
+    #   slash (`/`) or includes `//`, `/./`, or `/../` patterns. For example:
+    #
+    #    * `/photos`
+    #
+    #   * `photos//2006/January`
+    #
+    #   * `photos/./2006/February`
+    #
+    #   * `photos/../2006/March`
+    #
+    #    </note>
+    #
+    # @option params [String] :s3_storage_class
+    #   Specifies the storage class that you want your objects to use when
+    #   Amazon S3 is a transfer destination.
+    #
+    #   For buckets in Amazon Web Services Regions, the storage class defaults
+    #   to `STANDARD`. For buckets on Outposts, the storage class defaults to
+    #   `OUTPOSTS`.
+    #
+    #   For more information, see [Storage class considerations with Amazon S3
+    #   transfers][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes
+    #
+    # @option params [Types::S3Config] :s3_config
+    #   Specifies the Amazon Resource Name (ARN) of the Identity and Access
+    #   Management (IAM) role that DataSync uses to access your S3 bucket.
+    #
+    #   For more information, see [Providing DataSync access to S3
+    #   buckets][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-access
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_location_s3({
+    #     location_arn: "LocationArn", # required
+    #     subdirectory: "S3Subdirectory",
+    #     s3_storage_class: "STANDARD", # accepts STANDARD, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, GLACIER, DEEP_ARCHIVE, OUTPOSTS, GLACIER_INSTANT_RETRIEVAL
+    #     s3_config: {
+    #       bucket_access_role_arn: "IamRoleArn", # required
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationS3 AWS API Documentation
+    #
+    # @overload update_location_s3(params = {})
+    # @param [Hash] params ({})
+    def update_location_s3(params = {}, options = {})
+      req = build_request(:update_location_s3, params)
+      req.send_request(options)
+    end
+
+    # Modifies the following configuration parameters of the Server Message
+    # Block (SMB) transfer location that you're using with DataSync.
+    #
+    # For more information, see [Configuring DataSync transfers with an SMB
+    # file server][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html
     #
     # @option params [required, String] :location_arn
     #   Specifies the ARN of the SMB location that you want to update.
@@ -4774,7 +5213,7 @@ module Aws::DataSync
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-datasync'
-      context[:gem_version] = '1.93.0'
+      context[:gem_version] = '1.94.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

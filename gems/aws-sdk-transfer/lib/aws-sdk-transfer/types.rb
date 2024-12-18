@@ -119,6 +119,14 @@ module Aws::Transfer
     #   'BasicAuthSecretId=""'`
     #   @return [String]
     #
+    # @!attribute [rw] preserve_content_type
+    #   Allows you to use the Amazon S3 `Content-Type` that is associated
+    #   with objects in S3 instead of having the content type mapped based
+    #   on the file extension. This parameter is enabled by default when you
+    #   create an AS2 connector from the console, but disabled by default
+    #   when you create an AS2 connector by calling the API directly.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/As2ConnectorConfig AWS API Documentation
     #
     class As2ConnectorConfig < Struct.new(
@@ -130,7 +138,8 @@ module Aws::Transfer
       :signing_algorithm,
       :mdn_signing_algorithm,
       :mdn_response,
-      :basic_auth_secret_id)
+      :basic_auth_secret_id,
+      :preserve_content_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -480,6 +489,34 @@ module Aws::Transfer
     #   Key-value pairs that can be used to group and search for agreements.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] preserve_filename
+    #   Determines whether or not Transfer Family appends a unique string of
+    #   characters to the end of the AS2 message payload filename when
+    #   saving it.
+    #
+    #   * `ENABLED`: the filename provided by your trading parter is
+    #     preserved when the file is saved.
+    #
+    #   * `DISABLED` (default value): when Transfer Family saves the file,
+    #     the filename is adjusted, as described in [File names and
+    #     locations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2
+    #   @return [String]
+    #
+    # @!attribute [rw] enforce_message_signing
+    #   Determines whether or not unsigned messages from your trading
+    #   partners will be accepted.
+    #
+    #   * `ENABLED`: Transfer Family rejects unsigned messages from your
+    #     trading partner.
+    #
+    #   * `DISABLED` (default value): Transfer Family accepts unsigned
+    #     messages from your trading partner.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateAgreementRequest AWS API Documentation
     #
     class CreateAgreementRequest < Struct.new(
@@ -490,7 +527,9 @@ module Aws::Transfer
       :base_directory,
       :access_role,
       :status,
-      :tags)
+      :tags,
+      :preserve_filename,
+      :enforce_message_signing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2193,6 +2232,34 @@ module Aws::Transfer
     #   Key-value pairs that can be used to group and search for agreements.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] preserve_filename
+    #   Determines whether or not Transfer Family appends a unique string of
+    #   characters to the end of the AS2 message payload filename when
+    #   saving it.
+    #
+    #   * `ENABLED`: the filename provided by your trading parter is
+    #     preserved when the file is saved.
+    #
+    #   * `DISABLED` (default value): when Transfer Family saves the file,
+    #     the filename is adjusted, as described in [File names and
+    #     locations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2
+    #   @return [String]
+    #
+    # @!attribute [rw] enforce_message_signing
+    #   Determines whether or not unsigned messages from your trading
+    #   partners will be accepted.
+    #
+    #   * `ENABLED`: Transfer Family rejects unsigned messages from your
+    #     trading partner.
+    #
+    #   * `DISABLED` (default value): Transfer Family accepts unsigned
+    #     messages from your trading partner.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedAgreement AWS API Documentation
     #
     class DescribedAgreement < Struct.new(
@@ -2205,7 +2272,9 @@ module Aws::Transfer
       :partner_profile_id,
       :base_directory,
       :access_role,
-      :tags)
+      :tags,
+      :preserve_filename,
+      :enforce_message_signing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2233,9 +2302,8 @@ module Aws::Transfer
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The certificate can be either `ACTIVE`, `PENDING_ROTATION`, or
-    #   `INACTIVE`. `PENDING_ROTATION` means that this certificate will
-    #   replace the current certificate when it expires.
+    #   Currently, the only available status is `ACTIVE`: all other values
+    #   are reserved for future use.
     #   @return [String]
     #
     # @!attribute [rw] certificate
@@ -6187,6 +6255,34 @@ module Aws::Transfer
     #   Manager.
     #   @return [String]
     #
+    # @!attribute [rw] preserve_filename
+    #   Determines whether or not Transfer Family appends a unique string of
+    #   characters to the end of the AS2 message payload filename when
+    #   saving it.
+    #
+    #   * `ENABLED`: the filename provided by your trading parter is
+    #     preserved when the file is saved.
+    #
+    #   * `DISABLED` (default value): when Transfer Family saves the file,
+    #     the filename is adjusted, as described in [File names and
+    #     locations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2
+    #   @return [String]
+    #
+    # @!attribute [rw] enforce_message_signing
+    #   Determines whether or not unsigned messages from your trading
+    #   partners will be accepted.
+    #
+    #   * `ENABLED`: Transfer Family rejects unsigned messages from your
+    #     trading partner.
+    #
+    #   * `DISABLED` (default value): Transfer Family accepts unsigned
+    #     messages from your trading partner.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateAgreementRequest AWS API Documentation
     #
     class UpdateAgreementRequest < Struct.new(
@@ -6197,7 +6293,9 @@ module Aws::Transfer
       :local_profile_id,
       :partner_profile_id,
       :base_directory,
-      :access_role)
+      :access_role,
+      :preserve_filename,
+      :enforce_message_signing)
       SENSITIVE = []
       include Aws::Structure
     end

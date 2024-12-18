@@ -2469,6 +2469,19 @@ module Aws::IoT
       SENSITIVE: []
     end
 
+    class GetThingConnectivityDataRequest
+      attr_accessor thing_name: ::String
+      SENSITIVE: [:thing_name]
+    end
+
+    class GetThingConnectivityDataResponse
+      attr_accessor thing_name: ::String
+      attr_accessor connected: bool
+      attr_accessor timestamp: ::Time
+      attr_accessor disconnect_reason: ("AUTH_ERROR" | "CLIENT_INITIATED_DISCONNECT" | "CLIENT_ERROR" | "CONNECTION_LOST" | "DUPLICATE_CLIENTID" | "FORBIDDEN_ACCESS" | "MQTT_KEEP_ALIVE_TIMEOUT" | "SERVER_ERROR" | "SERVER_INITIATED_DISCONNECT" | "THROTTLED" | "WEBSOCKET_TTL_EXPIRATION" | "CUSTOMAUTH_TTL_EXPIRATION" | "UNKNOWN" | "NONE")
+      SENSITIVE: [:thing_name]
+    end
+
     class GetTopicRuleDestinationRequest
       attr_accessor arn: ::String
       SENSITIVE: []

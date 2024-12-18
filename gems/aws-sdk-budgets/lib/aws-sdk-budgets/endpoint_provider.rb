@@ -31,6 +31,12 @@ module Aws::Budgets
           if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws-cn") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
             return Aws::Endpoints::Endpoint.new(url: "https://budgets.amazonaws.com.cn", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"budgets", "signingRegion"=>"cn-northwest-1"}]})
           end
+          if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws-iso") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
+            return Aws::Endpoints::Endpoint.new(url: "https://budgets.c2s.ic.gov", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"budgets", "signingRegion"=>"us-iso-east-1"}]})
+          end
+          if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws-iso-b") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
+            return Aws::Endpoints::Endpoint.new(url: "https://budgets.global.sc2s.sgov.gov", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"budgets", "signingRegion"=>"us-isob-east-1"}]})
+          end
           if Aws::Endpoints::Matchers.string_equals?(Aws::Endpoints::Matchers.attr(partition_result, "name"), "aws-iso-e") && Aws::Endpoints::Matchers.boolean_equals?(use_fips, false) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, false)
             return Aws::Endpoints::Endpoint.new(url: "https://budgets.global.cloud.adc-e.uk", headers: {}, properties: {"authSchemes"=>[{"name"=>"sigv4", "signingName"=>"budgets", "signingRegion"=>"eu-isoe-west-1"}]})
           end

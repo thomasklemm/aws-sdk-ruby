@@ -1575,7 +1575,11 @@ module Aws::IoT
     #   when running the command using the `StartCommandExecution` API.
     #
     # @option params [String] :role_arn
-    #   The IAM role that allows access to create the command.
+    #   The IAM role that you must provide when using the `AWS-IoT-FleetWise`
+    #   namespace. The role grants IoT Device Management the permission to
+    #   access IoT FleetWise resources for generating the payload for the
+    #   command. This field is not required when you use the `AWS-IoT`
+    #   namespace.
     #
     # @option params [Array<Types::Tag>] :tags
     #   Name-value pairs that are used as metadata to manage a command.
@@ -8491,6 +8495,38 @@ module Aws::IoT
       req.send_request(options)
     end
 
+    # Retrieves the live connectivity status per device.
+    #
+    # @option params [required, String] :thing_name
+    #   The name of your IoT thing.
+    #
+    # @return [Types::GetThingConnectivityDataResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetThingConnectivityDataResponse#thing_name #thing_name} => String
+    #   * {Types::GetThingConnectivityDataResponse#connected #connected} => Boolean
+    #   * {Types::GetThingConnectivityDataResponse#timestamp #timestamp} => Time
+    #   * {Types::GetThingConnectivityDataResponse#disconnect_reason #disconnect_reason} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_thing_connectivity_data({
+    #     thing_name: "ConnectivityApiThingName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.thing_name #=> String
+    #   resp.connected #=> Boolean
+    #   resp.timestamp #=> Time
+    #   resp.disconnect_reason #=> String, one of "AUTH_ERROR", "CLIENT_INITIATED_DISCONNECT", "CLIENT_ERROR", "CONNECTION_LOST", "DUPLICATE_CLIENTID", "FORBIDDEN_ACCESS", "MQTT_KEEP_ALIVE_TIMEOUT", "SERVER_ERROR", "SERVER_INITIATED_DISCONNECT", "THROTTLED", "WEBSOCKET_TTL_EXPIRATION", "CUSTOMAUTH_TTL_EXPIRATION", "UNKNOWN", "NONE"
+    #
+    # @overload get_thing_connectivity_data(params = {})
+    # @param [Hash] params ({})
+    def get_thing_connectivity_data(params = {}, options = {})
+      req = build_request(:get_thing_connectivity_data, params)
+      req.send_request(options)
+    end
+
     # Gets information about the rule.
     #
     # Requires permission to access the [GetTopicRule][1] action.
@@ -9742,10 +9778,22 @@ module Aws::IoT
 
     # List all command executions.
     #
-    # You must provide only the `startedTimeFilter` or the
-    # `completedTimeFilter` information. If you provide both time filters,
-    # the API will generate an error. You can use this information to find
-    # command executions that started within a specific timeframe.
+    # * You must provide only the `startedTimeFilter` or the
+    #   `completedTimeFilter` information. If you provide both time filters,
+    #   the API will generate an error. You can use this information to
+    #   retrieve a list of command executions within a specific timeframe.
+    #
+    # * You must provide only the `commandArn` or the `thingArn` information
+    #   depending on whether you want to list executions for a specific
+    #   command or an IoT thing. If you provide both fields, the API will
+    #   generate an error.
+    #
+    #  For more information about considerations for using this API, see
+    # [List command executions in your account (CLI)][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot/latest/developerguide/iot-remote-command-execution-start-monitor.html#iot-remote-command-execution-list-cli
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return in this operation.
@@ -16336,7 +16384,7 @@ module Aws::IoT
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iot'
-      context[:gem_version] = '1.140.0'
+      context[:gem_version] = '1.141.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

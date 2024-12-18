@@ -273,6 +273,7 @@ module Aws::IoT
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ConflictingResourceUpdateException = Shapes::StructureShape.new(name: 'ConflictingResourceUpdateException')
     ConnectionAttributeName = Shapes::StringShape.new(name: 'ConnectionAttributeName')
+    ConnectivityApiThingName = Shapes::StringShape.new(name: 'ConnectivityApiThingName')
     ConnectivityTimestamp = Shapes::IntegerShape.new(name: 'ConnectivityTimestamp')
     ConsecutiveDatapointsToAlarm = Shapes::IntegerShape.new(name: 'ConsecutiveDatapointsToAlarm')
     ConsecutiveDatapointsToClear = Shapes::IntegerShape.new(name: 'ConsecutiveDatapointsToClear')
@@ -536,6 +537,7 @@ module Aws::IoT
     DisassociateSbomFromPackageVersionRequest = Shapes::StructureShape.new(name: 'DisassociateSbomFromPackageVersionRequest')
     DisassociateSbomFromPackageVersionResponse = Shapes::StructureShape.new(name: 'DisassociateSbomFromPackageVersionResponse')
     DisconnectReason = Shapes::StringShape.new(name: 'DisconnectReason')
+    DisconnectReasonValue = Shapes::StringShape.new(name: 'DisconnectReasonValue')
     DisplayName = Shapes::StringShape.new(name: 'DisplayName')
     DocumentParameter = Shapes::StructureShape.new(name: 'DocumentParameter')
     DocumentParameters = Shapes::ListShape.new(name: 'DocumentParameters')
@@ -654,6 +656,8 @@ module Aws::IoT
     GetRegistrationCodeResponse = Shapes::StructureShape.new(name: 'GetRegistrationCodeResponse')
     GetStatisticsRequest = Shapes::StructureShape.new(name: 'GetStatisticsRequest')
     GetStatisticsResponse = Shapes::StructureShape.new(name: 'GetStatisticsResponse')
+    GetThingConnectivityDataRequest = Shapes::StructureShape.new(name: 'GetThingConnectivityDataRequest')
+    GetThingConnectivityDataResponse = Shapes::StructureShape.new(name: 'GetThingConnectivityDataResponse')
     GetTopicRuleDestinationRequest = Shapes::StructureShape.new(name: 'GetTopicRuleDestinationRequest')
     GetTopicRuleDestinationResponse = Shapes::StructureShape.new(name: 'GetTopicRuleDestinationResponse')
     GetTopicRuleRequest = Shapes::StructureShape.new(name: 'GetTopicRuleRequest')
@@ -3395,6 +3399,15 @@ module Aws::IoT
 
     GetStatisticsResponse.add_member(:statistics, Shapes::ShapeRef.new(shape: Statistics, location_name: "statistics"))
     GetStatisticsResponse.struct_class = Types::GetStatisticsResponse
+
+    GetThingConnectivityDataRequest.add_member(:thing_name, Shapes::ShapeRef.new(shape: ConnectivityApiThingName, required: true, location: "uri", location_name: "thingName"))
+    GetThingConnectivityDataRequest.struct_class = Types::GetThingConnectivityDataRequest
+
+    GetThingConnectivityDataResponse.add_member(:thing_name, Shapes::ShapeRef.new(shape: ConnectivityApiThingName, location_name: "thingName"))
+    GetThingConnectivityDataResponse.add_member(:connected, Shapes::ShapeRef.new(shape: Boolean, location_name: "connected"))
+    GetThingConnectivityDataResponse.add_member(:timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "timestamp"))
+    GetThingConnectivityDataResponse.add_member(:disconnect_reason, Shapes::ShapeRef.new(shape: DisconnectReasonValue, location_name: "disconnectReason"))
+    GetThingConnectivityDataResponse.struct_class = Types::GetThingConnectivityDataResponse
 
     GetTopicRuleDestinationRequest.add_member(:arn, Shapes::ShapeRef.new(shape: AwsArn, required: true, location: "uri", location_name: "arn"))
     GetTopicRuleDestinationRequest.struct_class = Types::GetTopicRuleDestinationRequest
@@ -7606,6 +7619,21 @@ module Aws::IoT
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidQueryException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidAggregationException)
+        o.errors << Shapes::ShapeRef.new(shape: IndexNotReadyException)
+      end)
+
+      api.add_operation(:get_thing_connectivity_data, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetThingConnectivityData"
+        o.http_method = "POST"
+        o.http_request_uri = "/things/{thingName}/connectivity-data"
+        o.input = Shapes::ShapeRef.new(shape: GetThingConnectivityDataRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetThingConnectivityDataResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: IndexNotReadyException)
       end)
 

@@ -694,6 +694,31 @@ module Aws::Transfer
     # @option params [Array<Types::Tag>] :tags
     #   Key-value pairs that can be used to group and search for agreements.
     #
+    # @option params [String] :preserve_filename
+    #   Determines whether or not Transfer Family appends a unique string of
+    #   characters to the end of the AS2 message payload filename when saving
+    #   it.
+    #
+    #   * `ENABLED`: the filename provided by your trading parter is preserved
+    #     when the file is saved.
+    #
+    #   * `DISABLED` (default value): when Transfer Family saves the file, the
+    #     filename is adjusted, as described in [File names and locations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2
+    #
+    # @option params [String] :enforce_message_signing
+    #   Determines whether or not unsigned messages from your trading partners
+    #   will be accepted.
+    #
+    #   * `ENABLED`: Transfer Family rejects unsigned messages from your
+    #     trading partner.
+    #
+    #   * `DISABLED` (default value): Transfer Family accepts unsigned
+    #     messages from your trading partner.
+    #
     # @return [Types::CreateAgreementResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateAgreementResponse#agreement_id #agreement_id} => String
@@ -714,6 +739,8 @@ module Aws::Transfer
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     preserve_filename: "ENABLED", # accepts ENABLED, DISABLED
+    #     enforce_message_signing: "ENABLED", # accepts ENABLED, DISABLED
     #   })
     #
     # @example Response structure
@@ -821,6 +848,7 @@ module Aws::Transfer
     #       mdn_signing_algorithm: "SHA256", # accepts SHA256, SHA384, SHA512, SHA1, NONE, DEFAULT
     #       mdn_response: "SYNC", # accepts SYNC, NONE
     #       basic_auth_secret_id: "As2ConnectorSecretId",
+    #       preserve_content_type: "ENABLED", # accepts ENABLED, DISABLED
     #     },
     #     access_role: "Role", # required
     #     logging_role: "Role",
@@ -2139,6 +2167,8 @@ module Aws::Transfer
     #   resp.agreement.tags #=> Array
     #   resp.agreement.tags[0].key #=> String
     #   resp.agreement.tags[0].value #=> String
+    #   resp.agreement.preserve_filename #=> String, one of "ENABLED", "DISABLED"
+    #   resp.agreement.enforce_message_signing #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeAgreement AWS API Documentation
     #
@@ -2222,6 +2252,7 @@ module Aws::Transfer
     #   resp.connector.as_2_config.mdn_signing_algorithm #=> String, one of "SHA256", "SHA384", "SHA512", "SHA1", "NONE", "DEFAULT"
     #   resp.connector.as_2_config.mdn_response #=> String, one of "SYNC", "NONE"
     #   resp.connector.as_2_config.basic_auth_secret_id #=> String
+    #   resp.connector.as_2_config.preserve_content_type #=> String, one of "ENABLED", "DISABLED"
     #   resp.connector.access_role #=> String
     #   resp.connector.logging_role #=> String
     #   resp.connector.tags #=> Array
@@ -4369,6 +4400,31 @@ module Aws::Transfer
     #   provides `secretsmanager:GetSecretValue` permission to Secrets
     #   Manager.
     #
+    # @option params [String] :preserve_filename
+    #   Determines whether or not Transfer Family appends a unique string of
+    #   characters to the end of the AS2 message payload filename when saving
+    #   it.
+    #
+    #   * `ENABLED`: the filename provided by your trading parter is preserved
+    #     when the file is saved.
+    #
+    #   * `DISABLED` (default value): when Transfer Family saves the file, the
+    #     filename is adjusted, as described in [File names and locations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2
+    #
+    # @option params [String] :enforce_message_signing
+    #   Determines whether or not unsigned messages from your trading partners
+    #   will be accepted.
+    #
+    #   * `ENABLED`: Transfer Family rejects unsigned messages from your
+    #     trading partner.
+    #
+    #   * `DISABLED` (default value): Transfer Family accepts unsigned
+    #     messages from your trading partner.
+    #
     # @return [Types::UpdateAgreementResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateAgreementResponse#agreement_id #agreement_id} => String
@@ -4384,6 +4440,8 @@ module Aws::Transfer
     #     partner_profile_id: "ProfileId",
     #     base_directory: "HomeDirectory",
     #     access_role: "Role",
+    #     preserve_filename: "ENABLED", # accepts ENABLED, DISABLED
+    #     enforce_message_signing: "ENABLED", # accepts ENABLED, DISABLED
     #   })
     #
     # @example Response structure
@@ -4517,6 +4575,7 @@ module Aws::Transfer
     #       mdn_signing_algorithm: "SHA256", # accepts SHA256, SHA384, SHA512, SHA1, NONE, DEFAULT
     #       mdn_response: "SYNC", # accepts SYNC, NONE
     #       basic_auth_secret_id: "As2ConnectorSecretId",
+    #       preserve_content_type: "ENABLED", # accepts ENABLED, DISABLED
     #     },
     #     access_role: "Role",
     #     logging_role: "Role",
@@ -5229,7 +5288,7 @@ module Aws::Transfer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transfer'
-      context[:gem_version] = '1.108.0'
+      context[:gem_version] = '1.109.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

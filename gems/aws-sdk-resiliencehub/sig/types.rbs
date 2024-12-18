@@ -43,6 +43,12 @@ module Aws::ResilienceHub
       SENSITIVE: []
     end
 
+    class Alarm
+      attr_accessor alarm_arn: ::String
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
     class AlarmRecommendation
       attr_accessor app_component_name: ::String
       attr_accessor app_component_names: ::Array[::String]
@@ -207,6 +213,7 @@ module Aws::ResilienceHub
     end
 
     class BatchUpdateRecommendationStatusSuccessfulEntry
+      attr_accessor app_component_id: ::String
       attr_accessor entry_id: ::String
       attr_accessor exclude_reason: ("AlreadyImplemented" | "NotRelevant" | "ComplexityOfImplementation")
       attr_accessor excluded: bool
@@ -634,6 +641,12 @@ module Aws::ResilienceHub
       attr_accessor event_type: ("ScheduledAssessmentFailure" | "DriftDetected")
       attr_accessor name: ::String
       attr_accessor sns_topic_arn: ::String
+      SENSITIVE: []
+    end
+
+    class Experiment
+      attr_accessor experiment_arn: ::String
+      attr_accessor experiment_template_id: ::String
       SENSITIVE: []
     end
 
@@ -1081,8 +1094,10 @@ module Aws::ResilienceHub
 
     class RecommendationItem
       attr_accessor already_implemented: bool
+      attr_accessor discovered_alarm: Types::Alarm
       attr_accessor exclude_reason: ("AlreadyImplemented" | "NotRelevant" | "ComplexityOfImplementation")
       attr_accessor excluded: bool
+      attr_accessor latest_discovered_experiment: Types::Experiment
       attr_accessor resource_id: ::String
       attr_accessor target_account_id: ::String
       attr_accessor target_region: ::String
@@ -1315,6 +1330,7 @@ module Aws::ResilienceHub
     end
 
     class TestRecommendation
+      attr_accessor app_component_id: ::String
       attr_accessor app_component_name: ::String
       attr_accessor depends_on_alarms: ::Array[::String]
       attr_accessor description: ::String
@@ -1427,6 +1443,7 @@ module Aws::ResilienceHub
     end
 
     class UpdateRecommendationStatusRequestEntry
+      attr_accessor app_component_id: ::String
       attr_accessor entry_id: ::String
       attr_accessor exclude_reason: ("AlreadyImplemented" | "NotRelevant" | "ComplexityOfImplementation")
       attr_accessor excluded: bool

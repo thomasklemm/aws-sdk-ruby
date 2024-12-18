@@ -1144,6 +1144,92 @@ module Aws
                                       ) -> _UpdateLocationAzureBlobResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationAzureBlobResponseSuccess
 
+      interface _UpdateLocationEfsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationEfsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_efs-instance_method
+      def update_location_efs: (
+                                 location_arn: ::String,
+                                 ?subdirectory: ::String,
+                                 ?access_point_arn: ::String,
+                                 ?file_system_access_role_arn: ::String,
+                                 ?in_transit_encryption: ("NONE" | "TLS1_2")
+                               ) -> _UpdateLocationEfsResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationEfsResponseSuccess
+
+      interface _UpdateLocationFsxLustreResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationFsxLustreResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_fsx_lustre-instance_method
+      def update_location_fsx_lustre: (
+                                        location_arn: ::String,
+                                        ?subdirectory: ::String
+                                      ) -> _UpdateLocationFsxLustreResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationFsxLustreResponseSuccess
+
+      interface _UpdateLocationFsxOntapResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationFsxOntapResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_fsx_ontap-instance_method
+      def update_location_fsx_ontap: (
+                                       location_arn: ::String,
+                                       ?protocol: {
+                                         nfs: {
+                                           mount_options: {
+                                             version: ("AUTOMATIC" | "NFS3" | "NFS4_0" | "NFS4_1")?
+                                           }?
+                                         }?,
+                                         smb: {
+                                           domain: ::String?,
+                                           mount_options: {
+                                             version: ("AUTOMATIC" | "SMB2" | "SMB3" | "SMB1" | "SMB2_0")?
+                                           }?,
+                                           password: ::String?,
+                                           user: ::String?
+                                         }?
+                                       },
+                                       ?subdirectory: ::String
+                                     ) -> _UpdateLocationFsxOntapResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationFsxOntapResponseSuccess
+
+      interface _UpdateLocationFsxOpenZfsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationFsxOpenZfsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_fsx_open_zfs-instance_method
+      def update_location_fsx_open_zfs: (
+                                          location_arn: ::String,
+                                          ?protocol: {
+                                            nfs: {
+                                              mount_options: {
+                                                version: ("AUTOMATIC" | "NFS3" | "NFS4_0" | "NFS4_1")?
+                                              }?
+                                            }?,
+                                            smb: {
+                                              domain: ::String?,
+                                              mount_options: {
+                                                version: ("AUTOMATIC" | "SMB2" | "SMB3" | "SMB1" | "SMB2_0")?
+                                              }?,
+                                              password: ::String,
+                                              user: ::String
+                                            }?
+                                          },
+                                          ?subdirectory: ::String
+                                        ) -> _UpdateLocationFsxOpenZfsResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationFsxOpenZfsResponseSuccess
+
+      interface _UpdateLocationFsxWindowsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationFsxWindowsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_fsx_windows-instance_method
+      def update_location_fsx_windows: (
+                                         location_arn: ::String,
+                                         ?subdirectory: ::String,
+                                         ?domain: ::String,
+                                         ?user: ::String,
+                                         ?password: ::String
+                                       ) -> _UpdateLocationFsxWindowsResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationFsxWindowsResponseSuccess
+
       interface _UpdateLocationHdfsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationHdfsResponse]
       end
@@ -1204,6 +1290,20 @@ module Aws
                                             ?server_certificate: ::String
                                           ) -> _UpdateLocationObjectStorageResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationObjectStorageResponseSuccess
+
+      interface _UpdateLocationS3ResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationS3Response]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataSync/Client.html#update_location_s3-instance_method
+      def update_location_s3: (
+                                location_arn: ::String,
+                                ?subdirectory: ::String,
+                                ?s3_storage_class: ("STANDARD" | "STANDARD_IA" | "ONEZONE_IA" | "INTELLIGENT_TIERING" | "GLACIER" | "DEEP_ARCHIVE" | "OUTPOSTS" | "GLACIER_INSTANT_RETRIEVAL"),
+                                ?s3_config: {
+                                  bucket_access_role_arn: ::String
+                                }
+                              ) -> _UpdateLocationS3ResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateLocationS3ResponseSuccess
 
       interface _UpdateLocationSmbResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateLocationSmbResponse]

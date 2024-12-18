@@ -21,6 +21,15 @@ module Aws::ConnectParticipant
       SENSITIVE: []
     end
 
+    class CancelParticipantAuthenticationRequest
+      attr_accessor session_id: ::String
+      attr_accessor connection_token: ::String
+      SENSITIVE: []
+    end
+
+    class CancelParticipantAuthenticationResponse < Aws::EmptyStructure
+    end
+
     class CompleteAttachmentUploadRequest
       attr_accessor attachment_ids: ::Array[::String]
       attr_accessor client_token: ::String
@@ -78,12 +87,26 @@ module Aws::ConnectParticipant
     class GetAttachmentRequest
       attr_accessor attachment_id: ::String
       attr_accessor connection_token: ::String
+      attr_accessor url_expiry_in_seconds: ::Integer
       SENSITIVE: []
     end
 
     class GetAttachmentResponse
       attr_accessor url: ::String
       attr_accessor url_expiry: ::String
+      attr_accessor attachment_size_in_bytes: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetAuthenticationUrlRequest
+      attr_accessor session_id: ::String
+      attr_accessor redirect_uri: ::String
+      attr_accessor connection_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetAuthenticationUrlResponse
+      attr_accessor authentication_url: ::String
       SENSITIVE: []
     end
 

@@ -130,6 +130,7 @@ module Aws::Transfer
     EncryptionType = Shapes::StringShape.new(name: 'EncryptionType')
     EndpointDetails = Shapes::StructureShape.new(name: 'EndpointDetails')
     EndpointType = Shapes::StringShape.new(name: 'EndpointType')
+    EnforceMessageSigningType = Shapes::StringShape.new(name: 'EnforceMessageSigningType')
     ExecutionError = Shapes::StructureShape.new(name: 'ExecutionError')
     ExecutionErrorMessage = Shapes::StringShape.new(name: 'ExecutionErrorMessage')
     ExecutionErrorType = Shapes::StringShape.new(name: 'ExecutionErrorType')
@@ -243,6 +244,8 @@ module Aws::Transfer
     PosixProfile = Shapes::StructureShape.new(name: 'PosixProfile')
     PostAuthenticationLoginBanner = Shapes::StringShape.new(name: 'PostAuthenticationLoginBanner')
     PreAuthenticationLoginBanner = Shapes::StringShape.new(name: 'PreAuthenticationLoginBanner')
+    PreserveContentType = Shapes::StringShape.new(name: 'PreserveContentType')
+    PreserveFilenameType = Shapes::StringShape.new(name: 'PreserveFilenameType')
     PrivateKeyType = Shapes::StringShape.new(name: 'PrivateKeyType')
     ProfileId = Shapes::StringShape.new(name: 'ProfileId')
     ProfileType = Shapes::StringShape.new(name: 'ProfileType')
@@ -390,6 +393,7 @@ module Aws::Transfer
     As2ConnectorConfig.add_member(:mdn_signing_algorithm, Shapes::ShapeRef.new(shape: MdnSigningAlg, location_name: "MdnSigningAlgorithm"))
     As2ConnectorConfig.add_member(:mdn_response, Shapes::ShapeRef.new(shape: MdnResponse, location_name: "MdnResponse"))
     As2ConnectorConfig.add_member(:basic_auth_secret_id, Shapes::ShapeRef.new(shape: As2ConnectorSecretId, location_name: "BasicAuthSecretId"))
+    As2ConnectorConfig.add_member(:preserve_content_type, Shapes::ShapeRef.new(shape: PreserveContentType, location_name: "PreserveContentType"))
     As2ConnectorConfig.struct_class = Types::As2ConnectorConfig
 
     As2Transports.member = Shapes::ShapeRef.new(shape: As2Transport)
@@ -435,6 +439,8 @@ module Aws::Transfer
     CreateAgreementRequest.add_member(:access_role, Shapes::ShapeRef.new(shape: Role, required: true, location_name: "AccessRole"))
     CreateAgreementRequest.add_member(:status, Shapes::ShapeRef.new(shape: AgreementStatusType, location_name: "Status"))
     CreateAgreementRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    CreateAgreementRequest.add_member(:preserve_filename, Shapes::ShapeRef.new(shape: PreserveFilenameType, location_name: "PreserveFilename"))
+    CreateAgreementRequest.add_member(:enforce_message_signing, Shapes::ShapeRef.new(shape: EnforceMessageSigningType, location_name: "EnforceMessageSigning"))
     CreateAgreementRequest.struct_class = Types::CreateAgreementRequest
 
     CreateAgreementResponse.add_member(:agreement_id, Shapes::ShapeRef.new(shape: AgreementId, required: true, location_name: "AgreementId"))
@@ -681,6 +687,8 @@ module Aws::Transfer
     DescribedAgreement.add_member(:base_directory, Shapes::ShapeRef.new(shape: HomeDirectory, location_name: "BaseDirectory"))
     DescribedAgreement.add_member(:access_role, Shapes::ShapeRef.new(shape: Role, location_name: "AccessRole"))
     DescribedAgreement.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    DescribedAgreement.add_member(:preserve_filename, Shapes::ShapeRef.new(shape: PreserveFilenameType, location_name: "PreserveFilename"))
+    DescribedAgreement.add_member(:enforce_message_signing, Shapes::ShapeRef.new(shape: EnforceMessageSigningType, location_name: "EnforceMessageSigning"))
     DescribedAgreement.struct_class = Types::DescribedAgreement
 
     DescribedCertificate.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
@@ -1329,6 +1337,8 @@ module Aws::Transfer
     UpdateAgreementRequest.add_member(:partner_profile_id, Shapes::ShapeRef.new(shape: ProfileId, location_name: "PartnerProfileId"))
     UpdateAgreementRequest.add_member(:base_directory, Shapes::ShapeRef.new(shape: HomeDirectory, location_name: "BaseDirectory"))
     UpdateAgreementRequest.add_member(:access_role, Shapes::ShapeRef.new(shape: Role, location_name: "AccessRole"))
+    UpdateAgreementRequest.add_member(:preserve_filename, Shapes::ShapeRef.new(shape: PreserveFilenameType, location_name: "PreserveFilename"))
+    UpdateAgreementRequest.add_member(:enforce_message_signing, Shapes::ShapeRef.new(shape: EnforceMessageSigningType, location_name: "EnforceMessageSigning"))
     UpdateAgreementRequest.struct_class = Types::UpdateAgreementRequest
 
     UpdateAgreementResponse.add_member(:agreement_id, Shapes::ShapeRef.new(shape: AgreementId, required: true, location_name: "AgreementId"))

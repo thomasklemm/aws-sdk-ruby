@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.191.0 (2024-12-18)
+------------------
+
+* Feature - This release adds support for the UpdateParticipantAuthentication API used for customer authentication within Amazon Connect chats.
+
 1.190.0 (2024-12-12)
 ------------------
 

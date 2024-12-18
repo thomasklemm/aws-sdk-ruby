@@ -613,6 +613,7 @@ module Aws::ResilienceHub
     #     app_arn: "Arn", # required
     #     request_entries: [ # required
     #       {
+    #         app_component_id: "EntityName255",
     #         entry_id: "String255", # required
     #         exclude_reason: "AlreadyImplemented", # accepts AlreadyImplemented, NotRelevant, ComplexityOfImplementation
     #         excluded: false, # required
@@ -633,6 +634,7 @@ module Aws::ResilienceHub
     #   resp.failed_entries[0].entry_id #=> String
     #   resp.failed_entries[0].error_message #=> String
     #   resp.successful_entries #=> Array
+    #   resp.successful_entries[0].app_component_id #=> String
     #   resp.successful_entries[0].entry_id #=> String
     #   resp.successful_entries[0].exclude_reason #=> String, one of "AlreadyImplemented", "NotRelevant", "ComplexityOfImplementation"
     #   resp.successful_entries[0].excluded #=> Boolean
@@ -2424,8 +2426,12 @@ module Aws::ResilienceHub
     #   resp.alarm_recommendations[0].description #=> String
     #   resp.alarm_recommendations[0].items #=> Array
     #   resp.alarm_recommendations[0].items[0].already_implemented #=> Boolean
+    #   resp.alarm_recommendations[0].items[0].discovered_alarm.alarm_arn #=> String
+    #   resp.alarm_recommendations[0].items[0].discovered_alarm.source #=> String
     #   resp.alarm_recommendations[0].items[0].exclude_reason #=> String, one of "AlreadyImplemented", "NotRelevant", "ComplexityOfImplementation"
     #   resp.alarm_recommendations[0].items[0].excluded #=> Boolean
+    #   resp.alarm_recommendations[0].items[0].latest_discovered_experiment.experiment_arn #=> String
+    #   resp.alarm_recommendations[0].items[0].latest_discovered_experiment.experiment_template_id #=> String
     #   resp.alarm_recommendations[0].items[0].resource_id #=> String
     #   resp.alarm_recommendations[0].items[0].target_account_id #=> String
     #   resp.alarm_recommendations[0].items[0].target_region #=> String
@@ -3630,8 +3636,12 @@ module Aws::ResilienceHub
     #   resp.sop_recommendations[0].description #=> String
     #   resp.sop_recommendations[0].items #=> Array
     #   resp.sop_recommendations[0].items[0].already_implemented #=> Boolean
+    #   resp.sop_recommendations[0].items[0].discovered_alarm.alarm_arn #=> String
+    #   resp.sop_recommendations[0].items[0].discovered_alarm.source #=> String
     #   resp.sop_recommendations[0].items[0].exclude_reason #=> String, one of "AlreadyImplemented", "NotRelevant", "ComplexityOfImplementation"
     #   resp.sop_recommendations[0].items[0].excluded #=> Boolean
+    #   resp.sop_recommendations[0].items[0].latest_discovered_experiment.experiment_arn #=> String
+    #   resp.sop_recommendations[0].items[0].latest_discovered_experiment.experiment_template_id #=> String
     #   resp.sop_recommendations[0].items[0].resource_id #=> String
     #   resp.sop_recommendations[0].items[0].target_account_id #=> String
     #   resp.sop_recommendations[0].items[0].target_region #=> String
@@ -3774,6 +3784,7 @@ module Aws::ResilienceHub
     #
     #   resp.next_token #=> String
     #   resp.test_recommendations #=> Array
+    #   resp.test_recommendations[0].app_component_id #=> String
     #   resp.test_recommendations[0].app_component_name #=> String
     #   resp.test_recommendations[0].depends_on_alarms #=> Array
     #   resp.test_recommendations[0].depends_on_alarms[0] #=> String
@@ -3781,8 +3792,12 @@ module Aws::ResilienceHub
     #   resp.test_recommendations[0].intent #=> String
     #   resp.test_recommendations[0].items #=> Array
     #   resp.test_recommendations[0].items[0].already_implemented #=> Boolean
+    #   resp.test_recommendations[0].items[0].discovered_alarm.alarm_arn #=> String
+    #   resp.test_recommendations[0].items[0].discovered_alarm.source #=> String
     #   resp.test_recommendations[0].items[0].exclude_reason #=> String, one of "AlreadyImplemented", "NotRelevant", "ComplexityOfImplementation"
     #   resp.test_recommendations[0].items[0].excluded #=> Boolean
+    #   resp.test_recommendations[0].items[0].latest_discovered_experiment.experiment_arn #=> String
+    #   resp.test_recommendations[0].items[0].latest_discovered_experiment.experiment_template_id #=> String
     #   resp.test_recommendations[0].items[0].resource_id #=> String
     #   resp.test_recommendations[0].items[0].target_account_id #=> String
     #   resp.test_recommendations[0].items[0].target_region #=> String
@@ -5104,7 +5119,7 @@ module Aws::ResilienceHub
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-resiliencehub'
-      context[:gem_version] = '1.44.0'
+      context[:gem_version] = '1.45.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

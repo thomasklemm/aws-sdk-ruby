@@ -6079,6 +6079,11 @@ module Aws::QuickSight
     #   these folders.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] performance_configuration
+    #   The configuration for the performance optimization of the dataset
+    #   that contains a `UniqueKey` configuration.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateDataSetRequest AWS API Documentation
     #
     class CreateDataSetRequest < Struct.new(
@@ -6097,7 +6102,8 @@ module Aws::QuickSight
       :tags,
       :data_set_usage_configuration,
       :dataset_parameters,
-      :folder_arns)
+      :folder_arns,
+      :performance_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8953,6 +8959,10 @@ module Aws::QuickSight
     #   The parameters that are declared in a dataset.
     #   @return [Array<Types::DatasetParameter>]
     #
+    # @!attribute [rw] performance_configuration
+    #   The performance optimization configuration of a dataset.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DataSet AWS API Documentation
     #
     class DataSet < Struct.new(
@@ -8972,7 +8982,8 @@ module Aws::QuickSight
       :row_level_permission_tag_configuration,
       :column_level_permission_rules,
       :data_set_usage_configuration,
-      :dataset_parameters)
+      :dataset_parameters,
+      :performance_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -25202,6 +25213,21 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # The configuration for the performance optimization of the dataset that
+    # contains a `UniqueKey` configuration.
+    #
+    # @!attribute [rw] unique_keys
+    #   A `UniqueKey` configuration.
+    #   @return [Array<Types::UniqueKey>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PerformanceConfiguration AWS API Documentation
+    #
+    class PerformanceConfiguration < Struct.new(
+      :unique_keys)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The period over period computation configuration.
     #
     # @!attribute [rw] computation_id
@@ -35117,6 +35143,21 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # A `UniqueKey` configuration that references a dataset column.
+    #
+    # @!attribute [rw] column_names
+    #   The name of the column that is referenced in the `UniqueKey`
+    #   configuration.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UniqueKey AWS API Documentation
+    #
+    class UniqueKey < Struct.new(
+      :column_names)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The unique values computation configuration.
     #
     # @!attribute [rw] computation_id
@@ -36191,6 +36232,11 @@ module Aws::QuickSight
     #   The parameter declarations of the dataset.
     #   @return [Array<Types::DatasetParameter>]
     #
+    # @!attribute [rw] performance_configuration
+    #   The configuration for the performance optimization of the dataset
+    #   that contains a `UniqueKey` configuration.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDataSetRequest AWS API Documentation
     #
     class UpdateDataSetRequest < Struct.new(
@@ -36206,7 +36252,8 @@ module Aws::QuickSight
       :row_level_permission_tag_configuration,
       :column_level_permission_rules,
       :data_set_usage_configuration,
-      :dataset_parameters)
+      :dataset_parameters,
+      :performance_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

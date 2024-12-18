@@ -131,6 +131,7 @@ module Aws
                                                 app_arn: ::String,
                                                 request_entries: Array[
                                                   {
+                                                    app_component_id: ::String?,
                                                     entry_id: ::String,
                                                     exclude_reason: ("AlreadyImplemented" | "NotRelevant" | "ComplexityOfImplementation")?,
                                                     excluded: bool,

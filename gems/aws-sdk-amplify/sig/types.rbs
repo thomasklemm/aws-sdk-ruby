@@ -34,6 +34,8 @@ module Aws::Amplify
       attr_accessor auto_branch_creation_config: Types::AutoBranchCreationConfig
       attr_accessor repository_clone_method: ("SSH" | "TOKEN" | "SIGV4")
       attr_accessor cache_config: Types::CacheConfig
+      attr_accessor webhook_create_time: ::Time
+      attr_accessor waf_configuration: Types::WafConfiguration
       SENSITIVE: [:basic_auth_credentials, :build_spec]
     end
 
@@ -439,7 +441,7 @@ module Aws::Amplify
       attr_accessor commit_message: ::String
       attr_accessor commit_time: ::Time
       attr_accessor start_time: ::Time
-      attr_accessor status: ("PENDING" | "PROVISIONING" | "RUNNING" | "FAILED" | "SUCCEED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("CREATED" | "PENDING" | "PROVISIONING" | "RUNNING" | "FAILED" | "SUCCEED" | "CANCELLING" | "CANCELLED")
       attr_accessor end_time: ::Time
       attr_accessor job_type: ("RELEASE" | "RETRY" | "MANUAL" | "WEB_HOOK")
       attr_accessor source_url: ::String
@@ -609,7 +611,7 @@ module Aws::Amplify
     class Step
       attr_accessor step_name: ::String
       attr_accessor start_time: ::Time
-      attr_accessor status: ("PENDING" | "PROVISIONING" | "RUNNING" | "FAILED" | "SUCCEED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("CREATED" | "PENDING" | "PROVISIONING" | "RUNNING" | "FAILED" | "SUCCEED" | "CANCELLING" | "CANCELLED")
       attr_accessor end_time: ::Time
       attr_accessor log_url: ::String
       attr_accessor artifacts_url: ::String
@@ -750,6 +752,13 @@ module Aws::Amplify
 
     class UpdateWebhookResult
       attr_accessor webhook: Types::Webhook
+      SENSITIVE: []
+    end
+
+    class WafConfiguration
+      attr_accessor web_acl_arn: ::String
+      attr_accessor waf_status: ("ASSOCIATING" | "ASSOCIATION_FAILED" | "ASSOCIATION_SUCCESS" | "DISASSOCIATING" | "DISASSOCIATION_FAILED")
+      attr_accessor status_reason: ::String
       SENSITIVE: []
     end
 

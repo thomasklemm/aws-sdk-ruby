@@ -2381,6 +2381,14 @@ module Aws::Connect
     #   Information about Amazon Connect Wisdom.
     #   @return [Types::WisdomInfo]
     #
+    # @!attribute [rw] customer_id
+    #   The customer's identification number. For example, the `CustomerId`
+    #   may be a customer number from your CRM. You can create a Lambda
+    #   function to pull the unique customer ID of the caller from your CRM
+    #   system. If you enable Amazon Connect Voice ID capability, this
+    #   attribute is populated with the `CustomerSpeakerId` of the caller.
+    #   @return [String]
+    #
     # @!attribute [rw] customer_endpoint
     #   The customer or external third party participant endpoint.
     #   @return [Types::EndpointInfo]
@@ -2489,6 +2497,7 @@ module Aws::Connect
       :scheduled_timestamp,
       :related_contact_id,
       :wisdom_info,
+      :customer_id,
       :customer_endpoint,
       :system_endpoint,
       :queue_time_adjustment_seconds,
@@ -21473,6 +21482,11 @@ module Aws::Connect
     #    </note>
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
+    # @!attribute [rw] customer_id
+    #   The customer's identification number. For example, the `CustomerId`
+    #   may be a customer number from your CRM.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartChatContactRequest AWS API Documentation
     #
     class StartChatContactRequest < Struct.new(
@@ -21486,8 +21500,9 @@ module Aws::Connect
       :supported_messaging_content_types,
       :persistent_chat,
       :related_contact_id,
-      :segment_attributes)
-      SENSITIVE = []
+      :segment_attributes,
+      :customer_id)
+      SENSITIVE = [:customer_id]
       include Aws::Structure
     end
 
@@ -24503,6 +24518,56 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] state
+    #   The `state` query parameter that was provided by Cognito in the
+    #   `redirectUri`. This will also match the `state` parameter provided
+    #   in the `AuthenticationUrl` from the [GetAuthenticationUrl][1]
+    #   response.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_GetAuthenticationUrl.html
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #   @return [String]
+    #
+    # @!attribute [rw] code
+    #   The `code` query parameter provided by Cognito in the `redirectUri`.
+    #   @return [String]
+    #
+    # @!attribute [rw] error
+    #   The `error` query parameter provided by Cognito in the
+    #   `redirectUri`.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_description
+    #   The `error_description` parameter provided by Cognito in the
+    #   `redirectUri`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateParticipantAuthenticationRequest AWS API Documentation
+    #
+    class UpdateParticipantAuthenticationRequest < Struct.new(
+      :state,
+      :instance_id,
+      :code,
+      :error,
+      :error_description)
+      SENSITIVE = [:code, :error, :error_description]
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateParticipantAuthenticationResponse AWS API Documentation
+    #
+    class UpdateParticipantAuthenticationResponse < Aws::EmptyStructure; end
+
     # Configuration information for the chat participant role.
     #
     # @note UpdateParticipantRoleConfigChannelInfo is a union - when making an API calls you must set exactly one of the members.
@@ -26756,6 +26821,9 @@ module Aws::Connect
     #
     # @!attribute [rw] ivr_recording_track
     #   Identifies which IVR track is being recorded.
+    #
+    #   One and only one of the track configurations should be presented in
+    #   the request.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/VoiceRecordingConfiguration AWS API Documentation

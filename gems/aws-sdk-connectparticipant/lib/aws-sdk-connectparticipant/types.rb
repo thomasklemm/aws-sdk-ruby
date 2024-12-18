@@ -59,6 +59,28 @@ module Aws::ConnectParticipant
       include Aws::Structure
     end
 
+    # @!attribute [rw] session_id
+    #   The `sessionId` provided in the `authenticationInitiated` event.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_token
+    #   The authentication token associated with the participant's
+    #   connection.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/CancelParticipantAuthenticationRequest AWS API Documentation
+    #
+    class CancelParticipantAuthenticationRequest < Struct.new(
+      :session_id,
+      :connection_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/CancelParticipantAuthenticationResponse AWS API Documentation
+    #
+    class CancelParticipantAuthenticationResponse < Aws::EmptyStructure; end
+
     # @!attribute [rw] attachment_ids
     #   A list of unique identifiers for the attachments.
     #   @return [Array<String>]
@@ -255,11 +277,18 @@ module Aws::ConnectParticipant
     #   connection.
     #   @return [String]
     #
+    # @!attribute [rw] url_expiry_in_seconds
+    #   The expiration time of the URL in ISO timestamp. It's specified in
+    #   ISO 8601 format: yyyy-MM-ddThh:mm:ss.SSSZ. For example,
+    #   2019-11-08T02:41:28.172Z.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAttachmentRequest AWS API Documentation
     #
     class GetAttachmentRequest < Struct.new(
       :attachment_id,
-      :connection_token)
+      :connection_token,
+      :url_expiry_in_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -279,11 +308,54 @@ module Aws::ConnectParticipant
     #   2019-11-08T02:41:28.172Z.
     #   @return [String]
     #
+    # @!attribute [rw] attachment_size_in_bytes
+    #   The size of the attachment in bytes.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAttachmentResponse AWS API Documentation
     #
     class GetAttachmentResponse < Struct.new(
       :url,
-      :url_expiry)
+      :url_expiry,
+      :attachment_size_in_bytes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] session_id
+    #   The sessionId provided in the authenticationInitiated event.
+    #   @return [String]
+    #
+    # @!attribute [rw] redirect_uri
+    #   The URL where the customer will be redirected after Amazon Cognito
+    #   authorizes the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_token
+    #   The authentication token associated with the participant's
+    #   connection.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAuthenticationUrlRequest AWS API Documentation
+    #
+    class GetAuthenticationUrlRequest < Struct.new(
+      :session_id,
+      :redirect_uri,
+      :connection_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] authentication_url
+    #   The URL where the customer will sign in to the identity provider.
+    #   This URL contains the authorize endpoint for the Cognito UserPool
+    #   used in the authentication.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/GetAuthenticationUrlResponse AWS API Documentation
+    #
+    class GetAuthenticationUrlResponse < Struct.new(
+      :authentication_url)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -731,7 +803,7 @@ module Aws::ConnectParticipant
     #   @return [String]
     #
     # @!attribute [rw] upload_metadata
-    #   Fields to be used while uploading the attachment.
+    #   The headers to be provided while uploading the file to the URL.
     #   @return [Types::UploadMetadata]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectparticipant-2018-09-07/StartAttachmentUploadResponse AWS API Documentation
