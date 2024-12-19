@@ -1024,6 +1024,10 @@ module Aws::MediaLive
     # @option params [Types::AnywhereSettings] :anywhere_settings
     #   Elemental anywhere settings
     #
+    # @option params [Types::ChannelEngineVersionRequest] :channel_engine_version
+    #
+    # @option params [Boolean] :dry_run
+    #
     # @return [Types::CreateChannelResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateChannelResponse#channel #channel} => Types::Channel
@@ -1810,6 +1814,8 @@ module Aws::MediaLive
     #   resp.channel.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.channel.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.channel.pipeline_details[0].pipeline_id #=> String
+    #   resp.channel.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.channel.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.channel.pipelines_running_count #=> Integer
     #   resp.channel.role_arn #=> String
     #   resp.channel.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -1825,6 +1831,8 @@ module Aws::MediaLive
     #   resp.channel.vpc.subnet_ids[0] #=> String
     #   resp.channel.anywhere_settings.channel_placement_group_id #=> String
     #   resp.channel.anywhere_settings.cluster_id #=> String
+    #   resp.channel.channel_engine_version.expiration_date #=> Time
+    #   resp.channel.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateChannel AWS API Documentation
     #
@@ -2340,6 +2348,7 @@ module Aws::MediaLive
     #   * {Types::DeleteChannelResponse#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::DeleteChannelResponse#vpc #vpc} => Types::VpcOutputSettingsDescription
     #   * {Types::DeleteChannelResponse#anywhere_settings #anywhere_settings} => Types::DescribeAnywhereSettings
+    #   * {Types::DeleteChannelResponse#channel_engine_version #channel_engine_version} => Types::ChannelEngineVersionResponse
     #
     # @example Request syntax with placeholder values
     #
@@ -3129,6 +3138,8 @@ module Aws::MediaLive
     #   resp.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.pipeline_details[0].pipeline_id #=> String
+    #   resp.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.pipelines_running_count #=> Integer
     #   resp.role_arn #=> String
     #   resp.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -3144,6 +3155,8 @@ module Aws::MediaLive
     #   resp.vpc.subnet_ids[0] #=> String
     #   resp.anywhere_settings.channel_placement_group_id #=> String
     #   resp.anywhere_settings.cluster_id #=> String
+    #   resp.channel_engine_version.expiration_date #=> Time
+    #   resp.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteChannel AWS API Documentation
     #
@@ -3476,6 +3489,7 @@ module Aws::MediaLive
     #   * {Types::DescribeChannelResponse#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::DescribeChannelResponse#vpc #vpc} => Types::VpcOutputSettingsDescription
     #   * {Types::DescribeChannelResponse#anywhere_settings #anywhere_settings} => Types::DescribeAnywhereSettings
+    #   * {Types::DescribeChannelResponse#channel_engine_version #channel_engine_version} => Types::ChannelEngineVersionResponse
     #
     # @example Request syntax with placeholder values
     #
@@ -4265,6 +4279,8 @@ module Aws::MediaLive
     #   resp.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.pipeline_details[0].pipeline_id #=> String
+    #   resp.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.pipelines_running_count #=> Integer
     #   resp.role_arn #=> String
     #   resp.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -4280,6 +4296,8 @@ module Aws::MediaLive
     #   resp.vpc.subnet_ids[0] #=> String
     #   resp.anywhere_settings.channel_placement_group_id #=> String
     #   resp.anywhere_settings.cluster_id #=> String
+    #   resp.channel_engine_version.expiration_date #=> Time
+    #   resp.channel_engine_version.version #=> String
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -5102,6 +5120,11 @@ module Aws::MediaLive
     #   resp.channels[0].vpc.subnet_ids[0] #=> String
     #   resp.channels[0].anywhere_settings.channel_placement_group_id #=> String
     #   resp.channels[0].anywhere_settings.cluster_id #=> String
+    #   resp.channels[0].channel_engine_version.expiration_date #=> Time
+    #   resp.channels[0].channel_engine_version.version #=> String
+    #   resp.channels[0].used_channel_engine_versions #=> Array
+    #   resp.channels[0].used_channel_engine_versions[0].expiration_date #=> Time
+    #   resp.channels[0].used_channel_engine_versions[0].version #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListChannels AWS API Documentation
@@ -5793,6 +5816,7 @@ module Aws::MediaLive
     #   * {Types::StartChannelResponse#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::StartChannelResponse#vpc #vpc} => Types::VpcOutputSettingsDescription
     #   * {Types::StartChannelResponse#anywhere_settings #anywhere_settings} => Types::DescribeAnywhereSettings
+    #   * {Types::StartChannelResponse#channel_engine_version #channel_engine_version} => Types::ChannelEngineVersionResponse
     #
     # @example Request syntax with placeholder values
     #
@@ -6582,6 +6606,8 @@ module Aws::MediaLive
     #   resp.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.pipeline_details[0].pipeline_id #=> String
+    #   resp.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.pipelines_running_count #=> Integer
     #   resp.role_arn #=> String
     #   resp.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -6597,6 +6623,8 @@ module Aws::MediaLive
     #   resp.vpc.subnet_ids[0] #=> String
     #   resp.anywhere_settings.channel_placement_group_id #=> String
     #   resp.anywhere_settings.cluster_id #=> String
+    #   resp.channel_engine_version.expiration_date #=> Time
+    #   resp.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartChannel AWS API Documentation
     #
@@ -6736,6 +6764,7 @@ module Aws::MediaLive
     #   * {Types::StopChannelResponse#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::StopChannelResponse#vpc #vpc} => Types::VpcOutputSettingsDescription
     #   * {Types::StopChannelResponse#anywhere_settings #anywhere_settings} => Types::DescribeAnywhereSettings
+    #   * {Types::StopChannelResponse#channel_engine_version #channel_engine_version} => Types::ChannelEngineVersionResponse
     #
     # @example Request syntax with placeholder values
     #
@@ -7525,6 +7554,8 @@ module Aws::MediaLive
     #   resp.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.pipeline_details[0].pipeline_id #=> String
+    #   resp.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.pipelines_running_count #=> Integer
     #   resp.role_arn #=> String
     #   resp.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -7540,6 +7571,8 @@ module Aws::MediaLive
     #   resp.vpc.subnet_ids[0] #=> String
     #   resp.anywhere_settings.channel_placement_group_id #=> String
     #   resp.anywhere_settings.cluster_id #=> String
+    #   resp.channel_engine_version.expiration_date #=> Time
+    #   resp.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StopChannel AWS API Documentation
     #
@@ -7708,6 +7741,10 @@ module Aws::MediaLive
     # @option params [String] :name
     #
     # @option params [String] :role_arn
+    #
+    # @option params [Types::ChannelEngineVersionRequest] :channel_engine_version
+    #
+    # @option params [Boolean] :dry_run
     #
     # @return [Types::UpdateChannelResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -8495,6 +8532,8 @@ module Aws::MediaLive
     #   resp.channel.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.channel.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.channel.pipeline_details[0].pipeline_id #=> String
+    #   resp.channel.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.channel.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.channel.pipelines_running_count #=> Integer
     #   resp.channel.role_arn #=> String
     #   resp.channel.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -8510,6 +8549,8 @@ module Aws::MediaLive
     #   resp.channel.vpc.subnet_ids[0] #=> String
     #   resp.channel.anywhere_settings.channel_placement_group_id #=> String
     #   resp.channel.anywhere_settings.cluster_id #=> String
+    #   resp.channel.channel_engine_version.expiration_date #=> Time
+    #   resp.channel.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannel AWS API Documentation
     #
@@ -9354,6 +9395,8 @@ module Aws::MediaLive
     #   resp.channel.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.channel.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.channel.pipeline_details[0].pipeline_id #=> String
+    #   resp.channel.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.channel.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.channel.pipelines_running_count #=> Integer
     #   resp.channel.role_arn #=> String
     #   resp.channel.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -9369,6 +9412,8 @@ module Aws::MediaLive
     #   resp.channel.vpc.subnet_ids[0] #=> String
     #   resp.channel.anywhere_settings.channel_placement_group_id #=> String
     #   resp.channel.anywhere_settings.cluster_id #=> String
+    #   resp.channel.channel_engine_version.expiration_date #=> Time
+    #   resp.channel.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelClass AWS API Documentation
     #
@@ -9965,6 +10010,7 @@ module Aws::MediaLive
     #   * {Types::RestartChannelPipelinesResponse#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::RestartChannelPipelinesResponse#vpc #vpc} => Types::VpcOutputSettingsDescription
     #   * {Types::RestartChannelPipelinesResponse#anywhere_settings #anywhere_settings} => Types::DescribeAnywhereSettings
+    #   * {Types::RestartChannelPipelinesResponse#channel_engine_version #channel_engine_version} => Types::ChannelEngineVersionResponse
     #
     # @example Request syntax with placeholder values
     #
@@ -10756,6 +10802,8 @@ module Aws::MediaLive
     #   resp.pipeline_details[0].active_motion_graphics_action_name #=> String
     #   resp.pipeline_details[0].active_motion_graphics_uri #=> String
     #   resp.pipeline_details[0].pipeline_id #=> String
+    #   resp.pipeline_details[0].channel_engine_version.expiration_date #=> Time
+    #   resp.pipeline_details[0].channel_engine_version.version #=> String
     #   resp.pipelines_running_count #=> Integer
     #   resp.role_arn #=> String
     #   resp.state #=> String, one of "CREATING", "CREATE_FAILED", "IDLE", "STARTING", "RUNNING", "RECOVERING", "STOPPING", "DELETING", "DELETED", "UPDATING", "UPDATE_FAILED"
@@ -10771,6 +10819,8 @@ module Aws::MediaLive
     #   resp.vpc.subnet_ids[0] #=> String
     #   resp.anywhere_settings.channel_placement_group_id #=> String
     #   resp.anywhere_settings.cluster_id #=> String
+    #   resp.channel_engine_version.expiration_date #=> Time
+    #   resp.channel_engine_version.version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/RestartChannelPipelines AWS API Documentation
     #
@@ -13621,6 +13671,28 @@ module Aws::MediaLive
       req.send_request(options)
     end
 
+    # Retrieves an array of all the encoder engine versions that are
+    # available in this AWS account.
+    #
+    # @return [Types::ListVersionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListVersionsResponse#versions #versions} => Array&lt;Types::ChannelEngineVersionResponse&gt;
+    #
+    # @example Response structure
+    #
+    #   resp.versions #=> Array
+    #   resp.versions[0].expiration_date #=> Time
+    #   resp.versions[0].version #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListVersions AWS API Documentation
+    #
+    # @overload list_versions(params = {})
+    # @param [Hash] params ({})
+    def list_versions(params = {}, options = {})
+      req = build_request(:list_versions, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -13639,7 +13711,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.140.0'
+      context[:gem_version] = '1.141.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

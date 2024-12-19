@@ -14,6 +14,10 @@ module Aws::WorkSpaces
 
     include Seahorse::Model
 
+    AGAModeForDirectoryEnum = Shapes::StringShape.new(name: 'AGAModeForDirectoryEnum')
+    AGAModeForWorkSpaceEnum = Shapes::StringShape.new(name: 'AGAModeForWorkSpaceEnum')
+    AGAPreferredProtocolForDirectory = Shapes::StringShape.new(name: 'AGAPreferredProtocolForDirectory')
+    AGAPreferredProtocolForWorkSpace = Shapes::StringShape.new(name: 'AGAPreferredProtocolForWorkSpace')
     ARN = Shapes::StringShape.new(name: 'ARN')
     AcceptAccountLinkInvitationRequest = Shapes::StructureShape.new(name: 'AcceptAccountLinkInvitationRequest')
     AcceptAccountLinkInvitationResult = Shapes::StructureShape.new(name: 'AcceptAccountLinkInvitationResult')
@@ -253,6 +257,8 @@ module Aws::WorkSpaces
     FailedWorkspaceChangeRequest = Shapes::StructureShape.new(name: 'FailedWorkspaceChangeRequest')
     GetAccountLinkRequest = Shapes::StructureShape.new(name: 'GetAccountLinkRequest')
     GetAccountLinkResult = Shapes::StructureShape.new(name: 'GetAccountLinkResult')
+    GlobalAcceleratorForDirectory = Shapes::StructureShape.new(name: 'GlobalAcceleratorForDirectory')
+    GlobalAcceleratorForWorkSpace = Shapes::StructureShape.new(name: 'GlobalAcceleratorForWorkSpace')
     IDCConfig = Shapes::StructureShape.new(name: 'IDCConfig')
     IdleDisconnectTimeoutInSeconds = Shapes::IntegerShape.new(name: 'IdleDisconnectTimeoutInSeconds')
     ImageAssociatedResourceType = Shapes::StringShape.new(name: 'ImageAssociatedResourceType')
@@ -1184,6 +1190,14 @@ module Aws::WorkSpaces
     GetAccountLinkResult.add_member(:account_link, Shapes::ShapeRef.new(shape: AccountLink, location_name: "AccountLink"))
     GetAccountLinkResult.struct_class = Types::GetAccountLinkResult
 
+    GlobalAcceleratorForDirectory.add_member(:mode, Shapes::ShapeRef.new(shape: AGAModeForDirectoryEnum, required: true, location_name: "Mode"))
+    GlobalAcceleratorForDirectory.add_member(:preferred_protocol, Shapes::ShapeRef.new(shape: AGAPreferredProtocolForDirectory, location_name: "PreferredProtocol"))
+    GlobalAcceleratorForDirectory.struct_class = Types::GlobalAcceleratorForDirectory
+
+    GlobalAcceleratorForWorkSpace.add_member(:mode, Shapes::ShapeRef.new(shape: AGAModeForWorkSpaceEnum, required: true, location_name: "Mode"))
+    GlobalAcceleratorForWorkSpace.add_member(:preferred_protocol, Shapes::ShapeRef.new(shape: AGAPreferredProtocolForWorkSpace, location_name: "PreferredProtocol"))
+    GlobalAcceleratorForWorkSpace.struct_class = Types::GlobalAcceleratorForWorkSpace
+
     IDCConfig.add_member(:instance_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "InstanceArn"))
     IDCConfig.add_member(:application_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "ApplicationArn"))
     IDCConfig.struct_class = Types::IDCConfig
@@ -1575,6 +1589,7 @@ module Aws::WorkSpaces
     StreamingProperties.add_member(:streaming_experience_preferred_protocol, Shapes::ShapeRef.new(shape: StreamingExperiencePreferredProtocolEnum, location_name: "StreamingExperiencePreferredProtocol"))
     StreamingProperties.add_member(:user_settings, Shapes::ShapeRef.new(shape: UserSettings, location_name: "UserSettings"))
     StreamingProperties.add_member(:storage_connectors, Shapes::ShapeRef.new(shape: StorageConnectors, location_name: "StorageConnectors"))
+    StreamingProperties.add_member(:global_accelerator, Shapes::ShapeRef.new(shape: GlobalAcceleratorForDirectory, location_name: "GlobalAccelerator"))
     StreamingProperties.struct_class = Types::StreamingProperties
 
     SubnetIds.member = Shapes::ShapeRef.new(shape: SubnetId)
@@ -1823,6 +1838,7 @@ module Aws::WorkSpaces
     WorkspaceProperties.add_member(:compute_type_name, Shapes::ShapeRef.new(shape: Compute, location_name: "ComputeTypeName"))
     WorkspaceProperties.add_member(:protocols, Shapes::ShapeRef.new(shape: ProtocolList, location_name: "Protocols"))
     WorkspaceProperties.add_member(:operating_system_name, Shapes::ShapeRef.new(shape: OperatingSystemName, location_name: "OperatingSystemName"))
+    WorkspaceProperties.add_member(:global_accelerator, Shapes::ShapeRef.new(shape: GlobalAcceleratorForWorkSpace, location_name: "GlobalAccelerator"))
     WorkspaceProperties.struct_class = Types::WorkspaceProperties
 
     WorkspaceRequest.add_member(:directory_id, Shapes::ShapeRef.new(shape: DirectoryId, required: true, location_name: "DirectoryId"))

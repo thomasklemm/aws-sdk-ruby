@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.32.0 (2024-12-19)
+------------------
+
+* Feature - AWS Systems Manager for SAP added support for registration and discovery of distributed ABAP applications
+
 1.31.0 (2024-10-18)
 ------------------
 

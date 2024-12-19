@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.141.0 (2024-12-19)
+------------------
+
+* Feature - MediaLive is releasing ListVersions api
+
 1.140.0 (2024-12-16)
 ------------------
 

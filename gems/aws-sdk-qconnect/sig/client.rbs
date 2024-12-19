@@ -140,6 +140,7 @@ module Aws
                                    },
                                  ]?,
                                  intent_labeling_generation_ai_prompt_id: ::String?,
+                                 locale: ::String?,
                                  query_reformulation_ai_prompt_id: ::String?
                                }?,
                                manual_search_ai_agent_configuration: {
@@ -182,7 +183,8 @@ module Aws
                                      association_id: ::String?,
                                      association_type: ("KNOWLEDGE_BASE")?
                                    },
-                                 ]?
+                                 ]?,
+                                 locale: ::String?
                                }?,
                                self_service_ai_agent_configuration: {
                                  association_configurations: Array[
@@ -1735,6 +1737,7 @@ module Aws
                                    },
                                  ]?,
                                  intent_labeling_generation_ai_prompt_id: ::String?,
+                                 locale: ::String?,
                                  query_reformulation_ai_prompt_id: ::String?
                                }?,
                                manual_search_ai_agent_configuration: {
@@ -1777,7 +1780,8 @@ module Aws
                                      association_id: ::String?,
                                      association_type: ("KNOWLEDGE_BASE")?
                                    },
-                                 ]?
+                                 ]?,
+                                 locale: ::String?
                                }?,
                                self_service_ai_agent_configuration: {
                                  association_configurations: Array[

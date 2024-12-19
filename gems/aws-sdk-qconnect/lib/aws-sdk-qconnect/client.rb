@@ -581,6 +581,7 @@ module Aws::QConnect
     #           },
     #         ],
     #         intent_labeling_generation_ai_prompt_id: "UuidWithQualifier",
+    #         locale: "NonEmptyString",
     #         query_reformulation_ai_prompt_id: "UuidWithQualifier",
     #       },
     #       manual_search_ai_agent_configuration: {
@@ -624,6 +625,7 @@ module Aws::QConnect
     #             association_type: "KNOWLEDGE_BASE", # accepts KNOWLEDGE_BASE
     #           },
     #         ],
+    #         locale: "NonEmptyString",
     #       },
     #       self_service_ai_agent_configuration: {
     #         association_configurations: [
@@ -703,6 +705,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -722,6 +725,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -829,6 +833,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -848,6 +853,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -3197,6 +3203,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -3216,6 +3223,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -4217,6 +4225,7 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -4236,6 +4245,7 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -4337,6 +4347,7 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -4356,6 +4367,7 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -6390,6 +6402,7 @@ module Aws::QConnect
     #           },
     #         ],
     #         intent_labeling_generation_ai_prompt_id: "UuidWithQualifier",
+    #         locale: "NonEmptyString",
     #         query_reformulation_ai_prompt_id: "UuidWithQualifier",
     #       },
     #       manual_search_ai_agent_configuration: {
@@ -6433,6 +6446,7 @@ module Aws::QConnect
     #             association_type: "KNOWLEDGE_BASE", # accepts KNOWLEDGE_BASE
     #           },
     #         ],
+    #         locale: "NonEmptyString",
     #       },
     #       self_service_ai_agent_configuration: {
     #         association_configurations: [
@@ -6507,6 +6521,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
@@ -6526,6 +6541,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.locale #=> String
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
     #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
@@ -7726,7 +7742,7 @@ module Aws::QConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qconnect'
-      context[:gem_version] = '1.25.0'
+      context[:gem_version] = '1.26.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

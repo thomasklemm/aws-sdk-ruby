@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.146.0 (2024-12-19)
+------------------
+
+* Feature - This release adds support for inserting timecode tracks into MP4 container outputs.
+
 1.145.0 (2024-11-20)
 ------------------
 

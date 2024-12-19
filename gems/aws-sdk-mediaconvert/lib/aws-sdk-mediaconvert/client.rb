@@ -705,7 +705,7 @@ module Aws::MediaConvert
     #             target_lkfs: 1.0,
     #             true_peak_limiter_threshold: 1.0,
     #           },
-    #           audio_source_name: "__string",
+    #           audio_source_name: "__stringMax2048",
     #           audio_type: 1,
     #           audio_type_control: "FOLLOW_INPUT", # accepts FOLLOW_INPUT, USE_CONFIGURED
     #           codec_settings: {
@@ -856,6 +856,7 @@ module Aws::MediaConvert
     #               hex_font_color: "__stringMin6Max8Pattern09aFAF609aFAF2",
     #               outline_color: "BLACK", # accepts BLACK, WHITE, YELLOW, RED, GREEN, BLUE, AUTO
     #               outline_size: 1,
+    #               remove_ruby_reserve_attributes: "DISABLED", # accepts DISABLED, ENABLED
     #               shadow_color: "NONE", # accepts NONE, BLACK, WHITE, AUTO
     #               shadow_opacity: 1,
     #               shadow_x_offset: 1,
@@ -1382,6 +1383,7 @@ module Aws::MediaConvert
     #         scaling_behavior: "DEFAULT", # accepts DEFAULT, STRETCH_TO_OUTPUT, FIT, FIT_NO_UPSCALE, FILL
     #         sharpness: 1,
     #         timecode_insertion: "DISABLED", # accepts DISABLED, PIC_TIMING_SEI
+    #         timecode_track: "DISABLED", # accepts DISABLED, ENABLED
     #         video_preprocessors: {
     #           color_corrector: {
     #             brightness: 1,
@@ -1626,6 +1628,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.hex_font_color #=> String
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_color #=> String, one of "BLACK", "WHITE", "YELLOW", "RED", "GREEN", "BLUE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_size #=> Integer
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.remove_ruby_reserve_attributes #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_color #=> String, one of "NONE", "BLACK", "WHITE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_opacity #=> Integer
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_x_offset #=> Integer
@@ -2055,6 +2058,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.scaling_behavior #=> String, one of "DEFAULT", "STRETCH_TO_OUTPUT", "FIT", "FIT_NO_UPSCALE", "FILL"
     #   resp.preset.settings.video_description.sharpness #=> Integer
     #   resp.preset.settings.video_description.timecode_insertion #=> String, one of "DISABLED", "PIC_TIMING_SEI"
+    #   resp.preset.settings.video_description.timecode_track #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.brightness #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_rgb_tolerance #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_yuv #=> Integer
@@ -2600,6 +2604,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.hex_font_color #=> String
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_color #=> String, one of "BLACK", "WHITE", "YELLOW", "RED", "GREEN", "BLUE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_size #=> Integer
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.remove_ruby_reserve_attributes #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_color #=> String, one of "NONE", "BLACK", "WHITE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_opacity #=> Integer
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_x_offset #=> Integer
@@ -3029,6 +3034,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.scaling_behavior #=> String, one of "DEFAULT", "STRETCH_TO_OUTPUT", "FIT", "FIT_NO_UPSCALE", "FILL"
     #   resp.preset.settings.video_description.sharpness #=> Integer
     #   resp.preset.settings.video_description.timecode_insertion #=> String, one of "DISABLED", "PIC_TIMING_SEI"
+    #   resp.preset.settings.video_description.timecode_track #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.brightness #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_rgb_tolerance #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_yuv #=> Integer
@@ -3442,6 +3448,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.hex_font_color #=> String
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_color #=> String, one of "BLACK", "WHITE", "YELLOW", "RED", "GREEN", "BLUE", "AUTO"
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_size #=> Integer
+    #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.remove_ruby_reserve_attributes #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_color #=> String, one of "NONE", "BLACK", "WHITE", "AUTO"
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_opacity #=> Integer
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_x_offset #=> Integer
@@ -3871,6 +3878,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.scaling_behavior #=> String, one of "DEFAULT", "STRETCH_TO_OUTPUT", "FIT", "FIT_NO_UPSCALE", "FILL"
     #   resp.presets[0].settings.video_description.sharpness #=> Integer
     #   resp.presets[0].settings.video_description.timecode_insertion #=> String, one of "DISABLED", "PIC_TIMING_SEI"
+    #   resp.presets[0].settings.video_description.timecode_track #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.video_preprocessors.color_corrector.brightness #=> Integer
     #   resp.presets[0].settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_rgb_tolerance #=> Integer
     #   resp.presets[0].settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_yuv #=> Integer
@@ -4349,7 +4357,7 @@ module Aws::MediaConvert
     #             target_lkfs: 1.0,
     #             true_peak_limiter_threshold: 1.0,
     #           },
-    #           audio_source_name: "__string",
+    #           audio_source_name: "__stringMax2048",
     #           audio_type: 1,
     #           audio_type_control: "FOLLOW_INPUT", # accepts FOLLOW_INPUT, USE_CONFIGURED
     #           codec_settings: {
@@ -4500,6 +4508,7 @@ module Aws::MediaConvert
     #               hex_font_color: "__stringMin6Max8Pattern09aFAF609aFAF2",
     #               outline_color: "BLACK", # accepts BLACK, WHITE, YELLOW, RED, GREEN, BLUE, AUTO
     #               outline_size: 1,
+    #               remove_ruby_reserve_attributes: "DISABLED", # accepts DISABLED, ENABLED
     #               shadow_color: "NONE", # accepts NONE, BLACK, WHITE, AUTO
     #               shadow_opacity: 1,
     #               shadow_x_offset: 1,
@@ -5026,6 +5035,7 @@ module Aws::MediaConvert
     #         scaling_behavior: "DEFAULT", # accepts DEFAULT, STRETCH_TO_OUTPUT, FIT, FIT_NO_UPSCALE, FILL
     #         sharpness: 1,
     #         timecode_insertion: "DISABLED", # accepts DISABLED, PIC_TIMING_SEI
+    #         timecode_track: "DISABLED", # accepts DISABLED, ENABLED
     #         video_preprocessors: {
     #           color_corrector: {
     #             brightness: 1,
@@ -5267,6 +5277,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.hex_font_color #=> String
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_color #=> String, one of "BLACK", "WHITE", "YELLOW", "RED", "GREEN", "BLUE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.outline_size #=> Integer
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.remove_ruby_reserve_attributes #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_color #=> String, one of "NONE", "BLACK", "WHITE", "AUTO"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_opacity #=> Integer
     #   resp.preset.settings.caption_descriptions[0].destination_settings.burnin_destination_settings.shadow_x_offset #=> Integer
@@ -5696,6 +5707,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.scaling_behavior #=> String, one of "DEFAULT", "STRETCH_TO_OUTPUT", "FIT", "FIT_NO_UPSCALE", "FILL"
     #   resp.preset.settings.video_description.sharpness #=> Integer
     #   resp.preset.settings.video_description.timecode_insertion #=> String, one of "DISABLED", "PIC_TIMING_SEI"
+    #   resp.preset.settings.video_description.timecode_track #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.brightness #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_rgb_tolerance #=> Integer
     #   resp.preset.settings.video_description.video_preprocessors.color_corrector.clip_limits.maximum_yuv #=> Integer
@@ -5873,7 +5885,7 @@ module Aws::MediaConvert
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconvert'
-      context[:gem_version] = '1.145.0'
+      context[:gem_version] = '1.146.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

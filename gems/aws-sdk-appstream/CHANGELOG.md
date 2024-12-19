@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.103.0 (2024-12-19)
+------------------
+
+* Feature - Added support for Rocky Linux 8 on Amazon AppStream 2.0
+
 1.102.0 (2024-10-18)
 ------------------
 

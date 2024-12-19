@@ -76,6 +76,13 @@ module Aws::SsmSap
       SENSITIVE: []
     end
 
+    class ComponentInfo
+      attr_accessor component_type: ("HANA" | "HANA_NODE" | "ABAP" | "ASCS" | "DIALOG" | "WEBDISP" | "WD" | "ERS")
+      attr_accessor sid: ::String
+      attr_accessor ec2_instance_id: ::String
+      SENSITIVE: []
+    end
+
     class ComponentSummary
       attr_accessor application_id: ::String
       attr_accessor component_id: ::String
@@ -355,6 +362,7 @@ module Aws::SsmSap
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor credentials: ::Array[Types::ApplicationCredential]
       attr_accessor database_arn: ::String
+      attr_accessor components_info: ::Array[Types::ComponentInfo]
       SENSITIVE: []
     end
 

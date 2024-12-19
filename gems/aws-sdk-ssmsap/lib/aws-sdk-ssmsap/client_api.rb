@@ -36,6 +36,8 @@ module Aws::SsmSap
     ComponentArnList = Shapes::ListShape.new(name: 'ComponentArnList')
     ComponentId = Shapes::StringShape.new(name: 'ComponentId')
     ComponentIdList = Shapes::ListShape.new(name: 'ComponentIdList')
+    ComponentInfo = Shapes::StructureShape.new(name: 'ComponentInfo')
+    ComponentInfoList = Shapes::ListShape.new(name: 'ComponentInfoList')
     ComponentStatus = Shapes::StringShape.new(name: 'ComponentStatus')
     ComponentSummary = Shapes::StructureShape.new(name: 'ComponentSummary')
     ComponentSummaryList = Shapes::ListShape.new(name: 'ComponentSummaryList')
@@ -208,6 +210,13 @@ module Aws::SsmSap
     ComponentArnList.member = Shapes::ShapeRef.new(shape: SsmSapArn)
 
     ComponentIdList.member = Shapes::ShapeRef.new(shape: ComponentId)
+
+    ComponentInfo.add_member(:component_type, Shapes::ShapeRef.new(shape: ComponentType, required: true, location_name: "ComponentType"))
+    ComponentInfo.add_member(:sid, Shapes::ShapeRef.new(shape: SID, required: true, location_name: "Sid"))
+    ComponentInfo.add_member(:ec2_instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "Ec2InstanceId"))
+    ComponentInfo.struct_class = Types::ComponentInfo
+
+    ComponentInfoList.member = Shapes::ShapeRef.new(shape: ComponentInfo)
 
     ComponentSummary.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "ApplicationId"))
     ComponentSummary.add_member(:component_id, Shapes::ShapeRef.new(shape: ComponentId, location_name: "ComponentId"))
@@ -433,6 +442,7 @@ module Aws::SsmSap
     RegisterApplicationInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     RegisterApplicationInput.add_member(:credentials, Shapes::ShapeRef.new(shape: ApplicationCredentialList, location_name: "Credentials"))
     RegisterApplicationInput.add_member(:database_arn, Shapes::ShapeRef.new(shape: SsmSapArn, location_name: "DatabaseArn"))
+    RegisterApplicationInput.add_member(:components_info, Shapes::ShapeRef.new(shape: ComponentInfoList, location_name: "ComponentsInfo"))
     RegisterApplicationInput.struct_class = Types::RegisterApplicationInput
 
     RegisterApplicationOutput.add_member(:application, Shapes::ShapeRef.new(shape: Application, location_name: "Application"))

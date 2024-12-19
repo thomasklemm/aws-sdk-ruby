@@ -2861,6 +2861,46 @@ module Aws::WorkSpaces
       include Aws::Structure
     end
 
+    # Describes the Global Accelerator for directory
+    #
+    # @!attribute [rw] mode
+    #   Indicates if Global Accelerator for directory is enabled or
+    #   disabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] preferred_protocol
+    #   Indicates the preferred protocol for Global Accelerator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/GlobalAcceleratorForDirectory AWS API Documentation
+    #
+    class GlobalAcceleratorForDirectory < Struct.new(
+      :mode,
+      :preferred_protocol)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the Global Accelerator for WorkSpaces.
+    #
+    # @!attribute [rw] mode
+    #   Indicates if Global Accelerator for WorkSpaces is enabled, disabled,
+    #   or the same mode as the associated directory.
+    #   @return [String]
+    #
+    # @!attribute [rw] preferred_protocol
+    #   Indicates the preferred protocol for Global Accelerator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/GlobalAcceleratorForWorkSpace AWS API Documentation
+    #
+    class GlobalAcceleratorForWorkSpace < Struct.new(
+      :mode,
+      :preferred_protocol)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies the configurations of the identity center.
     #
     # @!attribute [rw] instance_arn
@@ -4611,12 +4651,17 @@ module Aws::WorkSpaces
     #   Indicates the storage connector used
     #   @return [Array<Types::StorageConnector>]
     #
+    # @!attribute [rw] global_accelerator
+    #   Indicates the Global Accelerator properties.
+    #   @return [Types::GlobalAcceleratorForDirectory]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/StreamingProperties AWS API Documentation
     #
     class StreamingProperties < Struct.new(
       :streaming_experience_preferred_protocol,
       :user_settings,
-      :storage_connectors)
+      :storage_connectors,
+      :global_accelerator)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5874,6 +5919,10 @@ module Aws::WorkSpaces
     #   The name of the operating system.
     #   @return [String]
     #
+    # @!attribute [rw] global_accelerator
+    #   Indicates the Global Accelerator properties.
+    #   @return [Types::GlobalAcceleratorForWorkSpace]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/WorkspaceProperties AWS API Documentation
     #
     class WorkspaceProperties < Struct.new(
@@ -5883,7 +5932,8 @@ module Aws::WorkSpaces
       :user_volume_size_gib,
       :compute_type_name,
       :protocols,
-      :operating_system_name)
+      :operating_system_name,
+      :global_accelerator)
       SENSITIVE = []
       include Aws::Structure
     end

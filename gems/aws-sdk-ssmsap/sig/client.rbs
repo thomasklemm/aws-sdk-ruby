@@ -284,7 +284,14 @@ module Aws
                                       secret_id: ::String
                                     },
                                   ],
-                                  ?database_arn: ::String
+                                  ?database_arn: ::String,
+                                  ?components_info: Array[
+                                    {
+                                      component_type: ("HANA" | "HANA_NODE" | "ABAP" | "ASCS" | "DIALOG" | "WEBDISP" | "WD" | "ERS"),
+                                      sid: ::String,
+                                      ec2_instance_id: ::String
+                                    },
+                                  ]
                                 ) -> _RegisterApplicationResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterApplicationResponseSuccess
 

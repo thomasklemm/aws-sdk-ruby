@@ -133,6 +133,8 @@ module Aws::MediaLive
     ChannelClass = Shapes::StringShape.new(name: 'ChannelClass')
     ChannelConfigurationValidationError = Shapes::StructureShape.new(name: 'ChannelConfigurationValidationError')
     ChannelEgressEndpoint = Shapes::StructureShape.new(name: 'ChannelEgressEndpoint')
+    ChannelEngineVersionRequest = Shapes::StructureShape.new(name: 'ChannelEngineVersionRequest')
+    ChannelEngineVersionResponse = Shapes::StructureShape.new(name: 'ChannelEngineVersionResponse')
     ChannelPipelineIdToRestart = Shapes::StringShape.new(name: 'ChannelPipelineIdToRestart')
     ChannelPlacementGroupState = Shapes::StringShape.new(name: 'ChannelPlacementGroupState')
     ChannelState = Shapes::StringShape.new(name: 'ChannelState')
@@ -617,6 +619,8 @@ module Aws::MediaLive
     ListSignalMapsResponseContent = Shapes::StructureShape.new(name: 'ListSignalMapsResponseContent')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
+    ListVersionsRequest = Shapes::StructureShape.new(name: 'ListVersionsRequest')
+    ListVersionsResponse = Shapes::StructureShape.new(name: 'ListVersionsResponse')
     LogLevel = Shapes::StringShape.new(name: 'LogLevel')
     M2tsAbsentInputAudioBehavior = Shapes::StringShape.new(name: 'M2tsAbsentInputAudioBehavior')
     M2tsArib = Shapes::StringShape.new(name: 'M2tsArib')
@@ -1073,6 +1077,7 @@ module Aws::MediaLive
     __listOfCaptionLanguageMapping = Shapes::ListShape.new(name: '__listOfCaptionLanguageMapping')
     __listOfCaptionSelector = Shapes::ListShape.new(name: '__listOfCaptionSelector')
     __listOfChannelEgressEndpoint = Shapes::ListShape.new(name: '__listOfChannelEgressEndpoint')
+    __listOfChannelEngineVersionResponse = Shapes::ListShape.new(name: '__listOfChannelEngineVersionResponse')
     __listOfChannelPipelineIdToRestart = Shapes::ListShape.new(name: '__listOfChannelPipelineIdToRestart')
     __listOfChannelSummary = Shapes::ListShape.new(name: '__listOfChannelSummary')
     __listOfCloudWatchAlarmTemplateGroupSummary = Shapes::ListShape.new(name: '__listOfCloudWatchAlarmTemplateGroupSummary')
@@ -1579,6 +1584,7 @@ module Aws::MediaLive
     Channel.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     Channel.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     Channel.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    Channel.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     Channel.struct_class = Types::Channel
 
     ChannelConfigurationValidationError.add_member(:message, Shapes::ShapeRef.new(shape: __string, location_name: "message"))
@@ -1587,6 +1593,13 @@ module Aws::MediaLive
 
     ChannelEgressEndpoint.add_member(:source_ip, Shapes::ShapeRef.new(shape: __string, location_name: "sourceIp"))
     ChannelEgressEndpoint.struct_class = Types::ChannelEgressEndpoint
+
+    ChannelEngineVersionRequest.add_member(:version, Shapes::ShapeRef.new(shape: __string, location_name: "version"))
+    ChannelEngineVersionRequest.struct_class = Types::ChannelEngineVersionRequest
+
+    ChannelEngineVersionResponse.add_member(:expiration_date, Shapes::ShapeRef.new(shape: __timestampIso8601, location_name: "expirationDate"))
+    ChannelEngineVersionResponse.add_member(:version, Shapes::ShapeRef.new(shape: __string, location_name: "version"))
+    ChannelEngineVersionResponse.struct_class = Types::ChannelEngineVersionResponse
 
     ChannelSummary.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
     ChannelSummary.add_member(:cdi_input_specification, Shapes::ShapeRef.new(shape: CdiInputSpecification, location_name: "cdiInputSpecification"))
@@ -1605,6 +1618,8 @@ module Aws::MediaLive
     ChannelSummary.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     ChannelSummary.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     ChannelSummary.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    ChannelSummary.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
+    ChannelSummary.add_member(:used_channel_engine_versions, Shapes::ShapeRef.new(shape: __listOfChannelEngineVersionResponse, location_name: "usedChannelEngineVersions"))
     ChannelSummary.struct_class = Types::ChannelSummary
 
     ClaimDeviceRequest.add_member(:id, Shapes::ShapeRef.new(shape: __string, location_name: "id"))
@@ -1699,6 +1714,8 @@ module Aws::MediaLive
     CreateChannel.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateChannel.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettings, location_name: "vpc"))
     CreateChannel.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: AnywhereSettings, location_name: "anywhereSettings"))
+    CreateChannel.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
+    CreateChannel.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
     CreateChannel.struct_class = Types::CreateChannel
 
     CreateChannelPlacementGroupRequest.add_member(:cluster_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "clusterId"))
@@ -1732,6 +1749,8 @@ module Aws::MediaLive
     CreateChannelRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateChannelRequest.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettings, location_name: "vpc"))
     CreateChannelRequest.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: AnywhereSettings, location_name: "anywhereSettings"))
+    CreateChannelRequest.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
+    CreateChannelRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
     CreateChannelRequest.struct_class = Types::CreateChannelRequest
 
     CreateChannelResponse.add_member(:channel, Shapes::ShapeRef.new(shape: Channel, location_name: "channel"))
@@ -2167,6 +2186,7 @@ module Aws::MediaLive
     DeleteChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     DeleteChannelResponse.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     DeleteChannelResponse.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    DeleteChannelResponse.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     DeleteChannelResponse.struct_class = Types::DeleteChannelResponse
 
     DeleteCloudWatchAlarmTemplateGroupRequest.add_member(:identifier, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "identifier"))
@@ -2359,6 +2379,7 @@ module Aws::MediaLive
     DescribeChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     DescribeChannelResponse.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     DescribeChannelResponse.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    DescribeChannelResponse.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     DescribeChannelResponse.struct_class = Types::DescribeChannelResponse
 
     DescribeClusterRequest.add_member(:cluster_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "clusterId"))
@@ -3744,6 +3765,11 @@ module Aws::MediaLive
     ListTagsForResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     ListTagsForResourceResponse.struct_class = Types::ListTagsForResourceResponse
 
+    ListVersionsRequest.struct_class = Types::ListVersionsRequest
+
+    ListVersionsResponse.add_member(:versions, Shapes::ShapeRef.new(shape: __listOfChannelEngineVersionResponse, location_name: "versions"))
+    ListVersionsResponse.struct_class = Types::ListVersionsResponse
+
     M2tsSettings.add_member(:absent_input_audio_behavior, Shapes::ShapeRef.new(shape: M2tsAbsentInputAudioBehavior, location_name: "absentInputAudioBehavior"))
     M2tsSettings.add_member(:arib, Shapes::ShapeRef.new(shape: M2tsArib, location_name: "arib"))
     M2tsSettings.add_member(:arib_captions_pid, Shapes::ShapeRef.new(shape: __string, location_name: "aribCaptionsPid"))
@@ -4204,6 +4230,7 @@ module Aws::MediaLive
     PipelineDetail.add_member(:active_motion_graphics_action_name, Shapes::ShapeRef.new(shape: __string, location_name: "activeMotionGraphicsActionName"))
     PipelineDetail.add_member(:active_motion_graphics_uri, Shapes::ShapeRef.new(shape: __string, location_name: "activeMotionGraphicsUri"))
     PipelineDetail.add_member(:pipeline_id, Shapes::ShapeRef.new(shape: __string, location_name: "pipelineId"))
+    PipelineDetail.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     PipelineDetail.struct_class = Types::PipelineDetail
 
     PipelineLockingSettings.struct_class = Types::PipelineLockingSettings
@@ -4324,6 +4351,7 @@ module Aws::MediaLive
     RestartChannelPipelinesResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     RestartChannelPipelinesResponse.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     RestartChannelPipelinesResponse.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    RestartChannelPipelinesResponse.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     RestartChannelPipelinesResponse.struct_class = Types::RestartChannelPipelinesResponse
 
     Route.add_member(:cidr, Shapes::ShapeRef.new(shape: __string, location_name: "cidr"))
@@ -4532,6 +4560,7 @@ module Aws::MediaLive
     StartChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     StartChannelResponse.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     StartChannelResponse.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    StartChannelResponse.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     StartChannelResponse.struct_class = Types::StartChannelResponse
 
     StartDeleteMonitorDeploymentRequest.add_member(:identifier, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "identifier"))
@@ -4769,6 +4798,7 @@ module Aws::MediaLive
     StopChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     StopChannelResponse.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcOutputSettingsDescription, location_name: "vpc"))
     StopChannelResponse.add_member(:anywhere_settings, Shapes::ShapeRef.new(shape: DescribeAnywhereSettings, location_name: "anywhereSettings"))
+    StopChannelResponse.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse, location_name: "channelEngineVersion"))
     StopChannelResponse.struct_class = Types::StopChannelResponse
 
     StopInputDeviceRequest.add_member(:input_device_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "inputDeviceId"))
@@ -4912,6 +4942,8 @@ module Aws::MediaLive
     UpdateChannel.add_member(:maintenance, Shapes::ShapeRef.new(shape: MaintenanceUpdateSettings, location_name: "maintenance"))
     UpdateChannel.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
     UpdateChannel.add_member(:role_arn, Shapes::ShapeRef.new(shape: __string, location_name: "roleArn"))
+    UpdateChannel.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
+    UpdateChannel.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
     UpdateChannel.struct_class = Types::UpdateChannel
 
     UpdateChannelClass.add_member(:channel_class, Shapes::ShapeRef.new(shape: ChannelClass, required: true, location_name: "channelClass"))
@@ -4951,6 +4983,8 @@ module Aws::MediaLive
     UpdateChannelRequest.add_member(:maintenance, Shapes::ShapeRef.new(shape: MaintenanceUpdateSettings, location_name: "maintenance"))
     UpdateChannelRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
     UpdateChannelRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: __string, location_name: "roleArn"))
+    UpdateChannelRequest.add_member(:channel_engine_version, Shapes::ShapeRef.new(shape: ChannelEngineVersionRequest, location_name: "channelEngineVersion"))
+    UpdateChannelRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: __boolean, location_name: "dryRun"))
     UpdateChannelRequest.struct_class = Types::UpdateChannelRequest
 
     UpdateChannelResponse.add_member(:channel, Shapes::ShapeRef.new(shape: Channel, location_name: "channel"))
@@ -5395,6 +5429,8 @@ module Aws::MediaLive
     __listOfCaptionSelector.member = Shapes::ShapeRef.new(shape: CaptionSelector)
 
     __listOfChannelEgressEndpoint.member = Shapes::ShapeRef.new(shape: ChannelEgressEndpoint)
+
+    __listOfChannelEngineVersionResponse.member = Shapes::ShapeRef.new(shape: ChannelEngineVersionResponse)
 
     __listOfChannelPipelineIdToRestart.member = Shapes::ShapeRef.new(shape: ChannelPipelineIdToRestart)
 
@@ -7376,6 +7412,22 @@ module Aws::MediaLive
         o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
+      api.add_operation(:list_versions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListVersions"
+        o.http_method = "GET"
+        o.http_request_uri = "/prod/versions"
+        o.input = Shapes::ShapeRef.new(shape: ListVersionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListVersionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerErrorException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: GatewayTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)

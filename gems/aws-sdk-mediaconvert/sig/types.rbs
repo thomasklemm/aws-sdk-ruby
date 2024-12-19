@@ -243,6 +243,7 @@ module Aws::MediaConvert
       attr_accessor hex_font_color: ::String
       attr_accessor outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")
       attr_accessor outline_size: ::Integer
+      attr_accessor remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")
       attr_accessor shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")
       attr_accessor shadow_opacity: ::Integer
       attr_accessor shadow_x_offset: ::Integer
@@ -2173,6 +2174,7 @@ module Aws::MediaConvert
       attr_accessor scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")
       attr_accessor sharpness: ::Integer
       attr_accessor timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")
+      attr_accessor timecode_track: ("DISABLED" | "ENABLED")
       attr_accessor video_preprocessors: Types::VideoPreprocessor
       attr_accessor width: ::Integer
       SENSITIVE: []

@@ -491,6 +491,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -523,6 +524,8 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
+      attr_accessor used_channel_engine_versions: ::Array[Types::ChannelEngineVersionResponse]
       SENSITIVE: []
     end
 
@@ -570,6 +573,8 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettings
       attr_accessor anywhere_settings: Types::AnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionRequest
+      attr_accessor dry_run: bool
       SENSITIVE: []
     end
 
@@ -589,6 +594,8 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettings
       attr_accessor anywhere_settings: Types::AnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionRequest
+      attr_accessor dry_run: bool
       SENSITIVE: []
     end
 
@@ -771,6 +778,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -904,6 +912,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -2598,6 +2607,7 @@ module Aws::MediaLive
       attr_accessor active_motion_graphics_action_name: ::String
       attr_accessor active_motion_graphics_uri: ::String
       attr_accessor pipeline_id: ::String
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -2915,6 +2925,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -3031,6 +3042,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -3219,6 +3231,8 @@ module Aws::MediaLive
       attr_accessor maintenance: Types::MaintenanceUpdateSettings
       attr_accessor name: ::String
       attr_accessor role_arn: ::String
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionRequest
+      attr_accessor dry_run: bool
       SENSITIVE: []
     end
 
@@ -3251,6 +3265,8 @@ module Aws::MediaLive
       attr_accessor maintenance: Types::MaintenanceUpdateSettings
       attr_accessor name: ::String
       attr_accessor role_arn: ::String
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionRequest
+      attr_accessor dry_run: bool
       SENSITIVE: []
     end
 
@@ -3552,6 +3568,7 @@ module Aws::MediaLive
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor vpc: Types::VpcOutputSettingsDescription
       attr_accessor anywhere_settings: Types::DescribeAnywhereSettings
+      attr_accessor channel_engine_version: Types::ChannelEngineVersionResponse
       SENSITIVE: []
     end
 
@@ -5437,6 +5454,25 @@ module Aws::MediaLive
       attr_accessor pcr_period: ::Integer
       attr_accessor scte_35_control: ("NONE" | "PASSTHROUGH")
       attr_accessor scte_35_preroll_pullup_milliseconds: ::Float
+      SENSITIVE: []
+    end
+
+    class ChannelEngineVersionRequest
+      attr_accessor version: ::String
+      SENSITIVE: []
+    end
+
+    class ChannelEngineVersionResponse
+      attr_accessor expiration_date: ::Time
+      attr_accessor version: ::String
+      SENSITIVE: []
+    end
+
+    class ListVersionsRequest < Aws::EmptyStructure
+    end
+
+    class ListVersionsResponse
+      attr_accessor versions: ::Array[Types::ChannelEngineVersionResponse]
       SENSITIVE: []
     end
   end

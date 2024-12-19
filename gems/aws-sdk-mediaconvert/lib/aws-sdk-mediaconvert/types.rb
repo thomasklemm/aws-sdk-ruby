@@ -1523,6 +1523,15 @@ module Aws::MediaConvert
     #   outline size data from your input captions, if present.
     #   @return [Integer]
     #
+    # @!attribute [rw] remove_ruby_reserve_attributes
+    #   Optionally remove any tts:rubyReserve attributes present in your
+    #   input, that do not have a tts:ruby attribute in the same element,
+    #   from your output. Use if your vertical Japanese output captions have
+    #   alignment issues. To remove ruby reserve attributes when present:
+    #   Choose Enabled. To not remove any ruby reserve attributes: Keep the
+    #   default value, Disabled.
+    #   @return [String]
+    #
     # @!attribute [rw] shadow_color
     #   Specify the color of the shadow cast by the captions. Leave Shadow
     #   color blank and set Style passthrough to enabled to use the shadow
@@ -1610,6 +1619,7 @@ module Aws::MediaConvert
       :hex_font_color,
       :outline_color,
       :outline_size,
+      :remove_ruby_reserve_attributes,
       :shadow_color,
       :shadow_opacity,
       :shadow_x_offset,
@@ -13054,7 +13064,7 @@ module Aws::MediaConvert
     #   service will use drop-frame timecode on outputs. If it is not
     #   possible to use drop-frame timecode, the system will fall back to
     #   non-drop-frame. This setting is enabled by default when Timecode
-    #   insertion is enabled.
+    #   insertion or Timecode track is enabled.
     #   @return [String]
     #
     # @!attribute [rw] fixed_afd
@@ -13119,6 +13129,15 @@ module Aws::MediaConvert
     #   Job settings > Timecode configuration does.
     #   @return [String]
     #
+    # @!attribute [rw] timecode_track
+    #   To include a timecode track in your MP4 output: Choose Enabled.
+    #   MediaConvert writes the timecode track in the Null Media Header box
+    #   (NMHD), without any timecode text formatting information. You can
+    #   also specify dropframe or non-dropframe timecode under the Drop
+    #   Frame Timecode setting. To not include a timecode track: Keep the
+    #   default value, Disabled.
+    #   @return [String]
+    #
     # @!attribute [rw] video_preprocessors
     #   Find additional transcoding features under Preprocessors. Enable the
     #   features at each output individually. These features are disabled by
@@ -13150,6 +13169,7 @@ module Aws::MediaConvert
       :scaling_behavior,
       :sharpness,
       :timecode_insertion,
+      :timecode_track,
       :video_preprocessors,
       :width)
       SENSITIVE = []

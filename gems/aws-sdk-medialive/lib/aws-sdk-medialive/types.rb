@@ -1867,6 +1867,10 @@ module Aws::MediaLive
     #   Anywhere settings for this channel.
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   Requested engine version for this channel.
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Channel AWS API Documentation
     #
     class Channel < Struct.new(
@@ -1888,7 +1892,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1992,6 +1997,14 @@ module Aws::MediaLive
     #   AnywhereSettings settings for this channel.
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   The engine version that you requested for this channel.
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
+    # @!attribute [rw] used_channel_engine_versions
+    #   The engine version that the running pipelines are using.
+    #   @return [Array<Types::ChannelEngineVersionResponse>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ChannelSummary AWS API Documentation
     #
     class ChannelSummary < Struct.new(
@@ -2011,7 +2024,9 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version,
+      :used_channel_engine_versions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2165,6 +2180,13 @@ module Aws::MediaLive
     #   The Elemental Anywhere settings for this channel.
     #   @return [Types::AnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   The desired engine version for this channel.
+    #   @return [Types::ChannelEngineVersionRequest]
+    #
+    # @!attribute [rw] dry_run
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateChannel AWS API Documentation
     #
     class CreateChannel < Struct.new(
@@ -2182,7 +2204,9 @@ module Aws::MediaLive
       :role_arn,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version,
+      :dry_run)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2242,6 +2266,12 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::AnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionRequest]
+    #
+    # @!attribute [rw] dry_run
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CreateChannelRequest AWS API Documentation
     #
     class CreateChannelRequest < Struct.new(
@@ -2259,7 +2289,9 @@ module Aws::MediaLive
       :role_arn,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version,
+      :dry_run)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2827,6 +2859,9 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DeleteChannelResponse AWS API Documentation
     #
     class DeleteChannelResponse < Struct.new(
@@ -2848,7 +2883,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3220,6 +3256,9 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/DescribeChannelResponse AWS API Documentation
     #
     class DescribeChannelResponse < Struct.new(
@@ -3241,7 +3280,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10364,6 +10404,10 @@ module Aws::MediaLive
     #   Pipeline ID
     #   @return [String]
     #
+    # @!attribute [rw] channel_engine_version
+    #   Current engine version of the encoder for this pipeline.
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/PipelineDetail AWS API Documentation
     #
     class PipelineDetail < Struct.new(
@@ -10371,7 +10415,8 @@ module Aws::MediaLive
       :active_input_switch_action_name,
       :active_motion_graphics_action_name,
       :active_motion_graphics_uri,
-      :pipeline_id)
+      :pipeline_id,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11537,6 +11582,9 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartChannelResponse AWS API Documentation
     #
     class StartChannelResponse < Struct.new(
@@ -11558,7 +11606,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11980,6 +12029,9 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StopChannelResponse AWS API Documentation
     #
     class StopChannelResponse < Struct.new(
@@ -12001,7 +12053,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12596,6 +12649,13 @@ module Aws::MediaLive
     #   but the role was previously set that role will be removed.
     #   @return [String]
     #
+    # @!attribute [rw] channel_engine_version
+    #   Channel engine version for this channel
+    #   @return [Types::ChannelEngineVersionRequest]
+    #
+    # @!attribute [rw] dry_run
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannel AWS API Documentation
     #
     class UpdateChannel < Struct.new(
@@ -12607,7 +12667,9 @@ module Aws::MediaLive
       :log_level,
       :maintenance,
       :name,
-      :role_arn)
+      :role_arn,
+      :channel_engine_version,
+      :dry_run)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12693,6 +12755,12 @@ module Aws::MediaLive
     # @!attribute [rw] role_arn
     #   @return [String]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionRequest]
+    #
+    # @!attribute [rw] dry_run
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelRequest AWS API Documentation
     #
     class UpdateChannelRequest < Struct.new(
@@ -12705,7 +12773,9 @@ module Aws::MediaLive
       :log_level,
       :maintenance,
       :name,
-      :role_arn)
+      :role_arn,
+      :channel_engine_version,
+      :dry_run)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13738,6 +13808,9 @@ module Aws::MediaLive
     #   Elemental anywhere settings
     #   @return [Types::DescribeAnywhereSettings]
     #
+    # @!attribute [rw] channel_engine_version
+    #   @return [Types::ChannelEngineVersionResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/RestartChannelPipelinesResponse AWS API Documentation
     #
     class RestartChannelPipelinesResponse < Struct.new(
@@ -13760,7 +13833,8 @@ module Aws::MediaLive
       :state,
       :tags,
       :vpc,
-      :anywhere_settings)
+      :anywhere_settings,
+      :channel_engine_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20818,6 +20892,53 @@ module Aws::MediaLive
       :pcr_period,
       :scte_35_control,
       :scte_35_preroll_pullup_milliseconds)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] version
+    #   The build identifier of the engine version to use for this channel.
+    #   Specify 'DEFAULT' to reset to the default version.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ChannelEngineVersionRequest AWS API Documentation
+    #
+    class ChannelEngineVersionRequest < Struct.new(
+      :version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] expiration_date
+    #   @return [Time]
+    #
+    # @!attribute [rw] version
+    #   The build identifier for this version of the channel version.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ChannelEngineVersionResponse AWS API Documentation
+    #
+    class ChannelEngineVersionResponse < Struct.new(
+      :expiration_date,
+      :version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @api private
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListVersionsRequest AWS API Documentation
+    #
+    class ListVersionsRequest < Aws::EmptyStructure; end
+
+    # @!attribute [rw] versions
+    #   List of engine versions that are available for this AWS account.
+    #   @return [Array<Types::ChannelEngineVersionResponse>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListVersionsResponse AWS API Documentation
+    #
+    class ListVersionsResponse < Struct.new(
+      :versions)
       SENSITIVE = []
       include Aws::Structure
     end

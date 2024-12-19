@@ -313,6 +313,38 @@ module Aws::SsmSap
       include Aws::Structure
     end
 
+    # This is information about the component of your SAP application, such
+    # as Web Dispatcher.
+    #
+    # @!attribute [rw] component_type
+    #   This string is the type of the component.
+    #
+    #   Accepted value is `WD`.
+    #   @return [String]
+    #
+    # @!attribute [rw] sid
+    #   This string is the SAP System ID of the component.
+    #
+    #   Accepted values are alphanumeric.
+    #   @return [String]
+    #
+    # @!attribute [rw] ec2_instance_id
+    #   This is the Amazon EC2 instance on which your SAP component is
+    #   running.
+    #
+    #   Accepted values are alphanumeric.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-sap-2018-05-10/ComponentInfo AWS API Documentation
+    #
+    class ComponentInfo < Struct.new(
+      :component_type,
+      :sid,
+      :ec2_instance_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The summary of the component.
     #
     # @!attribute [rw] application_id
@@ -1261,6 +1293,14 @@ module Aws::SsmSap
     #   The Amazon Resource Name of the SAP HANA database.
     #   @return [String]
     #
+    # @!attribute [rw] components_info
+    #   This is an optional parameter for component details to which the SAP
+    #   ABAP application is attached, such as Web Dispatcher.
+    #
+    #   This is an array of ApplicationComponent objects. You may input 0 to
+    #   5 items.
+    #   @return [Array<Types::ComponentInfo>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-sap-2018-05-10/RegisterApplicationInput AWS API Documentation
     #
     class RegisterApplicationInput < Struct.new(
@@ -1271,7 +1311,8 @@ module Aws::SsmSap
       :sid,
       :tags,
       :credentials,
-      :database_arn)
+      :database_arn,
+      :components_info)
       SENSITIVE = []
       include Aws::Structure
     end

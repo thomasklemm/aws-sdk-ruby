@@ -888,6 +888,7 @@ module Aws
                                           hex_font_color: ::String?,
                                           outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")?,
                                           outline_size: ::Integer?,
+                                          remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")?,
                                           shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")?,
                                           shadow_opacity: ::Integer?,
                                           shadow_x_offset: ::Integer?,
@@ -1428,6 +1429,7 @@ module Aws
                                     scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")?,
                                     sharpness: ::Integer?,
                                     timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")?,
+                                    timecode_track: ("DISABLED" | "ENABLED")?,
                                     video_preprocessors: {
                                       color_corrector: {
                                         brightness: ::Integer?,
@@ -2334,6 +2336,7 @@ module Aws
                                                    hex_font_color: ::String?,
                                                    outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")?,
                                                    outline_size: ::Integer?,
+                                                   remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")?,
                                                    shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")?,
                                                    shadow_opacity: ::Integer?,
                                                    shadow_x_offset: ::Integer?,
@@ -2874,6 +2877,7 @@ module Aws
                                              scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")?,
                                              sharpness: ::Integer?,
                                              timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")?,
+                                             timecode_track: ("DISABLED" | "ENABLED")?,
                                              video_preprocessors: {
                                                color_corrector: {
                                                  brightness: ::Integer?,
@@ -3176,6 +3180,7 @@ module Aws
                                      hex_font_color: ::String?,
                                      outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")?,
                                      outline_size: ::Integer?,
+                                     remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")?,
                                      shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")?,
                                      shadow_opacity: ::Integer?,
                                      shadow_x_offset: ::Integer?,
@@ -3702,6 +3707,7 @@ module Aws
                                scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")?,
                                sharpness: ::Integer?,
                                timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")?,
+                               timecode_track: ("DISABLED" | "ENABLED")?,
                                video_preprocessors: {
                                  color_corrector: {
                                    brightness: ::Integer?,
@@ -4846,6 +4852,7 @@ module Aws
                                                    hex_font_color: ::String?,
                                                    outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")?,
                                                    outline_size: ::Integer?,
+                                                   remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")?,
                                                    shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")?,
                                                    shadow_opacity: ::Integer?,
                                                    shadow_x_offset: ::Integer?,
@@ -5386,6 +5393,7 @@ module Aws
                                              scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")?,
                                              sharpness: ::Integer?,
                                              timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")?,
+                                             timecode_track: ("DISABLED" | "ENABLED")?,
                                              video_preprocessors: {
                                                color_corrector: {
                                                  brightness: ::Integer?,
@@ -5687,6 +5695,7 @@ module Aws
                                      hex_font_color: ::String?,
                                      outline_color: ("BLACK" | "WHITE" | "YELLOW" | "RED" | "GREEN" | "BLUE" | "AUTO")?,
                                      outline_size: ::Integer?,
+                                     remove_ruby_reserve_attributes: ("DISABLED" | "ENABLED")?,
                                      shadow_color: ("NONE" | "BLACK" | "WHITE" | "AUTO")?,
                                      shadow_opacity: ::Integer?,
                                      shadow_x_offset: ::Integer?,
@@ -6213,6 +6222,7 @@ module Aws
                                scaling_behavior: ("DEFAULT" | "STRETCH_TO_OUTPUT" | "FIT" | "FIT_NO_UPSCALE" | "FILL")?,
                                sharpness: ::Integer?,
                                timecode_insertion: ("DISABLED" | "PIC_TIMING_SEI")?,
+                               timecode_track: ("DISABLED" | "ENABLED")?,
                                video_preprocessors: {
                                  color_corrector: {
                                    brightness: ::Integer?,

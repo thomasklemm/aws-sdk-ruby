@@ -347,7 +347,11 @@ module Aws
                                      user_volume_size_gib: ::Integer?,
                                      compute_type_name: ("VALUE" | "STANDARD" | "PERFORMANCE" | "POWER" | "GRAPHICS" | "POWERPRO" | "GRAPHICSPRO" | "GRAPHICS_G4DN" | "GRAPHICSPRO_G4DN")?,
                                      protocols: Array[("PCOIP" | "WSP")]?,
-                                     operating_system_name: ("AMAZON_LINUX_2" | "UBUNTU_18_04" | "UBUNTU_20_04" | "UBUNTU_22_04" | "UNKNOWN" | "WINDOWS_10" | "WINDOWS_11" | "WINDOWS_7" | "WINDOWS_SERVER_2016" | "WINDOWS_SERVER_2019" | "WINDOWS_SERVER_2022" | "RHEL_8" | "ROCKY_8")?
+                                     operating_system_name: ("AMAZON_LINUX_2" | "UBUNTU_18_04" | "UBUNTU_20_04" | "UBUNTU_22_04" | "UNKNOWN" | "WINDOWS_10" | "WINDOWS_11" | "WINDOWS_7" | "WINDOWS_SERVER_2016" | "WINDOWS_SERVER_2019" | "WINDOWS_SERVER_2022" | "RHEL_8" | "ROCKY_8")?,
+                                     global_accelerator: {
+                                       mode: ("ENABLED_AUTO" | "DISABLED" | "INHERITED"),
+                                       preferred_protocol: ("TCP" | "NONE" | "INHERITED")?
+                                     }?
                                    }?,
                                    tags: Array[
                                      {
@@ -1045,7 +1049,11 @@ module Aws
                                                connector_type: ("HOME_FOLDER"),
                                                status: ("ENABLED" | "DISABLED")
                                              },
-                                           ]?
+                                           ]?,
+                                           global_accelerator: {
+                                             mode: ("ENABLED_AUTO" | "DISABLED"),
+                                             preferred_protocol: ("TCP" | "NONE")?
+                                           }?
                                          }
                                        ) -> _ModifyStreamingPropertiesResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyStreamingPropertiesResponseSuccess
@@ -1100,7 +1108,11 @@ module Aws
                                            user_volume_size_gib: ::Integer?,
                                            compute_type_name: ("VALUE" | "STANDARD" | "PERFORMANCE" | "POWER" | "GRAPHICS" | "POWERPRO" | "GRAPHICSPRO" | "GRAPHICS_G4DN" | "GRAPHICSPRO_G4DN")?,
                                            protocols: Array[("PCOIP" | "WSP")]?,
-                                           operating_system_name: ("AMAZON_LINUX_2" | "UBUNTU_18_04" | "UBUNTU_20_04" | "UBUNTU_22_04" | "UNKNOWN" | "WINDOWS_10" | "WINDOWS_11" | "WINDOWS_7" | "WINDOWS_SERVER_2016" | "WINDOWS_SERVER_2019" | "WINDOWS_SERVER_2022" | "RHEL_8" | "ROCKY_8")?
+                                           operating_system_name: ("AMAZON_LINUX_2" | "UBUNTU_18_04" | "UBUNTU_20_04" | "UBUNTU_22_04" | "UNKNOWN" | "WINDOWS_10" | "WINDOWS_11" | "WINDOWS_7" | "WINDOWS_SERVER_2016" | "WINDOWS_SERVER_2019" | "WINDOWS_SERVER_2022" | "RHEL_8" | "ROCKY_8")?,
+                                           global_accelerator: {
+                                             mode: ("ENABLED_AUTO" | "DISABLED" | "INHERITED"),
+                                             preferred_protocol: ("TCP" | "NONE" | "INHERITED")?
+                                           }?
                                          },
                                          ?data_replication: ("NO_REPLICATION" | "PRIMARY_AS_SOURCE")
                                        ) -> _ModifyWorkspacePropertiesResponseSuccess

@@ -853,6 +853,21 @@ module Aws::QConnect
     #   `ANSWER_RECOMMENDATION` AI Agent.
     #   @return [String]
     #
+    # @!attribute [rw] locale
+    #   The locale to which specifies the language and region settings that
+    #   determine the response language for [QueryAssistant][1].
+    #
+    #   <note markdown="1"> Changing this locale to anything other than `en_US` will turn off
+    #   recommendations triggered by contact transcripts for agent
+    #   assistance, as this feature is not supported in multiple languages.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html
+    #   @return [String]
+    #
     # @!attribute [rw] query_reformulation_ai_prompt_id
     #   The AI Prompt identifier for the Query Reformulation prompt used by
     #   the `ANSWER_RECOMMENDATION` AI Agent.
@@ -865,6 +880,7 @@ module Aws::QConnect
       :answer_generation_ai_prompt_id,
       :association_configurations,
       :intent_labeling_generation_ai_prompt_id,
+      :locale,
       :query_reformulation_ai_prompt_id)
       SENSITIVE = []
       include Aws::Structure
@@ -4927,7 +4943,7 @@ module Aws::QConnect
     #       VINs.
     #   * **Finance**
     #
-    #     * **REDIT\_DEBIT\_CARD\_CVV**
+    #     * **CREDIT\_DEBIT\_CARD\_CVV**
     #
     #       A three-digit card verification code (CVV) that is present on
     #       VISA, MasterCard, and Discover credit and debit cards. For
@@ -6431,12 +6447,22 @@ module Aws::QConnect
     #   Agent.
     #   @return [Array<Types::AssociationConfiguration>]
     #
+    # @!attribute [rw] locale
+    #   The locale to which specifies the language and region settings that
+    #   determine the response language for [QueryAssistant][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ManualSearchAIAgentConfiguration AWS API Documentation
     #
     class ManualSearchAIAgentConfiguration < Struct.new(
       :answer_generation_ai_guardrail_id,
       :answer_generation_ai_prompt_id,
-      :association_configurations)
+      :association_configurations,
+      :locale)
       SENSITIVE = []
       include Aws::Structure
     end

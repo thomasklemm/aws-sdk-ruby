@@ -752,6 +752,7 @@ module Aws::QConnect
     AnswerRecommendationAIAgentConfiguration.add_member(:answer_generation_ai_prompt_id, Shapes::ShapeRef.new(shape: UuidWithQualifier, location_name: "answerGenerationAIPromptId"))
     AnswerRecommendationAIAgentConfiguration.add_member(:association_configurations, Shapes::ShapeRef.new(shape: AssociationConfigurationList, location_name: "associationConfigurations"))
     AnswerRecommendationAIAgentConfiguration.add_member(:intent_labeling_generation_ai_prompt_id, Shapes::ShapeRef.new(shape: UuidWithQualifier, location_name: "intentLabelingGenerationAIPromptId"))
+    AnswerRecommendationAIAgentConfiguration.add_member(:locale, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "locale"))
     AnswerRecommendationAIAgentConfiguration.add_member(:query_reformulation_ai_prompt_id, Shapes::ShapeRef.new(shape: UuidWithQualifier, location_name: "queryReformulationAIPromptId"))
     AnswerRecommendationAIAgentConfiguration.struct_class = Types::AnswerRecommendationAIAgentConfiguration
 
@@ -1856,6 +1857,7 @@ module Aws::QConnect
     ManualSearchAIAgentConfiguration.add_member(:answer_generation_ai_guardrail_id, Shapes::ShapeRef.new(shape: UuidWithQualifier, location_name: "answerGenerationAIGuardrailId"))
     ManualSearchAIAgentConfiguration.add_member(:answer_generation_ai_prompt_id, Shapes::ShapeRef.new(shape: UuidWithQualifier, location_name: "answerGenerationAIPromptId"))
     ManualSearchAIAgentConfiguration.add_member(:association_configurations, Shapes::ShapeRef.new(shape: AssociationConfigurationList, location_name: "associationConfigurations"))
+    ManualSearchAIAgentConfiguration.add_member(:locale, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "locale"))
     ManualSearchAIAgentConfiguration.struct_class = Types::ManualSearchAIAgentConfiguration
 
     MessageData.add_member(:text, Shapes::ShapeRef.new(shape: TextMessage, location_name: "text"))

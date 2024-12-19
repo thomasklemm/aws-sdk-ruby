@@ -1524,7 +1524,11 @@ module Aws
                             ?anywhere_settings: {
                               channel_placement_group_id: ::String?,
                               cluster_id: ::String?
-                            }
+                            },
+                            ?channel_engine_version: {
+                              version: ::String?
+                            },
+                            ?dry_run: bool
                           ) -> _CreateChannelResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateChannelResponseSuccess
 
@@ -1702,6 +1706,7 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def vpc: () -> Types::VpcOutputSettingsDescription
         def anywhere_settings: () -> Types::DescribeAnywhereSettings
+        def channel_engine_version: () -> Types::ChannelEngineVersionResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#delete_channel-instance_method
       def delete_channel: (
@@ -1835,6 +1840,7 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def vpc: () -> Types::VpcOutputSettingsDescription
         def anywhere_settings: () -> Types::DescribeAnywhereSettings
+        def channel_engine_version: () -> Types::ChannelEngineVersionResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#describe_channel-instance_method
       def describe_channel: (
@@ -2229,6 +2235,7 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def vpc: () -> Types::VpcOutputSettingsDescription
         def anywhere_settings: () -> Types::DescribeAnywhereSettings
+        def channel_engine_version: () -> Types::ChannelEngineVersionResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#start_channel-instance_method
       def start_channel: (
@@ -2294,6 +2301,7 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def vpc: () -> Types::VpcOutputSettingsDescription
         def anywhere_settings: () -> Types::DescribeAnywhereSettings
+        def channel_engine_version: () -> Types::ChannelEngineVersionResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#stop_channel-instance_method
       def stop_channel: (
@@ -3563,7 +3571,11 @@ module Aws
                               maintenance_start_time: ::String?
                             },
                             ?name: ::String,
-                            ?role_arn: ::String
+                            ?role_arn: ::String,
+                            ?channel_engine_version: {
+                              version: ::String?
+                            },
+                            ?dry_run: bool
                           ) -> _UpdateChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChannelResponseSuccess
 
@@ -3853,6 +3865,7 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def vpc: () -> Types::VpcOutputSettingsDescription
         def anywhere_settings: () -> Types::DescribeAnywhereSettings
+        def channel_engine_version: () -> Types::ChannelEngineVersionResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#restart_channel_pipelines-instance_method
       def restart_channel_pipelines: (
@@ -4822,6 +4835,15 @@ module Aws
                                ?state: ("ACTIVE" | "DRAINING")
                              ) -> _UpdateNodeStateResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateNodeStateResponseSuccess
+
+      interface _ListVersionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListVersionsResponse]
+        def versions: () -> ::Array[Types::ChannelEngineVersionResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#list_versions-instance_method
+      def list_versions: (
+                         ) -> _ListVersionsResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListVersionsResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaLive/Client.html#wait_until-instance_method
       def wait_until: (:channel_created waiter_name, 

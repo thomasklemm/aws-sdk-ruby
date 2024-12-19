@@ -1265,6 +1265,10 @@ module Aws::WorkSpaces
     #           compute_type_name: "VALUE", # accepts VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, GRAPHICSPRO_G4DN
     #           protocols: ["PCOIP"], # accepts PCOIP, WSP
     #           operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8, ROCKY_8
+    #           global_accelerator: {
+    #             mode: "ENABLED_AUTO", # required, accepts ENABLED_AUTO, DISABLED, INHERITED
+    #             preferred_protocol: "TCP", # accepts TCP, NONE, INHERITED
+    #           },
     #         },
     #         tags: [
     #           {
@@ -1294,6 +1298,8 @@ module Aws::WorkSpaces
     #   resp.failed_requests[0].workspace_request.workspace_properties.protocols #=> Array
     #   resp.failed_requests[0].workspace_request.workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
     #   resp.failed_requests[0].workspace_request.workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
+    #   resp.failed_requests[0].workspace_request.workspace_properties.global_accelerator.mode #=> String, one of "ENABLED_AUTO", "DISABLED", "INHERITED"
+    #   resp.failed_requests[0].workspace_request.workspace_properties.global_accelerator.preferred_protocol #=> String, one of "TCP", "NONE", "INHERITED"
     #   resp.failed_requests[0].workspace_request.tags #=> Array
     #   resp.failed_requests[0].workspace_request.tags[0].key #=> String
     #   resp.failed_requests[0].workspace_request.tags[0].value #=> String
@@ -1323,6 +1329,8 @@ module Aws::WorkSpaces
     #   resp.pending_requests[0].workspace_properties.protocols #=> Array
     #   resp.pending_requests[0].workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
     #   resp.pending_requests[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
+    #   resp.pending_requests[0].workspace_properties.global_accelerator.mode #=> String, one of "ENABLED_AUTO", "DISABLED", "INHERITED"
+    #   resp.pending_requests[0].workspace_properties.global_accelerator.preferred_protocol #=> String, one of "TCP", "NONE", "INHERITED"
     #   resp.pending_requests[0].modification_states #=> Array
     #   resp.pending_requests[0].modification_states[0].resource #=> String, one of "ROOT_VOLUME", "USER_VOLUME", "COMPUTE_TYPE"
     #   resp.pending_requests[0].modification_states[0].state #=> String, one of "UPDATE_INITIATED", "UPDATE_IN_PROGRESS"
@@ -2586,6 +2594,8 @@ module Aws::WorkSpaces
     #   resp.directories[0].streaming_properties.storage_connectors #=> Array
     #   resp.directories[0].streaming_properties.storage_connectors[0].connector_type #=> String, one of "HOME_FOLDER"
     #   resp.directories[0].streaming_properties.storage_connectors[0].status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.directories[0].streaming_properties.global_accelerator.mode #=> String, one of "ENABLED_AUTO", "DISABLED"
+    #   resp.directories[0].streaming_properties.global_accelerator.preferred_protocol #=> String, one of "TCP", "NONE"
     #   resp.directories[0].error_message #=> String
     #   resp.next_token #=> String
     #
@@ -2814,6 +2824,8 @@ module Aws::WorkSpaces
     #   resp.workspaces[0].workspace_properties.protocols #=> Array
     #   resp.workspaces[0].workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
     #   resp.workspaces[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
+    #   resp.workspaces[0].workspace_properties.global_accelerator.mode #=> String, one of "ENABLED_AUTO", "DISABLED", "INHERITED"
+    #   resp.workspaces[0].workspace_properties.global_accelerator.preferred_protocol #=> String, one of "TCP", "NONE", "INHERITED"
     #   resp.workspaces[0].modification_states #=> Array
     #   resp.workspaces[0].modification_states[0].resource #=> String, one of "ROOT_VOLUME", "USER_VOLUME", "COMPUTE_TYPE"
     #   resp.workspaces[0].modification_states[0].state #=> String, one of "UPDATE_INITIATED", "UPDATE_IN_PROGRESS"
@@ -3761,6 +3773,10 @@ module Aws::WorkSpaces
     #           status: "ENABLED", # required, accepts ENABLED, DISABLED
     #         },
     #       ],
+    #       global_accelerator: {
+    #         mode: "ENABLED_AUTO", # required, accepts ENABLED_AUTO, DISABLED
+    #         preferred_protocol: "TCP", # accepts TCP, NONE
+    #       },
     #     },
     #   })
     #
@@ -3887,6 +3903,10 @@ module Aws::WorkSpaces
     #       compute_type_name: "VALUE", # accepts VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, GRAPHICSPRO_G4DN
     #       protocols: ["PCOIP"], # accepts PCOIP, WSP
     #       operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8, ROCKY_8
+    #       global_accelerator: {
+    #         mode: "ENABLED_AUTO", # required, accepts ENABLED_AUTO, DISABLED, INHERITED
+    #         preferred_protocol: "TCP", # accepts TCP, NONE, INHERITED
+    #       },
     #     },
     #     data_replication: "NO_REPLICATION", # accepts NO_REPLICATION, PRIMARY_AS_SOURCE
     #   })
@@ -4807,7 +4827,7 @@ module Aws::WorkSpaces
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-workspaces'
-      context[:gem_version] = '1.127.0'
+      context[:gem_version] = '1.128.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

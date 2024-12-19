@@ -1156,6 +1156,13 @@ module Aws::SsmSap
     # @option params [String] :database_arn
     #   The Amazon Resource Name of the SAP HANA database.
     #
+    # @option params [Array<Types::ComponentInfo>] :components_info
+    #   This is an optional parameter for component details to which the SAP
+    #   ABAP application is attached, such as Web Dispatcher.
+    #
+    #   This is an array of ApplicationComponent objects. You may input 0 to 5
+    #   items.
+    #
     # @return [Types::RegisterApplicationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::RegisterApplicationOutput#application #application} => Types::Application
@@ -1180,6 +1187,13 @@ module Aws::SsmSap
     #       },
     #     ],
     #     database_arn: "SsmSapArn",
+    #     components_info: [
+    #       {
+    #         component_type: "HANA", # required, accepts HANA, HANA_NODE, ABAP, ASCS, DIALOG, WEBDISP, WD, ERS
+    #         sid: "SID", # required
+    #         ec2_instance_id: "InstanceId", # required
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -1446,7 +1460,7 @@ module Aws::SsmSap
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ssmsap'
-      context[:gem_version] = '1.31.0'
+      context[:gem_version] = '1.32.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

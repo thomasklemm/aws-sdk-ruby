@@ -229,6 +229,7 @@ module Aws::QConnect
       attr_accessor answer_generation_ai_prompt_id: ::String
       attr_accessor association_configurations: ::Array[Types::AssociationConfiguration]
       attr_accessor intent_labeling_generation_ai_prompt_id: ::String
+      attr_accessor locale: ::String
       attr_accessor query_reformulation_ai_prompt_id: ::String
       SENSITIVE: []
     end
@@ -1673,6 +1674,7 @@ module Aws::QConnect
       attr_accessor answer_generation_ai_guardrail_id: ::String
       attr_accessor answer_generation_ai_prompt_id: ::String
       attr_accessor association_configurations: ::Array[Types::AssociationConfiguration]
+      attr_accessor locale: ::String
       SENSITIVE: []
     end
 

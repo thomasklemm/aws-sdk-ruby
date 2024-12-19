@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.128.0 (2024-12-19)
+------------------
+
+* Feature - Added AWS Global Accelerator (AGA) support for WorkSpaces Personal.
+
 1.127.0 (2024-12-09)
 ------------------
 

@@ -867,6 +867,18 @@ module Aws::WorkSpaces
       SENSITIVE: []
     end
 
+    class GlobalAcceleratorForDirectory
+      attr_accessor mode: ("ENABLED_AUTO" | "DISABLED")
+      attr_accessor preferred_protocol: ("TCP" | "NONE")
+      SENSITIVE: []
+    end
+
+    class GlobalAcceleratorForWorkSpace
+      attr_accessor mode: ("ENABLED_AUTO" | "DISABLED" | "INHERITED")
+      attr_accessor preferred_protocol: ("TCP" | "NONE" | "INHERITED")
+      SENSITIVE: []
+    end
+
     class IDCConfig
       attr_accessor instance_arn: ::String
       attr_accessor application_arn: ::String
@@ -1372,6 +1384,7 @@ module Aws::WorkSpaces
       attr_accessor streaming_experience_preferred_protocol: ("TCP" | "UDP")
       attr_accessor user_settings: ::Array[Types::UserSetting]
       attr_accessor storage_connectors: ::Array[Types::StorageConnector]
+      attr_accessor global_accelerator: Types::GlobalAcceleratorForDirectory
       SENSITIVE: []
     end
 
@@ -1659,6 +1672,7 @@ module Aws::WorkSpaces
       attr_accessor compute_type_name: ("VALUE" | "STANDARD" | "PERFORMANCE" | "POWER" | "GRAPHICS" | "POWERPRO" | "GRAPHICSPRO" | "GRAPHICS_G4DN" | "GRAPHICSPRO_G4DN")
       attr_accessor protocols: ::Array[("PCOIP" | "WSP")]
       attr_accessor operating_system_name: ("AMAZON_LINUX_2" | "UBUNTU_18_04" | "UBUNTU_20_04" | "UBUNTU_22_04" | "UNKNOWN" | "WINDOWS_10" | "WINDOWS_11" | "WINDOWS_7" | "WINDOWS_SERVER_2016" | "WINDOWS_SERVER_2019" | "WINDOWS_SERVER_2022" | "RHEL_8" | "ROCKY_8")
+      attr_accessor global_accelerator: Types::GlobalAcceleratorForWorkSpace
       SENSITIVE: []
     end
 
