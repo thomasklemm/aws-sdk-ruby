@@ -133,6 +133,9 @@ module Aws
                           ?instruction: ::String,
                           ?memory_configuration: {
                             enabled_memory_types: Array[("SESSION_SUMMARY")],
+                            session_summary_configuration: {
+                              max_recent_sessions: ::Integer?
+                            }?,
                             storage_days: ::Integer?
                           },
                           ?orchestration_type: ("DEFAULT" | "CUSTOM_ORCHESTRATION"),
@@ -152,7 +155,7 @@ module Aws
                                 parser_mode: ("DEFAULT" | "OVERRIDDEN")?,
                                 prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")?,
                                 prompt_state: ("ENABLED" | "DISABLED")?,
-                                prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION")?
+                                prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "MEMORY_SUMMARIZATION")?
                               },
                             ]
                           },
@@ -294,7 +297,7 @@ module Aws
                                       }?
                                     }?,
                                     source_configuration: {
-                                      auth_type: ("OAUTH2_CLIENT_CREDENTIALS"),
+                                      auth_type: ("OAUTH2_CLIENT_CREDENTIALS" | "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS"),
                                       credentials_secret_arn: ::String,
                                       domain: ::String,
                                       host_type: ("ONLINE"),
@@ -306,11 +309,13 @@ module Aws
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {
+                                        max_pages: ::Integer?,
                                         rate_limit: ::Integer?
                                       }?,
                                       exclusion_filters: Array[::String]?,
                                       inclusion_filters: Array[::String]?,
-                                      scope: ("HOST_ONLY" | "SUBDOMAINS")?
+                                      scope: ("HOST_ONLY" | "SUBDOMAINS")?,
+                                      user_agent: ::String?
                                     }?,
                                     source_configuration: {
                                       url_configuration: {
@@ -1640,6 +1645,9 @@ module Aws
                           ?instruction: ::String,
                           ?memory_configuration: {
                             enabled_memory_types: Array[("SESSION_SUMMARY")],
+                            session_summary_configuration: {
+                              max_recent_sessions: ::Integer?
+                            }?,
                             storage_days: ::Integer?
                           },
                           ?orchestration_type: ("DEFAULT" | "CUSTOM_ORCHESTRATION"),
@@ -1659,7 +1667,7 @@ module Aws
                                 parser_mode: ("DEFAULT" | "OVERRIDDEN")?,
                                 prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")?,
                                 prompt_state: ("ENABLED" | "DISABLED")?,
-                                prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION")?
+                                prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "MEMORY_SUMMARIZATION")?
                               },
                             ]
                           }
@@ -1830,7 +1838,7 @@ module Aws
                                       }?
                                     }?,
                                     source_configuration: {
-                                      auth_type: ("OAUTH2_CLIENT_CREDENTIALS"),
+                                      auth_type: ("OAUTH2_CLIENT_CREDENTIALS" | "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS"),
                                       credentials_secret_arn: ::String,
                                       domain: ::String,
                                       host_type: ("ONLINE"),
@@ -1842,11 +1850,13 @@ module Aws
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {
+                                        max_pages: ::Integer?,
                                         rate_limit: ::Integer?
                                       }?,
                                       exclusion_filters: Array[::String]?,
                                       inclusion_filters: Array[::String]?,
-                                      scope: ("HOST_ONLY" | "SUBDOMAINS")?
+                                      scope: ("HOST_ONLY" | "SUBDOMAINS")?,
+                                      user_agent: ::String?
                                     }?,
                                     source_configuration: {
                                       url_configuration: {

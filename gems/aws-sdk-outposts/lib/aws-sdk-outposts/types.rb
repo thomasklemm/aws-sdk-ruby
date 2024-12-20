@@ -2373,6 +2373,8 @@ module Aws::Outposts
     #     * **AH530P7W (red)** – 3P+N+E, 7hr; 30A; three phase
     #
     #     * **AH532P6W (red)** – 3P+N+E, 6hr; 32A; three phase
+    #
+    #     * **CS8365C** – (common in US); 3P+E, 50A; three phase
     #   @return [String]
     #
     # @!attribute [rw] power_feed_drop

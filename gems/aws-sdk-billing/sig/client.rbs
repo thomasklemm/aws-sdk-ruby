@@ -76,6 +76,67 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _CreateBillingViewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateBillingViewResponse]
+        def arn: () -> ::String
+        def created_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#create_billing_view-instance_method
+      def create_billing_view: (
+                                 name: ::String,
+                                 ?description: ::String,
+                                 source_views: Array[::String],
+                                 ?data_filter_expression: {
+                                   dimensions: {
+                                     key: ("LINKED_ACCOUNT"),
+                                     values: Array[::String]
+                                   }?,
+                                   tags: {
+                                     key: ::String,
+                                     values: Array[::String]
+                                   }?
+                                 },
+                                 ?client_token: ::String,
+                                 ?resource_tags: Array[
+                                   {
+                                     key: ::String,
+                                     value: ::String?
+                                   },
+                                 ]
+                               ) -> _CreateBillingViewResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBillingViewResponseSuccess
+
+      interface _DeleteBillingViewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteBillingViewResponse]
+        def arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#delete_billing_view-instance_method
+      def delete_billing_view: (
+                                 arn: ::String
+                               ) -> _DeleteBillingViewResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBillingViewResponseSuccess
+
+      interface _GetBillingViewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetBillingViewResponse]
+        def billing_view: () -> Types::BillingViewElement
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#get_billing_view-instance_method
+      def get_billing_view: (
+                              arn: ::String
+                            ) -> _GetBillingViewResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBillingViewResponseSuccess
+
+      interface _GetResourcePolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetResourcePolicyResponse]
+        def resource_arn: () -> ::String
+        def policy: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#get_resource_policy-instance_method
+      def get_resource_policy: (
+                                 resource_arn: ::String
+                               ) -> _GetResourcePolicyResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetResourcePolicyResponseSuccess
+
       interface _ListBillingViewsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListBillingViewsResponse]
         def billing_views: () -> ::Array[Types::BillingViewListElement]
@@ -83,14 +144,88 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#list_billing_views-instance_method
       def list_billing_views: (
-                                active_time_range: {
+                                ?active_time_range: {
                                   active_after_inclusive: ::Time,
                                   active_before_inclusive: ::Time
                                 },
+                                ?arns: Array[::String],
+                                ?billing_view_types: Array[("PRIMARY" | "BILLING_GROUP" | "CUSTOM")],
+                                ?owner_account_id: ::String,
                                 ?max_results: ::Integer,
                                 ?next_token: ::String
                               ) -> _ListBillingViewsResponseSuccess
-                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillingViewsResponseSuccess
+                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillingViewsResponseSuccess
+
+      interface _ListSourceViewsForBillingViewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSourceViewsForBillingViewResponse]
+        def source_views: () -> ::Array[::String]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#list_source_views_for_billing_view-instance_method
+      def list_source_views_for_billing_view: (
+                                                arn: ::String,
+                                                ?max_results: ::Integer,
+                                                ?next_token: ::String
+                                              ) -> _ListSourceViewsForBillingViewResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSourceViewsForBillingViewResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
+        def resource_tags: () -> ::Array[Types::ResourceTag]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    resource_arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          resource_arn: ::String,
+                          resource_tags: Array[
+                            {
+                              key: ::String,
+                              value: ::String?
+                            },
+                          ]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            resource_arn: ::String,
+                            resource_tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateBillingViewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateBillingViewResponse]
+        def arn: () -> ::String
+        def updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Billing/Client.html#update_billing_view-instance_method
+      def update_billing_view: (
+                                 arn: ::String,
+                                 ?name: ::String,
+                                 ?description: ::String,
+                                 ?data_filter_expression: {
+                                   dimensions: {
+                                     key: ("LINKED_ACCOUNT"),
+                                     values: Array[::String]
+                                   }?,
+                                   tags: {
+                                     key: ::String,
+                                     values: Array[::String]
+                                   }?
+                                 }
+                               ) -> _UpdateBillingViewResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBillingViewResponseSuccess
     end
   end
 end

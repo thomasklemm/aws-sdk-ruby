@@ -454,6 +454,262 @@ module Aws::Billing
 
     # @!group API Operations
 
+    # Creates a billing view with the specified billing view attributes.
+    #
+    # @option params [required, String] :name
+    #   The name of the billing view.
+    #
+    # @option params [String] :description
+    #   The description of the billing view.
+    #
+    # @option params [required, Array<String>] :source_views
+    #   A list of billing views used as the data source for the custom billing
+    #   view.
+    #
+    # @option params [Types::Expression] :data_filter_expression
+    #   See [Expression][1]. Billing view only supports `LINKED_ACCOUNT` and
+    #   `Tags`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier you specify to ensure idempotency
+    #   of the request. Idempotency ensures that an API request completes no
+    #   more than one time. If the original request completes successfully,
+    #   any subsequent retries complete successfully without performing any
+    #   further actions with an idempotent request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Array<Types::ResourceTag>] :resource_tags
+    #   A list of key value map specifying tags associated to the billing view
+    #   being created.
+    #
+    # @return [Types::CreateBillingViewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateBillingViewResponse#arn #arn} => String
+    #   * {Types::CreateBillingViewResponse#created_at #created_at} => Time
+    #
+    #
+    # @example Example: Invoke CreateBillingView
+    #
+    #   resp = client.create_billing_view({
+    #     name: "Example Custom Billing View", 
+    #     data_filter_expression: {
+    #       dimensions: {
+    #         key: "LINKED_ACCOUNT", 
+    #         values: [
+    #           "000000000000", 
+    #         ], 
+    #       }, 
+    #     }, 
+    #     description: "Custom Billing View Example", 
+    #     source_views: [
+    #       "arn:aws:billing::123456789101:billingview/primary", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #     created_at: Time.parse(1719792001), 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_billing_view({
+    #     name: "BillingViewName", # required
+    #     description: "BillingViewDescription",
+    #     source_views: ["BillingViewArn"], # required
+    #     data_filter_expression: {
+    #       dimensions: {
+    #         key: "LINKED_ACCOUNT", # required, accepts LINKED_ACCOUNT
+    #         values: ["Value"], # required
+    #       },
+    #       tags: {
+    #         key: "TagKey", # required
+    #         values: ["Value"], # required
+    #       },
+    #     },
+    #     client_token: "ClientToken",
+    #     resource_tags: [
+    #       {
+    #         key: "ResourceTagKey", # required
+    #         value: "ResourceTagValue",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.created_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/CreateBillingView AWS API Documentation
+    #
+    # @overload create_billing_view(params = {})
+    # @param [Hash] params ({})
+    def create_billing_view(params = {}, options = {})
+      req = build_request(:create_billing_view, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified billing view.
+    #
+    # @option params [required, String] :arn
+    #   The Amazon Resource Name (ARN) that can be used to uniquely identify
+    #   the billing view.
+    #
+    # @return [Types::DeleteBillingViewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteBillingViewResponse#arn #arn} => String
+    #
+    #
+    # @example Example: Invoke DeleteBillingView
+    #
+    #   resp = client.delete_billing_view({
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_billing_view({
+    #     arn: "BillingViewArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/DeleteBillingView AWS API Documentation
+    #
+    # @overload delete_billing_view(params = {})
+    # @param [Hash] params ({})
+    def delete_billing_view(params = {}, options = {})
+      req = build_request(:delete_billing_view, params)
+      req.send_request(options)
+    end
+
+    # Returns the metadata associated to the specified billing view ARN.
+    #
+    # @option params [required, String] :arn
+    #   The Amazon Resource Name (ARN) that can be used to uniquely identify
+    #   the billing view.
+    #
+    # @return [Types::GetBillingViewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetBillingViewResponse#billing_view #billing_view} => Types::BillingViewElement
+    #
+    #
+    # @example Example: Invoke GetBillingView
+    #
+    #   resp = client.get_billing_view({
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     billing_view: {
+    #       name: "Example Custom Billing View", 
+    #       arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #       billing_view_type: "CUSTOM", 
+    #       data_filter_expression: {
+    #         dimensions: {
+    #           key: "LINKED_ACCOUNT", 
+    #           values: [
+    #             "000000000000", 
+    #           ], 
+    #         }, 
+    #       }, 
+    #       description: "Custom Billing View Example -- updated description", 
+    #       owner_account_id: "123456789101", 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_billing_view({
+    #     arn: "BillingViewArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.billing_view.arn #=> String
+    #   resp.billing_view.name #=> String
+    #   resp.billing_view.description #=> String
+    #   resp.billing_view.billing_view_type #=> String, one of "PRIMARY", "BILLING_GROUP", "CUSTOM"
+    #   resp.billing_view.owner_account_id #=> String
+    #   resp.billing_view.data_filter_expression.dimensions.key #=> String, one of "LINKED_ACCOUNT"
+    #   resp.billing_view.data_filter_expression.dimensions.values #=> Array
+    #   resp.billing_view.data_filter_expression.dimensions.values[0] #=> String
+    #   resp.billing_view.data_filter_expression.tags.key #=> String
+    #   resp.billing_view.data_filter_expression.tags.values #=> Array
+    #   resp.billing_view.data_filter_expression.tags.values[0] #=> String
+    #   resp.billing_view.created_at #=> Time
+    #   resp.billing_view.updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetBillingView AWS API Documentation
+    #
+    # @overload get_billing_view(params = {})
+    # @param [Hash] params ({})
+    def get_billing_view(params = {}, options = {})
+      req = build_request(:get_billing_view, params)
+      req.send_request(options)
+    end
+
+    # Returns the resource-based policy document attached to the resource in
+    # `JSON` format.
+    #
+    # @option params [required, String] :resource_arn
+    #   The Amazon Resource Name (ARN) of the billing view resource to which
+    #   the policy is attached to.
+    #
+    # @return [Types::GetResourcePolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetResourcePolicyResponse#resource_arn #resource_arn} => String
+    #   * {Types::GetResourcePolicyResponse#policy #policy} => String
+    #
+    #
+    # @example Example: Invoke GetResourcePolicy
+    #
+    #   resp = client.get_resource_policy({
+    #     resource_arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     policy: "{\"Version\":\"2012-10-17\",\"Id\":\"46f47cb2-a11d-43f3-983d-470b5708a899\",\"Statement\":[{\"Sid\":\"ExampleStatement1\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::000000000000:root\"},\"Action\":[\"ce:GetDimensionValues\",\"ce:GetCostAndUsageWithResources\",\"ce:GetCostAndUsage\",\"ce:GetCostForecast\",\"ce:GetTags\",\"ce:GetUsageForecast\",\"ce:GetCostCategories\",\"billing:GetBillingView\"],\"Resource\":\"arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899\"}]}", 
+    #     resource_arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_resource_policy({
+    #     resource_arn: "ResourceArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.policy #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/GetResourcePolicy AWS API Documentation
+    #
+    # @overload get_resource_policy(params = {})
+    # @param [Hash] params ({})
+    def get_resource_policy(params = {}, options = {})
+      req = build_request(:get_resource_policy, params)
+      req.send_request(options)
+    end
+
     # Lists the billing views available for a given time period.
     #
     # Every Amazon Web Services account has a unique `PRIMARY` billing view
@@ -462,11 +718,21 @@ module Aws::Billing
     # representing pro forma costs associated with each created billing
     # group.
     #
-    # @option params [required, Types::ActiveTimeRange] :active_time_range
+    # @option params [Types::ActiveTimeRange] :active_time_range
     #   The time range for the billing views listed. `PRIMARY` billing view is
     #   always listed. `BILLING_GROUP` billing views are listed for time
     #   ranges when the associated billing group resource in Billing Conductor
     #   is active. The time range must be within one calendar month.
+    #
+    # @option params [Array<String>] :arns
+    #   The Amazon Resource Name (ARN) that can be used to uniquely identify
+    #   the billing view.
+    #
+    # @option params [Array<String>] :billing_view_types
+    #   The type of billing view.
+    #
+    # @option params [String] :owner_account_id
+    #   The list of owners of the billing view.
     #
     # @option params [Integer] :max_results
     #   The maximum number of billing views to retrieve. Default is 100.
@@ -516,10 +782,13 @@ module Aws::Billing
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_billing_views({
-    #     active_time_range: { # required
+    #     active_time_range: {
     #       active_after_inclusive: Time.now, # required
     #       active_before_inclusive: Time.now, # required
     #     },
+    #     arns: ["BillingViewArn"],
+    #     billing_view_types: ["PRIMARY"], # accepts PRIMARY, BILLING_GROUP, CUSTOM
+    #     owner_account_id: "AccountId",
     #     max_results: 1,
     #     next_token: "PageToken",
     #   })
@@ -529,8 +798,9 @@ module Aws::Billing
     #   resp.billing_views #=> Array
     #   resp.billing_views[0].arn #=> String
     #   resp.billing_views[0].name #=> String
+    #   resp.billing_views[0].description #=> String
     #   resp.billing_views[0].owner_account_id #=> String
-    #   resp.billing_views[0].billing_view_type #=> String, one of "PRIMARY", "BILLING_GROUP"
+    #   resp.billing_views[0].billing_view_type #=> String, one of "PRIMARY", "BILLING_GROUP", "CUSTOM"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListBillingViews AWS API Documentation
@@ -539,6 +809,281 @@ module Aws::Billing
     # @param [Hash] params ({})
     def list_billing_views(params = {}, options = {})
       req = build_request(:list_billing_views, params)
+      req.send_request(options)
+    end
+
+    # Lists the source views (managed Amazon Web Services billing views)
+    # associated with the billing view.
+    #
+    # @option params [required, String] :arn
+    #   The Amazon Resource Name (ARN) that can be used to uniquely identify
+    #   the billing view.
+    #
+    # @option params [Integer] :max_results
+    #   The number of entries a paginated response contains.
+    #
+    # @option params [String] :next_token
+    #   The pagination token that is used on subsequent calls to list billing
+    #   views.
+    #
+    # @return [Types::ListSourceViewsForBillingViewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListSourceViewsForBillingViewResponse#source_views #source_views} => Array&lt;String&gt;
+    #   * {Types::ListSourceViewsForBillingViewResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: Invoke ListSourceViewsForBillingView
+    #
+    #   resp = client.list_source_views_for_billing_view({
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     source_views: [
+    #       "arn:aws:billing::123456789101:billingview/primary", 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_source_views_for_billing_view({
+    #     arn: "BillingViewArn", # required
+    #     max_results: 1,
+    #     next_token: "PageToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.source_views #=> Array
+    #   resp.source_views[0] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListSourceViewsForBillingView AWS API Documentation
+    #
+    # @overload list_source_views_for_billing_view(params = {})
+    # @param [Hash] params ({})
+    def list_source_views_for_billing_view(params = {}, options = {})
+      req = build_request(:list_source_views_for_billing_view, params)
+      req.send_request(options)
+    end
+
+    # Lists tags associated with the billing view resource.
+    #
+    # @option params [required, String] :resource_arn
+    #   The Amazon Resource Name (ARN) of the resource.
+    #
+    # @return [Types::ListTagsForResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListTagsForResourceResponse#resource_tags #resource_tags} => Array&lt;Types::ResourceTag&gt;
+    #
+    #
+    # @example Example: Invoke ListTagsForResource
+    #
+    #   resp = client.list_tags_for_resource({
+    #     resource_arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     resource_tags: [
+    #       {
+    #         key: "ExampleTagKey", 
+    #         value: "ExampleTagValue", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_tags_for_resource({
+    #     resource_arn: "ResourceArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_tags #=> Array
+    #   resp.resource_tags[0].key #=> String
+    #   resp.resource_tags[0].value #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/ListTagsForResource AWS API Documentation
+    #
+    # @overload list_tags_for_resource(params = {})
+    # @param [Hash] params ({})
+    def list_tags_for_resource(params = {}, options = {})
+      req = build_request(:list_tags_for_resource, params)
+      req.send_request(options)
+    end
+
+    # An API operation for adding one or more tags (key-value pairs) to a
+    # resource.
+    #
+    # @option params [required, String] :resource_arn
+    #   The Amazon Resource Name (ARN) of the resource.
+    #
+    # @option params [required, Array<Types::ResourceTag>] :resource_tags
+    #   A list of tag key value pairs that are associated with the resource.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Invoke TagResource
+    #
+    #   resp = client.tag_resource({
+    #     resource_arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #     resource_tags: [
+    #       {
+    #         key: "ExampleTagKey", 
+    #         value: "ExampleTagValue", 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.tag_resource({
+    #     resource_arn: "ResourceArn", # required
+    #     resource_tags: [ # required
+    #       {
+    #         key: "ResourceTagKey", # required
+    #         value: "ResourceTagValue",
+    #       },
+    #     ],
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/TagResource AWS API Documentation
+    #
+    # @overload tag_resource(params = {})
+    # @param [Hash] params ({})
+    def tag_resource(params = {}, options = {})
+      req = build_request(:tag_resource, params)
+      req.send_request(options)
+    end
+
+    # Removes one or more tags from a resource. Specify only tag keys in
+    # your request. Don't specify the value.
+    #
+    # @option params [required, String] :resource_arn
+    #   The Amazon Resource Name (ARN) of the resource.
+    #
+    # @option params [required, Array<String>] :resource_tag_keys
+    #   A list of tag key value pairs that are associated with the resource.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Invoke UntagResource
+    #
+    #   resp = client.untag_resource({
+    #     resource_arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #     resource_tag_keys: [
+    #       "ExampleTagKey", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.untag_resource({
+    #     resource_arn: "ResourceArn", # required
+    #     resource_tag_keys: ["ResourceTagKey"], # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/UntagResource AWS API Documentation
+    #
+    # @overload untag_resource(params = {})
+    # @param [Hash] params ({})
+    def untag_resource(params = {}, options = {})
+      req = build_request(:untag_resource, params)
+      req.send_request(options)
+    end
+
+    # An API to update the attributes of the billing view.
+    #
+    # @option params [required, String] :arn
+    #   The Amazon Resource Name (ARN) that can be used to uniquely identify
+    #   the billing view.
+    #
+    # @option params [String] :name
+    #   The name of the billing view.
+    #
+    # @option params [String] :description
+    #   The description of the billing view.
+    #
+    # @option params [Types::Expression] :data_filter_expression
+    #   See [Expression][1]. Billing view only supports `LINKED_ACCOUNT` and
+    #   `Tags`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html
+    #
+    # @return [Types::UpdateBillingViewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateBillingViewResponse#arn #arn} => String
+    #   * {Types::UpdateBillingViewResponse#updated_at #updated_at} => Time
+    #
+    #
+    # @example Example: Invoke UpdateBillingView
+    #
+    #   resp = client.update_billing_view({
+    #     name: "Example Custom Billing View", 
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #     data_filter_expression: {
+    #       dimensions: {
+    #         key: "LINKED_ACCOUNT", 
+    #         values: [
+    #           "000000000000", 
+    #         ], 
+    #       }, 
+    #     }, 
+    #     description: "Custom Billing View Example -- updated description", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     arn: "arn:aws:billing::123456789101:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899", 
+    #     updated_at: Time.parse(1719792001), 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_billing_view({
+    #     arn: "BillingViewArn", # required
+    #     name: "BillingViewName",
+    #     description: "BillingViewDescription",
+    #     data_filter_expression: {
+    #       dimensions: {
+    #         key: "LINKED_ACCOUNT", # required, accepts LINKED_ACCOUNT
+    #         values: ["Value"], # required
+    #       },
+    #       tags: {
+    #         key: "TagKey", # required
+    #         values: ["Value"], # required
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/billing-2023-09-07/UpdateBillingView AWS API Documentation
+    #
+    # @overload update_billing_view(params = {})
+    # @param [Hash] params ({})
+    def update_billing_view(params = {}, options = {})
+      req = build_request(:update_billing_view, params)
       req.send_request(options)
     end
 
@@ -560,7 +1105,7 @@ module Aws::Billing
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-billing'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

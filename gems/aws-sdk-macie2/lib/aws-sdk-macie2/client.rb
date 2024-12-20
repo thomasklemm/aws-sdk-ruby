@@ -1238,7 +1238,7 @@ module Aws::Macie2
     #   resp.buckets[0].bucket_name #=> String
     #   resp.buckets[0].classifiable_object_count #=> Integer
     #   resp.buckets[0].classifiable_size_in_bytes #=> Integer
-    #   resp.buckets[0].error_code #=> String, one of "ACCESS_DENIED"
+    #   resp.buckets[0].error_code #=> String, one of "ACCESS_DENIED", "BUCKET_COUNT_EXCEEDS_QUOTA"
     #   resp.buckets[0].error_message #=> String
     #   resp.buckets[0].job_details.is_defined_in_job #=> String, one of "TRUE", "FALSE", "UNKNOWN"
     #   resp.buckets[0].job_details.is_monitored_by_job #=> String, one of "TRUE", "FALSE", "UNKNOWN"
@@ -2834,8 +2834,8 @@ module Aws::Macie2
       req.send_request(options)
     end
 
-    # Retrieves a subset of information about all the custom data
-    # identifiers for an account.
+    # Retrieves a subset of information about the custom data identifiers
+    # for an account.
     #
     # @option params [Integer] :max_results
     #
@@ -3329,8 +3329,8 @@ module Aws::Macie2
     # @option params [Types::SecurityHubConfiguration] :security_hub_configuration
     #   Specifies configuration settings that determine which findings are
     #   published to Security Hub automatically. For information about how
-    #   Macie publishes findings to Security Hub, see [Amazon Macie
-    #   integration with Security Hub][1] in the *Amazon Macie User Guide*.
+    #   Macie publishes findings to Security Hub, see [Evaluating findings
+    #   with Security Hub][1] in the *Amazon Macie User Guide*.
     #
     #
     #
@@ -3358,7 +3358,8 @@ module Aws::Macie2
     end
 
     # Retrieves (queries) statistical data and other information about
-    # Amazon Web Services resources that Amazon Macie monitors and analyzes.
+    # Amazon Web Services resources that Amazon Macie monitors and analyzes
+    # for an account.
     #
     # @option params [Types::SearchResourcesBucketCriteria] :bucket_criteria
     #   Specifies property- and tag-based conditions that define filter
@@ -3442,7 +3443,7 @@ module Aws::Macie2
     #   resp.matching_resources[0].matching_bucket.bucket_name #=> String
     #   resp.matching_resources[0].matching_bucket.classifiable_object_count #=> Integer
     #   resp.matching_resources[0].matching_bucket.classifiable_size_in_bytes #=> Integer
-    #   resp.matching_resources[0].matching_bucket.error_code #=> String, one of "ACCESS_DENIED"
+    #   resp.matching_resources[0].matching_bucket.error_code #=> String, one of "ACCESS_DENIED", "BUCKET_COUNT_EXCEEDS_QUOTA"
     #   resp.matching_resources[0].matching_bucket.error_message #=> String
     #   resp.matching_resources[0].matching_bucket.job_details.is_defined_in_job #=> String, one of "TRUE", "FALSE", "UNKNOWN"
     #   resp.matching_resources[0].matching_bucket.job_details.is_monitored_by_job #=> String, one of "TRUE", "FALSE", "UNKNOWN"
@@ -3921,8 +3922,8 @@ module Aws::Macie2
     #   Amazon Macie verifies that the role exists and the attached policies
     #   are configured correctly. If there's an issue, Macie returns an
     #   error. For information about addressing the issue, see [Configuration
-    #   options and requirements for retrieving sensitive data samples][1] in
-    #   the *Amazon Macie User Guide*.
+    #   options for retrieving sensitive data samples][1] in the *Amazon Macie
+    #   User Guide*.
     #
     #
     #
@@ -4036,7 +4037,7 @@ module Aws::Macie2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-macie2'
-      context[:gem_version] = '1.80.0'
+      context[:gem_version] = '1.81.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

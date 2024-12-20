@@ -744,6 +744,9 @@ module Aws::BedrockAgent
     #     instruction: "Instruction",
     #     memory_configuration: {
     #       enabled_memory_types: ["SESSION_SUMMARY"], # required, accepts SESSION_SUMMARY
+    #       session_summary_configuration: {
+    #         max_recent_sessions: 1,
+    #       },
     #       storage_days: 1,
     #     },
     #     orchestration_type: "DEFAULT", # accepts DEFAULT, CUSTOM_ORCHESTRATION
@@ -763,7 +766,7 @@ module Aws::BedrockAgent
     #           parser_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
     #           prompt_creation_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
     #           prompt_state: "ENABLED", # accepts ENABLED, DISABLED
-    #           prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, POST_PROCESSING, KNOWLEDGE_BASE_RESPONSE_GENERATION
+    #           prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, POST_PROCESSING, KNOWLEDGE_BASE_RESPONSE_GENERATION, MEMORY_SUMMARIZATION
     #         },
     #       ],
     #     },
@@ -795,6 +798,7 @@ module Aws::BedrockAgent
     #   resp.agent.instruction #=> String
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
+    #   resp.agent.memory_configuration.session_summary_configuration.max_recent_sessions #=> Integer
     #   resp.agent.memory_configuration.storage_days #=> Integer
     #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
@@ -811,7 +815,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_state #=> String, one of "ENABLED", "DISABLED"
-    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION"
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "MEMORY_SUMMARIZATION"
     #   resp.agent.recommended_actions #=> Array
     #   resp.agent.recommended_actions[0] #=> String
     #   resp.agent.updated_at #=> Time
@@ -1213,7 +1217,7 @@ module Aws::BedrockAgent
     #           },
     #         },
     #         source_configuration: { # required
-    #           auth_type: "OAUTH2_CLIENT_CREDENTIALS", # required, accepts OAUTH2_CLIENT_CREDENTIALS
+    #           auth_type: "OAUTH2_CLIENT_CREDENTIALS", # required, accepts OAUTH2_CLIENT_CREDENTIALS, OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS
     #           credentials_secret_arn: "SecretArn", # required
     #           domain: "SharePointDomain", # required
     #           host_type: "ONLINE", # required, accepts ONLINE
@@ -1225,11 +1229,13 @@ module Aws::BedrockAgent
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
+    #             max_pages: 1,
     #             rate_limit: 1,
     #           },
     #           exclusion_filters: ["FilterPattern"],
     #           inclusion_filters: ["FilterPattern"],
     #           scope: "HOST_ONLY", # accepts HOST_ONLY, SUBDOMAINS
+    #           user_agent: "UserAgent",
     #         },
     #         source_configuration: { # required
     #           url_configuration: { # required
@@ -1338,7 +1344,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].object_type #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.type #=> String, one of "PATTERN"
-    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS"
+    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS", "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS"
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.credentials_secret_arn #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.domain #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.host_type #=> String, one of "ONLINE"
@@ -1346,12 +1352,14 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
     #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.max_pages #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -3134,6 +3142,7 @@ module Aws::BedrockAgent
     #   resp.agent.instruction #=> String
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
+    #   resp.agent.memory_configuration.session_summary_configuration.max_recent_sessions #=> Integer
     #   resp.agent.memory_configuration.storage_days #=> Integer
     #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
@@ -3150,7 +3159,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_state #=> String, one of "ENABLED", "DISABLED"
-    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION"
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "MEMORY_SUMMARIZATION"
     #   resp.agent.recommended_actions #=> Array
     #   resp.agent.recommended_actions[0] #=> String
     #   resp.agent.updated_at #=> Time
@@ -3402,6 +3411,7 @@ module Aws::BedrockAgent
     #   resp.agent_version.instruction #=> String
     #   resp.agent_version.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent_version.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
+    #   resp.agent_version.memory_configuration.session_summary_configuration.max_recent_sessions #=> Integer
     #   resp.agent_version.memory_configuration.storage_days #=> Integer
     #   resp.agent_version.prompt_override_configuration.override_lambda #=> String
     #   resp.agent_version.prompt_override_configuration.prompt_configurations #=> Array
@@ -3416,7 +3426,7 @@ module Aws::BedrockAgent
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].prompt_state #=> String, one of "ENABLED", "DISABLED"
-    #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION"
+    #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "MEMORY_SUMMARIZATION"
     #   resp.agent_version.recommended_actions #=> Array
     #   resp.agent_version.recommended_actions[0] #=> String
     #   resp.agent_version.updated_at #=> Time
@@ -3486,7 +3496,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].object_type #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.type #=> String, one of "PATTERN"
-    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS"
+    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS", "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS"
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.credentials_secret_arn #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.domain #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.host_type #=> String, one of "ONLINE"
@@ -3494,12 +3504,14 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
     #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.max_pages #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -5501,6 +5513,9 @@ module Aws::BedrockAgent
     #     instruction: "Instruction",
     #     memory_configuration: {
     #       enabled_memory_types: ["SESSION_SUMMARY"], # required, accepts SESSION_SUMMARY
+    #       session_summary_configuration: {
+    #         max_recent_sessions: 1,
+    #       },
     #       storage_days: 1,
     #     },
     #     orchestration_type: "DEFAULT", # accepts DEFAULT, CUSTOM_ORCHESTRATION
@@ -5520,7 +5535,7 @@ module Aws::BedrockAgent
     #           parser_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
     #           prompt_creation_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
     #           prompt_state: "ENABLED", # accepts ENABLED, DISABLED
-    #           prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, POST_PROCESSING, KNOWLEDGE_BASE_RESPONSE_GENERATION
+    #           prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, POST_PROCESSING, KNOWLEDGE_BASE_RESPONSE_GENERATION, MEMORY_SUMMARIZATION
     #         },
     #       ],
     #     },
@@ -5549,6 +5564,7 @@ module Aws::BedrockAgent
     #   resp.agent.instruction #=> String
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
+    #   resp.agent.memory_configuration.session_summary_configuration.max_recent_sessions #=> Integer
     #   resp.agent.memory_configuration.storage_days #=> Integer
     #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
@@ -5565,7 +5581,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_state #=> String, one of "ENABLED", "DISABLED"
-    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION"
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].prompt_type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "POST_PROCESSING", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "MEMORY_SUMMARIZATION"
     #   resp.agent.recommended_actions #=> Array
     #   resp.agent.recommended_actions[0] #=> String
     #   resp.agent.updated_at #=> Time
@@ -6011,7 +6027,7 @@ module Aws::BedrockAgent
     #           },
     #         },
     #         source_configuration: { # required
-    #           auth_type: "OAUTH2_CLIENT_CREDENTIALS", # required, accepts OAUTH2_CLIENT_CREDENTIALS
+    #           auth_type: "OAUTH2_CLIENT_CREDENTIALS", # required, accepts OAUTH2_CLIENT_CREDENTIALS, OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS
     #           credentials_secret_arn: "SecretArn", # required
     #           domain: "SharePointDomain", # required
     #           host_type: "ONLINE", # required, accepts ONLINE
@@ -6023,11 +6039,13 @@ module Aws::BedrockAgent
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
+    #             max_pages: 1,
     #             rate_limit: 1,
     #           },
     #           exclusion_filters: ["FilterPattern"],
     #           inclusion_filters: ["FilterPattern"],
     #           scope: "HOST_ONLY", # accepts HOST_ONLY, SUBDOMAINS
+    #           user_agent: "UserAgent",
     #         },
     #         source_configuration: { # required
     #           url_configuration: { # required
@@ -6137,7 +6155,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.pattern_object_filter.filters[0].object_type #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.crawler_configuration.filter_configuration.type #=> String, one of "PATTERN"
-    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS"
+    #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.auth_type #=> String, one of "OAUTH2_CLIENT_CREDENTIALS", "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS"
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.credentials_secret_arn #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.domain #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.host_type #=> String, one of "ONLINE"
@@ -6145,12 +6163,14 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
     #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.max_pages #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.inclusion_filters[0] #=> String
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.scope #=> String, one of "HOST_ONLY", "SUBDOMAINS"
+    #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.user_agent #=> String
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.source_configuration.url_configuration.seed_urls[0].url #=> String
     #   resp.data_source.data_source_id #=> String
@@ -7292,7 +7312,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.40.0'
+      context[:gem_version] = '1.41.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

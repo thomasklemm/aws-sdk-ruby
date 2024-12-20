@@ -528,6 +528,7 @@ module Aws::CostExplorer
       attr_accessor filter: Types::Expression
       attr_accessor metrics: ::Array[::String]
       attr_accessor group_by: ::Array[Types::GroupDefinition]
+      attr_accessor billing_view_arn: ::String
       attr_accessor next_page_token: ::String
       SENSITIVE: []
     end
@@ -546,6 +547,7 @@ module Aws::CostExplorer
       attr_accessor filter: Types::Expression
       attr_accessor metrics: ::Array[::String]
       attr_accessor group_by: ::Array[Types::GroupDefinition]
+      attr_accessor billing_view_arn: ::String
       attr_accessor next_page_token: ::String
       SENSITIVE: []
     end
@@ -564,6 +566,7 @@ module Aws::CostExplorer
       attr_accessor cost_category_name: ::String
       attr_accessor filter: Types::Expression
       attr_accessor sort_by: ::Array[Types::SortDefinition]
+      attr_accessor billing_view_arn: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_page_token: ::String
       SENSITIVE: []
@@ -583,6 +586,7 @@ module Aws::CostExplorer
       attr_accessor metric: ("BLENDED_COST" | "UNBLENDED_COST" | "AMORTIZED_COST" | "NET_UNBLENDED_COST" | "NET_AMORTIZED_COST" | "USAGE_QUANTITY" | "NORMALIZED_USAGE_AMOUNT")
       attr_accessor granularity: ("DAILY" | "MONTHLY" | "HOURLY")
       attr_accessor filter: Types::Expression
+      attr_accessor billing_view_arn: ::String
       attr_accessor prediction_interval_level: ::Integer
       SENSITIVE: []
     end
@@ -600,6 +604,7 @@ module Aws::CostExplorer
       attr_accessor context: ("COST_AND_USAGE" | "RESERVATIONS" | "SAVINGS_PLANS")
       attr_accessor filter: Types::Expression
       attr_accessor sort_by: ::Array[Types::SortDefinition]
+      attr_accessor billing_view_arn: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_page_token: ::String
       SENSITIVE: []
@@ -775,6 +780,7 @@ module Aws::CostExplorer
       attr_accessor tag_key: ::String
       attr_accessor filter: Types::Expression
       attr_accessor sort_by: ::Array[Types::SortDefinition]
+      attr_accessor billing_view_arn: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_page_token: ::String
       SENSITIVE: []
@@ -793,6 +799,7 @@ module Aws::CostExplorer
       attr_accessor metric: ("BLENDED_COST" | "UNBLENDED_COST" | "AMORTIZED_COST" | "NET_UNBLENDED_COST" | "NET_AMORTIZED_COST" | "USAGE_QUANTITY" | "NORMALIZED_USAGE_AMOUNT")
       attr_accessor granularity: ("DAILY" | "MONTHLY" | "HOURLY")
       attr_accessor filter: Types::Expression
+      attr_accessor billing_view_arn: ::String
       attr_accessor prediction_interval_level: ::Integer
       SENSITIVE: []
     end

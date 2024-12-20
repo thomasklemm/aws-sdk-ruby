@@ -32,6 +32,7 @@ module Aws::BedrockAgentRuntime
   # * {ConflictException}
   # * {DependencyFailedException}
   # * {InternalServerException}
+  # * {ModelNotReadyException}
   # * {ResourceNotFoundException}
   # * {ServiceQuotaExceededException}
   # * {ThrottlingException}
@@ -118,6 +119,21 @@ module Aws::BedrockAgentRuntime
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::BedrockAgentRuntime::Types::InternalServerException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ModelNotReadyException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::BedrockAgentRuntime::Types::ModelNotReadyException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

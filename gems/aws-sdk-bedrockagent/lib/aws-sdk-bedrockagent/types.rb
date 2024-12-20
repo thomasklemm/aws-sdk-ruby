@@ -6721,6 +6721,11 @@ module Aws::BedrockAgent
     #   The type of memory that is stored.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] session_summary_configuration
+    #   Contains the configuration for SESSION\_SUMMARY memory type enabled
+    #   for the agent.
+    #   @return [Types::SessionSummaryConfiguration]
+    #
     # @!attribute [rw] storage_days
     #   The number of days the agent is configured to retain the
     #   conversational context.
@@ -6730,6 +6735,7 @@ module Aws::BedrockAgent
     #
     class MemoryConfiguration < Struct.new(
       :enabled_memory_types,
+      :session_summary_configuration,
       :storage_days)
       SENSITIVE = []
       include Aws::Structure
@@ -8763,6 +8769,21 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Configuration for SESSION\_SUMMARY memory type enabled for the agent.
+    #
+    # @!attribute [rw] max_recent_sessions
+    #   Maximum number of recent session summaries to include in the
+    #   agent's prompt context.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/SessionSummaryConfiguration AWS API Documentation
+    #
+    class SessionSummaryConfiguration < Struct.new(
+      :max_recent_sessions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The configuration of the SharePoint content. For example, configuring
     # specific types of SharePoint content.
     #
@@ -10570,19 +10591,34 @@ module Aws::BedrockAgent
     #   "docs.aws.amazon.com".
     #   @return [String]
     #
+    # @!attribute [rw] user_agent
+    #   A string used for identifying the crawler or a bot when it accesses
+    #   a web server. By default, this is set to `bedrockbot_UUID` for your
+    #   crawler. You can optionally append a custom string to
+    #   `bedrockbot_UUID` to allowlist a specific user agent permitted to
+    #   access your source URLs.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/WebCrawlerConfiguration AWS API Documentation
     #
     class WebCrawlerConfiguration < Struct.new(
       :crawler_limits,
       :exclusion_filters,
       :inclusion_filters,
-      :scope)
-      SENSITIVE = [:exclusion_filters, :inclusion_filters]
+      :scope,
+      :user_agent)
+      SENSITIVE = [:exclusion_filters, :inclusion_filters, :user_agent]
       include Aws::Structure
     end
 
     # The rate limits for the URLs that you want to crawl. You should be
     # authorized to crawl the URLs.
+    #
+    # @!attribute [rw] max_pages
+    #   The max number of web pages crawled from your source URLs, up to
+    #   25,000 pages. If the web pages exceed this limit, the data source
+    #   sync will fail and no web pages will be ingested.
+    #   @return [Integer]
     #
     # @!attribute [rw] rate_limit
     #   The max rate at which pages are crawled, up to 300 per minute per
@@ -10592,6 +10628,7 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/WebCrawlerLimits AWS API Documentation
     #
     class WebCrawlerLimits < Struct.new(
+      :max_pages,
       :rate_limit)
       SENSITIVE = []
       include Aws::Structure

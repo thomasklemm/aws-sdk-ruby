@@ -44,6 +44,7 @@ module Aws::CostExplorer
     Attributes = Shapes::MapShape.new(name: 'Attributes')
     BackfillLimitExceededException = Shapes::StructureShape.new(name: 'BackfillLimitExceededException')
     BillExpirationException = Shapes::StructureShape.new(name: 'BillExpirationException')
+    BillingViewArn = Shapes::StringShape.new(name: 'BillingViewArn')
     CommitmentPurchaseAnalysisConfiguration = Shapes::StructureShape.new(name: 'CommitmentPurchaseAnalysisConfiguration')
     Context = Shapes::StringShape.new(name: 'Context')
     CostAllocationTag = Shapes::StructureShape.new(name: 'CostAllocationTag')
@@ -819,6 +820,7 @@ module Aws::CostExplorer
     GetCostAndUsageRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
     GetCostAndUsageRequest.add_member(:metrics, Shapes::ShapeRef.new(shape: MetricNames, required: true, location_name: "Metrics"))
     GetCostAndUsageRequest.add_member(:group_by, Shapes::ShapeRef.new(shape: GroupDefinitions, location_name: "GroupBy"))
+    GetCostAndUsageRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetCostAndUsageRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
     GetCostAndUsageRequest.struct_class = Types::GetCostAndUsageRequest
 
@@ -833,6 +835,7 @@ module Aws::CostExplorer
     GetCostAndUsageWithResourcesRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, required: true, location_name: "Filter"))
     GetCostAndUsageWithResourcesRequest.add_member(:metrics, Shapes::ShapeRef.new(shape: MetricNames, location_name: "Metrics"))
     GetCostAndUsageWithResourcesRequest.add_member(:group_by, Shapes::ShapeRef.new(shape: GroupDefinitions, location_name: "GroupBy"))
+    GetCostAndUsageWithResourcesRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetCostAndUsageWithResourcesRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
     GetCostAndUsageWithResourcesRequest.struct_class = Types::GetCostAndUsageWithResourcesRequest
 
@@ -847,6 +850,7 @@ module Aws::CostExplorer
     GetCostCategoriesRequest.add_member(:cost_category_name, Shapes::ShapeRef.new(shape: CostCategoryName, location_name: "CostCategoryName"))
     GetCostCategoriesRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
     GetCostCategoriesRequest.add_member(:sort_by, Shapes::ShapeRef.new(shape: SortDefinitions, location_name: "SortBy"))
+    GetCostCategoriesRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetCostCategoriesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
     GetCostCategoriesRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
     GetCostCategoriesRequest.struct_class = Types::GetCostCategoriesRequest
@@ -862,6 +866,7 @@ module Aws::CostExplorer
     GetCostForecastRequest.add_member(:metric, Shapes::ShapeRef.new(shape: Metric, required: true, location_name: "Metric"))
     GetCostForecastRequest.add_member(:granularity, Shapes::ShapeRef.new(shape: Granularity, required: true, location_name: "Granularity"))
     GetCostForecastRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
+    GetCostForecastRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetCostForecastRequest.add_member(:prediction_interval_level, Shapes::ShapeRef.new(shape: PredictionIntervalLevel, location_name: "PredictionIntervalLevel"))
     GetCostForecastRequest.struct_class = Types::GetCostForecastRequest
 
@@ -875,6 +880,7 @@ module Aws::CostExplorer
     GetDimensionValuesRequest.add_member(:context, Shapes::ShapeRef.new(shape: Context, location_name: "Context"))
     GetDimensionValuesRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
     GetDimensionValuesRequest.add_member(:sort_by, Shapes::ShapeRef.new(shape: SortDefinitions, location_name: "SortBy"))
+    GetDimensionValuesRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetDimensionValuesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
     GetDimensionValuesRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
     GetDimensionValuesRequest.struct_class = Types::GetDimensionValuesRequest
@@ -1010,6 +1016,7 @@ module Aws::CostExplorer
     GetTagsRequest.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, location_name: "TagKey"))
     GetTagsRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
     GetTagsRequest.add_member(:sort_by, Shapes::ShapeRef.new(shape: SortDefinitions, location_name: "SortBy"))
+    GetTagsRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetTagsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
     GetTagsRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
     GetTagsRequest.struct_class = Types::GetTagsRequest
@@ -1024,6 +1031,7 @@ module Aws::CostExplorer
     GetUsageForecastRequest.add_member(:metric, Shapes::ShapeRef.new(shape: Metric, required: true, location_name: "Metric"))
     GetUsageForecastRequest.add_member(:granularity, Shapes::ShapeRef.new(shape: Granularity, required: true, location_name: "Granularity"))
     GetUsageForecastRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
+    GetUsageForecastRequest.add_member(:billing_view_arn, Shapes::ShapeRef.new(shape: BillingViewArn, location_name: "BillingViewArn"))
     GetUsageForecastRequest.add_member(:prediction_interval_level, Shapes::ShapeRef.new(shape: PredictionIntervalLevel, location_name: "PredictionIntervalLevel"))
     GetUsageForecastRequest.struct_class = Types::GetUsageForecastRequest
 
@@ -1825,6 +1833,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_cost_and_usage_with_resources, Seahorse::Model::Operation.new.tap do |o|
@@ -1838,6 +1847,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: BillExpirationException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_cost_categories, Seahorse::Model::Operation.new.tap do |o|
@@ -1851,6 +1861,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_cost_forecast, Seahorse::Model::Operation.new.tap do |o|
@@ -1861,6 +1872,7 @@ module Aws::CostExplorer
         o.output = Shapes::ShapeRef.new(shape: GetCostForecastResponse)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_dimension_values, Seahorse::Model::Operation.new.tap do |o|
@@ -1874,6 +1886,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_reservation_coverage, Seahorse::Model::Operation.new.tap do |o|
@@ -1994,6 +2007,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_usage_forecast, Seahorse::Model::Operation.new.tap do |o|
@@ -2005,6 +2019,7 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: UnresolvableUsageUnitException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:list_commitment_purchase_analyses, Seahorse::Model::Operation.new.tap do |o|

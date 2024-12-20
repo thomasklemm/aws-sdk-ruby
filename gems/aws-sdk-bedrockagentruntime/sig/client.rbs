@@ -85,7 +85,8 @@ module Aws
       def delete_agent_memory: (
                                  agent_alias_id: ::String,
                                  agent_id: ::String,
-                                 ?memory_id: ::String
+                                 ?memory_id: ::String,
+                                 ?session_id: ::String
                                ) -> _DeleteAgentMemoryResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAgentMemoryResponseSuccess
 
@@ -138,6 +139,11 @@ module Aws
       def invoke_agent: (
                           agent_alias_id: ::String,
                           agent_id: ::String,
+                          ?bedrock_model_configurations: {
+                            performance_config: {
+                              latency: ("standard" | "optimized")?
+                            }?
+                          },
                           ?enable_trace: bool,
                           ?end_session: bool,
                           ?input_text: ::String,
@@ -338,7 +344,12 @@ module Aws
                              node_name: ::String,
                              node_output_name: ::String
                            },
-                         ]
+                         ],
+                         ?model_performance_configuration: {
+                           performance_config: {
+                             latency: ("standard" | "optimized")?
+                           }?
+                         }
                        ) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
 
@@ -382,6 +393,11 @@ module Aws
                                      parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")?
                                    },
                                  ],
+                                 ?bedrock_model_configurations: {
+                                   performance_config: {
+                                     latency: ("standard" | "optimized")?
+                                   }?
+                                 },
                                  ?customer_encryption_key_arn: ::String,
                                  ?enable_trace: bool,
                                  ?end_session: bool,
@@ -786,6 +802,9 @@ module Aws
                                              top_p: ::Float?
                                            }?
                                          }?,
+                                         performance_config: {
+                                           latency: ("standard" | "optimized")?
+                                         }?,
                                          prompt_template: {
                                            text_prompt_template: ::String?
                                          }?
@@ -821,6 +840,9 @@ module Aws
                                              top_p: ::Float?
                                            }?
                                          }?,
+                                         performance_config: {
+                                           latency: ("standard" | "optimized")?
+                                         }?,
                                          prompt_template: {
                                            text_prompt_template: ::String?
                                          }?
@@ -837,6 +859,9 @@ module Aws
                                              temperature: ::Float?,
                                              top_p: ::Float?
                                            }?
+                                         }?,
+                                         performance_config: {
+                                           latency: ("standard" | "optimized")?
                                          }?,
                                          prompt_template: {
                                            text_prompt_template: ::String?
@@ -987,6 +1012,9 @@ module Aws
                                                     top_p: ::Float?
                                                   }?
                                                 }?,
+                                                performance_config: {
+                                                  latency: ("standard" | "optimized")?
+                                                }?,
                                                 prompt_template: {
                                                   text_prompt_template: ::String?
                                                 }?
@@ -1022,6 +1050,9 @@ module Aws
                                                     top_p: ::Float?
                                                   }?
                                                 }?,
+                                                performance_config: {
+                                                  latency: ("standard" | "optimized")?
+                                                }?,
                                                 prompt_template: {
                                                   text_prompt_template: ::String?
                                                 }?
@@ -1038,6 +1069,9 @@ module Aws
                                                     temperature: ::Float?,
                                                     top_p: ::Float?
                                                   }?
+                                                }?,
+                                                performance_config: {
+                                                  latency: ("standard" | "optimized")?
                                                 }?,
                                                 prompt_template: {
                                                   text_prompt_template: ::String?

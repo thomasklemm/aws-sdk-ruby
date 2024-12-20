@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.278.0 (2024-12-20)
+------------------
+
+* Feature - This release adds support for c6i, m6i and r6i instance on SageMaker Hyperpod and trn1 instances in batch
+
 1.277.0 (2024-12-04)
 ------------------
 

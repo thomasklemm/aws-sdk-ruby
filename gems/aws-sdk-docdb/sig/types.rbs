@@ -76,6 +76,13 @@ module Aws::DocDB
       SENSITIVE: []
     end
 
+    class ClusterMasterUserSecret
+      attr_accessor secret_arn: ::String
+      attr_accessor secret_status: ::String
+      attr_accessor kms_key_id: ::String
+      SENSITIVE: []
+    end
+
     class CopyDBClusterParameterGroupMessage
       attr_accessor source_db_cluster_parameter_group_identifier: ::String
       attr_accessor target_db_cluster_parameter_group_identifier: ::String
@@ -127,6 +134,8 @@ module Aws::DocDB
       attr_accessor deletion_protection: bool
       attr_accessor global_cluster_identifier: ::String
       attr_accessor storage_type: ::String
+      attr_accessor manage_master_user_password: bool
+      attr_accessor master_user_secret_kms_key_id: ::String
       attr_accessor source_region: ::String
       SENSITIVE: []
     end
@@ -262,6 +271,7 @@ module Aws::DocDB
       attr_accessor enabled_cloudwatch_logs_exports: ::Array[::String]
       attr_accessor deletion_protection: bool
       attr_accessor storage_type: ::String
+      attr_accessor master_user_secret: Types::ClusterMasterUserSecret
       SENSITIVE: []
     end
 
@@ -914,6 +924,9 @@ module Aws::DocDB
       attr_accessor allow_major_version_upgrade: bool
       attr_accessor deletion_protection: bool
       attr_accessor storage_type: ::String
+      attr_accessor manage_master_user_password: bool
+      attr_accessor master_user_secret_kms_key_id: ::String
+      attr_accessor rotate_master_user_password: bool
       SENSITIVE: []
     end
 

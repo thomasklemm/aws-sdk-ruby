@@ -286,6 +286,28 @@ module Aws::EKS
       include Aws::Structure
     end
 
+    # The summary information about the Amazon EKS add-on compatibility for
+    # the next Kubernetes version for an insight check in the
+    # `UPGRADE_READINESS` category.
+    #
+    # @!attribute [rw] name
+    #   The name of the Amazon EKS add-on.
+    #   @return [String]
+    #
+    # @!attribute [rw] compatible_versions
+    #   The list of compatible Amazon EKS add-on versions for the next
+    #   Kubernetes version.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/AddonCompatibilityDetail AWS API Documentation
+    #
+    class AddonCompatibilityDetail < Struct.new(
+      :name,
+      :compatible_versions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The health of the add-on.
     #
     # @!attribute [rw] issues
@@ -3417,10 +3439,15 @@ module Aws::EKS
     #   insight check in the `UPGRADE_READINESS` category.
     #   @return [Array<Types::DeprecationDetail>]
     #
+    # @!attribute [rw] addon_compatibility_details
+    #   A list of `AddonCompatibilityDetail` objects for Amazon EKS add-ons.
+    #   @return [Array<Types::AddonCompatibilityDetail>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/InsightCategorySpecificSummary AWS API Documentation
     #
     class InsightCategorySpecificSummary < Struct.new(
-      :deprecation_details)
+      :deprecation_details,
+      :addon_compatibility_details)
       SENSITIVE = []
       include Aws::Structure
     end

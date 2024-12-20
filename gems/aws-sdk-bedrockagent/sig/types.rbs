@@ -1694,6 +1694,7 @@ module Aws::BedrockAgent
 
     class MemoryConfiguration
       attr_accessor enabled_memory_types: ::Array[("SESSION_SUMMARY")]
+      attr_accessor session_summary_configuration: Types::SessionSummaryConfiguration
       attr_accessor storage_days: ::Integer
       SENSITIVE: []
     end
@@ -1899,7 +1900,7 @@ module Aws::BedrockAgent
       attr_accessor parser_mode: ("DEFAULT" | "OVERRIDDEN")
       attr_accessor prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")
       attr_accessor prompt_state: ("ENABLED" | "DISABLED")
-      attr_accessor prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION")
+      attr_accessor prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "POST_PROCESSING" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "MEMORY_SUMMARIZATION")
       SENSITIVE: [:base_prompt_template]
     end
 
@@ -2225,6 +2226,11 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class SessionSummaryConfiguration
+      attr_accessor max_recent_sessions: ::Integer
+      SENSITIVE: []
+    end
+
     class SharePointCrawlerConfiguration
       attr_accessor filter_configuration: Types::CrawlFilterConfiguration
       SENSITIVE: []
@@ -2237,7 +2243,7 @@ module Aws::BedrockAgent
     end
 
     class SharePointSourceConfiguration
-      attr_accessor auth_type: ("OAUTH2_CLIENT_CREDENTIALS")
+      attr_accessor auth_type: ("OAUTH2_CLIENT_CREDENTIALS" | "OAUTH2_SHAREPOINT_APP_ONLY_CLIENT_CREDENTIALS")
       attr_accessor credentials_secret_arn: ::String
       attr_accessor domain: ::String
       attr_accessor host_type: ("ONLINE")
@@ -2715,10 +2721,12 @@ module Aws::BedrockAgent
       attr_accessor exclusion_filters: ::Array[::String]
       attr_accessor inclusion_filters: ::Array[::String]
       attr_accessor scope: ("HOST_ONLY" | "SUBDOMAINS")
-      SENSITIVE: [:exclusion_filters, :inclusion_filters]
+      attr_accessor user_agent: ::String
+      SENSITIVE: [:exclusion_filters, :inclusion_filters, :user_agent]
     end
 
     class WebCrawlerLimits
+      attr_accessor max_pages: ::Integer
       attr_accessor rate_limit: ::Integer
       SENSITIVE: []
     end

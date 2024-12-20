@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2024-12-20)
+------------------
+
+* Feature - Support for custom user agent and max web pages crawled for web connector. Support app only credentials for SharePoint connector. Increase agents memory duration limit to 365 days. Support to specify max number of session summaries to include in agent invocation context.
+
 1.40.0 (2024-12-04)
 ------------------
 

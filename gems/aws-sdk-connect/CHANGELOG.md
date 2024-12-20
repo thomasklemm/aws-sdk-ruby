@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.192.0 (2024-12-20)
+------------------
+
+* Feature - This release supports adding NotAttributeCondition and Range to the RoutingCriteria object.
+
 1.191.0 (2024-12-18)
 ------------------
 

@@ -5228,6 +5228,8 @@ module Aws::Connect
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.name #=> String
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.value #=> String
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.proficiency_level #=> Float
+    #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.range.min_proficiency_level #=> Float
+    #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.range.max_proficiency_level #=> Float
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.match_criteria.agents_criteria.agent_ids #=> Array
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.match_criteria.agents_criteria.agent_ids[0] #=> String
     #   resp.contact.routing_criteria.steps[0].expression.attribute_condition.comparison_operator #=> String
@@ -5235,6 +5237,14 @@ module Aws::Connect
     #   resp.contact.routing_criteria.steps[0].expression.and_expression[0] #=> Types::Expression
     #   resp.contact.routing_criteria.steps[0].expression.or_expression #=> Array
     #   resp.contact.routing_criteria.steps[0].expression.or_expression[0] #=> Types::Expression
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.name #=> String
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.value #=> String
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.proficiency_level #=> Float
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.range.min_proficiency_level #=> Float
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.range.max_proficiency_level #=> Float
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.match_criteria.agents_criteria.agent_ids #=> Array
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.match_criteria.agents_criteria.agent_ids[0] #=> String
+    #   resp.contact.routing_criteria.steps[0].expression.not_attribute_condition.comparison_operator #=> String
     #   resp.contact.routing_criteria.steps[0].status #=> String, one of "ACTIVE", "INACTIVE", "JOINED", "EXPIRED"
     #   resp.contact.routing_criteria.activation_timestamp #=> Time
     #   resp.contact.routing_criteria.index #=> Integer
@@ -18244,6 +18254,10 @@ module Aws::Connect
     #               name: "PredefinedAttributeName",
     #               value: "ProficiencyValue",
     #               proficiency_level: 1.0,
+    #               range: {
+    #                 min_proficiency_level: 1.0,
+    #                 max_proficiency_level: 1.0,
+    #               },
     #               match_criteria: {
     #                 agents_criteria: {
     #                   agent_ids: ["AgentId"],
@@ -18261,6 +18275,21 @@ module Aws::Connect
     #                 # recursive Expression
     #               },
     #             ],
+    #             not_attribute_condition: {
+    #               name: "PredefinedAttributeName",
+    #               value: "ProficiencyValue",
+    #               proficiency_level: 1.0,
+    #               range: {
+    #                 min_proficiency_level: 1.0,
+    #                 max_proficiency_level: 1.0,
+    #               },
+    #               match_criteria: {
+    #                 agents_criteria: {
+    #                   agent_ids: ["AgentId"],
+    #                 },
+    #               },
+    #               comparison_operator: "ComparisonOperator",
+    #             },
     #           },
     #         },
     #       ],
@@ -20570,7 +20599,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.191.0'
+      context[:gem_version] = '1.192.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

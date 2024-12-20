@@ -1020,6 +1020,35 @@ module Aws::DocDB
     #
     #    </note>
     #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager.
+    #
+    #   Constraint: You can't manage the master user password with Amazon Web
+    #   Services Secrets Manager if `MasterUserPassword` is specified.
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager. This setting is valid only if the master user password is
+    #   managed by Amazon DocumentDB in Amazon Web Services Secrets Manager
+    #   for the DB cluster.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you can't
+    #   use the `aws/secretsmanager` KMS key to encrypt the secret, and you
+    #   must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
+    #
     # @option params [String] :source_region
     #   The source region of the snapshot. This is only needed when the
     #   shapshot is encrypted and in a different region.
@@ -1057,6 +1086,8 @@ module Aws::DocDB
     #     deletion_protection: false,
     #     global_cluster_identifier: "GlobalClusterIdentifier",
     #     storage_type: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
     #     source_region: "String",
     #   })
     #
@@ -1106,6 +1137,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/CreateDBCluster AWS API Documentation
     #
@@ -1858,6 +1892,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DeleteDBCluster AWS API Documentation
     #
@@ -2706,6 +2743,9 @@ module Aws::DocDB
     #   resp.db_clusters[0].enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_clusters[0].deletion_protection #=> Boolean
     #   resp.db_clusters[0].storage_type #=> String
+    #   resp.db_clusters[0].master_user_secret.secret_arn #=> String
+    #   resp.db_clusters[0].master_user_secret.secret_status #=> String
+    #   resp.db_clusters[0].master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DescribeDBClusters AWS API Documentation
     #
@@ -3676,6 +3716,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/FailoverDBCluster AWS API Documentation
     #
@@ -3979,6 +4022,60 @@ module Aws::DocDB
     #
     #   Default value is `standard `
     #
+    # @option params [Boolean] :manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager. If the cluster doesn't manage the master
+    #   user password with Amazon Web Services Secrets Manager, you can turn
+    #   on this management. In this case, you can't specify
+    #   `MasterUserPassword`. If the cluster already manages the master user
+    #   password with Amazon Web Services Secrets Manager, and you specify
+    #   that the master user password is not managed with Amazon Web Services
+    #   Secrets Manager, then you must specify `MasterUserPassword`. In this
+    #   case, Amazon DocumentDB deletes the secret and uses the new password
+    #   for the master user specified by `MasterUserPassword`.
+    #
+    # @option params [String] :master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that is
+    #   automatically generated and managed in Amazon Web Services Secrets
+    #   Manager.
+    #
+    #   This setting is valid only if both of the following conditions are
+    #   met:
+    #
+    #   * The cluster doesn't manage the master user password in Amazon Web
+    #     Services Secrets Manager. If the cluster already manages the master
+    #     user password in Amazon Web Services Secrets Manager, you can't
+    #     change the KMS key that is used to encrypt the secret.
+    #
+    #   * You are enabling `ManageMasterUserPassword` to manage the master
+    #     user password in Amazon Web Services Secrets Manager. If you are
+    #     turning on `ManageMasterUserPassword` and don't specify
+    #     `MasterUserSecretKmsKeyId`, then the `aws/secretsmanager` KMS key is
+    #     used to encrypt the secret. If the secret is in a different Amazon
+    #     Web Services account, then you can't use the `aws/secretsmanager`
+    #     KMS key to encrypt the secret, and you must use a customer managed
+    #     KMS key.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   There is a default KMS key for your Amazon Web Services account. Your
+    #   Amazon Web Services account has a different default KMS key for each
+    #   Amazon Web Services Region.
+    #
+    # @option params [Boolean] :rotate_master_user_password
+    #   Specifies whether to rotate the secret managed by Amazon Web Services
+    #   Secrets Manager for the master user password.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   Amazon DocumentDB in Amazon Web Services Secrets Manager for the
+    #   cluster. The secret value contains the updated password.
+    #
+    #   Constraint: You must apply the change immediately when rotating the
+    #   master user password.
+    #
     # @return [Types::ModifyDBClusterResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyDBClusterResult#db_cluster #db_cluster} => Types::DBCluster
@@ -4004,6 +4101,9 @@ module Aws::DocDB
     #     allow_major_version_upgrade: false,
     #     deletion_protection: false,
     #     storage_type: "String",
+    #     manage_master_user_password: false,
+    #     master_user_secret_kms_key_id: "String",
+    #     rotate_master_user_password: false,
     #   })
     #
     # @example Response structure
@@ -4052,6 +4152,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/ModifyDBCluster AWS API Documentation
     #
@@ -5127,6 +5230,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/RestoreDBClusterFromSnapshot AWS API Documentation
     #
@@ -5351,6 +5457,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/RestoreDBClusterToPointInTime AWS API Documentation
     #
@@ -5429,6 +5538,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/StartDBCluster AWS API Documentation
     #
@@ -5507,6 +5619,9 @@ module Aws::DocDB
     #   resp.db_cluster.enabled_cloudwatch_logs_exports[0] #=> String
     #   resp.db_cluster.deletion_protection #=> Boolean
     #   resp.db_cluster.storage_type #=> String
+    #   resp.db_cluster.master_user_secret.secret_arn #=> String
+    #   resp.db_cluster.master_user_secret.secret_status #=> String
+    #   resp.db_cluster.master_user_secret.kms_key_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/StopDBCluster AWS API Documentation
     #
@@ -5605,7 +5720,7 @@ module Aws::DocDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-docdb'
-      context[:gem_version] = '1.79.0'
+      context[:gem_version] = '1.80.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

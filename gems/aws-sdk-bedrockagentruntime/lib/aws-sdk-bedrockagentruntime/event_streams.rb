@@ -43,6 +43,10 @@ module Aws::BedrockAgentRuntime
         @event_emitter.on(:internal_server_exception, block) if block_given?
       end
 
+      def on_model_not_ready_exception_event(&block)
+        @event_emitter.on(:model_not_ready_exception, block) if block_given?
+      end
+
       def on_resource_not_found_exception_event(&block)
         @event_emitter.on(:resource_not_found_exception, block) if block_given?
       end
@@ -87,6 +91,7 @@ module Aws::BedrockAgentRuntime
         on_dependency_failed_exception_event(&block)
         on_files_event(&block)
         on_internal_server_exception_event(&block)
+        on_model_not_ready_exception_event(&block)
         on_resource_not_found_exception_event(&block)
         on_return_control_event(&block)
         on_service_quota_exceeded_exception_event(&block)

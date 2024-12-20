@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.80.0 (2024-12-20)
+------------------
+
+* Feature - Support AWS Secret Manager managed password for AWS DocumentDB instance-based cluster.
+
 1.79.0 (2024-11-06)
 ------------------
 

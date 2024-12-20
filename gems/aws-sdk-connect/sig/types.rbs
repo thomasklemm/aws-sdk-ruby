@@ -346,6 +346,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor value: ::String
       attr_accessor proficiency_level: ::Float
+      attr_accessor range: Types::Range
       attr_accessor match_criteria: Types::MatchCriteria
       attr_accessor comparison_operator: ::String
       SENSITIVE: []
@@ -2348,6 +2349,7 @@ module Aws::Connect
       attr_accessor attribute_condition: Types::AttributeCondition
       attr_accessor and_expression: ::Array[Types::Expression]
       attr_accessor or_expression: ::Array[Types::Expression]
+      attr_accessor not_attribute_condition: Types::AttributeCondition
       SENSITIVE: []
     end
 
@@ -4106,6 +4108,12 @@ module Aws::Connect
       attr_accessor quick_connect_type: ("USER" | "QUEUE" | "PHONE_NUMBER")
       attr_accessor last_modified_time: ::Time
       attr_accessor last_modified_region: ::String
+      SENSITIVE: []
+    end
+
+    class Range
+      attr_accessor min_proficiency_level: ::Float
+      attr_accessor max_proficiency_level: ::Float
       SENSITIVE: []
     end
 

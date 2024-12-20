@@ -211,7 +211,7 @@ module Aws::Macie2
       attr_accessor bucket_name: ::String
       attr_accessor classifiable_object_count: ::Integer
       attr_accessor classifiable_size_in_bytes: ::Integer
-      attr_accessor error_code: ("ACCESS_DENIED")
+      attr_accessor error_code: ("ACCESS_DENIED" | "BUCKET_COUNT_EXCEEDS_QUOTA")
       attr_accessor error_message: ::String
       attr_accessor job_details: Types::JobDetails
       attr_accessor last_automated_discovery_time: ::Time
@@ -1336,7 +1336,7 @@ module Aws::Macie2
       attr_accessor bucket_name: ::String
       attr_accessor classifiable_object_count: ::Integer
       attr_accessor classifiable_size_in_bytes: ::Integer
-      attr_accessor error_code: ("ACCESS_DENIED")
+      attr_accessor error_code: ("ACCESS_DENIED" | "BUCKET_COUNT_EXCEEDS_QUOTA")
       attr_accessor error_message: ::String
       attr_accessor job_details: Types::JobDetails
       attr_accessor last_automated_discovery_time: ::Time

@@ -310,6 +310,13 @@ module Aws::SageMaker
     # Specifies the training algorithm to use in a [CreateTrainingJob][1]
     # request.
     #
+    # SageMaker uses its own SageMaker account credentials to pull and
+    # access built-in algorithms so built-in algorithms are universally
+    # accessible across all Amazon Web Services accounts. As a result,
+    # built-in algorithms have standard, unrestricted access. You cannot
+    # restrict built-in algorithms using IAM roles. Use custom algorithms if
+    # you require specific access controls.
+    #
     # For more information about algorithms provided by SageMaker, see
     # [Algorithms][2]. For information about using your own algorithms, see
     # [Using Your Own Algorithms with Amazon SageMaker][3].
@@ -1297,7 +1304,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Details about an Amazon SageMaker app.
+    # Details about an Amazon SageMaker AI app.
     #
     # @!attribute [rw] domain_id
     #   The domain ID.
@@ -1328,7 +1335,7 @@ module Aws::SageMaker
     #   @return [Time]
     #
     # @!attribute [rw] resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -1347,7 +1354,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # The configuration for running a SageMaker image as a KernelGateway
+    # The configuration for running a SageMaker AI image as a KernelGateway
     # app.
     #
     # @!attribute [rw] app_image_config_arn
@@ -1368,7 +1375,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] kernel_gateway_image_config
     #   The configuration for the file system and kernels in the SageMaker
-    #   image.
+    #   AI image.
     #   @return [Types::KernelGatewayImageConfig]
     #
     # @!attribute [rw] jupyter_lab_app_image_config
@@ -2720,7 +2727,7 @@ module Aws::SageMaker
     #   The data type.
     #
     #   * If you choose `S3Prefix`, `S3Uri` identifies a key name prefix.
-    #     SageMaker uses all objects that match the specified key name
+    #     SageMaker AI uses all objects that match the specified key name
     #     prefix for model training.
     #
     #     The `S3Prefix` should have the following format:
@@ -2729,7 +2736,7 @@ module Aws::SageMaker
     #
     #   * If you choose `ManifestFile`, `S3Uri` identifies an object that is
     #     a manifest file containing a list of object keys that you want
-    #     SageMaker to use for model training.
+    #     SageMaker AI to use for model training.
     #
     #     A `ManifestFile` should have the format shown below:
     #
@@ -3506,16 +3513,16 @@ module Aws::SageMaker
     end
 
     # Configuration specifying how to treat different headers. If no headers
-    # are specified Amazon SageMaker will by default base64 encode when
+    # are specified Amazon SageMaker AI will by default base64 encode when
     # capturing the data.
     #
     # @!attribute [rw] csv_content_types
-    #   The list of all content type headers that Amazon SageMaker will
+    #   The list of all content type headers that Amazon SageMaker AI will
     #   treat as CSV and capture accordingly.
     #   @return [Array<String>]
     #
     # @!attribute [rw] json_content_types
-    #   The list of all content type headers that SageMaker will treat as
+    #   The list of all content type headers that SageMaker AI will treat as
     #   JSON and capture accordingly.
     #   @return [Array<String>]
     #
@@ -4722,7 +4729,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] file_system_config
     #   The Amazon Elastic File System storage configuration for a SageMaker
-    #   image.
+    #   AI image.
     #   @return [Types::FileSystemConfig]
     #
     # @!attribute [rw] container_config
@@ -4748,7 +4755,7 @@ module Aws::SageMaker
     # [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.html
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -4785,7 +4792,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # A Git repository that SageMaker automatically displays to users for
+    # A Git repository that SageMaker AI automatically displays to users for
     # cloning in the JupyterServer application.
     #
     # @!attribute [rw] repository_url
@@ -5773,7 +5780,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] resource_spec
     #   The instance type and the Amazon Resource Name (ARN) of the
-    #   SageMaker image created on the instance.
+    #   SageMaker AI image created on the instance.
     #
     #   <note markdown="1"> The value of `InstanceType` passed as part of the `ResourceSpec` in
     #   the `CreateApp` call overrides the value passed as part of the
@@ -6281,9 +6288,10 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that enables Amazon
-    #   SageMaker to perform tasks on your behalf.
+    #   SageMaker AI to perform tasks on your behalf.
     #
-    #   During model compilation, Amazon SageMaker needs your permission to:
+    #   During model compilation, Amazon SageMaker AI needs your permission
+    #   to:
     #
     #   * Read input data from an S3 bucket
     #
@@ -6294,9 +6302,9 @@ module Aws::SageMaker
     #   * Publish metrics to Amazon CloudWatch
     #
     #   You grant permissions for all of these tasks to an IAM role. To pass
-    #   this role to Amazon SageMaker, the caller of this API must have the
-    #   `iam:PassRole` permission. For more information, see [Amazon
-    #   SageMaker Roles.][1]
+    #   this role to Amazon SageMaker AI, the caller of this API must have
+    #   the `iam:PassRole` permission. For more information, see [Amazon
+    #   SageMaker AI Roles.][1]
     #
     #
     #
@@ -6335,7 +6343,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] stopping_condition
     #   Specifies a limit to how long a model compilation job can run. When
-    #   the job reaches the time limit, Amazon SageMaker ends the
+    #   the job reaches the time limit, Amazon SageMaker AI ends the
     #   compilation job. Use this API to cap model training costs.
     #   @return [Types::StoppingCondition]
     #
@@ -6367,7 +6375,7 @@ module Aws::SageMaker
 
     # @!attribute [rw] compilation_job_arn
     #   If the action is successful, the service sends back an HTTP 200
-    #   response. Amazon SageMaker returns the following data in JSON
+    #   response. Amazon SageMaker AI returns the following data in JSON
     #   format:
     #
     #   * `CompilationJobArn`: The Amazon Resource Name (ARN) of the
@@ -6529,7 +6537,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -6666,7 +6674,7 @@ module Aws::SageMaker
     #   `PublicInternetOnly`.
     #
     #   * `PublicInternetOnly` - Non-EFS traffic is through a VPC managed by
-    #     Amazon SageMaker, which allows direct internet access
+    #     Amazon SageMaker AI, which allows direct internet access
     #
     #   * `VpcOnly` - All traffic is through the specified VPC and subnets
     #   @return [String]
@@ -6676,7 +6684,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
-    #   SageMaker uses Amazon Web Services KMS to encrypt EFS and EBS
+    #   SageMaker AI uses Amazon Web Services KMS to encrypt EFS and EBS
     #   volumes attached to the domain with an Amazon Web Services managed
     #   key by default. For more control, specify a customer managed key.
     #   @return [String]
@@ -6866,7 +6874,7 @@ module Aws::SageMaker
     #   @return [Array<Types::ProductionVariant>]
     #
     # @!attribute [rw] data_capture_config
-    #   Configuration to control how SageMaker captures inference data.
+    #   Configuration to control how SageMaker AI captures inference data.
     #   @return [Types::DataCaptureConfig]
     #
     # @!attribute [rw] tags
@@ -6952,11 +6960,11 @@ module Aws::SageMaker
     #
     # @!attribute [rw] execution_role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform actions on your behalf. For more information,
-    #   see [SageMaker Roles][1].
+    #   AI can assume to perform actions on your behalf. For more
+    #   information, see [SageMaker AI Roles][1].
     #
-    #   <note markdown="1"> To be able to pass this role to Amazon SageMaker, the caller of this
-    #   action must have the `iam:PassRole` permission.
+    #   <note markdown="1"> To be able to pass this role to Amazon SageMaker AI, the caller of
+    #   this action must have the `iam:PassRole` permission.
     #
     #    </note>
     #
@@ -7642,7 +7650,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The ARN of an IAM role that enables Amazon SageMaker to perform
+    #   The ARN of an IAM role that enables Amazon SageMaker AI to perform
     #   tasks on your behalf.
     #   @return [String]
     #
@@ -7717,16 +7725,16 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] job_type
-    #   Indicates SageMaker job type compatibility.
+    #   Indicates SageMaker AI job type compatibility.
     #
-    #   * `TRAINING`: The image version is compatible with SageMaker
+    #   * `TRAINING`: The image version is compatible with SageMaker AI
     #     training jobs.
     #
-    #   * `INFERENCE`: The image version is compatible with SageMaker
+    #   * `INFERENCE`: The image version is compatible with SageMaker AI
     #     inference jobs.
     #
     #   * `NOTEBOOK_KERNEL`: The image version is compatible with SageMaker
-    #     notebook kernels.
+    #     AI notebook kernels.
     #   @return [String]
     #
     # @!attribute [rw] ml_framework
@@ -8408,7 +8416,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -8592,7 +8600,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -9028,7 +9036,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -9134,13 +9142,14 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   When you send any requests to Amazon Web Services resources from the
-    #   notebook instance, SageMaker assumes this role to perform tasks on
-    #   your behalf. You must grant this role necessary permissions so
-    #   SageMaker can perform these tasks. The policy must allow the
-    #   SageMaker service principal (sagemaker.amazonaws.com) permissions to
-    #   assume this role. For more information, see [SageMaker Roles][1].
+    #   notebook instance, SageMaker AI assumes this role to perform tasks
+    #   on your behalf. You must grant this role necessary permissions so
+    #   SageMaker AI can perform these tasks. The policy must allow the
+    #   SageMaker AI service principal (sagemaker.amazonaws.com) permissions
+    #   to assume this role. For more information, see [SageMaker AI
+    #   Roles][1].
     #
-    #   <note markdown="1"> To be able to pass this role to SageMaker, the caller of this API
+    #   <note markdown="1"> To be able to pass this role to SageMaker AI, the caller of this API
     #   must have the `iam:PassRole` permission.
     #
     #    </note>
@@ -9152,7 +9161,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Resource Name (ARN) of a Amazon Web Services Key
-    #   Management Service key that SageMaker uses to encrypt data on the
+    #   Management Service key that SageMaker AI uses to encrypt data on the
     #   storage volume attached to your notebook instance. The KMS key you
     #   provide must be enabled. For information, see [Enabling and
     #   Disabling Keys][1] in the *Amazon Web Services Key Management
@@ -9185,10 +9194,10 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] direct_internet_access
-    #   Sets whether SageMaker provides internet access to the notebook
+    #   Sets whether SageMaker AI provides internet access to the notebook
     #   instance. If you set this to `Disabled` this notebook instance is
     #   able to access resources only in your VPC, and is not be able to
-    #   connect to SageMaker training and endpoint services unless you
+    #   connect to SageMaker AI training and endpoint services unless you
     #   configure a NAT Gateway in your VPC.
     #
     #   For more information, see [Notebook Instances Are Internet-Enabled
@@ -9220,7 +9229,8 @@ module Aws::SageMaker
     #   repository in [Amazon Web Services CodeCommit][1] or in any other
     #   Git repository. When you open a notebook instance, it opens in the
     #   directory that contains this repository. For more information, see
-    #   [Associating Git Repositories with SageMaker Notebook Instances][2].
+    #   [Associating Git Repositories with SageMaker AI Notebook
+    #   Instances][2].
     #
     #
     #
@@ -9235,7 +9245,7 @@ module Aws::SageMaker
     #   in [Amazon Web Services CodeCommit][1] or in any other Git
     #   repository. These repositories are cloned at the same level as the
     #   default repository of your notebook instance. For more information,
-    #   see [Associating Git Repositories with SageMaker Notebook
+    #   see [Associating Git Repositories with SageMaker AI Notebook
     #   Instances][2].
     #
     #
@@ -9343,9 +9353,9 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that enables Amazon
-    #   SageMaker to perform tasks on your behalf.
+    #   SageMaker AI to perform tasks on your behalf.
     #
-    #   During model optimization, Amazon SageMaker needs your permission
+    #   During model optimization, Amazon SageMaker AI needs your permission
     #   to:
     #
     #   * Read input data from an S3 bucket
@@ -9357,9 +9367,9 @@ module Aws::SageMaker
     #   * Publish metrics to Amazon CloudWatch
     #
     #   You grant permissions for all of these tasks to an IAM role. To pass
-    #   this role to Amazon SageMaker, the caller of this API must have the
-    #   `iam:PassRole` permission. For more information, see [Amazon
-    #   SageMaker Roles.][1]
+    #   this role to Amazon SageMaker AI, the caller of this API must have
+    #   the `iam:PassRole` permission. For more information, see [Amazon
+    #   SageMaker AI Roles.][1]
     #
     #
     #
@@ -10008,13 +10018,13 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] studio_lifecycle_config_name
-    #   The name of the Amazon SageMaker Studio Lifecycle Configuration to
-    #   create.
+    #   The name of the Amazon SageMaker AI Studio Lifecycle Configuration
+    #   to create.
     #   @return [String]
     #
     # @!attribute [rw] studio_lifecycle_config_content
-    #   The content of your Amazon SageMaker Studio Lifecycle Configuration
-    #   script. This content must be base64 encoded.
+    #   The content of your Amazon SageMaker AI Studio Lifecycle
+    #   Configuration script. This content must be base64 encoded.
     #   @return [String]
     #
     # @!attribute [rw] studio_lifecycle_config_app_type
@@ -10918,8 +10928,8 @@ module Aws::SageMaker
     end
 
     # A file system, created by you, that you assign to a user profile or
-    # space for an Amazon SageMaker Domain. Permitted users can access this
-    # file system in Amazon SageMaker Studio.
+    # space for an Amazon SageMaker AI Domain. Permitted users can access
+    # this file system in Amazon SageMaker AI Studio.
     #
     # @note CustomFileSystem is a union - when making an API calls you must set exactly one of the members.
     #
@@ -10949,8 +10959,8 @@ module Aws::SageMaker
     end
 
     # The settings for assigning a custom file system to a user profile or
-    # space for an Amazon SageMaker Domain. Permitted users can access this
-    # file system in Amazon SageMaker Studio.
+    # space for an Amazon SageMaker AI Domain. Permitted users can access
+    # this file system in Amazon SageMaker AI Studio.
     #
     # @note CustomFileSystemConfig is a union - when making an API calls you must set exactly one of the members.
     #
@@ -10979,8 +10989,8 @@ module Aws::SageMaker
       class Unknown < CustomFileSystemConfig; end
     end
 
-    # A custom SageMaker image. For more information, see [Bring your own
-    # SageMaker image][1].
+    # A custom SageMaker AI image. For more information, see [Bring your own
+    # SageMaker AI image][1].
     #
     #
     #
@@ -11052,7 +11062,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Configuration to control how SageMaker captures inference data.
+    # Configuration to control how SageMaker AI captures inference data.
     #
     # @!attribute [rw] enable_capture
     #   Whether data capture should be enabled or disabled (defaults to
@@ -11060,8 +11070,8 @@ module Aws::SageMaker
     #   @return [Boolean]
     #
     # @!attribute [rw] initial_sampling_percentage
-    #   The percentage of requests SageMaker will capture. A lower value is
-    #   recommended for Endpoints with high traffic.
+    #   The percentage of requests SageMaker AI will capture. A lower value
+    #   is recommended for Endpoints with high traffic.
     #   @return [Integer]
     #
     # @!attribute [rw] destination_s3_uri
@@ -11070,8 +11080,8 @@ module Aws::SageMaker
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Resource Name (ARN) of an Key Management Service key that
-    #   SageMaker uses to encrypt the captured data at rest using Amazon S3
-    #   server-side encryption.
+    #   SageMaker AI uses to encrypt the captured data at rest using Amazon
+    #   S3 server-side encryption.
     #
     #   The KmsKeyId can be any of the following formats:
     #
@@ -11093,8 +11103,8 @@ module Aws::SageMaker
     #
     # @!attribute [rw] capture_content_type_header
     #   Configuration specifying how to treat different headers. If no
-    #   headers are specified SageMaker will by default base64 encode when
-    #   capturing the data.
+    #   headers are specified SageMaker AI will by default base64 encode
+    #   when capturing the data.
     #   @return [Types::CaptureContentTypeHeader]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DataCaptureConfig AWS API Documentation
@@ -11604,7 +11614,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] custom_file_system_configs
     #   The settings for assigning a custom file system to a domain.
-    #   Permitted users can access this file system in Amazon SageMaker
+    #   Permitted users can access this file system in Amazon SageMaker AI
     #   Studio.
     #   @return [Array<Types::CustomFileSystemConfig>]
     #
@@ -12339,7 +12349,7 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] notebook_instance_name
-    #   The name of the SageMaker notebook instance to delete.
+    #   The name of the SageMaker AI notebook instance to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeleteNotebookInstanceInput AWS API Documentation
@@ -12471,8 +12481,8 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] studio_lifecycle_config_name
-    #   The name of the Amazon SageMaker Studio Lifecycle Configuration to
-    #   delete.
+    #   The name of the Amazon SageMaker AI Studio Lifecycle Configuration
+    #   to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeleteStudioLifecycleConfigRequest AWS API Documentation
@@ -13090,15 +13100,15 @@ module Aws::SageMaker
     #
     # @!attribute [rw] last_user_activity_timestamp
     #   The timestamp of the last user's activity.
-    #   `LastUserActivityTimestamp` is also updated when SageMaker performs
-    #   health checks without user activity. As a result, this value is set
-    #   to the same value as `LastHealthCheckTimestamp`.
+    #   `LastUserActivityTimestamp` is also updated when SageMaker AI
+    #   performs health checks without user activity. As a result, this
+    #   value is set to the same value as `LastHealthCheckTimestamp`.
     #   @return [Time]
     #
     # @!attribute [rw] creation_time
     #   The creation time of the application.
     #
-    #   <note markdown="1"> After an application has been shut down for 24 hours, SageMaker
+    #   <note markdown="1"> After an application has been shut down for 24 hours, SageMaker AI
     #   deletes all metadata for the application. To be considered an update
     #   and retain application metadata, applications must be restarted
     #   within 24 hours after the previous application has been shut down.
@@ -13114,7 +13124,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] resource_spec
     #   The instance type and the Amazon Resource Name (ARN) of the
-    #   SageMaker image created on the instance.
+    #   SageMaker AI image created on the instance.
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] built_in_lifecycle_config_arn
@@ -13286,9 +13296,9 @@ module Aws::SageMaker
     #   @return [Array<Types::AutoMLPartialFailureReason>]
     #
     # @!attribute [rw] best_candidate
-    #   The best model candidate selected by SageMaker Autopilot using both
-    #   the best objective metric and lowest [InferenceLatency][1] for an
-    #   experiment.
+    #   The best model candidate selected by SageMaker AI Autopilot using
+    #   both the best objective metric and lowest [InferenceLatency][1] for
+    #   an experiment.
     #
     #
     #
@@ -13785,12 +13795,12 @@ module Aws::SageMaker
     #   The time when the model compilation job on a compilation job
     #   instance ended. For a successful or stopped job, this is when the
     #   job's model artifacts have finished uploading. For a failed job,
-    #   this is when Amazon SageMaker detected that the job failed.
+    #   this is when Amazon SageMaker AI detected that the job failed.
     #   @return [Time]
     #
     # @!attribute [rw] stopping_condition
     #   Specifies a limit to how long a model compilation job can run. When
-    #   the job reaches the time limit, Amazon SageMaker ends the
+    #   the job reaches the time limit, Amazon SageMaker AI ends the
     #   compilation job. Use this API to cap model training costs.
     #   @return [Types::StoppingCondition]
     #
@@ -13829,7 +13839,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   assumes to perform the model compilation job.
+    #   AI assumes to perform the model compilation job.
     #   @return [String]
     #
     # @!attribute [rw] input_config
@@ -14122,7 +14132,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -14328,7 +14338,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] single_sign_on_application_arn
-    #   The ARN of the application managed by SageMaker in IAM Identity
+    #   The ARN of the application managed by SageMaker AI in IAM Identity
     #   Center. This value is only returned for domains created after
     #   October 1, 2023.
     #   @return [String]
@@ -14372,7 +14382,7 @@ module Aws::SageMaker
     #   `PublicInternetOnly`.
     #
     #   * `PublicInternetOnly` - Non-EFS traffic is through a VPC managed by
-    #     Amazon SageMaker, which allows direct internet access
+    #     Amazon SageMaker AI, which allows direct internet access
     #
     #   * `VpcOnly` - All traffic is through the specified VPC and subnets
     #   @return [String]
@@ -14658,7 +14668,7 @@ module Aws::SageMaker
     #   @return [Array<Types::ProductionVariant>]
     #
     # @!attribute [rw] data_capture_config
-    #   Configuration to control how SageMaker captures inference data.
+    #   Configuration to control how SageMaker AI captures inference data.
     #   @return [Types::DataCaptureConfig]
     #
     # @!attribute [rw] kms_key_id
@@ -15716,7 +15726,7 @@ module Aws::SageMaker
     #   @return [Time]
     #
     # @!attribute [rw] role_arn
-    #   The ARN of the IAM role that enables Amazon SageMaker to perform
+    #   The ARN of the IAM role that enables Amazon SageMaker AI to perform
     #   tasks on your behalf.
     #   @return [String]
     #
@@ -15814,16 +15824,16 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] job_type
-    #   Indicates SageMaker job type compatibility.
+    #   Indicates SageMaker AI job type compatibility.
     #
-    #   * `TRAINING`: The image version is compatible with SageMaker
+    #   * `TRAINING`: The image version is compatible with SageMaker AI
     #     training jobs.
     #
-    #   * `INFERENCE`: The image version is compatible with SageMaker
+    #   * `INFERENCE`: The image version is compatible with SageMaker AI
     #     inference jobs.
     #
     #   * `NOTEBOOK_KERNEL`: The image version is compatible with SageMaker
-    #     notebook kernels.
+    #     AI notebook kernels.
     #   @return [String]
     #
     # @!attribute [rw] ml_framework
@@ -17275,7 +17285,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @!attribute [rw] stopping_condition
@@ -17453,7 +17463,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] notebook_instance_name
-    #   The name of the SageMaker notebook instance.
+    #   The name of the SageMaker AI notebook instance.
     #   @return [String]
     #
     # @!attribute [rw] notebook_instance_status
@@ -17487,12 +17497,12 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
-    #   The Amazon Web Services KMS key ID SageMaker uses to encrypt data
+    #   The Amazon Web Services KMS key ID SageMaker AI uses to encrypt data
     #   when storing it on the ML storage volume attached to the instance.
     #   @return [String]
     #
     # @!attribute [rw] network_interface_id
-    #   The network interface IDs that SageMaker created at the time of
+    #   The network interface IDs that SageMaker AI created at the time of
     #   creating the instance.
     #   @return [String]
     #
@@ -17518,10 +17528,10 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] direct_internet_access
-    #   Describes whether SageMaker provides internet access to the notebook
-    #   instance. If this value is set to *Disabled*, the notebook instance
-    #   does not have internet access, and cannot connect to SageMaker
-    #   training and endpoint services.
+    #   Describes whether SageMaker AI provides internet access to the
+    #   notebook instance. If this value is set to *Disabled*, the notebook
+    #   instance does not have internet access, and cannot connect to
+    #   SageMaker AI training and endpoint services.
     #
     #   For more information, see [Notebook Instances Are Internet-Enabled
     #   by Default][1].
@@ -17551,7 +17561,8 @@ module Aws::SageMaker
     #   repository in [Amazon Web Services CodeCommit][1] or in any other
     #   Git repository. When you open a notebook instance, it opens in the
     #   directory that contains this repository. For more information, see
-    #   [Associating Git Repositories with SageMaker Notebook Instances][2].
+    #   [Associating Git Repositories with SageMaker AI Notebook
+    #   Instances][2].
     #
     #
     #
@@ -17566,7 +17577,7 @@ module Aws::SageMaker
     #   in [Amazon Web Services CodeCommit][1] or in any other Git
     #   repository. These repositories are cloned at the same level as the
     #   default repository of your notebook instance. For more information,
-    #   see [Associating Git Repositories with SageMaker Notebook
+    #   see [Associating Git Repositories with SageMaker AI Notebook
     #   Instances][2].
     #
     #
@@ -18370,8 +18381,8 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] studio_lifecycle_config_name
-    #   The name of the Amazon SageMaker Studio Lifecycle Configuration to
-    #   describe.
+    #   The name of the Amazon SageMaker AI Studio Lifecycle Configuration
+    #   to describe.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeStudioLifecycleConfigRequest AWS API Documentation
@@ -18387,23 +18398,23 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] studio_lifecycle_config_name
-    #   The name of the Amazon SageMaker Studio Lifecycle Configuration that
-    #   is described.
+    #   The name of the Amazon SageMaker AI Studio Lifecycle Configuration
+    #   that is described.
     #   @return [String]
     #
     # @!attribute [rw] creation_time
-    #   The creation time of the Amazon SageMaker Studio Lifecycle
+    #   The creation time of the Amazon SageMaker AI Studio Lifecycle
     #   Configuration.
     #   @return [Time]
     #
     # @!attribute [rw] last_modified_time
-    #   This value is equivalent to CreationTime because Amazon SageMaker
+    #   This value is equivalent to CreationTime because Amazon SageMaker AI
     #   Studio Lifecycle Configurations are immutable.
     #   @return [Time]
     #
     # @!attribute [rw] studio_lifecycle_config_content
-    #   The content of your Amazon SageMaker Studio Lifecycle Configuration
-    #   script.
+    #   The content of your Amazon SageMaker AI Studio Lifecycle
+    #   Configuration script.
     #   @return [String]
     #
     # @!attribute [rw] studio_lifecycle_config_app_type
@@ -19868,8 +19879,8 @@ module Aws::SageMaker
     #   @return [Types::RStudioServerProDomainSettings]
     #
     # @!attribute [rw] execution_role_identity_config
-    #   The configuration for attaching a SageMaker user profile name to the
-    #   execution role as a [sts:SourceIdentity key][1].
+    #   The configuration for attaching a SageMaker AI user profile name to
+    #   the execution role as a [sts:SourceIdentity key][1].
     #
     #
     #
@@ -19908,10 +19919,10 @@ module Aws::SageMaker
     #   @return [Types::RStudioServerProDomainSettingsForUpdate]
     #
     # @!attribute [rw] execution_role_identity_config
-    #   The configuration for attaching a SageMaker user profile name to the
-    #   execution role as a [sts:SourceIdentity key][1]. This configuration
-    #   can only be modified if there are no apps in the `InService` or
-    #   `Pending` state.
+    #   The configuration for attaching a SageMaker AI user profile name to
+    #   the execution role as a [sts:SourceIdentity key][1]. This
+    #   configuration can only be modified if there are no apps in the
+    #   `InService` or `Pending` state.
     #
     #
     #
@@ -20103,8 +20114,8 @@ module Aws::SageMaker
     end
 
     # A file system, created by you in Amazon EFS, that you assign to a user
-    # profile or space for an Amazon SageMaker Domain. Permitted users can
-    # access this file system in Amazon SageMaker Studio.
+    # profile or space for an Amazon SageMaker AI Domain. Permitted users
+    # can access this file system in Amazon SageMaker AI Studio.
     #
     # @!attribute [rw] file_system_id
     #   The ID of your Amazon EFS file system.
@@ -20119,7 +20130,7 @@ module Aws::SageMaker
     end
 
     # The settings for assigning a custom Amazon EFS file system to a user
-    # profile or space for an Amazon SageMaker Domain.
+    # profile or space for an Amazon SageMaker AI Domain.
     #
     # @!attribute [rw] file_system_id
     #   The ID of your Amazon EFS file system.
@@ -20127,8 +20138,8 @@ module Aws::SageMaker
     #
     # @!attribute [rw] file_system_path
     #   The path to the file system directory that is accessible in Amazon
-    #   SageMaker Studio. Permitted users can access only this directory and
-    #   below.
+    #   SageMaker AI Studio. Permitted users can access only this directory
+    #   and below.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/EFSFileSystemConfig AWS API Documentation
@@ -21757,7 +21768,7 @@ module Aws::SageMaker
     end
 
     # The Amazon Elastic File System storage configuration for a SageMaker
-    # image.
+    # AI image.
     #
     # @!attribute [rw] mount_path
     #   The path within the image to mount the user's EFS home directory.
@@ -25056,9 +25067,10 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # A SageMaker image. A SageMaker image represents a set of container
-    # images that are derived from a common base container image. Each of
-    # these container images is represented by a SageMaker `ImageVersion`.
+    # A SageMaker AI image. A SageMaker AI image represents a set of
+    # container images that are derived from a common base container image.
+    # Each of these container images is represented by a SageMaker AI
+    # `ImageVersion`.
     #
     # @!attribute [rw] creation_time
     #   When the image was created.
@@ -25154,7 +25166,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # A version of a SageMaker `Image`. A version represents an existing
+    # A version of a SageMaker AI `Image`. A version represents an existing
     # container image.
     #
     # @!attribute [rw] creation_time
@@ -25427,8 +25439,8 @@ module Aws::SageMaker
     # including the model, container, and compute resources.
     #
     # @!attribute [rw] model_name
-    #   The name of an existing SageMaker model object in your account that
-    #   you want to deploy with the inference component.
+    #   The name of an existing SageMaker AI model object in your account
+    #   that you want to deploy with the inference component.
     #   @return [String]
     #
     # @!attribute [rw] container
@@ -25488,7 +25500,7 @@ module Aws::SageMaker
     # component.
     #
     # @!attribute [rw] model_name
-    #   The name of the SageMaker model object that is deployed with the
+    #   The name of the SageMaker AI model object that is deployed with the
     #   inference component.
     #   @return [String]
     #
@@ -25638,8 +25650,8 @@ module Aws::SageMaker
     #
     # @!attribute [rw] content_type
     #   Configuration specifying how to treat different headers. If no
-    #   headers are specified Amazon SageMaker will by default base64 encode
-    #   when capturing the data.
+    #   headers are specified Amazon SageMaker AI will by default base64
+    #   encode when capturing the data.
     #   @return [Types::CaptureContentTypeHeader]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceExperimentDataStorageConfig AWS API Documentation
@@ -26329,13 +26341,13 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # The configuration for the file system and kernels in a SageMaker image
-    # running as a JupyterLab app. The `FileSystemConfig` object is not
-    # supported.
+    # The configuration for the file system and kernels in a SageMaker AI
+    # image running as a JupyterLab app. The `FileSystemConfig` object is
+    # not supported.
     #
     # @!attribute [rw] file_system_config
     #   The Amazon Elastic File System storage configuration for a SageMaker
-    #   image.
+    #   AI image.
     #   @return [Types::FileSystemConfig]
     #
     # @!attribute [rw] container_config
@@ -26354,7 +26366,7 @@ module Aws::SageMaker
     # The settings for the JupyterLab application.
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -26411,7 +26423,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] default_resource_spec
     #   The default instance type and the Amazon Resource Name (ARN) of the
-    #   default SageMaker image used by the JupyterServer app. If you use
+    #   default SageMaker AI image used by the JupyterServer app. If you use
     #   the `LifecycleConfigArns` parameter, then this parameter is also
     #   required.
     #   @return [Types::ResourceSpec]
@@ -26428,8 +26440,8 @@ module Aws::SageMaker
     #   @return [Array<String>]
     #
     # @!attribute [rw] code_repositories
-    #   A list of Git repositories that SageMaker automatically displays to
-    #   users for cloning in the JupyterServer application.
+    #   A list of Git repositories that SageMaker AI automatically displays
+    #   to users for cloning in the JupyterServer application.
     #   @return [Array<Types::CodeRepository>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/JupyterServerAppSettings AWS API Documentation
@@ -26462,9 +26474,9 @@ module Aws::SageMaker
     #
     # @!attribute [rw] default_resource_spec
     #   The default instance type and the Amazon Resource Name (ARN) of the
-    #   default SageMaker image used by the KernelGateway app.
+    #   default SageMaker AI image used by the KernelGateway app.
     #
-    #   <note markdown="1"> The Amazon SageMaker Studio UI does not use the default instance
+    #   <note markdown="1"> The Amazon SageMaker AI Studio UI does not use the default instance
     #   type value set here. The default instance type set here is used when
     #   Apps are created using the CLI or CloudFormation and the instance
     #   type parameter value is not passed.
@@ -26473,7 +26485,7 @@ module Aws::SageMaker
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] custom_images
-    #   A list of custom SageMaker images that are configured to run as a
+    #   A list of custom SageMaker AI images that are configured to run as a
     #   KernelGateway app.
     #   @return [Array<Types::CustomImage>]
     #
@@ -26497,8 +26509,8 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # The configuration for the file system and kernels in a SageMaker image
-    # running as a KernelGateway app.
+    # The configuration for the file system and kernels in a SageMaker AI
+    # image running as a KernelGateway app.
     #
     # @!attribute [rw] kernel_specs
     #   The specification of the Jupyter kernels in the image.
@@ -26506,7 +26518,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] file_system_config
     #   The Amazon Elastic File System storage configuration for a SageMaker
-    #   image.
+    #   AI image.
     #   @return [Types::FileSystemConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/KernelGatewayImageConfig AWS API Documentation
@@ -27294,7 +27306,7 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] sage_maker_image_version_aliases
-    #   A list of SageMaker image version aliases.
+    #   A list of SageMaker AI image version aliases.
     #   @return [Array<String>]
     #
     # @!attribute [rw] next_token
@@ -28219,7 +28231,7 @@ module Aws::SageMaker
     #   @return [Array<Types::CompilationJobSummary>]
     #
     # @!attribute [rw] next_token
-    #   If the response is truncated, Amazon SageMaker returns this
+    #   If the response is truncated, Amazon SageMaker AI returns this
     #   `NextToken`. To retrieve the next set of model compilation jobs, use
     #   this token in the next request.
     #   @return [String]
@@ -30961,8 +30973,8 @@ module Aws::SageMaker
     #   @return [Array<Types::MonitoringJobDefinitionSummary>]
     #
     # @!attribute [rw] next_token
-    #   If the response is truncated, Amazon SageMaker returns this token.
-    #   To retrieve the next set of model quality monitoring job
+    #   If the response is truncated, Amazon SageMaker AI returns this
+    #   token. To retrieve the next set of model quality monitoring job
     #   definitions, use it in the next request.
     #   @return [String]
     #
@@ -31430,8 +31442,8 @@ module Aws::SageMaker
     end
 
     # @!attribute [rw] next_token
-    #   If the response is truncated, SageMaker returns this token. To get
-    #   the next set of lifecycle configurations, use it in the next
+    #   If the response is truncated, SageMaker AI returns this token. To
+    #   get the next set of lifecycle configurations, use it in the next
     #   request.
     #   @return [String]
     #
@@ -31545,8 +31557,8 @@ module Aws::SageMaker
 
     # @!attribute [rw] next_token
     #   If the response to the previous `ListNotebookInstances` request was
-    #   truncated, SageMaker returns this token. To retrieve the next set of
-    #   notebook instances, use the token in the next request.
+    #   truncated, SageMaker AI returns this token. To retrieve the next set
+    #   of notebook instances, use the token in the next request.
     #   @return [String]
     #
     # @!attribute [rw] notebook_instances
@@ -35563,8 +35575,8 @@ module Aws::SageMaker
     #   @return [Integer]
     #
     # @!attribute [rw] volume_kms_key_id
-    #   The Key Management Service (KMS) key that Amazon SageMaker uses to
-    #   encrypt data on the storage volume attached to the ML compute
+    #   The Key Management Service (KMS) key that Amazon SageMaker AI uses
+    #   to encrypt data on the storage volume attached to the ML compute
     #   instance(s) that run the model monitoring job.
     #   @return [String]
     #
@@ -35733,7 +35745,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] monitoring_inputs
     #   The array of inputs for the monitoring job. Currently we support
-    #   monitoring an Amazon SageMaker Endpoint.
+    #   monitoring an Amazon SageMaker AI Endpoint.
     #   @return [Array<Types::MonitoringInput>]
     #
     # @!attribute [rw] monitoring_output_config
@@ -35767,7 +35779,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker
-    #   can assume to perform tasks on your behalf.
+    #   AI can assume to perform tasks on your behalf.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/MonitoringJobDefinition AWS API Documentation
@@ -35888,8 +35900,8 @@ module Aws::SageMaker
     #   @return [Array<Types::MonitoringOutput>]
     #
     # @!attribute [rw] kms_key_id
-    #   The Key Management Service (KMS) key that Amazon SageMaker uses to
-    #   encrypt the model artifacts at rest using Amazon S3 server-side
+    #   The Key Management Service (KMS) key that Amazon SageMaker AI uses
+    #   to encrypt the model artifacts at rest using Amazon S3 server-side
     #   encryption.
     #   @return [String]
     #
@@ -35931,12 +35943,12 @@ module Aws::SageMaker
     #
     # @!attribute [rw] s3_uri
     #   A URI that identifies the Amazon S3 storage location where Amazon
-    #   SageMaker saves the results of a monitoring job.
+    #   SageMaker AI saves the results of a monitoring job.
     #   @return [String]
     #
     # @!attribute [rw] local_path
     #   The local path to the Amazon S3 storage location where Amazon
-    #   SageMaker saves the results of a monitoring job. LocalPath is an
+    #   SageMaker AI saves the results of a monitoring job. LocalPath is an
     #   absolute path for the output data.
     #   @return [String]
     #
@@ -36177,7 +36189,7 @@ module Aws::SageMaker
     # The [VpcConfig][1] configuration object that specifies the VPC that
     # you want the compilation jobs to connect to. For more information on
     # controlling access to your Amazon S3 buckets used for compilation job,
-    # see [Give Amazon SageMaker Compilation Jobs Access to Resources in
+    # see [Give Amazon SageMaker AI Compilation Jobs Access to Resources in
     # Your Amazon VPC][2].
     #
     #
@@ -36350,7 +36362,7 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Provides summary information for an SageMaker notebook instance.
+    # Provides summary information for an SageMaker AI notebook instance.
     #
     # @!attribute [rw] notebook_instance_name
     #   The name of the notebook instance that you want a summary for.
@@ -36401,7 +36413,8 @@ module Aws::SageMaker
     #   repository in [Amazon Web Services CodeCommit][1] or in any other
     #   Git repository. When you open a notebook instance, it opens in the
     #   directory that contains this repository. For more information, see
-    #   [Associating Git Repositories with SageMaker Notebook Instances][2].
+    #   [Associating Git Repositories with SageMaker AI Notebook
+    #   Instances][2].
     #
     #
     #
@@ -36416,7 +36429,7 @@ module Aws::SageMaker
     #   in [Amazon Web Services CodeCommit][1] or in any other Git
     #   repository. These repositories are cloned at the same level as the
     #   default repository of your notebook instance. For more information,
-    #   see [Associating Git Repositories with SageMaker Notebook
+    #   see [Associating Git Repositories with SageMaker AI Notebook
     #   Instances][2].
     #
     #
@@ -37065,7 +37078,7 @@ module Aws::SageMaker
     # recommended to use for particular TargetPlatform.
     #
     # @!attribute [rw] s3_output_location
-    #   Identifies the S3 bucket where you want Amazon SageMaker to store
+    #   Identifies the S3 bucket where you want Amazon SageMaker AI to store
     #   the model artifacts. For example,
     #   `s3://bucket-name/key-name-prefix`.
     #   @return [String]
@@ -37210,9 +37223,9 @@ module Aws::SageMaker
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Web Services Key Management Service key (Amazon Web
-    #   Services KMS) that Amazon SageMaker uses to encrypt your output
+    #   Services KMS) that Amazon SageMaker AI uses to encrypt your output
     #   models with Amazon S3 server-side encryption after compilation job.
-    #   If you don't provide a KMS key ID, Amazon SageMaker uses the
+    #   If you don't provide a KMS key ID, Amazon SageMaker AI uses the
     #   default KMS key for Amazon S3 for your role's account. For more
     #   information, see [KMS-Managed Encryption Keys][1] in the *Amazon
     #   Simple Storage Service Developer Guide.*
@@ -40108,12 +40121,12 @@ module Aws::SageMaker
     # A collection of settings that apply to an `RSessionGateway` app.
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] custom_images
-    #   A list of custom SageMaker images that are configured to run as a
+    #   A list of custom SageMaker AI images that are configured to run as a
     #   RSession app.
     #   @return [Array<Types::CustomImage>]
     #
@@ -40167,7 +40180,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -40190,7 +40203,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -41410,11 +41423,11 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Specifies the ARN's of a SageMaker image and SageMaker image version,
-    # and the instance type that the version runs on.
+    # Specifies the ARN's of a SageMaker AI image and SageMaker AI image
+    # version, and the instance type that the version runs on.
     #
     # @!attribute [rw] sage_maker_image_arn
-    #   The ARN of the SageMaker image that the image version belongs to.
+    #   The ARN of the SageMaker AI image that the image version belongs to.
     #   @return [String]
     #
     # @!attribute [rw] sage_maker_image_version_arn
@@ -41978,7 +41991,7 @@ module Aws::SageMaker
     #     requested time to run the execution.
     #
     #   * We recommend that if you would like a daily schedule, you do not
-    #     provide this parameter. Amazon SageMaker will pick a time for
+    #     provide this parameter. Amazon SageMaker AI will pick a time for
     #     running every day.
     #
     #    </note>
@@ -42810,8 +42823,8 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Specifies options for sharing Amazon SageMaker Studio notebooks. These
-    # settings are specified as part of `DefaultUserSettings` when the
+    # Specifies options for sharing Amazon SageMaker AI Studio notebooks.
+    # These settings are specified as part of `DefaultUserSettings` when the
     # `CreateDomain` API is called, and as part of `UserSettings` when the
     # `CreateUserProfile` API is called. When `SharingSettings` is not
     # specified, notebook sharing isn't allowed.
@@ -42974,7 +42987,7 @@ module Aws::SageMaker
     # The application settings for a Code Editor space.
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -43064,7 +43077,7 @@ module Aws::SageMaker
     # The settings for the JupyterLab application within a space.
     #
     # @!attribute [rw] default_resource_spec
-    #   Specifies the ARN's of a SageMaker image and SageMaker image
+    #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
     #   @return [Types::ResourceSpec]
     #
@@ -43108,6 +43121,13 @@ module Aws::SageMaker
     #
     # @!attribute [rw] app_type
     #   The type of app created within the space.
+    #
+    #   If using the [ UpdateSpace][1] API, you can't change the app type
+    #   of your space by specifying a different value for this field.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateSpace.html
     #   @return [String]
     #
     # @!attribute [rw] space_storage_settings
@@ -43116,8 +43136,8 @@ module Aws::SageMaker
     #
     # @!attribute [rw] custom_file_systems
     #   A file system, created by you, that you assign to a space for an
-    #   Amazon SageMaker Domain. Permitted users can access this file system
-    #   in Amazon SageMaker Studio.
+    #   Amazon SageMaker AI Domain. Permitted users can access this file
+    #   system in Amazon SageMaker AI Studio.
     #   @return [Array<Types::CustomFileSystem>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/SpaceSettings AWS API Documentation
@@ -43718,23 +43738,23 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Details of the Amazon SageMaker Studio Lifecycle Configuration.
+    # Details of the Amazon SageMaker AI Studio Lifecycle Configuration.
     #
     # @!attribute [rw] studio_lifecycle_config_arn
     #   The Amazon Resource Name (ARN) of the Lifecycle Configuration.
     #   @return [String]
     #
     # @!attribute [rw] studio_lifecycle_config_name
-    #   The name of the Amazon SageMaker Studio Lifecycle Configuration.
+    #   The name of the Amazon SageMaker AI Studio Lifecycle Configuration.
     #   @return [String]
     #
     # @!attribute [rw] creation_time
-    #   The creation time of the Amazon SageMaker Studio Lifecycle
+    #   The creation time of the Amazon SageMaker AI Studio Lifecycle
     #   Configuration.
     #   @return [Time]
     #
     # @!attribute [rw] last_modified_time
-    #   This value is equivalent to CreationTime because Amazon SageMaker
+    #   This value is equivalent to CreationTime because Amazon SageMaker AI
     #   Studio Lifecycle Configurations are immutable.
     #   @return [Time]
     #
@@ -44129,7 +44149,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] default_resource_spec
     #   The default instance type and the Amazon Resource Name (ARN) of the
-    #   SageMaker image created on the instance.
+    #   SageMaker AI image created on the instance.
     #   @return [Types::ResourceSpec]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TensorBoardAppSettings AWS API Documentation
@@ -47510,7 +47530,7 @@ module Aws::SageMaker
     #   Specifies the VPC used for non-EFS traffic.
     #
     #   * `PublicInternetOnly` - Non-EFS traffic is through a VPC managed by
-    #     Amazon SageMaker, which allows direct internet access.
+    #     Amazon SageMaker AI, which allows direct internet access.
     #
     #   * `VpcOnly` - All Studio traffic is through the specified VPC and
     #     subnets.
@@ -47832,7 +47852,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The new ARN for the IAM role that enables Amazon SageMaker to
+    #   The new ARN for the IAM role that enables Amazon SageMaker AI to
     #   perform tasks on your behalf.
     #   @return [String]
     #
@@ -47897,16 +47917,16 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] job_type
-    #   Indicates SageMaker job type compatibility.
+    #   Indicates SageMaker AI job type compatibility.
     #
-    #   * `TRAINING`: The image version is compatible with SageMaker
+    #   * `TRAINING`: The image version is compatible with SageMaker AI
     #     training jobs.
     #
-    #   * `INFERENCE`: The image version is compatible with SageMaker
+    #   * `INFERENCE`: The image version is compatible with SageMaker AI
     #     inference jobs.
     #
     #   * `NOTEBOOK_KERNEL`: The image version is compatible with SageMaker
-    #     notebook kernels.
+    #     AI notebook kernels.
     #   @return [String]
     #
     # @!attribute [rw] ml_framework
@@ -48385,11 +48405,11 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the IAM role that SageMaker can
+    #   The Amazon Resource Name (ARN) of the IAM role that SageMaker AI can
     #   assume to access the notebook instance. For more information, see
-    #   [SageMaker Roles][1].
+    #   [SageMaker AI Roles][1].
     #
-    #   <note markdown="1"> To be able to pass this role to SageMaker, the caller of this API
+    #   <note markdown="1"> To be able to pass this role to SageMaker AI, the caller of this API
     #   must have the `iam:PassRole` permission.
     #
     #    </note>
@@ -48420,7 +48440,7 @@ module Aws::SageMaker
     # @!attribute [rw] volume_size_in_gb
     #   The size, in GB, of the ML storage volume to attach to the notebook
     #   instance. The default value is 5 GB. ML storage volumes are
-    #   encrypted, so SageMaker can't determine the amount of available
+    #   encrypted, so SageMaker AI can't determine the amount of available
     #   free space on the volume. Because of this, you can increase the
     #   volume size when you update a notebook instance, but you can't
     #   decrease the volume size. If you want to decrease the size of the ML
@@ -48435,7 +48455,8 @@ module Aws::SageMaker
     #   repository in [Amazon Web Services CodeCommit][1] or in any other
     #   Git repository. When you open a notebook instance, it opens in the
     #   directory that contains this repository. For more information, see
-    #   [Associating Git Repositories with SageMaker Notebook Instances][2].
+    #   [Associating Git Repositories with SageMaker AI Notebook
+    #   Instances][2].
     #
     #
     #
@@ -48450,7 +48471,7 @@ module Aws::SageMaker
     #   in [Amazon Web Services CodeCommit][1] or in any other Git
     #   repository. These repositories are cloned at the same level as the
     #   default repository of your notebook instance. For more information,
-    #   see [Associating Git Repositories with SageMaker Notebook
+    #   see [Associating Git Repositories with SageMaker AI Notebook
     #   Instances][2].
     #
     #
@@ -49251,8 +49272,8 @@ module Aws::SageMaker
     #   set to `VpcOnly`, unless specified as part of the
     #   `DefaultUserSettings` for the domain.
     #
-    #   Amazon SageMaker adds a security group to allow NFS traffic from
-    #   Amazon SageMaker Studio. Therefore, the number of security groups
+    #   Amazon SageMaker AI adds a security group to allow NFS traffic from
+    #   Amazon SageMaker AI Studio. Therefore, the number of security groups
     #   that you can specify is one less than the maximum number shown.
     #
     #   SageMaker applies these settings only to private spaces that the
@@ -49261,7 +49282,7 @@ module Aws::SageMaker
     #   @return [Array<String>]
     #
     # @!attribute [rw] sharing_settings
-    #   Specifies options for sharing Amazon SageMaker Studio notebooks.
+    #   Specifies options for sharing Amazon SageMaker AI Studio notebooks.
     #   @return [Types::SharingSettings]
     #
     # @!attribute [rw] jupyter_server_app_settings
@@ -49344,7 +49365,7 @@ module Aws::SageMaker
     #
     # @!attribute [rw] custom_file_system_configs
     #   The settings for assigning a custom file system to a user profile.
-    #   Permitted users can access this file system in Amazon SageMaker
+    #   Permitted users can access this file system in Amazon SageMaker AI
     #   Studio.
     #
     #   SageMaker applies these settings only to private spaces that the

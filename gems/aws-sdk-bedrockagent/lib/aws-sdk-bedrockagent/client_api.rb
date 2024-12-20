@@ -355,6 +355,7 @@ module Aws::BedrockAgent
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     MalformedConditionExpressionFlowValidationDetails = Shapes::StructureShape.new(name: 'MalformedConditionExpressionFlowValidationDetails')
     MalformedNodeInputExpressionFlowValidationDetails = Shapes::StructureShape.new(name: 'MalformedNodeInputExpressionFlowValidationDetails')
+    MaxRecentSessions = Shapes::IntegerShape.new(name: 'MaxRecentSessions')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MaximumLength = Shapes::IntegerShape.new(name: 'MaximumLength')
     MemoryConfiguration = Shapes::StructureShape.new(name: 'MemoryConfiguration')
@@ -521,6 +522,7 @@ module Aws::BedrockAgent
     SemanticChunkingConfigurationMaxTokensInteger = Shapes::IntegerShape.new(name: 'SemanticChunkingConfigurationMaxTokensInteger')
     ServerSideEncryptionConfiguration = Shapes::StructureShape.new(name: 'ServerSideEncryptionConfiguration')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SessionSummaryConfiguration = Shapes::StructureShape.new(name: 'SessionSummaryConfiguration')
     SessionTTL = Shapes::IntegerShape.new(name: 'SessionTTL')
     SharePointAuthType = Shapes::StringShape.new(name: 'SharePointAuthType')
     SharePointCrawlerConfiguration = Shapes::StructureShape.new(name: 'SharePointCrawlerConfiguration')
@@ -611,6 +613,7 @@ module Aws::BedrockAgent
     UpdatePromptResponse = Shapes::StructureShape.new(name: 'UpdatePromptResponse')
     Url = Shapes::StringShape.new(name: 'Url')
     UrlConfiguration = Shapes::StructureShape.new(name: 'UrlConfiguration')
+    UserAgent = Shapes::StringShape.new(name: 'UserAgent')
     ValidateFlowDefinitionRequest = Shapes::StructureShape.new(name: 'ValidateFlowDefinitionRequest')
     ValidateFlowDefinitionResponse = Shapes::StructureShape.new(name: 'ValidateFlowDefinitionResponse')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
@@ -621,6 +624,7 @@ module Aws::BedrockAgent
     Version = Shapes::StringShape.new(name: 'Version')
     WebCrawlerConfiguration = Shapes::StructureShape.new(name: 'WebCrawlerConfiguration')
     WebCrawlerLimits = Shapes::StructureShape.new(name: 'WebCrawlerLimits')
+    WebCrawlerLimitsMaxPagesInteger = Shapes::IntegerShape.new(name: 'WebCrawlerLimitsMaxPagesInteger')
     WebCrawlerLimitsRateLimitInteger = Shapes::IntegerShape.new(name: 'WebCrawlerLimitsRateLimitInteger')
     WebDataSourceConfiguration = Shapes::StructureShape.new(name: 'WebDataSourceConfiguration')
     WebScopeType = Shapes::StringShape.new(name: 'WebScopeType')
@@ -1919,6 +1923,7 @@ module Aws::BedrockAgent
     MalformedNodeInputExpressionFlowValidationDetails.struct_class = Types::MalformedNodeInputExpressionFlowValidationDetails
 
     MemoryConfiguration.add_member(:enabled_memory_types, Shapes::ShapeRef.new(shape: EnabledMemoryTypes, required: true, location_name: "enabledMemoryTypes"))
+    MemoryConfiguration.add_member(:session_summary_configuration, Shapes::ShapeRef.new(shape: SessionSummaryConfiguration, location_name: "sessionSummaryConfiguration"))
     MemoryConfiguration.add_member(:storage_days, Shapes::ShapeRef.new(shape: StorageDays, location_name: "storageDays"))
     MemoryConfiguration.struct_class = Types::MemoryConfiguration
 
@@ -2309,6 +2314,9 @@ module Aws::BedrockAgent
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
+    SessionSummaryConfiguration.add_member(:max_recent_sessions, Shapes::ShapeRef.new(shape: MaxRecentSessions, location_name: "maxRecentSessions"))
+    SessionSummaryConfiguration.struct_class = Types::SessionSummaryConfiguration
+
     SharePointCrawlerConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: CrawlFilterConfiguration, location_name: "filterConfiguration"))
     SharePointCrawlerConfiguration.struct_class = Types::SharePointCrawlerConfiguration
 
@@ -2669,8 +2677,10 @@ module Aws::BedrockAgent
     WebCrawlerConfiguration.add_member(:exclusion_filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "exclusionFilters"))
     WebCrawlerConfiguration.add_member(:inclusion_filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "inclusionFilters"))
     WebCrawlerConfiguration.add_member(:scope, Shapes::ShapeRef.new(shape: WebScopeType, location_name: "scope"))
+    WebCrawlerConfiguration.add_member(:user_agent, Shapes::ShapeRef.new(shape: UserAgent, location_name: "userAgent"))
     WebCrawlerConfiguration.struct_class = Types::WebCrawlerConfiguration
 
+    WebCrawlerLimits.add_member(:max_pages, Shapes::ShapeRef.new(shape: WebCrawlerLimitsMaxPagesInteger, location_name: "maxPages"))
     WebCrawlerLimits.add_member(:rate_limit, Shapes::ShapeRef.new(shape: WebCrawlerLimitsRateLimitInteger, location_name: "rateLimit"))
     WebCrawlerLimits.struct_class = Types::WebCrawlerLimits
 

@@ -706,7 +706,7 @@ module Aws::Outposts
     #     rack_physical_properties: {
     #       power_draw_kva: "POWER_5_KVA", # accepts POWER_5_KVA, POWER_10_KVA, POWER_15_KVA, POWER_30_KVA
     #       power_phase: "SINGLE_PHASE", # accepts SINGLE_PHASE, THREE_PHASE
-    #       power_connector: "L6_30P", # accepts L6_30P, IEC309, AH530P7W, AH532P6W
+    #       power_connector: "L6_30P", # accepts L6_30P, IEC309, AH530P7W, AH532P6W, CS8365C
     #       power_feed_drop: "ABOVE_RACK", # accepts ABOVE_RACK, BELOW_RACK
     #       uplink_gbps: "UPLINK_1G", # accepts UPLINK_1G, UPLINK_10G, UPLINK_40G, UPLINK_100G
     #       uplink_count: "UPLINK_COUNT_1", # accepts UPLINK_COUNT_1, UPLINK_COUNT_2, UPLINK_COUNT_3, UPLINK_COUNT_4, UPLINK_COUNT_5, UPLINK_COUNT_6, UPLINK_COUNT_7, UPLINK_COUNT_8, UPLINK_COUNT_12, UPLINK_COUNT_16
@@ -731,7 +731,7 @@ module Aws::Outposts
     #   resp.site.operating_address_city #=> String
     #   resp.site.rack_physical_properties.power_draw_kva #=> String, one of "POWER_5_KVA", "POWER_10_KVA", "POWER_15_KVA", "POWER_30_KVA"
     #   resp.site.rack_physical_properties.power_phase #=> String, one of "SINGLE_PHASE", "THREE_PHASE"
-    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W"
+    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W", "CS8365C"
     #   resp.site.rack_physical_properties.power_feed_drop #=> String, one of "ABOVE_RACK", "BELOW_RACK"
     #   resp.site.rack_physical_properties.uplink_gbps #=> String, one of "UPLINK_1G", "UPLINK_10G", "UPLINK_40G", "UPLINK_100G"
     #   resp.site.rack_physical_properties.uplink_count #=> String, one of "UPLINK_COUNT_1", "UPLINK_COUNT_2", "UPLINK_COUNT_3", "UPLINK_COUNT_4", "UPLINK_COUNT_5", "UPLINK_COUNT_6", "UPLINK_COUNT_7", "UPLINK_COUNT_8", "UPLINK_COUNT_12", "UPLINK_COUNT_16"
@@ -1158,7 +1158,7 @@ module Aws::Outposts
     #   resp.site.operating_address_city #=> String
     #   resp.site.rack_physical_properties.power_draw_kva #=> String, one of "POWER_5_KVA", "POWER_10_KVA", "POWER_15_KVA", "POWER_30_KVA"
     #   resp.site.rack_physical_properties.power_phase #=> String, one of "SINGLE_PHASE", "THREE_PHASE"
-    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W"
+    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W", "CS8365C"
     #   resp.site.rack_physical_properties.power_feed_drop #=> String, one of "ABOVE_RACK", "BELOW_RACK"
     #   resp.site.rack_physical_properties.uplink_gbps #=> String, one of "UPLINK_1G", "UPLINK_10G", "UPLINK_40G", "UPLINK_100G"
     #   resp.site.rack_physical_properties.uplink_count #=> String, one of "UPLINK_COUNT_1", "UPLINK_COUNT_2", "UPLINK_COUNT_3", "UPLINK_COUNT_4", "UPLINK_COUNT_5", "UPLINK_COUNT_6", "UPLINK_COUNT_7", "UPLINK_COUNT_8", "UPLINK_COUNT_12", "UPLINK_COUNT_16"
@@ -1697,7 +1697,7 @@ module Aws::Outposts
     #   resp.sites[0].operating_address_city #=> String
     #   resp.sites[0].rack_physical_properties.power_draw_kva #=> String, one of "POWER_5_KVA", "POWER_10_KVA", "POWER_15_KVA", "POWER_30_KVA"
     #   resp.sites[0].rack_physical_properties.power_phase #=> String, one of "SINGLE_PHASE", "THREE_PHASE"
-    #   resp.sites[0].rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W"
+    #   resp.sites[0].rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W", "CS8365C"
     #   resp.sites[0].rack_physical_properties.power_feed_drop #=> String, one of "ABOVE_RACK", "BELOW_RACK"
     #   resp.sites[0].rack_physical_properties.uplink_gbps #=> String, one of "UPLINK_1G", "UPLINK_10G", "UPLINK_40G", "UPLINK_100G"
     #   resp.sites[0].rack_physical_properties.uplink_count #=> String, one of "UPLINK_COUNT_1", "UPLINK_COUNT_2", "UPLINK_COUNT_3", "UPLINK_COUNT_4", "UPLINK_COUNT_5", "UPLINK_COUNT_6", "UPLINK_COUNT_7", "UPLINK_COUNT_8", "UPLINK_COUNT_12", "UPLINK_COUNT_16"
@@ -1745,7 +1745,7 @@ module Aws::Outposts
     end
 
     # Starts the specified capacity task. You can have one active capacity
-    # task per order or Outpost.
+    # task for each order and each Outpost.
     #
     # @option params [required, String] :outpost_identifier
     #   The ID or ARN of the Outposts associated with the specified capacity
@@ -2050,7 +2050,7 @@ module Aws::Outposts
     #   resp.site.operating_address_city #=> String
     #   resp.site.rack_physical_properties.power_draw_kva #=> String, one of "POWER_5_KVA", "POWER_10_KVA", "POWER_15_KVA", "POWER_30_KVA"
     #   resp.site.rack_physical_properties.power_phase #=> String, one of "SINGLE_PHASE", "THREE_PHASE"
-    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W"
+    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W", "CS8365C"
     #   resp.site.rack_physical_properties.power_feed_drop #=> String, one of "ABOVE_RACK", "BELOW_RACK"
     #   resp.site.rack_physical_properties.uplink_gbps #=> String, one of "UPLINK_1G", "UPLINK_10G", "UPLINK_40G", "UPLINK_100G"
     #   resp.site.rack_physical_properties.uplink_count #=> String, one of "UPLINK_COUNT_1", "UPLINK_COUNT_2", "UPLINK_COUNT_3", "UPLINK_COUNT_4", "UPLINK_COUNT_5", "UPLINK_COUNT_6", "UPLINK_COUNT_7", "UPLINK_COUNT_8", "UPLINK_COUNT_12", "UPLINK_COUNT_16"
@@ -2176,6 +2176,8 @@ module Aws::Outposts
     #
     #     * **AH532P6W (red)** – 3P+N+E, 6hr; 32A; three phase
     #
+    #     * **CS8365C** – (common in US); 3P+E, 50A; three phase
+    #
     # @option params [String] :power_feed_drop
     #   Indicates whether the power feed comes above or below the rack.
     #
@@ -2252,7 +2254,7 @@ module Aws::Outposts
     #     site_id: "SiteId", # required
     #     power_draw_kva: "POWER_5_KVA", # accepts POWER_5_KVA, POWER_10_KVA, POWER_15_KVA, POWER_30_KVA
     #     power_phase: "SINGLE_PHASE", # accepts SINGLE_PHASE, THREE_PHASE
-    #     power_connector: "L6_30P", # accepts L6_30P, IEC309, AH530P7W, AH532P6W
+    #     power_connector: "L6_30P", # accepts L6_30P, IEC309, AH530P7W, AH532P6W, CS8365C
     #     power_feed_drop: "ABOVE_RACK", # accepts ABOVE_RACK, BELOW_RACK
     #     uplink_gbps: "UPLINK_1G", # accepts UPLINK_1G, UPLINK_10G, UPLINK_40G, UPLINK_100G
     #     uplink_count: "UPLINK_COUNT_1", # accepts UPLINK_COUNT_1, UPLINK_COUNT_2, UPLINK_COUNT_3, UPLINK_COUNT_4, UPLINK_COUNT_5, UPLINK_COUNT_6, UPLINK_COUNT_7, UPLINK_COUNT_8, UPLINK_COUNT_12, UPLINK_COUNT_16
@@ -2276,7 +2278,7 @@ module Aws::Outposts
     #   resp.site.operating_address_city #=> String
     #   resp.site.rack_physical_properties.power_draw_kva #=> String, one of "POWER_5_KVA", "POWER_10_KVA", "POWER_15_KVA", "POWER_30_KVA"
     #   resp.site.rack_physical_properties.power_phase #=> String, one of "SINGLE_PHASE", "THREE_PHASE"
-    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W"
+    #   resp.site.rack_physical_properties.power_connector #=> String, one of "L6_30P", "IEC309", "AH530P7W", "AH532P6W", "CS8365C"
     #   resp.site.rack_physical_properties.power_feed_drop #=> String, one of "ABOVE_RACK", "BELOW_RACK"
     #   resp.site.rack_physical_properties.uplink_gbps #=> String, one of "UPLINK_1G", "UPLINK_10G", "UPLINK_40G", "UPLINK_100G"
     #   resp.site.rack_physical_properties.uplink_count #=> String, one of "UPLINK_COUNT_1", "UPLINK_COUNT_2", "UPLINK_COUNT_3", "UPLINK_COUNT_4", "UPLINK_COUNT_5", "UPLINK_COUNT_6", "UPLINK_COUNT_7", "UPLINK_COUNT_8", "UPLINK_COUNT_12", "UPLINK_COUNT_16"
@@ -2311,7 +2313,7 @@ module Aws::Outposts
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-outposts'
-      context[:gem_version] = '1.74.0'
+      context[:gem_version] = '1.75.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -3163,6 +3163,10 @@ module Aws::EKS
     #   resp.insight.category_specific_summary.deprecation_details[0].client_stats[0].user_agent #=> String
     #   resp.insight.category_specific_summary.deprecation_details[0].client_stats[0].number_of_requests_last_30_days #=> Integer
     #   resp.insight.category_specific_summary.deprecation_details[0].client_stats[0].last_request_time #=> Time
+    #   resp.insight.category_specific_summary.addon_compatibility_details #=> Array
+    #   resp.insight.category_specific_summary.addon_compatibility_details[0].name #=> String
+    #   resp.insight.category_specific_summary.addon_compatibility_details[0].compatible_versions #=> Array
+    #   resp.insight.category_specific_summary.addon_compatibility_details[0].compatible_versions[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/DescribeInsight AWS API Documentation
     #
@@ -5348,7 +5352,7 @@ module Aws::EKS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eks'
-      context[:gem_version] = '1.123.0'
+      context[:gem_version] = '1.124.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

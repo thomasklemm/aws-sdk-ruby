@@ -279,6 +279,51 @@ module Aws::DocDB
       include Aws::Structure
     end
 
+    # Contains the secret managed by Amazon DocumentDB in Amazon Web
+    # Services Secrets Manager for the master user password.
+    #
+    # @!attribute [rw] secret_arn
+    #   The Amazon Resource Name (ARN) of the secret.
+    #   @return [String]
+    #
+    # @!attribute [rw] secret_status
+    #   The status of the secret.
+    #
+    #   The possible status values include the following:
+    #
+    #   * creating - The secret is being created.
+    #
+    #   * active - The secret is available for normal use and rotation.
+    #
+    #   * rotating - The secret is being rotated.
+    #
+    #   * impaired - The secret can be used to access database credentials,
+    #     but it can't be rotated. A secret might have this status if, for
+    #     example, permissions are changed so that Amazon DocumentDB can no
+    #     longer access either the secret or the KMS key for the secret.
+    #
+    #     When a secret has this status, you can correct the condition that
+    #     caused the status. Alternatively, modify the instance to turn off
+    #     automatic management of database credentials, and then modify the
+    #     instance again to turn on automatic management of database
+    #     credentials.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The Amazon Web Services KMS key identifier that is used to encrypt
+    #   the secret.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/ClusterMasterUserSecret AWS API Documentation
+    #
+    class ClusterMasterUserSecret < Struct.new(
+      :secret_arn,
+      :secret_status,
+      :kms_key_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents the input to CopyDBClusterParameterGroup.
     #
     # @!attribute [rw] source_db_cluster_parameter_group_identifier
@@ -686,6 +731,37 @@ module Aws::DocDB
     #    </note>
     #   @return [String]
     #
+    # @!attribute [rw] manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager.
+    #
+    #   Constraint: You can't manage the master user password with Amazon
+    #   Web Services Secrets Manager if `MasterUserPassword` is specified.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that
+    #   is automatically generated and managed in Amazon Web Services
+    #   Secrets Manager. This setting is valid only if the master user
+    #   password is managed by Amazon DocumentDB in Amazon Web Services
+    #   Secrets Manager for the DB cluster.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   If you don't specify `MasterUserSecretKmsKeyId`, then the
+    #   `aws/secretsmanager` KMS key is used to encrypt the secret. If the
+    #   secret is in a different Amazon Web Services account, then you
+    #   can't use the `aws/secretsmanager` KMS key to encrypt the secret,
+    #   and you must use a customer managed KMS key.
+    #
+    #   There is a default KMS key for your Amazon Web Services account.
+    #   Your Amazon Web Services account has a different default KMS key for
+    #   each Amazon Web Services Region.
+    #   @return [String]
+    #
     # @!attribute [rw] source_region
     #   The source region of the snapshot. This is only needed when the
     #   shapshot is encrypted and in a different region.
@@ -715,6 +791,8 @@ module Aws::DocDB
       :deletion_protection,
       :global_cluster_identifier,
       :storage_type,
+      :manage_master_user_password,
+      :master_user_secret_kms_key_id,
       :source_region)
       SENSITIVE = []
       include Aws::Structure
@@ -1373,6 +1451,11 @@ module Aws::DocDB
     #   Default value is `standard `
     #   @return [String]
     #
+    # @!attribute [rw] master_user_secret
+    #   The secret managed by Amazon DocumentDB in Amazon Web Services
+    #   Secrets Manager for the master user password.
+    #   @return [Types::ClusterMasterUserSecret]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DBCluster AWS API Documentation
     #
     class DBCluster < Struct.new(
@@ -1408,7 +1491,8 @@ module Aws::DocDB
       :cluster_create_time,
       :enabled_cloudwatch_logs_exports,
       :deletion_protection,
-      :storage_type)
+      :storage_type,
+      :master_user_secret)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4228,6 +4312,64 @@ module Aws::DocDB
     #   Default value is `standard `
     #   @return [String]
     #
+    # @!attribute [rw] manage_master_user_password
+    #   Specifies whether to manage the master user password with Amazon Web
+    #   Services Secrets Manager. If the cluster doesn't manage the master
+    #   user password with Amazon Web Services Secrets Manager, you can turn
+    #   on this management. In this case, you can't specify
+    #   `MasterUserPassword`. If the cluster already manages the master user
+    #   password with Amazon Web Services Secrets Manager, and you specify
+    #   that the master user password is not managed with Amazon Web
+    #   Services Secrets Manager, then you must specify
+    #   `MasterUserPassword`. In this case, Amazon DocumentDB deletes the
+    #   secret and uses the new password for the master user specified by
+    #   `MasterUserPassword`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] master_user_secret_kms_key_id
+    #   The Amazon Web Services KMS key identifier to encrypt a secret that
+    #   is automatically generated and managed in Amazon Web Services
+    #   Secrets Manager.
+    #
+    #   This setting is valid only if both of the following conditions are
+    #   met:
+    #
+    #   * The cluster doesn't manage the master user password in Amazon Web
+    #     Services Secrets Manager. If the cluster already manages the
+    #     master user password in Amazon Web Services Secrets Manager, you
+    #     can't change the KMS key that is used to encrypt the secret.
+    #
+    #   * You are enabling `ManageMasterUserPassword` to manage the master
+    #     user password in Amazon Web Services Secrets Manager. If you are
+    #     turning on `ManageMasterUserPassword` and don't specify
+    #     `MasterUserSecretKmsKeyId`, then the `aws/secretsmanager` KMS key
+    #     is used to encrypt the secret. If the secret is in a different
+    #     Amazon Web Services account, then you can't use the
+    #     `aws/secretsmanager` KMS key to encrypt the secret, and you must
+    #     use a customer managed KMS key.
+    #
+    #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
+    #   alias ARN, or alias name for the KMS key. To use a KMS key in a
+    #   different Amazon Web Services account, specify the key ARN or alias
+    #   ARN.
+    #
+    #   There is a default KMS key for your Amazon Web Services account.
+    #   Your Amazon Web Services account has a different default KMS key for
+    #   each Amazon Web Services Region.
+    #   @return [String]
+    #
+    # @!attribute [rw] rotate_master_user_password
+    #   Specifies whether to rotate the secret managed by Amazon Web
+    #   Services Secrets Manager for the master user password.
+    #
+    #   This setting is valid only if the master user password is managed by
+    #   Amazon DocumentDB in Amazon Web Services Secrets Manager for the
+    #   cluster. The secret value contains the updated password.
+    #
+    #   Constraint: You must apply the change immediately when rotating the
+    #   master user password.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/ModifyDBClusterMessage AWS API Documentation
     #
     class ModifyDBClusterMessage < Struct.new(
@@ -4245,7 +4387,10 @@ module Aws::DocDB
       :engine_version,
       :allow_major_version_upgrade,
       :deletion_protection,
-      :storage_type)
+      :storage_type,
+      :manage_master_user_password,
+      :master_user_secret_kms_key_id,
+      :rotate_master_user_password)
       SENSITIVE = []
       include Aws::Structure
     end

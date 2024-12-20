@@ -151,6 +151,11 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class BedrockModelConfigurations
+      attr_accessor performance_config: Types::PerformanceConfiguration
+      SENSITIVE: []
+    end
+
     class BedrockRerankingConfiguration
       attr_accessor model_configuration: Types::BedrockRerankingModelConfiguration
       attr_accessor number_of_results: ::Integer
@@ -255,6 +260,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor agent_alias_id: ::String
       attr_accessor agent_id: ::String
       attr_accessor memory_id: ::String
+      attr_accessor session_id: ::String
       SENSITIVE: []
     end
 
@@ -279,6 +285,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
       attr_accessor guardrail_configuration: Types::GuardrailConfiguration
       attr_accessor inference_config: Types::InferenceConfig
+      attr_accessor performance_config: Types::PerformanceConfiguration
       attr_accessor prompt_template: Types::PromptTemplate
       SENSITIVE: []
     end
@@ -523,6 +530,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
       attr_accessor guardrail_configuration: Types::GuardrailConfiguration
       attr_accessor inference_config: Types::InferenceConfig
+      attr_accessor performance_config: Types::PerformanceConfiguration
       attr_accessor prompt_template: Types::PromptTemplate
       SENSITIVE: []
     end
@@ -688,6 +696,11 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: [:trace]
     end
 
+    class InlineBedrockModelConfigurations
+      attr_accessor performance_config: Types::PerformanceConfiguration
+      SENSITIVE: []
+    end
+
     class InlineSessionState
       attr_accessor files: ::Array[Types::InputFile]
       attr_accessor invocation_id: ::String
@@ -762,6 +775,7 @@ module Aws::BedrockAgentRuntime
     class InvokeAgentRequest
       attr_accessor agent_alias_id: ::String
       attr_accessor agent_id: ::String
+      attr_accessor bedrock_model_configurations: Types::BedrockModelConfigurations
       attr_accessor enable_trace: bool
       attr_accessor end_session: bool
       attr_accessor input_text: ::String
@@ -786,6 +800,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor flow_alias_identifier: ::String
       attr_accessor flow_identifier: ::String
       attr_accessor inputs: ::Array[Types::FlowInput]
+      attr_accessor model_performance_configuration: Types::ModelPerformanceConfiguration
       SENSITIVE: []
     end
 
@@ -796,6 +811,7 @@ module Aws::BedrockAgentRuntime
 
     class InvokeInlineAgentRequest
       attr_accessor action_groups: ::Array[Types::AgentActionGroup]
+      attr_accessor bedrock_model_configurations: Types::InlineBedrockModelConfigurations
       attr_accessor customer_encryption_key_arn: ::String
       attr_accessor enable_trace: bool
       attr_accessor end_session: bool
@@ -934,6 +950,17 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: [:text]
     end
 
+    class ModelNotReadyException
+      attr_accessor message: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
+    class ModelPerformanceConfiguration
+      attr_accessor performance_config: Types::PerformanceConfiguration
+      SENSITIVE: []
+    end
+
     class Observation
       attr_accessor action_group_invocation_output: Types::ActionGroupInvocationOutput
       attr_accessor agent_collaborator_invocation_output: Types::AgentCollaboratorInvocationOutput
@@ -977,6 +1004,7 @@ module Aws::BedrockAgentRuntime
     class OrchestrationConfiguration
       attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
       attr_accessor inference_config: Types::InferenceConfig
+      attr_accessor performance_config: Types::PerformanceConfiguration
       attr_accessor prompt_template: Types::PromptTemplate
       attr_accessor query_transformation_configuration: Types::QueryTransformationConfiguration
       SENSITIVE: []
@@ -1038,6 +1066,11 @@ module Aws::BedrockAgentRuntime
       attr_accessor bytes: ::String
       attr_accessor event_type: untyped
       SENSITIVE: [:bytes]
+    end
+
+    class PerformanceConfiguration
+      attr_accessor latency: ("standard" | "optimized")
+      SENSITIVE: []
     end
 
     class PostProcessingModelInvocationOutput
@@ -1633,7 +1666,7 @@ module Aws::BedrockAgentRuntime
     end
 
     class ResponseStream < Enumerator[untyped, untyped]
-      def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
+      def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :model_not_ready_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
     end
 
     class RetrieveAndGenerateStreamResponseOutput < Enumerator[untyped, untyped]

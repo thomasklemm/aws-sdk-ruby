@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1.0 (2024-12-20)
+------------------
+
+* Feature - Added new API's for defining and fetching Billing Views.
+
 1.0.0 (2024-11-13)
 ------------------
 

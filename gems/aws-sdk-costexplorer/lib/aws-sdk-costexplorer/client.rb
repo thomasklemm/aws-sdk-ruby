@@ -1422,6 +1422,14 @@ module Aws::CostExplorer
     #   When you group by the `TAG` type and include a valid tag key, you get
     #   all tag values, including empty strings.
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [String] :next_page_token
     #   The token to retrieve the next set of results. Amazon Web Services
     #   provides the token when the response from a previous call has more
@@ -1479,6 +1487,7 @@ module Aws::CostExplorer
     #         key: "GroupDefinitionKey",
     #       },
     #     ],
+    #     billing_view_arn: "BillingViewArn",
     #     next_page_token: "NextPageToken",
     #   })
     #
@@ -1605,6 +1614,14 @@ module Aws::CostExplorer
     #   You can group Amazon Web Services costs using up to two different
     #   groups: `DIMENSION`, `TAG`, `COST_CATEGORY`.
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [String] :next_page_token
     #   The token to retrieve the next set of results. Amazon Web Services
     #   provides the token when the response from a previous call has more
@@ -1662,6 +1679,7 @@ module Aws::CostExplorer
     #         key: "GroupDefinitionKey",
     #       },
     #     ],
+    #     billing_view_arn: "BillingViewArn",
     #     next_page_token: "NextPageToken",
     #   })
     #
@@ -1834,6 +1852,14 @@ module Aws::CostExplorer
     #   When you use the `SortBy` value, the `NextPageToken` and
     #   `SearchString` key values aren't supported.
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [Integer] :max_results
     #   This field is only used when the `SortBy` value is provided in the
     #   request.
@@ -1903,6 +1929,7 @@ module Aws::CostExplorer
     #         sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
     #       },
     #     ],
+    #     billing_view_arn: "BillingViewArn",
     #     max_results: 1,
     #     next_page_token: "NextPageToken",
     #   })
@@ -2013,6 +2040,14 @@ module Aws::CostExplorer
     #
     #   * `SAVINGS_PLAN_ARN`
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [Integer] :prediction_interval_level
     #   Cost Explorer always returns the mean forecast as a single point. You
     #   can request a prediction interval around the mean by specifying a
@@ -2065,6 +2100,7 @@ module Aws::CostExplorer
     #         match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE, GREATER_THAN_OR_EQUAL
     #       },
     #     },
+    #     billing_view_arn: "BillingViewArn",
     #     prediction_interval_level: 1,
     #   })
     #
@@ -2377,6 +2413,14 @@ module Aws::CostExplorer
     #   `COST_AND_USAGE`. Further, when using `SortBy`, `NextPageToken` and
     #   `SearchString` aren't supported.
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [Integer] :max_results
     #   This field is only used when SortBy is provided in the request. The
     #   maximum number of objects that are returned for this request. If
@@ -2443,6 +2487,7 @@ module Aws::CostExplorer
     #         sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
     #       },
     #     ],
+    #     billing_view_arn: "BillingViewArn",
     #     max_results: 1,
     #     next_page_token: "NextPageToken",
     #   })
@@ -4380,6 +4425,14 @@ module Aws::CostExplorer
     #   When you use `SortBy`, `NextPageToken` and `SearchString` aren't
     #   supported.
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [Integer] :max_results
     #   This field is only used when SortBy is provided in the request. The
     #   maximum number of objects that are returned for this request. If
@@ -4445,6 +4498,7 @@ module Aws::CostExplorer
     #         sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
     #       },
     #     ],
+    #     billing_view_arn: "BillingViewArn",
     #     max_results: 1,
     #     next_page_token: "NextPageToken",
     #   })
@@ -4545,6 +4599,14 @@ module Aws::CostExplorer
     #
     #   * `SAVINGS_PLAN_ARN`
     #
+    # @option params [String] :billing_view_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies a specific
+    #   billing view. The ARN is used to specify which particular billing view
+    #   you want to interact with or retrieve information from when making API
+    #   calls related to Amazon Web Services Billing and Cost Management
+    #   features. The BillingViewArn can be retrieved by calling the
+    #   ListBillingViews API.
+    #
     # @option params [Integer] :prediction_interval_level
     #   Amazon Web Services Cost Explorer always returns the mean forecast as
     #   a single point. You can request a prediction interval around the mean
@@ -4597,6 +4659,7 @@ module Aws::CostExplorer
     #         match_options: ["EQUALS"], # accepts EQUALS, ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE, GREATER_THAN_OR_EQUAL
     #       },
     #     },
+    #     billing_view_arn: "BillingViewArn",
     #     prediction_interval_level: 1,
     #   })
     #
@@ -5549,7 +5612,7 @@ module Aws::CostExplorer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-costexplorer'
-      context[:gem_version] = '1.117.0'
+      context[:gem_version] = '1.118.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

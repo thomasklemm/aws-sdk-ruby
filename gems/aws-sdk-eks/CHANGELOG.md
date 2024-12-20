@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.124.0 (2024-12-20)
+------------------
+
+* Feature - This release expands the catalog of upgrade insight checks
+
 1.123.0 (2024-12-13)
 ------------------
 

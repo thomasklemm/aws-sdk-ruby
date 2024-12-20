@@ -1013,6 +1013,7 @@ module Aws::Connect
     QuickConnectType = Shapes::StringShape.new(name: 'QuickConnectType')
     QuickConnectTypes = Shapes::ListShape.new(name: 'QuickConnectTypes')
     QuickConnectsList = Shapes::ListShape.new(name: 'QuickConnectsList')
+    Range = Shapes::StructureShape.new(name: 'Range')
     ReadOnlyFieldInfo = Shapes::StructureShape.new(name: 'ReadOnlyFieldInfo')
     ReadOnlyTaskTemplateFields = Shapes::ListShape.new(name: 'ReadOnlyTaskTemplateFields')
     RealTimeContactAnalysisAttachment = Shapes::StructureShape.new(name: 'RealTimeContactAnalysisAttachment')
@@ -1798,6 +1799,7 @@ module Aws::Connect
     AttributeCondition.add_member(:name, Shapes::ShapeRef.new(shape: PredefinedAttributeName, location_name: "Name"))
     AttributeCondition.add_member(:value, Shapes::ShapeRef.new(shape: ProficiencyValue, location_name: "Value"))
     AttributeCondition.add_member(:proficiency_level, Shapes::ShapeRef.new(shape: NullableProficiencyLevel, location_name: "ProficiencyLevel"))
+    AttributeCondition.add_member(:range, Shapes::ShapeRef.new(shape: Range, location_name: "Range"))
     AttributeCondition.add_member(:match_criteria, Shapes::ShapeRef.new(shape: MatchCriteria, location_name: "MatchCriteria"))
     AttributeCondition.add_member(:comparison_operator, Shapes::ShapeRef.new(shape: ComparisonOperator, location_name: "ComparisonOperator"))
     AttributeCondition.struct_class = Types::AttributeCondition
@@ -3341,6 +3343,7 @@ module Aws::Connect
     Expression.add_member(:attribute_condition, Shapes::ShapeRef.new(shape: AttributeCondition, location_name: "AttributeCondition"))
     Expression.add_member(:and_expression, Shapes::ShapeRef.new(shape: Expressions, location_name: "AndExpression"))
     Expression.add_member(:or_expression, Shapes::ShapeRef.new(shape: Expressions, location_name: "OrExpression"))
+    Expression.add_member(:not_attribute_condition, Shapes::ShapeRef.new(shape: AttributeCondition, location_name: "NotAttributeCondition"))
     Expression.struct_class = Types::Expression
 
     Expressions.member = Shapes::ShapeRef.new(shape: Expression)
@@ -4738,6 +4741,10 @@ module Aws::Connect
     QuickConnectTypes.member = Shapes::ShapeRef.new(shape: QuickConnectType)
 
     QuickConnectsList.member = Shapes::ShapeRef.new(shape: QuickConnectId)
+
+    Range.add_member(:min_proficiency_level, Shapes::ShapeRef.new(shape: NullableProficiencyLevel, location_name: "MinProficiencyLevel"))
+    Range.add_member(:max_proficiency_level, Shapes::ShapeRef.new(shape: NullableProficiencyLevel, location_name: "MaxProficiencyLevel"))
+    Range.struct_class = Types::Range
 
     ReadOnlyFieldInfo.add_member(:id, Shapes::ShapeRef.new(shape: TaskTemplateFieldIdentifier, location_name: "Id"))
     ReadOnlyFieldInfo.struct_class = Types::ReadOnlyFieldInfo

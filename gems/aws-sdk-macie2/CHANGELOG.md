@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.81.0 (2024-12-20)
+------------------
+
+* Feature - This release adds support for identifying S3 general purpose buckets that exceed the Amazon Macie quota for preventative control monitoring.
+
 1.80.0 (2024-10-18)
 ------------------
 

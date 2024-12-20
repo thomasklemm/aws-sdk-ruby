@@ -224,7 +224,7 @@ module Aws::BedrockAgentRuntime
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/https:/docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentActionGroup AWS API Documentation
@@ -581,6 +581,20 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Settings for a model called with InvokeAgent.
+    #
+    # @!attribute [rw] performance_config
+    #   The performance configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/BedrockModelConfigurations AWS API Documentation
+    #
+    class BedrockModelConfigurations < Struct.new(
+      :performance_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains configurations for an Amazon Bedrock reranker model.
     #
     # @!attribute [rw] model_configuration
@@ -906,12 +920,17 @@ module Aws::BedrockAgentRuntime
     #   The unique identifier of the memory.
     #   @return [String]
     #
+    # @!attribute [rw] session_id
+    #   The unique session identifier of the memory.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/DeleteAgentMemoryRequest AWS API Documentation
     #
     class DeleteAgentMemoryRequest < Struct.new(
       :agent_alias_id,
       :agent_id,
-      :memory_id)
+      :memory_id,
+      :session_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -986,6 +1005,10 @@ module Aws::BedrockAgentRuntime
     #   to generate responses while using an external source.
     #   @return [Types::InferenceConfig]
     #
+    # @!attribute [rw] performance_config
+    #   The latency configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @!attribute [rw] prompt_template
     #   Contain the textPromptTemplate string for the external source
     #   wrapper object.
@@ -997,6 +1020,7 @@ module Aws::BedrockAgentRuntime
       :additional_model_request_fields,
       :guardrail_configuration,
       :inference_config,
+      :performance_config,
       :prompt_template)
       SENSITIVE = []
       include Aws::Structure
@@ -1844,6 +1868,10 @@ module Aws::BedrockAgentRuntime
     #   to generate responses while using a knowledge base as a source.
     #   @return [Types::InferenceConfig]
     #
+    # @!attribute [rw] performance_config
+    #   The latency configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @!attribute [rw] prompt_template
     #   Contains the template for the prompt that's sent to the model for
     #   response generation. Generation prompts must include the
@@ -1861,6 +1889,7 @@ module Aws::BedrockAgentRuntime
       :additional_model_request_fields,
       :guardrail_configuration,
       :inference_config,
+      :performance_config,
       :prompt_template)
       SENSITIVE = []
       include Aws::Structure
@@ -2449,6 +2478,20 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Settings for a model called with InvokeInlineAgent.
+    #
+    # @!attribute [rw] performance_config
+    #   The latency configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineBedrockModelConfigurations AWS API Documentation
+    #
+    class InlineBedrockModelConfigurations < Struct.new(
+      :performance_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains parameters that specify various attributes that persist
     # across a session or prompt. You can define session state attributes as
     # key-value pairs when writing a [Lambda function][1] for an action
@@ -2707,6 +2750,10 @@ module Aws::BedrockAgentRuntime
     #   The unique identifier of the agent to use.
     #   @return [String]
     #
+    # @!attribute [rw] bedrock_model_configurations
+    #   Model performance settings for the request.
+    #   @return [Types::BedrockModelConfigurations]
+    #
     # @!attribute [rw] enable_trace
     #   Specifies whether to turn on the trace or not to track the agent's
     #   reasoning process. For more information, see [Trace enablement][1].
@@ -2758,6 +2805,11 @@ module Aws::BedrockAgentRuntime
     #
     # @!attribute [rw] streaming_configurations
     #   Specifies the configurations for streaming.
+    #
+    #   <note markdown="1"> To use agent streaming, you need permissions to perform the
+    #   `bedrock:InvokeModelWithResponseStream` action.
+    #
+    #    </note>
     #   @return [Types::StreamingConfigurations]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeAgentRequest AWS API Documentation
@@ -2765,6 +2817,7 @@ module Aws::BedrockAgentRuntime
     class InvokeAgentRequest < Struct.new(
       :agent_alias_id,
       :agent_id,
+      :bedrock_model_configurations,
       :enable_trace,
       :end_session,
       :input_text,
@@ -2829,13 +2882,18 @@ module Aws::BedrockAgentRuntime
     #   the flow.
     #   @return [Array<Types::FlowInput>]
     #
+    # @!attribute [rw] model_performance_configuration
+    #   Model performance settings for the request.
+    #   @return [Types::ModelPerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeFlowRequest AWS API Documentation
     #
     class InvokeFlowRequest < Struct.new(
       :enable_trace,
       :flow_alias_identifier,
       :flow_identifier,
-      :inputs)
+      :inputs,
+      :model_performance_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2857,6 +2915,10 @@ module Aws::BedrockAgentRuntime
     #   A list of action groups with each action group defining the action
     #   the inline agent needs to carry out.
     #   @return [Array<Types::AgentActionGroup>]
+    #
+    # @!attribute [rw] bedrock_model_configurations
+    #   Model settings for the request.
+    #   @return [Types::InlineBedrockModelConfigurations]
     #
     # @!attribute [rw] customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
@@ -2953,6 +3015,7 @@ module Aws::BedrockAgentRuntime
     #
     class InvokeInlineAgentRequest < Struct.new(
       :action_groups,
+      :bedrock_model_configurations,
       :customer_encryption_key_arn,
       :enable_trace,
       :end_session,
@@ -3529,6 +3592,41 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # The model specified in the request is not ready to serve inference
+    # requests. The AWS SDK will automatically retry the operation up to 5
+    # times. For information about configuring automatic retries, see [Retry
+    # behavior][1] in the *AWS SDKs and Tools* reference guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ModelNotReadyException AWS API Documentation
+    #
+    class ModelNotReadyException < Struct.new(
+      :message,
+      :event_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The performance configuration for a model called with InvokeFlow.
+    #
+    # @!attribute [rw] performance_config
+    #   The latency configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ModelPerformanceConfiguration AWS API Documentation
+    #
+    class ModelPerformanceConfiguration < Struct.new(
+      :performance_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the result or output of an action group or knowledge base, or
     # the response to the user.
     #
@@ -3678,6 +3776,10 @@ module Aws::BedrockAgentRuntime
     #   to generate responses while using a knowledge base as a source.
     #   @return [Types::InferenceConfig]
     #
+    # @!attribute [rw] performance_config
+    #   The latency configuration for the model.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @!attribute [rw] prompt_template
     #   Contains the template for the prompt that's sent to the model.
     #   Orchestration prompts must include the `$conversation_history$` and
@@ -3699,6 +3801,7 @@ module Aws::BedrockAgentRuntime
     class OrchestrationConfiguration < Struct.new(
       :additional_model_request_fields,
       :inference_config,
+      :performance_config,
       :prompt_template,
       :query_transformation_configuration)
       SENSITIVE = []
@@ -3887,6 +3990,20 @@ module Aws::BedrockAgentRuntime
       :bytes,
       :event_type)
       SENSITIVE = [:bytes]
+      include Aws::Structure
+    end
+
+    # Performance settings for a model.
+    #
+    # @!attribute [rw] latency
+    #   To use a latency-optimized version of the model, set to `optimized`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/PerformanceConfiguration AWS API Documentation
+    #
+    class PerformanceConfiguration < Struct.new(
+      :latency)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -6214,6 +6331,7 @@ module Aws::BedrockAgentRuntime
           :dependency_failed_exception,
           :files,
           :internal_server_exception,
+          :model_not_ready_exception,
           :resource_not_found_exception,
           :return_control,
           :service_quota_exceeded_exception,

@@ -181,6 +181,8 @@ module Aws
                                ?deletion_protection: bool,
                                ?global_cluster_identifier: ::String,
                                ?storage_type: ::String,
+                               ?manage_master_user_password: bool,
+                               ?master_user_secret_kms_key_id: ::String,
                                ?source_region: ::String
                              ) -> _CreateDBClusterResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDBClusterResponseSuccess
@@ -739,7 +741,10 @@ module Aws
                                ?engine_version: ::String,
                                ?allow_major_version_upgrade: bool,
                                ?deletion_protection: bool,
-                               ?storage_type: ::String
+                               ?storage_type: ::String,
+                               ?manage_master_user_password: bool,
+                               ?master_user_secret_kms_key_id: ::String,
+                               ?rotate_master_user_password: bool
                              ) -> _ModifyDBClusterResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyDBClusterResponseSuccess
 

@@ -447,7 +447,7 @@ module Aws::BedrockDataAutomation
 
     # @!group API Operations
 
-    # Creates an Amazon Bedrock Keystone Blueprint
+    # Creates an Amazon Bedrock Data Automation Blueprint
     #
     # @option params [required, String] :blueprint_name
     #   Name of the Blueprint
@@ -513,7 +513,8 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Creates a new version of an existing Amazon Bedrock Keystone Blueprint
+    # Creates a new version of an existing Amazon Bedrock Data Automation
+    # Blueprint
     #
     # @option params [required, String] :blueprint_arn
     #   ARN generated at the server side when a Blueprint is created
@@ -558,7 +559,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Creates an Amazon Bedrock Keystone DataAutomationProject
+    # Creates an Amazon Bedrock Data Automation Project
     #
     # @option params [required, String] :project_name
     #   Name of the DataAutomationProject
@@ -704,7 +705,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Deletes an existing Amazon Bedrock Keystone Blueprint
+    # Deletes an existing Amazon Bedrock Data Automation Blueprint
     #
     # @option params [required, String] :blueprint_arn
     #   ARN generated at the server side when a Blueprint is created
@@ -730,7 +731,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Deletes an existing Amazon Bedrock Keystone DataAutomationProject
+    # Deletes an existing Amazon Bedrock Data Automation Project
     #
     # @option params [required, String] :project_arn
     #   ARN generated at the server side when a DataAutomationProject is
@@ -761,7 +762,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Gets an existing Amazon Bedrock Keystone Blueprint
+    # Gets an existing Amazon Bedrock Data Automation Blueprint
     #
     # @option params [required, String] :blueprint_arn
     #   ARN generated at the server side when a Blueprint is created
@@ -807,7 +808,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Gets an existing Amazon Bedrock Keystone DataAutomationProject
+    # Gets an existing Amazon Bedrock Data Automation Project
     #
     # @option params [required, String] :project_arn
     #   ARN generated at the server side when a DataAutomationProject is
@@ -881,7 +882,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Lists all existing Amazon Bedrock Keystone Blueprints
+    # Lists all existing Amazon Bedrock Data Automation Blueprints
     #
     # @option params [String] :blueprint_arn
     #   ARN of a Blueprint
@@ -942,7 +943,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Lists all existing Amazon Bedrock Keystone DataAutomationProjects
+    # Lists all existing Amazon Bedrock Data Automation Projects
     #
     # @option params [Integer] :max_results
     #   Max Results
@@ -998,7 +999,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Updates an existing Amazon Bedrock Blueprint
+    # Updates an existing Amazon Bedrock Data Automation Blueprint
     #
     # @option params [required, String] :blueprint_arn
     #   ARN generated at the server side when a Blueprint is created
@@ -1044,7 +1045,7 @@ module Aws::BedrockDataAutomation
       req.send_request(options)
     end
 
-    # Updates an existing Amazon Bedrock DataAutomationProject
+    # Updates an existing Amazon Bedrock Data Automation Project
     #
     # @option params [required, String] :project_arn
     #   ARN generated at the server side when a DataAutomationProject is
@@ -1193,7 +1194,7 @@ module Aws::BedrockDataAutomation
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockdataautomation'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

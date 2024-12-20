@@ -351,8 +351,8 @@ module Aws::Macie2
       include Aws::Structure
     end
 
-    # Provides information about an Amazon Web Service that performed an
-    # action on an affected resource.
+    # Provides information about an Amazon Web Services service that
+    # performed an action on an affected resource.
     #
     # @!attribute [rw] invoked_by
     #   @return [String]
@@ -685,12 +685,12 @@ module Aws::Macie2
     # information, see [How Macie monitors Amazon S3 data security][1] in
     # the *Amazon Macie User Guide*.
     #
-    # If an error occurs when Macie attempts to retrieve and process
+    # If an error or issue prevents Macie from retrieving and processing
     # metadata from Amazon S3 for the bucket or the bucket's objects, the
     # value for the versioning property is false and the value for most
-    # other properties is null. Key exceptions are accountId, bucketArn,
-    # bucketCreatedAt, bucketName, lastUpdated, and region. To identify the
-    # cause of the error, refer to the errorCode and errorMessage values.
+    # other properties is null or UNKNOWN. Key exceptions are accountId,
+    # bucketArn, bucketCreatedAt, bucketName, lastUpdated, and region. To
+    # identify the cause, refer to the errorCode and errorMessage values.
     #
     #
     #
@@ -723,7 +723,7 @@ module Aws::Macie2
     #   @return [Integer]
     #
     # @!attribute [rw] error_code
-    #   The error code for an error that prevented Amazon Macie from
+    #   The code for an error or issue that prevented Amazon Macie from
     #   retrieving and processing information about an S3 bucket and the
     #   bucket's objects.
     #   @return [String]
@@ -957,7 +957,7 @@ module Aws::Macie2
     # Provides aggregated statistical data for sensitive data discovery
     # metrics that apply to S3 buckets, grouped by bucket sensitivity score
     # (sensitivityScore). If automated sensitive data discovery is currently
-    # disabled for your account, the value for each metric is 0.
+    # disabled for your account, the value for most of these metrics is 0.
     #
     # @!attribute [rw] classification_error
     #   Provides aggregated statistical data for sensitive data discovery
@@ -965,8 +965,8 @@ module Aws::Macie2
     #   data for all the buckets that have a sensitivity score
     #   (sensitivityScore) of a specified value or within a specified range
     #   (BucketStatisticsBySensitivity). If automated sensitive data
-    #   discovery is currently disabled for your account, the value for each
-    #   field is 0.
+    #   discovery is currently disabled for your account, the value for most
+    #   fields is 0.
     #   @return [Types::SensitivityAggregations]
     #
     # @!attribute [rw] not_classified
@@ -975,8 +975,8 @@ module Aws::Macie2
     #   data for all the buckets that have a sensitivity score
     #   (sensitivityScore) of a specified value or within a specified range
     #   (BucketStatisticsBySensitivity). If automated sensitive data
-    #   discovery is currently disabled for your account, the value for each
-    #   field is 0.
+    #   discovery is currently disabled for your account, the value for most
+    #   fields is 0.
     #   @return [Types::SensitivityAggregations]
     #
     # @!attribute [rw] not_sensitive
@@ -985,8 +985,8 @@ module Aws::Macie2
     #   data for all the buckets that have a sensitivity score
     #   (sensitivityScore) of a specified value or within a specified range
     #   (BucketStatisticsBySensitivity). If automated sensitive data
-    #   discovery is currently disabled for your account, the value for each
-    #   field is 0.
+    #   discovery is currently disabled for your account, the value for most
+    #   fields is 0.
     #   @return [Types::SensitivityAggregations]
     #
     # @!attribute [rw] sensitive
@@ -995,8 +995,8 @@ module Aws::Macie2
     #   data for all the buckets that have a sensitivity score
     #   (sensitivityScore) of a specified value or within a specified range
     #   (BucketStatisticsBySensitivity). If automated sensitive data
-    #   discovery is currently disabled for your account, the value for each
-    #   field is 0.
+    #   discovery is currently disabled for your account, the value for most
+    #   fields is 0.
     #   @return [Types::SensitivityAggregations]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/BucketStatisticsBySensitivity AWS API Documentation
@@ -2395,8 +2395,7 @@ module Aws::Macie2
     #
     # @!attribute [rw] type
     #   The type of finding. For details about each type, see [Types of
-    #   Amazon Macie findings][1] in the *Amazon Macie User Guide*. Possible
-    #   values are:
+    #   findings][1] in the *Amazon Macie User Guide*. Possible values are:
     #
     #
     #
@@ -2768,7 +2767,8 @@ module Aws::Macie2
     #   Provides aggregated statistical data for sensitive data discovery
     #   metrics that apply to S3 buckets, grouped by bucket sensitivity
     #   score (sensitivityScore). If automated sensitive data discovery is
-    #   currently disabled for your account, the value for each metric is 0.
+    #   currently disabled for your account, the value for most of these
+    #   metrics is 0.
     #   @return [Types::BucketStatisticsBySensitivity]
     #
     # @!attribute [rw] classifiable_object_count
@@ -3095,8 +3095,8 @@ module Aws::Macie2
     # @!attribute [rw] security_hub_configuration
     #   Specifies configuration settings that determine which findings are
     #   published to Security Hub automatically. For information about how
-    #   Macie publishes findings to Security Hub, see [Amazon Macie
-    #   integration with Security Hub][1] in the *Amazon Macie User Guide*.
+    #   Macie publishes findings to Security Hub, see [Evaluating findings
+    #   with Security Hub][1] in the *Amazon Macie User Guide*.
     #
     #
     #
@@ -4627,11 +4627,11 @@ module Aws::Macie2
     # information, see [How Macie monitors Amazon S3 data security][1] in
     # the *Amazon Macie User Guide*.
     #
-    # If an error occurs when Macie attempts to retrieve and process
+    # If an error or issue prevents Macie from retrieving and processing
     # information about the bucket or the bucket's objects, the value for
-    # most of these properties is null. Key exceptions are accountId and
-    # bucketName. To identify the cause of the error, refer to the errorCode
-    # and errorMessage values.
+    # many of these properties is null. Key exceptions are accountId and
+    # bucketName. To identify the cause, refer to the errorCode and
+    # errorMessage values.
     #
     #
     #
@@ -4655,7 +4655,7 @@ module Aws::Macie2
     #   @return [Integer]
     #
     # @!attribute [rw] error_code
-    #   The error code for an error that prevented Amazon Macie from
+    #   The code for an error or issue that prevented Amazon Macie from
     #   retrieving and processing information about an S3 bucket and the
     #   bucket's objects.
     #   @return [String]
@@ -4747,11 +4747,11 @@ module Aws::Macie2
     #   For more information, see [How Macie monitors Amazon S3 data
     #   security][1] in the *Amazon Macie User Guide*.
     #
-    #   If an error occurs when Macie attempts to retrieve and process
+    #   If an error or issue prevents Macie from retrieving and processing
     #   information about the bucket or the bucket's objects, the value for
-    #   most of these properties is null. Key exceptions are accountId and
-    #   bucketName. To identify the cause of the error, refer to the
-    #   errorCode and errorMessage values.
+    #   many of these properties is null. Key exceptions are accountId and
+    #   bucketName. To identify the cause, refer to the errorCode and
+    #   errorMessage values.
     #
     #
     #
@@ -5023,8 +5023,8 @@ module Aws::Macie2
     # @!attribute [rw] security_hub_configuration
     #   Specifies configuration settings that determine which findings are
     #   published to Security Hub automatically. For information about how
-    #   Macie publishes findings to Security Hub, see [Amazon Macie
-    #   integration with Security Hub][1] in the *Amazon Macie User Guide*.
+    #   Macie publishes findings to Security Hub, see [Evaluating findings
+    #   with Security Hub][1] in the *Amazon Macie User Guide*.
     #
     #
     #
@@ -5200,6 +5200,11 @@ module Aws::Macie2
     #
     # @!attribute [rw] s3_bucket
     #   Provides information about the S3 bucket that a finding applies to.
+    #   If a quota prevented Amazon Macie from retrieving and processing all
+    #   the bucket's information prior to generating the finding, the
+    #   following values are UNKNOWN or null:
+    #   allowsUnencryptedObjectUploads, defaultServerSideEncryption,
+    #   publicAccess, and tags.
     #   @return [Types::S3Bucket]
     #
     # @!attribute [rw] s3_object
@@ -5262,7 +5267,11 @@ module Aws::Macie2
       include Aws::Structure
     end
 
-    # Provides information about the S3 bucket that a finding applies to.
+    # Provides information about the S3 bucket that a finding applies to. If
+    # a quota prevented Amazon Macie from retrieving and processing all the
+    # bucket's information prior to generating the finding, the following
+    # values are UNKNOWN or null: allowsUnencryptedObjectUploads,
+    # defaultServerSideEncryption, publicAccess, and tags.
     #
     # @!attribute [rw] allows_unencrypted_object_uploads
     #   @return [String]
@@ -5670,7 +5679,8 @@ module Aws::Macie2
 
     # Specifies criteria for filtering, sorting, and paginating the results
     # of a query for statistical data and other information about Amazon Web
-    # Services resources that Amazon Macie monitors and analyzes.
+    # Services resources that Amazon Macie monitors and analyzes for your
+    # account.
     #
     # @!attribute [rw] bucket_criteria
     #   Specifies property- and tag-based conditions that define filter
@@ -5810,8 +5820,8 @@ module Aws::Macie2
 
     # Specifies configuration settings that determine which findings are
     # published to Security Hub automatically. For information about how
-    # Macie publishes findings to Security Hub, see [Amazon Macie
-    # integration with Security Hub][1] in the *Amazon Macie User Guide*.
+    # Macie publishes findings to Security Hub, see [Evaluating findings
+    # with Security Hub][1] in the *Amazon Macie User Guide*.
     #
     #
     #
@@ -5867,7 +5877,8 @@ module Aws::Macie2
     # for all the buckets that have a sensitivity score (sensitivityScore)
     # of a specified value or within a specified range
     # (BucketStatisticsBySensitivity). If automated sensitive data discovery
-    # is currently disabled for your account, the value for each field is 0.
+    # is currently disabled for your account, the value for most fields is
+    # 0.
     #
     # @!attribute [rw] classifiable_size_in_bytes
     #   @return [Integer]
@@ -6217,8 +6228,8 @@ module Aws::Macie2
     end
 
     # Specifies a custom data identifier or managed data identifier that
-    # detected a type of sensitive data to start excluding or including in
-    # an S3 bucket's sensitivity score.
+    # detected a type of sensitive data to exclude from an S3 bucket's
+    # sensitivity score.
     #
     # @!attribute [rw] id
     #   @return [String]
@@ -6554,12 +6565,12 @@ module Aws::Macie2
     class UpdateAutomatedDiscoveryConfigurationResponse < Aws::EmptyStructure; end
 
     # Changes the status of a classification job. For more information about
-    # pausing, resuming, or cancelling jobs, see [Managing sensitive data
-    # discovery jobs][1] in the *Amazon Macie User Guide*.
+    # pausing, resuming, or cancelling jobs, see [Changing the status of a
+    # job][1] in the *Amazon Macie User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/macie/latest/user/discovery-jobs-manage.html
+    # [1]: https://docs.aws.amazon.com/macie/latest/user/discovery-jobs-status-change.html
     #
     # @!attribute [rw] job_id
     #   @return [String]
@@ -6743,11 +6754,10 @@ module Aws::Macie2
     class UpdateOrganizationConfigurationResponse < Aws::EmptyStructure; end
 
     # Updates the sensitivity scoring settings for an S3 bucket that Amazon
-    # Macie monitors and analyzes for an account. The settings specify
-    # whether to exclude or include occurrences of specific types of
-    # sensitive data in the bucket's sensitivity score. To update the
-    # settings, automated sensitive data discovery must be enabled for the
-    # account.
+    # Macie monitors and analyzes for an account. The settings specify types
+    # of sensitive data to exclude from the sensitivity score that Macie
+    # calculates for the bucket. To update the settings, automated sensitive
+    # data discovery must be enabled for the account.
     #
     # @!attribute [rw] resource_arn
     #   @return [String]
@@ -6797,8 +6807,8 @@ module Aws::Macie2
     # Amazon Macie verifies that the role exists and the attached policies
     # are configured correctly. If there's an issue, Macie returns an
     # error. For information about addressing the issue, see [Configuration
-    # options and requirements for retrieving sensitive data samples][1] in
-    # the *Amazon Macie User Guide*.
+    # options for retrieving sensitive data samples][1] in the *Amazon Macie
+    # User Guide*.
     #
     #
     #
@@ -6847,8 +6857,8 @@ module Aws::Macie2
     #   Amazon Macie verifies that the role exists and the attached policies
     #   are configured correctly. If there's an issue, Macie returns an
     #   error. For information about addressing the issue, see
-    #   [Configuration options and requirements for retrieving sensitive
-    #   data samples][1] in the *Amazon Macie User Guide*.
+    #   [Configuration options for retrieving sensitive data samples][1] in
+    #   the *Amazon Macie User Guide*.
     #
     #
     #
@@ -7091,8 +7101,8 @@ module Aws::Macie2
     #   @return [Types::AwsAccount]
     #
     # @!attribute [rw] aws_service
-    #   Provides information about an Amazon Web Service that performed an
-    #   action on an affected resource.
+    #   Provides information about an Amazon Web Services service that
+    #   performed an action on an affected resource.
     #   @return [Types::AwsService]
     #
     # @!attribute [rw] federated_user

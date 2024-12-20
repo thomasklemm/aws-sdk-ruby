@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.75.0 (2024-12-20)
+------------------
+
+* Feature - Add CS8365C as a supported power connector for Outpost sites.
+
 1.74.0 (2024-11-18)
 ------------------
 

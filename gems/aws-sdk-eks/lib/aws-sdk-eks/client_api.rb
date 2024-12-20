@@ -24,6 +24,8 @@ module Aws::EKS
     AccessScopeType = Shapes::StringShape.new(name: 'AccessScopeType')
     AdditionalInfoMap = Shapes::MapShape.new(name: 'AdditionalInfoMap')
     Addon = Shapes::StructureShape.new(name: 'Addon')
+    AddonCompatibilityDetail = Shapes::StructureShape.new(name: 'AddonCompatibilityDetail')
+    AddonCompatibilityDetails = Shapes::ListShape.new(name: 'AddonCompatibilityDetails')
     AddonHealth = Shapes::StructureShape.new(name: 'AddonHealth')
     AddonInfo = Shapes::StructureShape.new(name: 'AddonInfo')
     AddonIssue = Shapes::StructureShape.new(name: 'AddonIssue')
@@ -375,6 +377,12 @@ module Aws::EKS
     Addon.add_member(:configuration_values, Shapes::ShapeRef.new(shape: String, location_name: "configurationValues"))
     Addon.add_member(:pod_identity_associations, Shapes::ShapeRef.new(shape: StringList, location_name: "podIdentityAssociations"))
     Addon.struct_class = Types::Addon
+
+    AddonCompatibilityDetail.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
+    AddonCompatibilityDetail.add_member(:compatible_versions, Shapes::ShapeRef.new(shape: StringList, location_name: "compatibleVersions"))
+    AddonCompatibilityDetail.struct_class = Types::AddonCompatibilityDetail
+
+    AddonCompatibilityDetails.member = Shapes::ShapeRef.new(shape: AddonCompatibilityDetail)
 
     AddonHealth.add_member(:issues, Shapes::ShapeRef.new(shape: AddonIssueList, location_name: "issues"))
     AddonHealth.struct_class = Types::AddonHealth
@@ -936,6 +944,7 @@ module Aws::EKS
     Insight.struct_class = Types::Insight
 
     InsightCategorySpecificSummary.add_member(:deprecation_details, Shapes::ShapeRef.new(shape: DeprecationDetails, location_name: "deprecationDetails"))
+    InsightCategorySpecificSummary.add_member(:addon_compatibility_details, Shapes::ShapeRef.new(shape: AddonCompatibilityDetails, location_name: "addonCompatibilityDetails"))
     InsightCategorySpecificSummary.struct_class = Types::InsightCategorySpecificSummary
 
     InsightResourceDetail.add_member(:insight_status, Shapes::ShapeRef.new(shape: InsightStatus, location_name: "insightStatus"))

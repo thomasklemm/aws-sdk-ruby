@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.38.0 (2024-12-20)
+------------------
+
+* Feature - bedrock agents now supports long term memory and performance configs. Invokeflow supports performance configs. RetrieveAndGenerate performance configs
+
 1.37.0 (2024-12-04)
 ------------------
 

@@ -469,6 +469,9 @@ module Aws::BedrockAgentRuntime
     # @option params [String] :memory_id
     #   The unique identifier of the memory.
     #
+    # @option params [String] :session_id
+    #   The unique session identifier of the memory.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -477,6 +480,7 @@ module Aws::BedrockAgentRuntime
     #     agent_alias_id: "AgentAliasId", # required
     #     agent_id: "AgentId", # required
     #     memory_id: "MemoryId",
+    #     session_id: "SessionId",
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/DeleteAgentMemory AWS API Documentation
@@ -621,6 +625,15 @@ module Aws::BedrockAgentRuntime
     #   final result it yielded. For more information, see [Trace
     #   enablement][1].
     #
+    # * To stream agent responses, make sure that only orchestration prompt
+    #   is enabled. Agent streaming is not supported for the following
+    #   steps:
+    #
+    #   * `Pre-processing`
+    #
+    #   * `Post-processing`
+    #
+    #   * Agent with 1 Knowledge base and `User Input` not enabled
     # * End a conversation by setting `endSession` to `true`.
     #
     # * In the `sessionState` object, you can include attributes for the
@@ -650,6 +663,9 @@ module Aws::BedrockAgentRuntime
     #
     # @option params [required, String] :agent_id
     #   The unique identifier of the agent to use.
+    #
+    # @option params [Types::BedrockModelConfigurations] :bedrock_model_configurations
+    #   Model performance settings for the request.
     #
     # @option params [Boolean] :enable_trace
     #   Specifies whether to turn on the trace or not to track the agent's
@@ -695,6 +711,11 @@ module Aws::BedrockAgentRuntime
     #
     # @option params [Types::StreamingConfigurations] :streaming_configurations
     #   Specifies the configurations for streaming.
+    #
+    #   <note markdown="1"> To use agent streaming, you need permissions to perform the
+    #   `bedrock:InvokeModelWithResponseStream` action.
+    #
+    #    </note>
     #
     # @return [Types::InvokeAgentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -767,6 +788,9 @@ module Aws::BedrockAgentRuntime
     #       handler.on_internal_server_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
     #       end
+    #       handler.on_model_not_ready_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::modelNotReadyException
+    #       end
     #       handler.on_resource_not_found_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
     #       end
@@ -812,6 +836,9 @@ module Aws::BedrockAgentRuntime
     #       end
     #       stream.on_internal_server_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       stream.on_model_not_ready_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::modelNotReadyException
     #       end
     #       stream.on_resource_not_found_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
@@ -859,6 +886,9 @@ module Aws::BedrockAgentRuntime
     #       handler.on_internal_server_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
     #       end
+    #       handler.on_model_not_ready_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::modelNotReadyException
+    #       end
     #       handler.on_resource_not_found_exception_event do |event|
     #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
     #       end
@@ -899,6 +929,11 @@ module Aws::BedrockAgentRuntime
     #   resp = client.invoke_agent({
     #     agent_alias_id: "AgentAliasId", # required
     #     agent_id: "AgentId", # required
+    #     bedrock_model_configurations: {
+    #       performance_config: {
+    #         latency: "standard", # accepts standard, optimized
+    #       },
+    #     },
     #     enable_trace: false,
     #     end_session: false,
     #     input_text: "InputText",
@@ -1098,7 +1133,7 @@ module Aws::BedrockAgentRuntime
     #
     #   All events are available at resp.completion:
     #   resp.completion #=> Enumerator
-    #   resp.completion.event_types #=> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
+    #   resp.completion.event_types #=> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :model_not_ready_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
     #
     #   For :access_denied_exception event available at #on_access_denied_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -1146,6 +1181,9 @@ module Aws::BedrockAgentRuntime
     #   event.files[0].type #=> String
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :model_not_ready_exception event available at #on_model_not_ready_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
     #
     #   For :resource_not_found_exception event available at #on_resource_not_found_exception_event callback and response eventstream enumerator:
@@ -1598,6 +1636,9 @@ module Aws::BedrockAgentRuntime
     #   A list of objects, each containing information about an input into the
     #   flow.
     #
+    # @option params [Types::ModelPerformanceConfiguration] :model_performance_configuration
+    #   Model performance settings for the request.
+    #
     # @return [Types::InvokeFlowResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::InvokeFlowResponse#response_stream #response_stream} => Types::FlowResponseStream
@@ -1800,6 +1841,11 @@ module Aws::BedrockAgentRuntime
     #         node_output_name: "NodeOutputName", # required
     #       },
     #     ],
+    #     model_performance_configuration: {
+    #       performance_config: {
+    #         latency: "standard", # accepts standard, optimized
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -1917,6 +1963,9 @@ module Aws::BedrockAgentRuntime
     # @option params [Array<Types::AgentActionGroup>] :action_groups
     #   A list of action groups with each action group defining the action the
     #   inline agent needs to carry out.
+    #
+    # @option params [Types::InlineBedrockModelConfigurations] :bedrock_model_configurations
+    #   Model settings for the request.
     #
     # @option params [String] :customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
@@ -2230,6 +2279,11 @@ module Aws::BedrockAgentRuntime
     #         parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
     #       },
     #     ],
+    #     bedrock_model_configurations: {
+    #       performance_config: {
+    #         latency: "standard", # accepts standard, optimized
+    #       },
+    #     },
     #     customer_encryption_key_arn: "KmsKeyArn",
     #     enable_trace: false,
     #     end_session: false,
@@ -3475,6 +3529,9 @@ module Aws::BedrockAgentRuntime
     #               top_p: 1.0,
     #             },
     #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
+    #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
     #           },
@@ -3512,6 +3569,9 @@ module Aws::BedrockAgentRuntime
     #               top_p: 1.0,
     #             },
     #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
+    #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
     #           },
@@ -3530,6 +3590,9 @@ module Aws::BedrockAgentRuntime
     #               temperature: 1.0,
     #               top_p: 1.0,
     #             },
+    #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
     #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
@@ -3937,6 +4000,9 @@ module Aws::BedrockAgentRuntime
     #               top_p: 1.0,
     #             },
     #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
+    #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
     #           },
@@ -3974,6 +4040,9 @@ module Aws::BedrockAgentRuntime
     #               top_p: 1.0,
     #             },
     #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
+    #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
     #           },
@@ -3992,6 +4061,9 @@ module Aws::BedrockAgentRuntime
     #               temperature: 1.0,
     #               top_p: 1.0,
     #             },
+    #           },
+    #           performance_config: {
+    #             latency: "standard", # accepts standard, optimized
     #           },
     #           prompt_template: {
     #             text_prompt_template: "TextPromptTemplate",
@@ -4230,7 +4302,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.37.0'
+      context[:gem_version] = '1.38.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

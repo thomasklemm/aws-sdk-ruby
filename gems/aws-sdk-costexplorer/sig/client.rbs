@@ -412,6 +412,7 @@ module Aws
                                     key: ::String?
                                   },
                                 ],
+                                ?billing_view_arn: ::String,
                                 ?next_page_token: ::String
                               ) -> _GetCostAndUsageResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCostAndUsageResponseSuccess
@@ -461,6 +462,7 @@ module Aws
                                                    key: ::String?
                                                  },
                                                ],
+                                               ?billing_view_arn: ::String,
                                                ?next_page_token: ::String
                                              ) -> _GetCostAndUsageWithResourcesResponseSuccess
                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCostAndUsageWithResourcesResponseSuccess
@@ -511,6 +513,7 @@ module Aws
                                      sort_order: ("ASCENDING" | "DESCENDING")?
                                    },
                                  ],
+                                 ?billing_view_arn: ::String,
                                  ?max_results: ::Integer,
                                  ?next_page_token: ::String
                                ) -> _GetCostCategoriesResponseSuccess
@@ -553,6 +556,7 @@ module Aws
                                    match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "CASE_SENSITIVE" | "CASE_INSENSITIVE" | "GREATER_THAN_OR_EQUAL")]?
                                  }?
                                },
+                               ?billing_view_arn: ::String,
                                ?prediction_interval_level: ::Integer
                              ) -> _GetCostForecastResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCostForecastResponseSuccess
@@ -603,6 +607,7 @@ module Aws
                                       sort_order: ("ASCENDING" | "DESCENDING")?
                                     },
                                   ],
+                                  ?billing_view_arn: ::String,
                                   ?max_results: ::Integer,
                                   ?next_page_token: ::String
                                 ) -> _GetDimensionValuesResponseSuccess
@@ -1045,6 +1050,7 @@ module Aws
                           sort_order: ("ASCENDING" | "DESCENDING")?
                         },
                       ],
+                      ?billing_view_arn: ::String,
                       ?max_results: ::Integer,
                       ?next_page_token: ::String
                     ) -> _GetTagsResponseSuccess
@@ -1087,6 +1093,7 @@ module Aws
                                     match_options: Array[("EQUALS" | "ABSENT" | "STARTS_WITH" | "ENDS_WITH" | "CONTAINS" | "CASE_SENSITIVE" | "CASE_INSENSITIVE" | "GREATER_THAN_OR_EQUAL")]?
                                   }?
                                 },
+                                ?billing_view_arn: ::String,
                                 ?prediction_interval_level: ::Integer
                               ) -> _GetUsageForecastResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetUsageForecastResponseSuccess

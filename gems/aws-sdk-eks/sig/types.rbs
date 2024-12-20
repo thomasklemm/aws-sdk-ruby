@@ -63,6 +63,12 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class AddonCompatibilityDetail
+      attr_accessor name: ::String
+      attr_accessor compatible_versions: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class AddonHealth
       attr_accessor issues: ::Array[Types::AddonIssue]
       SENSITIVE: []
@@ -783,6 +789,7 @@ module Aws::EKS
 
     class InsightCategorySpecificSummary
       attr_accessor deprecation_details: ::Array[Types::DeprecationDetail]
+      attr_accessor addon_compatibility_details: ::Array[Types::AddonCompatibilityDetail]
       SENSITIVE: []
     end
 

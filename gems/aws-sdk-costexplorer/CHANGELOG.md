@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.118.0 (2024-12-20)
+------------------
+
+* Feature - Support for retrieving cost, usage, and forecast for billing view.
+
 1.117.0 (2024-11-22)
 ------------------
 

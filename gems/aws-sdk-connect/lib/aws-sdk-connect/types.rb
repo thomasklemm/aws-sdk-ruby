@@ -1330,6 +1330,10 @@ module Aws::Connect
     #   The proficiency level of the condition.
     #   @return [Float]
     #
+    # @!attribute [rw] range
+    #   An Object to define the minimum and maximum proficiency levels.
+    #   @return [Types::Range]
+    #
     # @!attribute [rw] match_criteria
     #   An object to define `AgentsCriteria`.
     #   @return [Types::MatchCriteria]
@@ -1344,6 +1348,7 @@ module Aws::Connect
       :name,
       :value,
       :proficiency_level,
+      :range,
       :match_criteria,
       :comparison_operator)
       SENSITIVE = []
@@ -9112,12 +9117,17 @@ module Aws::Connect
     #   List of routing expressions which will be OR-ed together.
     #   @return [Array<Types::Expression>]
     #
+    # @!attribute [rw] not_attribute_condition
+    #   An object to specify the predefined attribute condition.
+    #   @return [Types::AttributeCondition]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Expression AWS API Documentation
     #
     class Expression < Struct.new(
       :attribute_condition,
       :and_expression,
-      :or_expression)
+      :or_expression,
+      :not_attribute_condition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17747,6 +17757,25 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # An Object to define the minimum and maximum proficiency levels.
+    #
+    # @!attribute [rw] min_proficiency_level
+    #   The minimum proficiency level of the range.
+    #   @return [Float]
+    #
+    # @!attribute [rw] max_proficiency_level
+    #   The maximum proficiency level of the range.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Range AWS API Documentation
+    #
+    class Range < Struct.new(
+      :min_proficiency_level,
+      :max_proficiency_level)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Indicates a field that is read-only to an agent.
     #
     # @!attribute [rw] id
@@ -21343,7 +21372,7 @@ module Aws::Connect
     #   @return [Types::CreatedByInfo]
     #
     # @!attribute [rw] upload_url_metadata
-    #   Information to be used while uploading the attached file.
+    #   The headers to be provided while uploading the file to the URL.
     #   @return [Types::UploadUrlMetadata]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartAttachedFileUploadResponse AWS API Documentation

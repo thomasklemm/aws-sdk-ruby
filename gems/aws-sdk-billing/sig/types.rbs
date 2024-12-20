@@ -19,12 +19,91 @@ module Aws::Billing
       SENSITIVE: []
     end
 
+    class BillingViewElement
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor billing_view_type: ("PRIMARY" | "BILLING_GROUP" | "CUSTOM")
+      attr_accessor owner_account_id: ::String
+      attr_accessor data_filter_expression: Types::Expression
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:name, :description]
+    end
+
     class BillingViewListElement
       attr_accessor arn: ::String
       attr_accessor name: ::String
+      attr_accessor description: ::String
       attr_accessor owner_account_id: ::String
-      attr_accessor billing_view_type: ("PRIMARY" | "BILLING_GROUP")
-      SENSITIVE: [:name]
+      attr_accessor billing_view_type: ("PRIMARY" | "BILLING_GROUP" | "CUSTOM")
+      SENSITIVE: [:name, :description]
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class CreateBillingViewRequest
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor source_views: ::Array[::String]
+      attr_accessor data_filter_expression: Types::Expression
+      attr_accessor client_token: ::String
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: [:name, :description]
+    end
+
+    class CreateBillingViewResponse
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      SENSITIVE: []
+    end
+
+    class DeleteBillingViewRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBillingViewResponse
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class DimensionValues
+      attr_accessor key: ("LINKED_ACCOUNT")
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class Expression
+      attr_accessor dimensions: Types::DimensionValues
+      attr_accessor tags: Types::TagValues
+      SENSITIVE: []
+    end
+
+    class GetBillingViewRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetBillingViewResponse
+      attr_accessor billing_view: Types::BillingViewElement
+      SENSITIVE: []
+    end
+
+    class GetResourcePolicyRequest
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetResourcePolicyResponse
+      attr_accessor resource_arn: ::String
+      attr_accessor policy: ::String
+      SENSITIVE: []
     end
 
     class InternalServerException
@@ -34,6 +113,9 @@ module Aws::Billing
 
     class ListBillingViewsRequest
       attr_accessor active_time_range: Types::ActiveTimeRange
+      attr_accessor arns: ::Array[::String]
+      attr_accessor billing_view_types: ::Array[("PRIMARY" | "BILLING_GROUP" | "CUSTOM")]
+      attr_accessor owner_account_id: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       SENSITIVE: []
@@ -45,8 +127,91 @@ module Aws::Billing
       SENSITIVE: []
     end
 
+    class ListSourceViewsForBillingViewRequest
+      attr_accessor arn: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListSourceViewsForBillingViewResponse
+      attr_accessor source_views: ::Array[::String]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceRequest
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceResponse
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceTag
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      SENSITIVE: []
+    end
+
+    class TagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: []
+    end
+
+    class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class TagValues
+      attr_accessor key: ::String
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ThrottlingException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UntagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateBillingViewRequest
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor data_filter_expression: Types::Expression
+      SENSITIVE: [:name, :description]
+    end
+
+    class UpdateBillingViewResponse
+      attr_accessor arn: ::String
+      attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
 
