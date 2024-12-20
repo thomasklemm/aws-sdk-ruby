@@ -134,7 +134,7 @@ module Aws
     # ### `:idle_timeout` Option
     #
     # This is a configurable, maximum number of seconds to wait for a
-    # new message before the polling loop exists. By default, there is
+    # new message before the polling loop exits. By default, there is
     # no idle timeout.
     #
     #     # stops polling after a minute of no received messages
