@@ -2705,6 +2705,7 @@ module Aws::Glue
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor recursive: bool
+      attr_accessor include_root: bool
       SENSITIVE: []
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.125.0 (2024-12-23)
+------------------
+
+* Feature - This release adds support for DescribeClusterVersions API that provides important information about Kubernetes versions along with end of support dates
+
 1.124.0 (2024-12-20)
 ------------------
 

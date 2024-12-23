@@ -70,6 +70,9 @@ module Aws::EKS
     ClusterIssueList = Shapes::ListShape.new(name: 'ClusterIssueList')
     ClusterName = Shapes::StringShape.new(name: 'ClusterName')
     ClusterStatus = Shapes::StringShape.new(name: 'ClusterStatus')
+    ClusterVersionInformation = Shapes::StructureShape.new(name: 'ClusterVersionInformation')
+    ClusterVersionList = Shapes::ListShape.new(name: 'ClusterVersionList')
+    ClusterVersionStatus = Shapes::StringShape.new(name: 'ClusterVersionStatus')
     Compatibilities = Shapes::ListShape.new(name: 'Compatibilities')
     Compatibility = Shapes::StructureShape.new(name: 'Compatibility')
     ComputeConfigRequest = Shapes::StructureShape.new(name: 'ComputeConfigRequest')
@@ -123,6 +126,9 @@ module Aws::EKS
     DescribeAddonVersionsResponse = Shapes::StructureShape.new(name: 'DescribeAddonVersionsResponse')
     DescribeClusterRequest = Shapes::StructureShape.new(name: 'DescribeClusterRequest')
     DescribeClusterResponse = Shapes::StructureShape.new(name: 'DescribeClusterResponse')
+    DescribeClusterVersionMaxResults = Shapes::IntegerShape.new(name: 'DescribeClusterVersionMaxResults')
+    DescribeClusterVersionsRequest = Shapes::StructureShape.new(name: 'DescribeClusterVersionsRequest')
+    DescribeClusterVersionsResponse = Shapes::StructureShape.new(name: 'DescribeClusterVersionsResponse')
     DescribeEksAnywhereSubscriptionRequest = Shapes::StructureShape.new(name: 'DescribeEksAnywhereSubscriptionRequest')
     DescribeEksAnywhereSubscriptionResponse = Shapes::StructureShape.new(name: 'DescribeEksAnywhereSubscriptionResponse')
     DescribeFargateProfileRequest = Shapes::StructureShape.new(name: 'DescribeFargateProfileRequest')
@@ -531,6 +537,19 @@ module Aws::EKS
 
     ClusterIssueList.member = Shapes::ShapeRef.new(shape: ClusterIssue)
 
+    ClusterVersionInformation.add_member(:cluster_version, Shapes::ShapeRef.new(shape: String, location_name: "clusterVersion"))
+    ClusterVersionInformation.add_member(:cluster_type, Shapes::ShapeRef.new(shape: String, location_name: "clusterType"))
+    ClusterVersionInformation.add_member(:default_platform_version, Shapes::ShapeRef.new(shape: String, location_name: "defaultPlatformVersion"))
+    ClusterVersionInformation.add_member(:default_version, Shapes::ShapeRef.new(shape: Boolean, location_name: "defaultVersion"))
+    ClusterVersionInformation.add_member(:release_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "releaseDate"))
+    ClusterVersionInformation.add_member(:end_of_standard_support_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endOfStandardSupportDate"))
+    ClusterVersionInformation.add_member(:end_of_extended_support_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endOfExtendedSupportDate"))
+    ClusterVersionInformation.add_member(:status, Shapes::ShapeRef.new(shape: ClusterVersionStatus, location_name: "status"))
+    ClusterVersionInformation.add_member(:kubernetes_patch_version, Shapes::ShapeRef.new(shape: String, location_name: "kubernetesPatchVersion"))
+    ClusterVersionInformation.struct_class = Types::ClusterVersionInformation
+
+    ClusterVersionList.member = Shapes::ShapeRef.new(shape: ClusterVersionInformation)
+
     Compatibilities.member = Shapes::ShapeRef.new(shape: Compatibility)
 
     Compatibility.add_member(:cluster_version, Shapes::ShapeRef.new(shape: String, location_name: "clusterVersion"))
@@ -780,6 +799,19 @@ module Aws::EKS
 
     DescribeClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "cluster"))
     DescribeClusterResponse.struct_class = Types::DescribeClusterResponse
+
+    DescribeClusterVersionsRequest.add_member(:cluster_type, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "clusterType"))
+    DescribeClusterVersionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeClusterVersionMaxResults, location: "querystring", location_name: "maxResults"))
+    DescribeClusterVersionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "nextToken"))
+    DescribeClusterVersionsRequest.add_member(:default_only, Shapes::ShapeRef.new(shape: BoxedBoolean, location: "querystring", location_name: "defaultOnly"))
+    DescribeClusterVersionsRequest.add_member(:include_all, Shapes::ShapeRef.new(shape: BoxedBoolean, location: "querystring", location_name: "includeAll"))
+    DescribeClusterVersionsRequest.add_member(:cluster_versions, Shapes::ShapeRef.new(shape: StringList, location: "querystring", location_name: "clusterVersions"))
+    DescribeClusterVersionsRequest.add_member(:status, Shapes::ShapeRef.new(shape: ClusterVersionStatus, location: "querystring", location_name: "status"))
+    DescribeClusterVersionsRequest.struct_class = Types::DescribeClusterVersionsRequest
+
+    DescribeClusterVersionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeClusterVersionsResponse.add_member(:cluster_versions, Shapes::ShapeRef.new(shape: ClusterVersionList, location_name: "clusterVersions"))
+    DescribeClusterVersionsResponse.struct_class = Types::DescribeClusterVersionsResponse
 
     DescribeEksAnywhereSubscriptionRequest.add_member(:id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "id"))
     DescribeEksAnywhereSubscriptionRequest.struct_class = Types::DescribeEksAnywhereSubscriptionRequest
@@ -1836,6 +1868,23 @@ module Aws::EKS
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: ServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:describe_cluster_versions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeClusterVersions"
+        o.http_method = "GET"
+        o.http_request_uri = "/cluster-versions"
+        o.input = Shapes::ShapeRef.new(shape: DescribeClusterVersionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeClusterVersionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ServerException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:describe_eks_anywhere_subscription, Seahorse::Model::Operation.new.tap do |o|

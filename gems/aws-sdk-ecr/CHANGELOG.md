@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.89.0 (2024-12-23)
+------------------
+
+* Feature - Documentation update for ECR GetAccountSetting and PutAccountSetting APIs.
+
 1.88.0 (2024-10-18)
 ------------------
 

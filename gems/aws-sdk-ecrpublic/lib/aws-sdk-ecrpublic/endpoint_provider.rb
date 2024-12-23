@@ -11,42 +11,20 @@ module Aws::ECRPublic
   class EndpointProvider
     def resolve_endpoint(parameters)
       region = parameters.region
-      use_dual_stack = parameters.use_dual_stack
       use_fips = parameters.use_fips
-      endpoint = parameters.endpoint
-      if Aws::Endpoints::Matchers.set?(endpoint)
+      use_dual_stack = parameters.use_dual_stack
+      if Aws::Endpoints::Matchers.set?(region) && (partition_result = Aws::Endpoints::Matchers.aws_partition(region))
         if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
-          raise ArgumentError, "Invalid Configuration: FIPS and custom endpoint are not supported"
+          raise ArgumentError, "ECR Public does not support FIPS"
         end
         if Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
-          raise ArgumentError, "Invalid Configuration: Dualstack and custom endpoint are not supported"
+          if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
+            return Aws::Endpoints::Endpoint.new(url: "https://ecr-public.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
+          end
+          raise ArgumentError, "Dualstack is enabled but this partition does not support dualstack"
         end
-        return Aws::Endpoints::Endpoint.new(url: endpoint, headers: {}, properties: {})
+        return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public.#{region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {})
       end
-      if Aws::Endpoints::Matchers.set?(region)
-        if (partition_result = Aws::Endpoints::Matchers.aws_partition(region))
-          if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true) && Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
-            if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsFIPS")) && Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-              return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public-fips.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
-            end
-            raise ArgumentError, "FIPS and DualStack are enabled, but this partition does not support one or both"
-          end
-          if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
-            if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsFIPS"))
-              return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public-fips.#{region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {})
-            end
-            raise ArgumentError, "FIPS is enabled but this partition does not support FIPS"
-          end
-          if Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
-            if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-              return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
-            end
-            raise ArgumentError, "DualStack is enabled but this partition does not support DualStack"
-          end
-          return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public.#{region}.#{partition_result['dnsSuffix']}", headers: {}, properties: {})
-        end
-      end
-      raise ArgumentError, "Invalid Configuration: Missing Region"
       raise ArgumentError, 'No endpoint could be resolved'
 
     end

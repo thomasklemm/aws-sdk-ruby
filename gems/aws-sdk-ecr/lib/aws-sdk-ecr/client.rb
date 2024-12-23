@@ -2102,10 +2102,11 @@ module Aws::ECR
       req.send_request(options)
     end
 
-    # Retrieves the basic scan type version name.
+    # Retrieves the account setting value for the specified setting name.
     #
     # @option params [required, String] :name
-    #   Basic scan type version name.
+    #   The name of the account setting, such as `BASIC_SCAN_TYPE_VERSION` or
+    #   `REGISTRY_POLICY_SCOPE`.
     #
     # @return [Types::GetAccountSettingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2668,15 +2669,18 @@ module Aws::ECR
       req.send_request(options)
     end
 
-    # Allows you to change the basic scan type version by setting the `name`
-    # parameter to either `CLAIR` to `AWS_NATIVE`.
+    # Allows you to change the basic scan type version or registry policy
+    # scope.
     #
     # @option params [required, String] :name
-    #   Basic scan type version name.
+    #   The name of the account setting, such as `BASIC_SCAN_TYPE_VERSION` or
+    #   `REGISTRY_POLICY_SCOPE`.
     #
     # @option params [required, String] :value
-    #   Setting value that determines what basic scan type is being used:
-    #   `AWS_NATIVE` or `CLAIR`.
+    #   Setting value that is specified. The following are valid values for
+    #   the basic scan type being used: `AWS_NATIVE` or `CLAIR`. The following
+    #   are valid values for the registry policy scope being used: `V1` or
+    #   `V2`.
     #
     # @return [Types::PutAccountSettingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3673,7 +3677,7 @@ module Aws::ECR
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecr'
-      context[:gem_version] = '1.88.0'
+      context[:gem_version] = '1.89.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

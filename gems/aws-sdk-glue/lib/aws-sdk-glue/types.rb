@@ -11111,9 +11111,21 @@ module Aws::Glue
     #   @return [Integer]
     #
     # @!attribute [rw] recursive
-    #   When specified as true, iterates through the account and returns all
-    #   catalog resources (including top-level resources and child
-    #   resources)
+    #   Whether to list all catalogs across the catalog hierarchy, starting
+    #   from the `ParentCatalogId`. Defaults to `false` . When `true`, all
+    #   catalog objects in the `ParentCatalogID` hierarchy are enumerated in
+    #   the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] include_root
+    #   Whether to list the default catalog in the account and region in the
+    #   response. Defaults to `false`. When `true` and `ParentCatalogId =
+    #   NULL | Amazon Web Services Account ID`, all catalogs and the default
+    #   catalog are enumerated in the response.
+    #
+    #   When the `ParentCatalogId` is not equal to null, and this attribute
+    #   is passed as `false` or `true`, an `InvalidInputException` is
+    #   thrown.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogsRequest AWS API Documentation
@@ -11122,7 +11134,8 @@ module Aws::Glue
       :parent_catalog_id,
       :next_token,
       :max_results,
-      :recursive)
+      :recursive,
+      :include_root)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16616,11 +16629,16 @@ module Aws::Glue
     #   `TIMEOUT` status. This value overrides the timeout value set in the
     #   parent job.
     #
-    #   Streaming jobs must have timeout values less than 7 days or 10080
-    #   minutes. When the value is left blank, the job will be restarted
-    #   after 7 days based if you have not setup a maintenance window. If
-    #   you have setup maintenance window, it will be restarted during the
-    #   maintenance window after 7 days.
+    #   Jobs must have timeout values less than 7 days or 10080 minutes.
+    #   Otherwise, the jobs will throw an exception.
+    #
+    #   When the value is left blank, the timeout is defaulted to 2880
+    #   minutes.
+    #
+    #   Any existing Glue jobs that had a timeout value greater than 7 days
+    #   will be defaulted to 7 days. For instance if you have specified a
+    #   timeout of 20 days for a batch job, it will be stopped on the 7th
+    #   day.
     #   @return [Integer]
     #
     # @!attribute [rw] max_capacity
@@ -23977,11 +23995,16 @@ module Aws::Glue
     #   `TIMEOUT` status. This value overrides the timeout value set in the
     #   parent job.
     #
-    #   Streaming jobs must have timeout values less than 7 days or 10080
-    #   minutes. When the value is left blank, the job will be restarted
-    #   after 7 days based if you have not setup a maintenance window. If
-    #   you have setup maintenance window, it will be restarted during the
-    #   maintenance window after 7 days.
+    #   Jobs must have timeout values less than 7 days or 10080 minutes.
+    #   Otherwise, the jobs will throw an exception.
+    #
+    #   When the value is left blank, the timeout is defaulted to 2880
+    #   minutes.
+    #
+    #   Any existing Glue jobs that had a timeout value greater than 7 days
+    #   will be defaulted to 7 days. For instance if you have specified a
+    #   timeout of 20 days for a batch job, it will be stopped on the 7th
+    #   day.
     #   @return [Integer]
     #
     # @!attribute [rw] max_capacity

@@ -240,6 +240,19 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class ClusterVersionInformation
+      attr_accessor cluster_version: ::String
+      attr_accessor cluster_type: ::String
+      attr_accessor default_platform_version: ::String
+      attr_accessor default_version: bool
+      attr_accessor release_date: ::Time
+      attr_accessor end_of_standard_support_date: ::Time
+      attr_accessor end_of_extended_support_date: ::Time
+      attr_accessor status: ("unsupported" | "standard-support" | "extended-support")
+      attr_accessor kubernetes_patch_version: ::String
+      SENSITIVE: []
+    end
+
     class Compatibility
       attr_accessor cluster_version: ::String
       attr_accessor platform_versions: ::Array[::String]
@@ -580,6 +593,23 @@ module Aws::EKS
 
     class DescribeClusterResponse
       attr_accessor cluster: Types::Cluster
+      SENSITIVE: []
+    end
+
+    class DescribeClusterVersionsRequest
+      attr_accessor cluster_type: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor default_only: bool
+      attr_accessor include_all: bool
+      attr_accessor cluster_versions: ::Array[::String]
+      attr_accessor status: ("unsupported" | "standard-support" | "extended-support")
+      SENSITIVE: []
+    end
+
+    class DescribeClusterVersionsResponse
+      attr_accessor next_token: ::String
+      attr_accessor cluster_versions: ::Array[Types::ClusterVersionInformation]
       SENSITIVE: []
     end
 

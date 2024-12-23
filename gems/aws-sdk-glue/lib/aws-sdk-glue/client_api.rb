@@ -3801,6 +3801,7 @@ module Aws::Glue
     GetCatalogsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     GetCatalogsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "MaxResults"))
     GetCatalogsRequest.add_member(:recursive, Shapes::ShapeRef.new(shape: Boolean, location_name: "Recursive"))
+    GetCatalogsRequest.add_member(:include_root, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "IncludeRoot"))
     GetCatalogsRequest.struct_class = Types::GetCatalogsRequest
 
     GetCatalogsResponse.add_member(:catalog_list, Shapes::ShapeRef.new(shape: CatalogList, required: true, location_name: "CatalogList"))

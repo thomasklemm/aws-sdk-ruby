@@ -286,17 +286,14 @@ module Aws::EKS
       include Aws::Structure
     end
 
-    # The summary information about the Amazon EKS add-on compatibility for
-    # the next Kubernetes version for an insight check in the
-    # `UPGRADE_READINESS` category.
+    # Contains compatibility information for an Amazon EKS add-on.
     #
     # @!attribute [rw] name
     #   The name of the Amazon EKS add-on.
     #   @return [String]
     #
     # @!attribute [rw] compatible_versions
-    #   The list of compatible Amazon EKS add-on versions for the next
-    #   Kubernetes version.
+    #   A list of compatible add-on versions.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/AddonCompatibilityDetail AWS API Documentation
@@ -1015,6 +1012,60 @@ module Aws::EKS
       :code,
       :message,
       :resource_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about a specific EKS cluster version.
+    #
+    # @!attribute [rw] cluster_version
+    #   The Kubernetes version for the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_type
+    #   The type of cluster this version is for.
+    #   @return [String]
+    #
+    # @!attribute [rw] default_platform_version
+    #   Default platform version for this Kubernetes version.
+    #   @return [String]
+    #
+    # @!attribute [rw] default_version
+    #   Indicates if this is a default version.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] release_date
+    #   The release date of this cluster version.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_of_standard_support_date
+    #   Date when standard support ends for this version.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_of_extended_support_date
+    #   Date when extended support ends for this version.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   Current status of this cluster version.
+    #   @return [String]
+    #
+    # @!attribute [rw] kubernetes_patch_version
+    #   The patch version of Kubernetes for this cluster version.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/ClusterVersionInformation AWS API Documentation
+    #
+    class ClusterVersionInformation < Struct.new(
+      :cluster_version,
+      :cluster_type,
+      :default_platform_version,
+      :default_version,
+      :release_date,
+      :end_of_standard_support_date,
+      :end_of_extended_support_date,
+      :status,
+      :kubernetes_patch_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2692,6 +2743,65 @@ module Aws::EKS
       include Aws::Structure
     end
 
+    # @!attribute [rw] cluster_type
+    #   The type of cluster to filter versions by.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   Maximum number of results to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Pagination token for the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] default_only
+    #   Filter to show only default versions.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] include_all
+    #   Include all available versions in the response.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] cluster_versions
+    #   List of specific cluster versions to describe.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   Filter versions by their current status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/DescribeClusterVersionsRequest AWS API Documentation
+    #
+    class DescribeClusterVersionsRequest < Struct.new(
+      :cluster_type,
+      :max_results,
+      :next_token,
+      :default_only,
+      :include_all,
+      :cluster_versions,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   Pagination token for the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_versions
+    #   List of cluster version information objects.
+    #   @return [Array<Types::ClusterVersionInformation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/DescribeClusterVersionsResponse AWS API Documentation
+    #
+    class DescribeClusterVersionsResponse < Struct.new(
+      :next_token,
+      :cluster_versions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] id
     #   The ID of the subscription.
     #   @return [String]
@@ -3440,7 +3550,7 @@ module Aws::EKS
     #   @return [Array<Types::DeprecationDetail>]
     #
     # @!attribute [rw] addon_compatibility_details
-    #   A list of `AddonCompatibilityDetail` objects for Amazon EKS add-ons.
+    #   A list of AddonCompatibilityDetail objects for Amazon EKS add-ons.
     #   @return [Array<Types::AddonCompatibilityDetail>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/InsightCategorySpecificSummary AWS API Documentation

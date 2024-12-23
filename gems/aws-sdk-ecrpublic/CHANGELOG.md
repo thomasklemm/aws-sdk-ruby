@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2024-12-23)
+------------------
+
+* Feature - Add support for Dualstack endpoints
+
 1.40.0 (2024-10-18)
 ------------------
 

@@ -2970,6 +2970,71 @@ module Aws::EKS
       req.send_request(options)
     end
 
+    # Lists available Kubernetes versions for Amazon EKS clusters.
+    #
+    # @option params [String] :cluster_type
+    #   The type of cluster to filter versions by.
+    #
+    # @option params [Integer] :max_results
+    #   Maximum number of results to return.
+    #
+    # @option params [String] :next_token
+    #   Pagination token for the next set of results.
+    #
+    # @option params [Boolean] :default_only
+    #   Filter to show only default versions.
+    #
+    # @option params [Boolean] :include_all
+    #   Include all available versions in the response.
+    #
+    # @option params [Array<String>] :cluster_versions
+    #   List of specific cluster versions to describe.
+    #
+    # @option params [String] :status
+    #   Filter versions by their current status.
+    #
+    # @return [Types::DescribeClusterVersionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeClusterVersionsResponse#next_token #next_token} => String
+    #   * {Types::DescribeClusterVersionsResponse#cluster_versions #cluster_versions} => Array&lt;Types::ClusterVersionInformation&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_cluster_versions({
+    #     cluster_type: "String",
+    #     max_results: 1,
+    #     next_token: "String",
+    #     default_only: false,
+    #     include_all: false,
+    #     cluster_versions: ["String"],
+    #     status: "unsupported", # accepts unsupported, standard-support, extended-support
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.cluster_versions #=> Array
+    #   resp.cluster_versions[0].cluster_version #=> String
+    #   resp.cluster_versions[0].cluster_type #=> String
+    #   resp.cluster_versions[0].default_platform_version #=> String
+    #   resp.cluster_versions[0].default_version #=> Boolean
+    #   resp.cluster_versions[0].release_date #=> Time
+    #   resp.cluster_versions[0].end_of_standard_support_date #=> Time
+    #   resp.cluster_versions[0].end_of_extended_support_date #=> Time
+    #   resp.cluster_versions[0].status #=> String, one of "unsupported", "standard-support", "extended-support"
+    #   resp.cluster_versions[0].kubernetes_patch_version #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/DescribeClusterVersions AWS API Documentation
+    #
+    # @overload describe_cluster_versions(params = {})
+    # @param [Hash] params ({})
+    def describe_cluster_versions(params = {}, options = {})
+      req = build_request(:describe_cluster_versions, params)
+      req.send_request(options)
+    end
+
     # Returns descriptive information about a subscription.
     #
     # @option params [required, String] :id
@@ -5352,7 +5417,7 @@ module Aws::EKS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eks'
-      context[:gem_version] = '1.124.0'
+      context[:gem_version] = '1.125.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

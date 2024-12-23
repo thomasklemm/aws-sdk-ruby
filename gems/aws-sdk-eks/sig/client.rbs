@@ -511,6 +511,23 @@ module Aws
                             ) -> _DescribeClusterResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeClusterResponseSuccess
 
+      interface _DescribeClusterVersionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeClusterVersionsResponse]
+        def next_token: () -> ::String
+        def cluster_versions: () -> ::Array[Types::ClusterVersionInformation]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EKS/Client.html#describe_cluster_versions-instance_method
+      def describe_cluster_versions: (
+                                       ?cluster_type: ::String,
+                                       ?max_results: ::Integer,
+                                       ?next_token: ::String,
+                                       ?default_only: bool,
+                                       ?include_all: bool,
+                                       ?cluster_versions: Array[::String],
+                                       ?status: ("unsupported" | "standard-support" | "extended-support")
+                                     ) -> _DescribeClusterVersionsResponseSuccess
+                                   | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeClusterVersionsResponseSuccess
+
       interface _DescribeEksAnywhereSubscriptionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeEksAnywhereSubscriptionResponse]
         def subscription: () -> Types::EksAnywhereSubscription

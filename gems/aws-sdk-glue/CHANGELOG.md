@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.206.0 (2024-12-23)
+------------------
+
+* Feature - Add IncludeRoot parameters to GetCatalogs API to return root catalog.
+
 1.205.0 (2024-12-12)
 ------------------
 
