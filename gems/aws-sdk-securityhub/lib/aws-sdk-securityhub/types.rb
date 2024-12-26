@@ -273,9 +273,9 @@ module Aws::SecurityHub
     # Extended Threat Detection attack sequence. GuardDuty generates an
     # attack sequence finding when multiple events align to a potentially
     # suspicious activity. To receive GuardDuty attack sequence findings in
-    # Security Hub, you must have GuardDuty and GuardDuty S3 Protection
-    # enabled. For more information, see [GuardDuty Extended Threat
-    # Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # Security Hub, you must have GuardDuty enabled. For more information,
+    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
+    # User Guide*.
     #
     #
     #
@@ -310,9 +310,9 @@ module Aws::SecurityHub
     # Detection attack sequence. GuardDuty generates an attack sequence
     # finding when multiple events align to a potentially suspicious
     # activity. To receive GuardDuty attack sequence findings in Security
-    # Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For
-    # more information, see [GuardDuty Extended Threat Detection ][1] in the
-    # *Amazon GuardDuty User Guide*.
+    # Hub, you must have GuardDuty enabled. For more information, see
+    # [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
+    # User Guide*.
     #
     #
     #
@@ -360,9 +360,8 @@ module Aws::SecurityHub
     # sequence. GuardDuty generates an attack sequence finding when multiple
     # events align to a potentially suspicious activity. To receive
     # GuardDuty attack sequence findings in Security Hub, you must have
-    # GuardDuty and GuardDuty S3 Protection enabled. For more information,
-    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
-    # User Guide*.
+    # GuardDuty enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -634,49 +633,23 @@ module Aws::SecurityHub
     # @!attribute [rw] created_at
     #   A timestamp that indicates when the rule was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] updated_at
     #   A timestamp that indicates when the rule was most recently updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -804,108 +777,56 @@ module Aws::SecurityHub
     #   captured by a finding was first observed by the security findings
     #   product.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
     #   Array Members: Minimum number of 1 item. Maximum number of 20 items.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] last_observed_at
-    #   A timestamp that indicates when the potential security issue
-    #   captured by a finding was most recently observed by the security
-    #   findings product.
+    #   A timestamp that indicates when the security findings provider most
+    #   recently observed a change in the resource that is involved in the
+    #   finding.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
     #   Array Members: Minimum number of 1 item. Maximum number of 20 items.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] created_at
     #   A timestamp that indicates when this finding record was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
     #   Array Members: Minimum number of 1 item. Maximum number of 20 items.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] updated_at
     #   A timestamp that indicates when the finding record was most recently
     #   updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
     #   Array Members: Minimum number of 1 item. Maximum number of 20 items.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] confidence
@@ -1094,27 +1015,14 @@ module Aws::SecurityHub
     # @!attribute [rw] note_updated_at
     #   The timestamp of when the note was updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
     #   Array Members: Minimum number of 1 item. Maximum number of 20 items.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] note_updated_by
@@ -1241,49 +1149,23 @@ module Aws::SecurityHub
     # @!attribute [rw] created_at
     #   A timestamp that indicates when the rule was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] updated_at
     #   A timestamp that indicates when the rule was most recently updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -1677,50 +1559,24 @@ module Aws::SecurityHub
     # @!attribute [rw] first_seen
     #   A timestamp that indicates when the API call was first observed.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] last_seen
     #   A timestamp that indicates when the API call was most recently
     #   observed.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsApiCallAction AWS API Documentation
@@ -1945,25 +1801,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_date
     #   Indicates when the API was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] version
@@ -2083,49 +1926,23 @@ module Aws::SecurityHub
     # @!attribute [rw] created_date
     #   Indicates when the stage was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] last_updated_date
     #   Indicates when the stage was most recently updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] web_acl_arn
@@ -2177,25 +1994,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_date
     #   Indicates when the API was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -2302,25 +2106,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_date
     #   Indicates when the stage was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -2338,25 +2129,12 @@ module Aws::SecurityHub
     # @!attribute [rw] last_updated_date
     #   Indicates when the stage was most recently updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] route_settings
@@ -2791,25 +2569,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_time
     #   Indicates when the auto scaling group was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] mixed_instances_policy
@@ -3145,25 +2910,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_time
     #   The creation date and time for the launch configuration.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] ebs_optimized
@@ -3829,25 +3581,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_at
     #   Indicates when the certificate was requested.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] domain_name
@@ -3885,25 +3624,12 @@ module Aws::SecurityHub
     #   Indicates when the certificate was imported. Provided if the
     #   certificate type is `IMPORTED`.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] in_use_by
@@ -3915,25 +3641,12 @@ module Aws::SecurityHub
     #   Indicates when the certificate was issued. Provided if the
     #   certificate type is `AMAZON_ISSUED`.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] issuer
@@ -3955,49 +3668,23 @@ module Aws::SecurityHub
     # @!attribute [rw] not_after
     #   The time after which the certificate becomes invalid.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] not_before
     #   The time before which the certificate is not valid.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] options
@@ -4220,25 +3907,12 @@ module Aws::SecurityHub
     # @!attribute [rw] updated_at
     #   Indicates when the renewal summary was last updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsCertificateManagerCertificateRenewalSummary AWS API Documentation
@@ -4500,25 +4174,12 @@ module Aws::SecurityHub
     # @!attribute [rw] last_modified_time
     #   Indicates when that the distribution was last modified.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] logging
@@ -5908,25 +5569,12 @@ module Aws::SecurityHub
     #   If the billing mode is `PAY_PER_REQUEST`, indicates when the billing
     #   mode was set to that value.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsDynamoDbTableBillingModeSummary AWS API Documentation
@@ -5951,25 +5599,12 @@ module Aws::SecurityHub
     # @!attribute [rw] creation_date_time
     #   Indicates when the table was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] global_secondary_indexes
@@ -6232,49 +5867,23 @@ module Aws::SecurityHub
     # @!attribute [rw] last_decrease_date_time
     #   Indicates when the provisioned throughput was last decreased.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] last_increase_date_time
     #   Indicates when the provisioned throughput was last increased.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] number_of_decreases_today
@@ -6402,25 +6011,12 @@ module Aws::SecurityHub
     # @!attribute [rw] restore_date_time
     #   Indicates the point in time that the table was restored to.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] restore_in_progress
@@ -6444,25 +6040,12 @@ module Aws::SecurityHub
     #   If the key is inaccessible, the date and time when DynamoDB detected
     #   that the key was inaccessible.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -6887,25 +6470,12 @@ module Aws::SecurityHub
     # @!attribute [rw] launched_at
     #   Indicates when the instance was launched.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] network_interfaces
@@ -8403,25 +7973,12 @@ module Aws::SecurityHub
     # @!attribute [rw] attach_time
     #   Indicates when the attachment initiated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] attachment_id
@@ -9005,25 +8562,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_time
     #   Indicates when the volume was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] device_name
@@ -9553,25 +9097,12 @@ module Aws::SecurityHub
     # @!attribute [rw] last_status_change
     #   The date and time of the last change in status.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] outside_ip_address
@@ -9632,25 +9163,12 @@ module Aws::SecurityHub
     # @!attribute [rw] image_published_at
     #   The date and time when the image was pushed to the repository.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsEcrContainerImageDetails AWS API Documentation
@@ -12820,25 +12338,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_time
     #   Indicates when the load balancer was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] dns_name
@@ -13128,25 +12633,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_time
     #   Indicates when the load balancer was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] dns_name
@@ -13704,25 +13196,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_at
     #   Indicates when the IAM access key was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] principal_id
@@ -13794,25 +13273,12 @@ module Aws::SecurityHub
     # @!attribute [rw] creation_date
     #   Indicates when the session was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsIamAccessKeySessionContextAttributes AWS API Documentation
@@ -13889,25 +13355,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the IAM group was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] group_id
@@ -13962,25 +13415,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the instance profile was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] instance_profile_id
@@ -14025,25 +13465,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the role was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] path
@@ -14101,25 +13528,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   When the policy was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] default_version_id
@@ -14158,25 +13572,12 @@ module Aws::SecurityHub
     # @!attribute [rw] update_date
     #   When the policy was most recently updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsIamPolicyDetails AWS API Documentation
@@ -14210,25 +13611,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the version was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsIamPolicyVersion AWS API Documentation
@@ -14255,25 +13643,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the role was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] instance_profile_list
@@ -14346,25 +13721,12 @@ module Aws::SecurityHub
     # @!attribute [rw] create_date
     #   Indicates when the user was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] group_list
@@ -14489,25 +13851,12 @@ module Aws::SecurityHub
     # @!attribute [rw] creation_date
     #   Indicates when the KMS key was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Float]
     #
     # @!attribute [rw] key_id
@@ -14653,25 +14002,12 @@ module Aws::SecurityHub
     # @!attribute [rw] last_modified
     #   Indicates when the function was last updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] layers
@@ -14882,25 +14218,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_date
     #   Indicates when the version was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsLambdaLayerVersionDetails AWS API Documentation
@@ -15902,25 +15225,12 @@ module Aws::SecurityHub
     #   Indicates when the DB cluster was created, in Universal Coordinated
     #   Time (UTC).
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] enabled_cloud_watch_logs_exports
@@ -16146,25 +15456,12 @@ module Aws::SecurityHub
     # @!attribute [rw] snapshot_create_time
     #   Indicates when the snapshot was taken.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] engine
@@ -16193,25 +15490,12 @@ module Aws::SecurityHub
     #   Indicates when the DB cluster was created, in Universal Coordinated
     #   Time (UTC).
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] master_username
@@ -16447,25 +15731,12 @@ module Aws::SecurityHub
     # @!attribute [rw] instance_create_time
     #   Indicates when the DB instance was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
@@ -16566,25 +15837,12 @@ module Aws::SecurityHub
     #   Specifies the latest time to which a database can be restored with
     #   point-in-time restore.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] auto_minor_version_upgrade
@@ -17391,25 +16649,12 @@ module Aws::SecurityHub
     # @!attribute [rw] subscription_creation_time
     #   The datetime when the event notification subscription was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsRdsEventSubscriptionDetails AWS API Documentation
@@ -17594,25 +16839,12 @@ module Aws::SecurityHub
     # @!attribute [rw] defer_maintenance_end_time
     #   The end of the time window for which maintenance was deferred.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] defer_maintenance_identifier
@@ -17622,25 +16854,12 @@ module Aws::SecurityHub
     # @!attribute [rw] defer_maintenance_start_time
     #   The start of the time window for which maintenance was deferred.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsRedshiftClusterDeferredMaintenanceWindow AWS API Documentation
@@ -17688,25 +16907,12 @@ module Aws::SecurityHub
     # @!attribute [rw] cluster_create_time
     #   Indicates when the cluster was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] cluster_identifier
@@ -17803,25 +17009,12 @@ module Aws::SecurityHub
     #   cluster must have a valid snapshot schedule and have backups
     #   enabled.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] expected_next_snapshot_schedule_time_status
@@ -17869,25 +17062,12 @@ module Aws::SecurityHub
     # @!attribute [rw] next_maintenance_window_start_time
     #   Indicates the start of the next maintenance window.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] node_type
@@ -18115,49 +17295,23 @@ module Aws::SecurityHub
     # @!attribute [rw] last_failure_time
     #   The last time when logs failed to be delivered.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] last_successful_delivery_time
     #   The last time that logs were delivered successfully.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] logging_enabled
@@ -18616,25 +17770,12 @@ module Aws::SecurityHub
     # @!attribute [rw] expiration_date
     #   The date when objects are moved or deleted.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] expiration_in_days
@@ -18837,25 +17978,12 @@ module Aws::SecurityHub
     #   A date on which to transition objects to the specified storage
     #   class. If you provide `Date`, you cannot provide `Days`.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] days
@@ -18929,25 +18057,12 @@ module Aws::SecurityHub
     # @!attribute [rw] created_at
     #   Indicates when the S3 bucket was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] server_side_encryption_configuration
@@ -19389,25 +18504,12 @@ module Aws::SecurityHub
     # @!attribute [rw] last_modified
     #   Indicates when the object was last modified.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] etag
@@ -19447,7 +18549,7 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
-    # Provides details about an Amazon SageMaker notebook instance.
+    # Provides details about an Amazon SageMaker AI notebook instance.
     #
     # @!attribute [rw] accelerator_types
     #   A list of Amazon Elastic Inference instance types to associate with
@@ -19462,8 +18564,8 @@ module Aws::SecurityHub
     #   in [CodeCommit][1] or in any other Git repository. These
     #   repositories are cloned at the same level as the default repository
     #   of your notebook instance. For more information, see [Associating
-    #   Git repositories with SageMaker notebook instances][2] in the
-    #   *Amazon SageMaker Developer Guide*.
+    #   Git repositories with SageMaker AI notebook instances][2] in the
+    #   *Amazon SageMaker AI Developer Guide*.
     #
     #
     #
@@ -19478,8 +18580,8 @@ module Aws::SecurityHub
     #   repository in [CodeCommit][1] or in any other Git repository. When
     #   you open a notebook instance, it opens in the directory that
     #   contains this repository. For more information, see [Associating Git
-    #   repositories with SageMaker notebook instances][2] in the *Amazon
-    #   SageMaker Developer Guide*.
+    #   repositories with SageMaker AI notebook instances][2] in the *Amazon
+    #   SageMaker AI Developer Guide*.
     #
     #
     #
@@ -19488,10 +18590,10 @@ module Aws::SecurityHub
     #   @return [String]
     #
     # @!attribute [rw] direct_internet_access
-    #   Sets whether SageMaker provides internet access to the notebook
+    #   Sets whether SageMaker AI provides internet access to the notebook
     #   instance. If you set this to `Disabled`, this notebook instance is
     #   able to access resources only in your VPC, and is not be able to
-    #   connect to SageMaker training and endpoint services unless you
+    #   connect to SageMaker AI training and endpoint services unless you
     #   configure a Network Address Translation (NAT) Gateway in your VPC.
     #   @return [String]
     #
@@ -19510,7 +18612,7 @@ module Aws::SecurityHub
     #
     # @!attribute [rw] kms_key_id
     #   The Amazon Resource Name (ARN) of an Key Management Service (KMS)
-    #   key that SageMaker uses to encrypt data on the storage volume
+    #   key that SageMaker AI uses to encrypt data on the storage volume
     #   attached to your notebook instance. The KMS key you provide must be
     #   enabled. For information, see [Enabling and disabling keys][1] in
     #   the *Key Management Service Developer Guide*.
@@ -19521,7 +18623,7 @@ module Aws::SecurityHub
     #   @return [String]
     #
     # @!attribute [rw] network_interface_id
-    #   The network interface ID that SageMaker created when the instance
+    #   The network interface ID that SageMaker AI created when the instance
     #   was created.
     #   @return [String]
     #
@@ -19781,100 +18883,48 @@ module Aws::SecurityHub
     #   Indicates when the security findings provider first observed the
     #   potential security issue that a finding captured.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] last_observed_at
     #   Indicates when the security findings provider most recently observed
-    #   the potential security issue that a finding captured.
+    #   a change in the resource that is involved in the finding.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] created_at
     #   Indicates when the security findings provider created the potential
     #   security issue that a finding captured.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] updated_at
     #   Indicates when the security findings provider last updated the
     #   finding record.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] severity
@@ -20050,25 +19100,12 @@ module Aws::SecurityHub
     #   A timestamp that indicates when Security Hub received a finding and
     #   begins to process it.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] aws_account_name
@@ -20083,9 +19120,8 @@ module Aws::SecurityHub
     #   attack sequence. GuardDuty generates an attack sequence finding when
     #   multiple events align to a potentially suspicious activity. To
     #   receive GuardDuty attack sequence findings in Security Hub, you must
-    #   have GuardDuty and GuardDuty S3 Protection enabled. For more
-    #   information, see [GuardDuty Extended Threat Detection ][1] in the
-    #   *Amazon GuardDuty User Guide*.
+    #   have GuardDuty enabled. For more information, see [GuardDuty
+    #   Extended Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -20185,101 +19221,49 @@ module Aws::SecurityHub
     #   A timestamp that indicates when the security findings provider first
     #   observed the potential security issue that a finding captured.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] last_observed_at
     #   A timestamp that indicates when the security findings provider most
-    #   recently observed the potential security issue that a finding
-    #   captured.
+    #   recently observed a change in the resource that is involved in the
+    #   finding.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] created_at
     #   A timestamp that indicates when the security findings provider
     #   created the potential security issue that a finding reflects.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] updated_at
     #   A timestamp that indicates when the security findings provider last
     #   updated the finding record.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] severity_product
@@ -20438,49 +19422,23 @@ module Aws::SecurityHub
     # @!attribute [rw] process_launched_at
     #   A timestamp that identifies when the process was launched.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] process_terminated_at
     #   A timestamp that identifies when the process was terminated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] threat_intel_indicator_type
@@ -20498,6 +19456,13 @@ module Aws::SecurityHub
     # @!attribute [rw] threat_intel_indicator_last_observed_at
     #   A timestamp that identifies the last observation of a threat
     #   intelligence indicator.
+    #
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] threat_intel_indicator_source
@@ -20610,25 +19575,12 @@ module Aws::SecurityHub
     # @!attribute [rw] resource_container_launched_at
     #   A timestamp that identifies when the container was started.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Array<Types::DateFilter>]
     #
     # @!attribute [rw] resource_details_other
@@ -23530,25 +22482,12 @@ module Aws::SecurityHub
     # @!attribute [rw] launched_at
     #   Indicates when the container started.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] volume_mounts
@@ -24068,49 +23007,23 @@ module Aws::SecurityHub
     # @!attribute [rw] start
     #   A timestamp that provides the start date for the date filter.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] end
     #   A timestamp that provides the end date for the date filter.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] date_range
@@ -24384,6 +23297,16 @@ module Aws::SecurityHub
     #   If set to `true`, then new controls for enabled standards are
     #   enabled automatically. If set to `false`, then new controls are not
     #   enabled.
+    #
+    #   When you automatically enable new controls, you can interact with
+    #   the controls in the console and programmatically immediately after
+    #   release. However, automatically enabled controls have a temporary
+    #   default status of `DISABLED`. It can take up to several days for
+    #   Security Hub to process the control release and designate the
+    #   control as `ENABLED` in your account. During the processing period,
+    #   you can manually enable or disable a control, and Security Hub will
+    #   maintain that designation regardless of whether you have
+    #   `AutoEnableControls` set to `true`.
     #   @return [Boolean]
     #
     # @!attribute [rw] control_finding_generator
@@ -24614,9 +23537,9 @@ module Aws::SecurityHub
     # GuardDuty Extended Threat Detection attack sequence. GuardDuty
     # generates an attack sequence finding when multiple events align to a
     # potentially suspicious activity. To receive GuardDuty attack sequence
-    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
-    # Protection enabled. For more information, see [GuardDuty Extended
-    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # findings in Security Hub, you must have GuardDuty enabled. For more
+    # information, see [GuardDuty Extended Threat Detection ][1] in the
+    # *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -24973,25 +23896,12 @@ module Aws::SecurityHub
     #   A timestamp that indicates when Security Hub processed the updated
     #   finding record.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] finding_created
@@ -25650,29 +24560,13 @@ module Aws::SecurityHub
     #   response is limited to 100 results, and the maximum time period is
     #   limited to 90 days.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt
+    #   [2]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] end_time
@@ -25692,29 +24586,13 @@ module Aws::SecurityHub
     #   response is limited to 100 results, and the maximum time period is
     #   limited to 90 days.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
-    #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt
+    #   [2]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [Time]
     #
     # @!attribute [rw] next_token
@@ -27244,9 +26122,8 @@ module Aws::SecurityHub
     # attack sequence. GuardDuty generates an attack sequence finding when
     # multiple events align to a potentially suspicious activity. To receive
     # GuardDuty attack sequence findings in Security Hub, you must have
-    # GuardDuty and GuardDuty S3 Protection enabled. For more information,
-    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
-    # User Guide*.
+    # GuardDuty enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -27273,9 +26150,9 @@ module Aws::SecurityHub
     # Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty
     # generates an attack sequence finding when multiple events align to a
     # potentially suspicious activity. To receive GuardDuty attack sequence
-    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
-    # Protection enabled. For more information, see [GuardDuty Extended
-    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # findings in Security Hub, you must have GuardDuty enabled. For more
+    # information, see [GuardDuty Extended Threat Detection ][1] in the
+    # *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -27340,9 +26217,9 @@ module Aws::SecurityHub
     # GuardDuty Extended Threat Detection attack sequence. GuardDuty
     # generates an attack sequence finding when multiple events align to a
     # potentially suspicious activity. To receive GuardDuty attack sequence
-    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
-    # Protection enabled. For more information, see [GuardDuty Extended
-    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # findings in Security Hub, you must have GuardDuty enabled. For more
+    # information, see [GuardDuty Extended Threat Detection ][1] in the
+    # *Amazon GuardDuty User Guide*.
     #
     # This field can provide information about the network endpoints
     # associated with the resource in the attack sequence finding, or about
@@ -27399,9 +26276,9 @@ module Aws::SecurityHub
     # in an Amazon GuardDuty Extended Threat Detection attack sequence.
     # GuardDuty generates an attack sequence finding when multiple events
     # align to a potentially suspicious activity. To receive GuardDuty
-    # attack sequence findings in Security Hub, you must have GuardDuty and
-    # GuardDuty S3 Protection enabled. For more information, see [GuardDuty
-    # Extended Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # attack sequence findings in Security Hub, you must have GuardDuty
+    # enabled. For more information, see [GuardDuty Extended Threat
+    # Detection ][1] in the *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -27531,25 +26408,12 @@ module Aws::SecurityHub
     # @!attribute [rw] updated_at
     #   A timestamp that indicates when the note was updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Note AWS API Documentation
@@ -27907,49 +26771,23 @@ module Aws::SecurityHub
     # @!attribute [rw] operation_start_time
     #   Indicates when the operation started.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] operation_end_time
     #   Indicates when the operation completed.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] reboot_option
@@ -28128,49 +26966,23 @@ module Aws::SecurityHub
     # @!attribute [rw] launched_at
     #   Indicates when the process was launched.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] terminated_at
     #   Indicates when the process was terminated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ProcessDetails AWS API Documentation
@@ -28841,7 +27653,7 @@ module Aws::SecurityHub
     #   @return [Types::AwsEc2LaunchTemplateDetails]
     #
     # @!attribute [rw] aws_sage_maker_notebook_instance
-    #   Provides details about an Amazon SageMaker notebook instance.
+    #   Provides details about an Amazon SageMaker AI notebook instance.
     #   @return [Types::AwsSageMakerNotebookInstanceDetails]
     #
     # @!attribute [rw] aws_wafv_2_web_acl
@@ -29970,9 +28782,9 @@ module Aws::SecurityHub
     # Detection attack sequence finding. GuardDuty generates an attack
     # sequence finding when multiple events align to a potentially
     # suspicious activity. To receive GuardDuty attack sequence findings in
-    # Security Hub, you must have GuardDuty and GuardDuty S3 Protection
-    # enabled. For more information, see [GuardDuty Extended Threat
-    # Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # Security Hub, you must have GuardDuty enabled. For more information,
+    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
+    # User Guide*.
     #
     #
     #
@@ -30252,8 +29064,8 @@ module Aws::SecurityHub
     #
     # @!attribute [rw] severity
     #   The severity associated with the signal. For more information about
-    #   severity, see [Findings severity levels][1] in the *Amazon GuardDuty
-    #   User Guide*.
+    #   severity, see [Severity levels for GuardDuty findings][1] in the
+    #   *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -31244,25 +30056,12 @@ module Aws::SecurityHub
     #   Indicates when the most recent instance of a threat intelligence
     #   indicator was observed.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] source
@@ -31909,6 +30708,16 @@ module Aws::SecurityHub
     #   By default, this is set to `true`, and new controls are enabled
     #   automatically. To not automatically enable new controls, set this to
     #   `false`.
+    #
+    #   When you automatically enable new controls, you can interact with
+    #   the controls in the console and programmatically immediately after
+    #   release. However, automatically enabled controls have a temporary
+    #   default status of `DISABLED`. It can take up to several days for
+    #   Security Hub to process the control release and designate the
+    #   control as `ENABLED` in your account. During the processing period,
+    #   you can manually enable or disable a control, and Security Hub will
+    #   maintain that designation regardless of whether you have
+    #   `AutoEnableControls` set to `true`.
     #   @return [Boolean]
     #
     # @!attribute [rw] control_finding_generator
@@ -31971,9 +30780,9 @@ module Aws::SecurityHub
     # in an Amazon GuardDuty Extended Threat Detection attack sequence.
     # GuardDuty generates an attack sequence finding when multiple events
     # align to a potentially suspicious activity. To receive GuardDuty
-    # attack sequence findings in Security Hub, you must have GuardDuty and
-    # GuardDuty S3 Protection enabled. For more information, see [GuardDuty
-    # Extended Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    # attack sequence findings in Security Hub, you must have GuardDuty
+    # enabled. For more information, see [GuardDuty Extended Threat
+    # Detection ][1] in the *Amazon GuardDuty User Guide*.
     #
     #
     #
@@ -32199,49 +31008,23 @@ module Aws::SecurityHub
     # @!attribute [rw] vendor_created_at
     #   Indicates when the vulnerability advisory was created.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @!attribute [rw] vendor_updated_at
     #   Indicates when the vulnerability advisory was last updated.
     #
-    #   This field accepts only the specified formats. Timestamps can end
-    #   with `Z` or `("+" / "-") time-hour [":" time-minute]`. The
-    #   time-secfrac after seconds is limited to a maximum of 9 digits. The
-    #   offset is bounded by +/-18:00. Here are valid timestamp formats with
-    #   examples:
+    #   For more information about the validation and formatting of
+    #   timestamp fields in Security Hub, see [Timestamps][1].
     #
-    #   * `YYYY-MM-DDTHH:MM:SSZ` (for example, `2019-01-31T23:00:00Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ` (for example,
-    #     `2019-01-31T23:00:00.123456789Z`)
     #
-    #   * `YYYY-MM-DDTHH:MM:SS+HH:MM` (for example,
-    #     `2024-01-04T15:25:10+17:59`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS-HHMM` (for example,
-    #     `2024-01-04T15:25:10-1759`)
-    #
-    #   * `YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM` (for example,
-    #     `2024-01-04T15:25:10.123456789+17:59`)
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/VulnerabilityVendor AWS API Documentation

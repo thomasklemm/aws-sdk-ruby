@@ -1288,6 +1288,7 @@ module Aws::BCMPricingCalculator
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeleteBillEstimateRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteBillEstimateResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
