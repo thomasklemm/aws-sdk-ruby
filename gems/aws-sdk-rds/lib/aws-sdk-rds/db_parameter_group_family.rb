@@ -224,7 +224,10 @@ module Aws::RDS
     #   })
     # @param [Hash] options ({})
     # @option options [Array<Types::Filter>] :filters
-    #   This parameter isn't currently supported.
+    #   A filter that specifies one or more parameters to describe.
+    #
+    #   The only supported filter is `parameter-name`. The results list only
+    #   includes information about the parameters with these names.
     # @return [Parameter::Collection]
     def engine_default_parameters(options = {})
       batches = Enumerator.new do |y|

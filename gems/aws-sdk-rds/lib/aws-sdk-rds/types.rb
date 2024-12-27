@@ -894,10 +894,30 @@ module Aws::RDS
     #
     # @!attribute [rw] enable_log_types
     #   The list of log types to enable.
+    #
+    #   The following values are valid for each DB engine:
+    #
+    #   * Aurora MySQL - `audit | error | general | slowquery`
+    #
+    #   * Aurora PostgreSQL - `postgresql`
+    #
+    #   * RDS for MySQL - `error | general | slowquery`
+    #
+    #   * RDS for PostgreSQL - `postgresql | upgrade`
     #   @return [Array<String>]
     #
     # @!attribute [rw] disable_log_types
     #   The list of log types to disable.
+    #
+    #   The following values are valid for each DB engine:
+    #
+    #   * Aurora MySQL - `audit | error | general | slowquery`
+    #
+    #   * Aurora PostgreSQL - `postgresql`
+    #
+    #   * RDS for MySQL - `error | general | slowquery`
+    #
+    #   * RDS for PostgreSQL - `postgresql | upgrade`
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/CloudwatchLogsExportConfiguration AWS API Documentation
@@ -2851,7 +2871,7 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor
     #   engine upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster
     #   @return [Boolean]
     #
     # @!attribute [rw] monitoring_interval
@@ -2862,7 +2882,7 @@ module Aws::RDS
     #   If `MonitoringRoleArn` is specified, also set `MonitoringInterval`
     #   to a value other than `0`.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values: `0 | 1 | 5 | 10 | 15 | 30 | 60`
     #
@@ -2879,7 +2899,7 @@ module Aws::RDS
     #   If `MonitoringInterval` is set to a value other than `0`, supply a
     #   `MonitoringRoleArn` value.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #
     #
@@ -2887,7 +2907,13 @@ module Aws::RDS
     #   @return [String]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the cluster.
+    #   The mode of Database Insights to enable for the DB cluster.
+    #
+    #   If you set this value to `advanced`, you must also set the
+    #   `PerformanceInsightsEnabled` parameter to `true` and the
+    #   `PerformanceInsightsRetentionPeriod` parameter to 465.
+    #
+    #   Valid for Cluster Type: Aurora DB clusters only
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -2897,7 +2923,7 @@ module Aws::RDS
     #   For more information, see [ Using Amazon Performance Insights][1] in
     #   the *Amazon RDS User Guide*.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #
     #
@@ -2917,13 +2943,13 @@ module Aws::RDS
     #   account has a different default KMS key for each Amazon Web Services
     #   Region.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #   @return [String]
     #
     # @!attribute [rw] performance_insights_retention_period
     #   The number of days to retain Performance Insights data.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values:
     #
@@ -4409,7 +4435,14 @@ module Aws::RDS
     #   @return [Boolean]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the instance.
+    #   The mode of Database Insights to enable for the DB instance.
+    #
+    #   This setting only applies to Amazon Aurora DB instances.
+    #
+    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
+    #   changed.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -5208,7 +5241,11 @@ module Aws::RDS
     #   @return [Boolean]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights.
+    #   The mode of Database Insights to enable for the read replica.
+    #
+    #   <note markdown="1"> Currently, this setting is not supported.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -5491,6 +5528,8 @@ module Aws::RDS
     #   The amount of storage (in gibibytes) to allocate initially for the
     #   read replica. Follow the allocation rules specified in
     #   `CreateDBInstance`.
+    #
+    #   This setting isn't valid for RDS for SQL Server.
     #
     #   <note markdown="1"> Be sure to allocate enough storage for your read replica so that the
     #   create operation can succeed. You can also allocate additional
@@ -7161,32 +7200,35 @@ module Aws::RDS
     # @!attribute [rw] auto_minor_version_upgrade
     #   Indicates whether minor version patches are applied automatically.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is for Aurora DB clusters and Multi-AZ DB clusters.
     #   @return [Boolean]
     #
     # @!attribute [rw] monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is only for -Aurora DB clusters and Multi-AZ DB
+    #   clusters.
     #   @return [Integer]
     #
     # @!attribute [rw] monitoring_role_arn
     #   The ARN for the IAM role that permits RDS to send Enhanced
     #   Monitoring metrics to Amazon CloudWatch Logs.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is only for Aurora DB clusters and Multi-AZ DB
+    #   clusters.
     #   @return [String]
     #
     # @!attribute [rw] database_insights_mode
-    #   The mode of Database Insights that is enabled for the cluster.
+    #   The mode of Database Insights that is enabled for the DB cluster.
     #   @return [String]
     #
     # @!attribute [rw] performance_insights_enabled
     #   Indicates whether Performance Insights is enabled for the DB
     #   cluster.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is only for Aurora DB clusters and Multi-AZ DB
+    #   clusters.
     #   @return [Boolean]
     #
     # @!attribute [rw] performance_insights_kms_key_id
@@ -7196,13 +7238,15 @@ module Aws::RDS
     #   The Amazon Web Services KMS key identifier is the key ARN, key ID,
     #   alias ARN, or alias name for the KMS key.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is only for Aurora DB clusters and Multi-AZ DB
+    #   clusters.
     #   @return [String]
     #
     # @!attribute [rw] performance_insights_retention_period
     #   The number of days to retain Performance Insights data.
     #
-    #   This setting is only for non-Aurora Multi-AZ DB clusters.
+    #   This setting is only for Aurora DB clusters and Multi-AZ DB
+    #   clusters.
     #
     #   Valid Values:
     #
@@ -12510,15 +12554,20 @@ module Aws::RDS
     #
     #   Valid Values:
     #
-    #   * `customer`
+    #   * `engine-default`
     #
-    #   * `engine`
+    #   * `system`
     #
-    #   * `service`
+    #   * `user`
     #   @return [String]
     #
     # @!attribute [rw] filters
-    #   This parameter isn't currently supported.
+    #   A filter that specifies one or more DB cluster parameters to
+    #   describe.
+    #
+    #   The only supported filter is `parameter-name`. The results list only
+    #   includes information about the DB cluster parameters with these
+    #   names.
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -13263,7 +13312,10 @@ module Aws::RDS
     #   @return [String]
     #
     # @!attribute [rw] filters
-    #   This parameter isn't currently supported.
+    #   A filter that specifies one or more DB parameters to describe.
+    #
+    #   The only supported filter is `parameter-name`. The results list only
+    #   includes information about the DB parameters with these names.
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -14233,7 +14285,10 @@ module Aws::RDS
     #   @return [String]
     #
     # @!attribute [rw] filters
-    #   This parameter isn't currently supported.
+    #   A filter that specifies one or more parameters to describe.
+    #
+    #   The only supported filter is `parameter-name`. The results list only
+    #   includes information about the parameters with these names.
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -17730,7 +17785,7 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor
     #   engine upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #   @return [Boolean]
     #
     # @!attribute [rw] monitoring_interval
@@ -17766,7 +17821,17 @@ module Aws::RDS
     #   @return [String]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the cluster.
+    #   Specifies the mode of Database Insights to enable for the DB
+    #   cluster.
+    #
+    #   If you change the value from `standard` to `advanced`, you must set
+    #   the `PerformanceInsightsEnabled` parameter to `true` and the
+    #   `PerformanceInsightsRetentionPeriod` parameter to 465.
+    #
+    #   If you change the value from `advanced` to `standard`, you must set
+    #   the `PerformanceInsightsEnabled` parameter to `false`.
+    #
+    #   Valid for Cluster Type: Aurora DB clusters only
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -17796,13 +17861,13 @@ module Aws::RDS
     #   account has a different default KMS key for each Amazon Web Services
     #   Region.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #   @return [String]
     #
     # @!attribute [rw] performance_insights_retention_period
     #   The number of days to retain Performance Insights data.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values:
     #
@@ -18992,7 +19057,15 @@ module Aws::RDS
     #   @return [Boolean]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the instance.
+    #   Specifies the mode of Database Insights to enable for the DB
+    #   instance.
+    #
+    #   This setting only applies to Amazon Aurora DB instances.
+    #
+    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
+    #   changed.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -19055,6 +19128,29 @@ module Aws::RDS
     #   `ApplyImmediately` parameter has no effect.
     #
     #   This setting doesn't apply to RDS Custom DB instances.
+    #
+    #   The following values are valid for each DB engine:
+    #
+    #   * Aurora MySQL - `audit | error | general | slowquery`
+    #
+    #   * Aurora PostgreSQL - `postgresql`
+    #
+    #   * RDS for MySQL - `error | general | slowquery`
+    #
+    #   * RDS for PostgreSQL - `postgresql | upgrade`
+    #
+    #   For more information about exporting CloudWatch Logs for Amazon RDS,
+    #   see [ Publishing Database Logs to Amazon CloudWatch Logs][1] in the
+    #   *Amazon RDS User Guide*.
+    #
+    #   For more information about exporting CloudWatch Logs for Amazon
+    #   Aurora, see [Publishing Database Logs to Amazon CloudWatch Logs][2]
+    #   in the *Amazon Aurora User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch
     #   @return [Types::CloudwatchLogsExportConfiguration]
     #
     # @!attribute [rw] processor_features
@@ -24967,6 +25063,8 @@ module Aws::RDS
     #   DB instance. Follow the allocation rules specified in
     #   CreateDBInstance.
     #
+    #   This setting isn't valid for RDS for SQL Server.
+    #
     #   <note markdown="1"> Be sure to allocate enough storage for your new DB instance so that
     #   the restore operation can succeed. You can also allocate additional
     #   storage for future growth.
@@ -25124,6 +25222,8 @@ module Aws::RDS
     #   The amount of storage (in gibibytes) to allocate initially for the
     #   DB instance. Follow the allocation rules specified in
     #   `CreateDBInstance`.
+    #
+    #   This setting isn't valid for RDS for SQL Server.
     #
     #   <note markdown="1"> Be sure to allocate enough storage for your new DB instance so that
     #   the restore operation can succeed. You can also allocate additional
@@ -25480,7 +25580,15 @@ module Aws::RDS
     #   @return [String]
     #
     # @!attribute [rw] database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the instance.
+    #   Specifies the mode of Database Insights to enable for the DB
+    #   instance.
+    #
+    #   This setting only applies to Amazon Aurora DB instances.
+    #
+    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
+    #   changed.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -26376,6 +26484,8 @@ module Aws::RDS
     #   The amount of storage (in gibibytes) to allocate initially for the
     #   DB instance. Follow the allocation rules specified in
     #   `CreateDBInstance`.
+    #
+    #   This setting isn't valid for RDS for SQL Server.
     #
     #   <note markdown="1"> Be sure to allocate enough storage for your new DB instance so that
     #   the restore operation can succeed. You can also allocate additional

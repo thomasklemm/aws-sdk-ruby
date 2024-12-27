@@ -541,7 +541,7 @@ module Aws::RDS
 
     # Indicates whether minor version patches are applied automatically.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is for Aurora DB clusters and Multi-AZ DB clusters.
     # @return [Boolean]
     def auto_minor_version_upgrade
       data[:auto_minor_version_upgrade]
@@ -550,7 +550,7 @@ module Aws::RDS
     # The interval, in seconds, between points when Enhanced Monitoring
     # metrics are collected for the DB cluster.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is only for -Aurora DB clusters and Multi-AZ DB clusters.
     # @return [Integer]
     def monitoring_interval
       data[:monitoring_interval]
@@ -559,13 +559,13 @@ module Aws::RDS
     # The ARN for the IAM role that permits RDS to send Enhanced Monitoring
     # metrics to Amazon CloudWatch Logs.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is only for Aurora DB clusters and Multi-AZ DB clusters.
     # @return [String]
     def monitoring_role_arn
       data[:monitoring_role_arn]
     end
 
-    # The mode of Database Insights that is enabled for the cluster.
+    # The mode of Database Insights that is enabled for the DB cluster.
     # @return [String]
     def database_insights_mode
       data[:database_insights_mode]
@@ -573,7 +573,7 @@ module Aws::RDS
 
     # Indicates whether Performance Insights is enabled for the DB cluster.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is only for Aurora DB clusters and Multi-AZ DB clusters.
     # @return [Boolean]
     def performance_insights_enabled
       data[:performance_insights_enabled]
@@ -585,7 +585,7 @@ module Aws::RDS
     # The Amazon Web Services KMS key identifier is the key ARN, key ID,
     # alias ARN, or alias name for the KMS key.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is only for Aurora DB clusters and Multi-AZ DB clusters.
     # @return [String]
     def performance_insights_kms_key_id
       data[:performance_insights_kms_key_id]
@@ -593,7 +593,7 @@ module Aws::RDS
 
     # The number of days to retain Performance Insights data.
     #
-    # This setting is only for non-Aurora Multi-AZ DB clusters.
+    # This setting is only for Aurora DB clusters and Multi-AZ DB clusters.
     #
     # Valid Values:
     #
@@ -1574,7 +1574,7 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB cluster
     # @option options [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster. To turn off collecting
@@ -1583,7 +1583,7 @@ module Aws::RDS
     #   If `MonitoringRoleArn` is specified, also set `MonitoringInterval` to
     #   a value other than `0`.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values: `0 | 1 | 5 | 10 | 15 | 30 | 60`
     #
@@ -1598,20 +1598,26 @@ module Aws::RDS
     #   If `MonitoringInterval` is set to a value other than `0`, supply a
     #   `MonitoringRoleArn` value.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling
     # @option options [String] :database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the cluster.
+    #   The mode of Database Insights to enable for the DB cluster.
+    #
+    #   If you set this value to `advanced`, you must also set the
+    #   `PerformanceInsightsEnabled` parameter to `true` and the
+    #   `PerformanceInsightsRetentionPeriod` parameter to 465.
+    #
+    #   Valid for Cluster Type: Aurora DB clusters only
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
     #   For more information, see [ Using Amazon Performance Insights][1] in
     #   the *Amazon RDS User Guide*.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #
     #
@@ -1628,11 +1634,11 @@ module Aws::RDS
     #   your Amazon Web Services account. Your Amazon Web Services account has
     #   a different default KMS key for each Amazon Web Services Region.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     # @option options [Integer] :performance_insights_retention_period
     #   The number of days to retain Performance Insights data.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values:
     #
@@ -2400,7 +2406,7 @@ module Aws::RDS
     #   the DB cluster during the maintenance window. By default, minor engine
     #   upgrades are applied automatically.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     # @option options [Integer] :monitoring_interval
     #   The interval, in seconds, between points when Enhanced Monitoring
     #   metrics are collected for the DB cluster. To turn off collecting
@@ -2430,7 +2436,16 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.html#USER_Monitoring.OS.IAMRole
     # @option options [String] :database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the cluster.
+    #   Specifies the mode of Database Insights to enable for the DB cluster.
+    #
+    #   If you change the value from `standard` to `advanced`, you must set
+    #   the `PerformanceInsightsEnabled` parameter to `true` and the
+    #   `PerformanceInsightsRetentionPeriod` parameter to 465.
+    #
+    #   If you change the value from `advanced` to `standard`, you must set
+    #   the `PerformanceInsightsEnabled` parameter to `false`.
+    #
+    #   Valid for Cluster Type: Aurora DB clusters only
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
@@ -2454,11 +2469,11 @@ module Aws::RDS
     #   your Amazon Web Services account. Your Amazon Web Services account has
     #   a different default KMS key for each Amazon Web Services Region.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     # @option options [Integer] :performance_insights_retention_period
     #   The number of days to retain Performance Insights data.
     #
-    #   Valid for Cluster Type: Multi-AZ DB clusters only
+    #   Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters
     #
     #   Valid Values:
     #

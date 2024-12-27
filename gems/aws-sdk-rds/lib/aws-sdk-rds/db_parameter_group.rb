@@ -602,7 +602,10 @@ module Aws::RDS
     #
     #   Valid Values: `user | system | engine-default`
     # @option options [Array<Types::Filter>] :filters
-    #   This parameter isn't currently supported.
+    #   A filter that specifies one or more DB parameters to describe.
+    #
+    #   The only supported filter is `parameter-name`. The results list only
+    #   includes information about the DB parameters with these names.
     # @return [Parameter::Collection]
     def parameters(options = {})
       batches = Enumerator.new do |y|

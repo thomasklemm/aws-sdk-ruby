@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.264.0 (2024-12-27)
+------------------
+
+* Feature - Updates Amazon RDS documentation to correct various descriptions.
+
 1.263.0 (2024-12-16)
 ------------------
 

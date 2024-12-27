@@ -1943,7 +1943,14 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     # @option options [String] :database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the instance.
+    #   The mode of Database Insights to enable for the DB instance.
+    #
+    #   This setting only applies to Amazon Aurora DB instances.
+    #
+    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
+    #   changed.
+    #
+    #    </note>
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #   For more information, see [Using Amazon Performance Insights][1] in
@@ -2616,7 +2623,11 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     # @option options [String] :database_insights_mode
-    #   Specifies the mode of Database Insights.
+    #   The mode of Database Insights to enable for the read replica.
+    #
+    #   <note markdown="1"> Currently, this setting is not supported.
+    #
+    #    </note>
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the read replica.
     #
@@ -2854,6 +2865,8 @@ module Aws::RDS
     #   The amount of storage (in gibibytes) to allocate initially for the
     #   read replica. Follow the allocation rules specified in
     #   `CreateDBInstance`.
+    #
+    #   This setting isn't valid for RDS for SQL Server.
     #
     #   <note markdown="1"> Be sure to allocate enough storage for your read replica so that the
     #   create operation can succeed. You can also allocate additional storage
@@ -3786,7 +3799,14 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     # @option options [String] :database_insights_mode
-    #   Specifies the mode of Database Insights to enable for the instance.
+    #   Specifies the mode of Database Insights to enable for the DB instance.
+    #
+    #   This setting only applies to Amazon Aurora DB instances.
+    #
+    #   <note markdown="1"> Currently, this value is inherited from the DB cluster and can't be
+    #   changed.
+    #
+    #    </note>
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #
@@ -3839,6 +3859,29 @@ module Aws::RDS
     #   `ApplyImmediately` parameter has no effect.
     #
     #   This setting doesn't apply to RDS Custom DB instances.
+    #
+    #   The following values are valid for each DB engine:
+    #
+    #   * Aurora MySQL - `audit | error | general | slowquery`
+    #
+    #   * Aurora PostgreSQL - `postgresql`
+    #
+    #   * RDS for MySQL - `error | general | slowquery`
+    #
+    #   * RDS for PostgreSQL - `postgresql | upgrade`
+    #
+    #   For more information about exporting CloudWatch Logs for Amazon RDS,
+    #   see [ Publishing Database Logs to Amazon CloudWatch Logs][1] in the
+    #   *Amazon RDS User Guide*.
+    #
+    #   For more information about exporting CloudWatch Logs for Amazon
+    #   Aurora, see [Publishing Database Logs to Amazon CloudWatch Logs][2] in
+    #   the *Amazon Aurora User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html#USER_LogAccess.Procedural.UploadtoCloudWatch
     # @option options [Array<Types::ProcessorFeature>] :processor_features
     #   The number of CPU cores and the number of threads per core for the DB
     #   instance class of the DB instance.
@@ -4763,6 +4806,8 @@ module Aws::RDS
     # @option options [Integer] :allocated_storage
     #   The amount of storage (in gibibytes) to allocate initially for the DB
     #   instance. Follow the allocation rules specified in `CreateDBInstance`.
+    #
+    #   This setting isn't valid for RDS for SQL Server.
     #
     #   <note markdown="1"> Be sure to allocate enough storage for your new DB instance so that
     #   the restore operation can succeed. You can also allocate additional
