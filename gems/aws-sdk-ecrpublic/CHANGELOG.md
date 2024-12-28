@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.42.0 (2024-12-28)
+------------------
+
+* Feature - Restoring custom endpoint functionality for ECR Public
+
 1.41.0 (2024-12-23)
 ------------------
 
