@@ -587,7 +587,28 @@ module Aws
                            maintenance_start_hour: ::String
                          },
                          ?source_monitoring_config: {
-                           thumbnail_state: ("ENABLED" | "DISABLED")?
+                           thumbnail_state: ("ENABLED" | "DISABLED")?,
+                           audio_monitoring_settings: Array[
+                             {
+                               silent_audio: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?
+                             },
+                           ]?,
+                           content_quality_analysis_state: ("ENABLED" | "DISABLED")?,
+                           video_monitoring_settings: Array[
+                             {
+                               black_frames: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?,
+                               frozen_frames: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?
+                             },
+                           ]?
                          }
                        ) -> _CreateFlowResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateFlowResponseSuccess
@@ -1100,7 +1121,28 @@ module Aws
                            maintenance_start_hour: ::String?
                          },
                          ?source_monitoring_config: {
-                           thumbnail_state: ("ENABLED" | "DISABLED")?
+                           thumbnail_state: ("ENABLED" | "DISABLED")?,
+                           audio_monitoring_settings: Array[
+                             {
+                               silent_audio: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?
+                             },
+                           ]?,
+                           content_quality_analysis_state: ("ENABLED" | "DISABLED")?,
+                           video_monitoring_settings: Array[
+                             {
+                               black_frames: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?,
+                               frozen_frames: {
+                                 state: ("ENABLED" | "DISABLED")?,
+                                 threshold_seconds: ::Integer?
+                               }?
+                             },
+                           ]?
                          }
                        ) -> _UpdateFlowResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateFlowResponseSuccess

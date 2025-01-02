@@ -893,17 +893,20 @@ module Aws::SQS
       include Aws::Structure
     end
 
-    # @!attribute [rw] queue_name
-    #   The name of the queue whose URL must be fetched. Maximum 80
-    #   characters. Valid values: alphanumeric characters, hyphens (`-`),
-    #   and underscores (`_`).
+    # Retrieves the URL of an existing queue based on its name and,
+    # optionally, the Amazon Web Services account ID.
     #
-    #   Queue URLs and names are case-sensitive.
+    # @!attribute [rw] queue_name
+    #   (Required) The name of the queue for which you want to fetch the
+    #   URL. The name can be up to 80 characters long and can include
+    #   alphanumeric characters, hyphens (-), and underscores (\_). Queue
+    #   URLs and names are case-sensitive.
     #   @return [String]
     #
     # @!attribute [rw] queue_owner_aws_account_id
-    #   The Amazon Web Services account ID of the account that created the
-    #   queue.
+    #   (Optional) The Amazon Web Services account ID of the account that
+    #   created the queue. This is only required when you are attempting to
+    #   access a queue owned by another Amazon Web Services account.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sqs-2012-11-05/GetQueueUrlRequest AWS API Documentation
@@ -934,7 +937,7 @@ module Aws::SQS
       include Aws::Structure
     end
 
-    # The `accountId` is invalid.
+    # The specified ID is invalid.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1006,7 +1009,7 @@ module Aws::SQS
       include Aws::Structure
     end
 
-    # When the request to a queue is not HTTPS and SigV4.
+    # The request was not made over HTTPS or did not use SigV4 for signing.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1605,7 +1608,8 @@ module Aws::SQS
       include Aws::Structure
     end
 
-    # The specified queue doesn't exist.
+    # Ensure that the `QueueUrl` is correct and that the queue has not been
+    # deleted.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1646,6 +1650,8 @@ module Aws::SQS
       include Aws::Structure
     end
 
+    # Retrieves one or more messages from a specified queue.
+    #
     # @!attribute [rw] queue_url
     #   The URL of the Amazon SQS queue from which messages are received.
     #
@@ -1653,7 +1659,7 @@ module Aws::SQS
     #   @return [String]
     #
     # @!attribute [rw] attribute_names
-    #   This parameter has been deprecated but will be supported for
+    #   This parameter has been discontinued but will be supported for
     #   backward compatibility. To provide attribute names, you are
     #   encouraged to use `MessageSystemAttributeNames`.
     #
@@ -1780,7 +1786,39 @@ module Aws::SQS
     # @!attribute [rw] visibility_timeout
     #   The duration (in seconds) that the received messages are hidden from
     #   subsequent retrieve requests after being retrieved by a
-    #   `ReceiveMessage` request.
+    #   `ReceiveMessage` request. If not specified, the default visibility
+    #   timeout for the queue is used, which is 30 seconds.
+    #
+    #   Understanding `VisibilityTimeout`:
+    #
+    #   * When a message is received from a queue, it becomes temporarily
+    #     invisible to other consumers for the duration of the visibility
+    #     timeout. This prevents multiple consumers from processing the same
+    #     message simultaneously. If the message is not deleted or its
+    #     visibility timeout is not extended before the timeout expires, it
+    #     becomes visible again and can be retrieved by other consumers.
+    #
+    #   * Setting an appropriate visibility timeout is crucial. If it's too
+    #     short, the message might become visible again before processing is
+    #     complete, leading to duplicate processing. If it's too long, it
+    #     delays the reprocessing of messages if the initial processing
+    #     fails.
+    #
+    #   * You can adjust the visibility timeout using the
+    #     `--visibility-timeout` parameter in the `receive-message` command
+    #     to match the processing time required by your application.
+    #
+    #   * A message that isn't deleted or a message whose visibility isn't
+    #     extended before the visibility timeout expires counts as a failed
+    #     receive. Depending on the configuration of the queue, the message
+    #     might be sent to the dead-letter queue.
+    #
+    #   For more information, see [Visibility Timeout][1] in the *Amazon SQS
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     #   @return [Integer]
     #
     # @!attribute [rw] wait_time_seconds
@@ -1788,7 +1826,9 @@ module Aws::SQS
     #   arrive in the queue before returning. If a message is available, the
     #   call returns sooner than `WaitTimeSeconds`. If no messages are
     #   available and the wait time expires, the call does not return a
-    #   message list.
+    #   message list. If you are using the Java SDK, it returns a
+    #   `ReceiveMessageResponse` object, which has a empty list instead of a
+    #   Null object.
     #
     #   To avoid HTTP errors, ensure that the HTTP response timeout for
     #   `ReceiveMessage` requests is longer than the `WaitTimeSeconds`
@@ -1918,18 +1958,16 @@ module Aws::SQS
 
     # The request was denied due to request throttling.
     #
-    # * The rate of requests per second exceeds the Amazon Web Services KMS
-    #   request quota for an account and Region.
+    # * Exceeds the permitted request rate for the queue or for the
+    #   recipient of the request.
     #
-    # * A burst or sustained high rate of requests to change the state of
-    #   the same KMS key. This condition is often known as a "hot key."
+    # * Ensure that the request rate is within the Amazon SQS limits for
+    #   sending messages. For more information, see [Amazon SQS quotas][1]
+    #   in the *Amazon SQS Developer Guide*.
     #
-    # * Requests for operations on KMS keys in a Amazon Web Services
-    #   CloudHSM key store might be throttled at a lower-than-expected rate
-    #   when the Amazon Web Services CloudHSM cluster associated with the
-    #   Amazon Web Services CloudHSM key store is processing numerous
-    #   commands, including those unrelated to the Amazon Web Services
-    #   CloudHSM key store.
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-quotas.html#quotas-requests
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -2746,7 +2784,16 @@ module Aws::SQS
       include Aws::Structure
     end
 
-    # The batch request contains more entries than permissible.
+    # The batch request contains more entries than permissible. For Amazon
+    # SQS, the maximum number of entries you can include in a single
+    # [SendMessageBatch][1], [DeleteMessageBatch][2], or
+    # [ChangeMessageVisibilityBatch][3] request is 10.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html
+    # [2]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessageBatch.html
+    # [3]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ChangeMessageVisibilityBatch.html
     #
     # @!attribute [rw] message
     #   @return [String]

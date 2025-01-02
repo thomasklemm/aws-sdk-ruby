@@ -556,6 +556,9 @@ module Aws::GameLift
     TargetConfiguration = Shapes::StructureShape.new(name: 'TargetConfiguration')
     TargetTrackingConfiguration = Shapes::StructureShape.new(name: 'TargetTrackingConfiguration')
     TerminalRoutingStrategyException = Shapes::StructureShape.new(name: 'TerminalRoutingStrategyException')
+    TerminateGameSessionInput = Shapes::StructureShape.new(name: 'TerminateGameSessionInput')
+    TerminateGameSessionOutput = Shapes::StructureShape.new(name: 'TerminateGameSessionOutput')
+    TerminationMode = Shapes::StringShape.new(name: 'TerminationMode')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
     UnauthorizedException = Shapes::StructureShape.new(name: 'UnauthorizedException')
     UnsupportedRegionException = Shapes::StructureShape.new(name: 'UnsupportedRegionException')
@@ -2281,6 +2284,13 @@ module Aws::GameLift
     TerminalRoutingStrategyException.add_member(:message, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Message"))
     TerminalRoutingStrategyException.struct_class = Types::TerminalRoutingStrategyException
 
+    TerminateGameSessionInput.add_member(:game_session_id, Shapes::ShapeRef.new(shape: ArnStringModel, required: true, location_name: "GameSessionId"))
+    TerminateGameSessionInput.add_member(:termination_mode, Shapes::ShapeRef.new(shape: TerminationMode, required: true, location_name: "TerminationMode"))
+    TerminateGameSessionInput.struct_class = Types::TerminateGameSessionInput
+
+    TerminateGameSessionOutput.add_member(:game_session, Shapes::ShapeRef.new(shape: GameSession, location_name: "GameSession"))
+    TerminateGameSessionOutput.struct_class = Types::TerminateGameSessionOutput
+
     UnauthorizedException.add_member(:message, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Message"))
     UnauthorizedException.struct_class = Types::UnauthorizedException
 
@@ -3959,6 +3969,20 @@ module Aws::GameLift
         o.errors << Shapes::ShapeRef.new(shape: TaggingFailedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: UnsupportedRegionException)
+      end)
+
+      api.add_operation(:terminate_game_session, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "TerminateGameSession"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: TerminateGameSessionInput)
+        o.output = Shapes::ShapeRef.new(shape: TerminateGameSessionOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidGameSessionStatusException)
+        o.errors << Shapes::ShapeRef.new(shape: NotReadyException)
       end)
 
       api.add_operation(:untag_resource, Seahorse::Model::Operation.new.tap do |o|

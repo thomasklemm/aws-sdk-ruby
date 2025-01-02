@@ -315,6 +315,7 @@ module Aws::MediaConvert
     H264Telecine = Shapes::StringShape.new(name: 'H264Telecine')
     H264TemporalAdaptiveQuantization = Shapes::StringShape.new(name: 'H264TemporalAdaptiveQuantization')
     H264UnregisteredSeiTimecode = Shapes::StringShape.new(name: 'H264UnregisteredSeiTimecode')
+    H264WriteMp4PackagingType = Shapes::StringShape.new(name: 'H264WriteMp4PackagingType')
     H265AdaptiveQuantization = Shapes::StringShape.new(name: 'H265AdaptiveQuantization')
     H265AlternateTransferFunctionSei = Shapes::StringShape.new(name: 'H265AlternateTransferFunctionSei')
     H265CodecLevel = Shapes::StringShape.new(name: 'H265CodecLevel')
@@ -877,7 +878,7 @@ module Aws::MediaConvert
     __stringMin16Max24PatternAZaZ0922AZaZ0916 = Shapes::StringShape.new(name: '__stringMin16Max24PatternAZaZ0922AZaZ0916')
     __stringMin1Max100000 = Shapes::StringShape.new(name: '__stringMin1Max100000')
     __stringMin1Max20 = Shapes::StringShape.new(name: '__stringMin1Max20')
-    __stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09 = Shapes::StringShape.new(name: '__stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09')
+    __stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09 = Shapes::StringShape.new(name: '__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09')
     __stringMin1Max256 = Shapes::StringShape.new(name: '__stringMin1Max256')
     __stringMin1Max50 = Shapes::StringShape.new(name: '__stringMin1Max50')
     __stringMin1Max50PatternAZAZ09 = Shapes::StringShape.new(name: '__stringMin1Max50PatternAZAZ09')
@@ -1657,6 +1658,7 @@ module Aws::MediaConvert
     H264Settings.add_member(:telecine, Shapes::ShapeRef.new(shape: H264Telecine, location_name: "telecine"))
     H264Settings.add_member(:temporal_adaptive_quantization, Shapes::ShapeRef.new(shape: H264TemporalAdaptiveQuantization, location_name: "temporalAdaptiveQuantization"))
     H264Settings.add_member(:unregistered_sei_timecode, Shapes::ShapeRef.new(shape: H264UnregisteredSeiTimecode, location_name: "unregisteredSeiTimecode"))
+    H264Settings.add_member(:write_mp_4_packaging_type, Shapes::ShapeRef.new(shape: H264WriteMp4PackagingType, location_name: "writeMp4PackagingType"))
     H264Settings.struct_class = Types::H264Settings
 
     H265QvbrSettings.add_member(:max_average_bitrate, Shapes::ShapeRef.new(shape: __integerMin1000Max1466400000, location_name: "maxAverageBitrate"))
@@ -1990,7 +1992,7 @@ module Aws::MediaConvert
 
     KantarWatermarkSettings.add_member(:channel_name, Shapes::ShapeRef.new(shape: __stringMin1Max20, location_name: "channelName"))
     KantarWatermarkSettings.add_member(:content_reference, Shapes::ShapeRef.new(shape: __stringMin1Max50PatternAZAZ09, location_name: "contentReference"))
-    KantarWatermarkSettings.add_member(:credentials_secret_name, Shapes::ShapeRef.new(shape: __stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09, location_name: "credentialsSecretName"))
+    KantarWatermarkSettings.add_member(:credentials_secret_name, Shapes::ShapeRef.new(shape: __stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09, location_name: "credentialsSecretName"))
     KantarWatermarkSettings.add_member(:file_offset, Shapes::ShapeRef.new(shape: __doubleMin0, location_name: "fileOffset"))
     KantarWatermarkSettings.add_member(:kantar_license_id, Shapes::ShapeRef.new(shape: __integerMin0Max2147483647, location_name: "kantarLicenseId"))
     KantarWatermarkSettings.add_member(:kantar_server_url, Shapes::ShapeRef.new(shape: __stringPatternHttpsKantarmedia, location_name: "kantarServerUrl"))

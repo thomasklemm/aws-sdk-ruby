@@ -4522,7 +4522,7 @@ module Aws::AppSync
     # @option params [Types::LogConfig] :log_config
     #   The Amazon CloudWatch Logs configuration for the `GraphqlApi` object.
     #
-    # @option params [String] :authentication_type
+    # @option params [required, String] :authentication_type
     #   The new authentication type for the `GraphqlApi` object.
     #
     # @option params [Types::UserPoolConfig] :user_pool_config
@@ -4605,7 +4605,7 @@ module Aws::AppSync
     #       cloud_watch_logs_role_arn: "String", # required
     #       exclude_verbose_content: false,
     #     },
-    #     authentication_type: "API_KEY", # accepts API_KEY, AWS_IAM, AMAZON_COGNITO_USER_POOLS, OPENID_CONNECT, AWS_LAMBDA
+    #     authentication_type: "API_KEY", # required, accepts API_KEY, AWS_IAM, AMAZON_COGNITO_USER_POOLS, OPENID_CONNECT, AWS_LAMBDA
     #     user_pool_config: {
     #       user_pool_id: "String", # required
     #       aws_region: "String", # required
@@ -4980,7 +4980,7 @@ module Aws::AppSync
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-appsync'
-      context[:gem_version] = '1.95.0'
+      context[:gem_version] = '1.96.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

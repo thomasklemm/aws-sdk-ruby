@@ -1240,7 +1240,7 @@ module Aws::GameLift
       attr_accessor current_player_session_count: ::Integer
       attr_accessor maximum_player_session_count: ::Integer
       attr_accessor status: ("ACTIVE" | "ACTIVATING" | "TERMINATED" | "TERMINATING" | "ERROR")
-      attr_accessor status_reason: ("INTERRUPTED")
+      attr_accessor status_reason: ("INTERRUPTED" | "TRIGGERED_ON_PROCESS_TERMINATE" | "FORCE_TERMINATED")
       attr_accessor game_properties: ::Array[Types::GameProperty]
       attr_accessor ip_address: ::String
       attr_accessor dns_name: ::String
@@ -2093,6 +2093,17 @@ module Aws::GameLift
 
     class TerminalRoutingStrategyException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class TerminateGameSessionInput
+      attr_accessor game_session_id: ::String
+      attr_accessor termination_mode: ("TRIGGER_ON_PROCESS_TERMINATE" | "FORCE_TERMINATE")
+      SENSITIVE: []
+    end
+
+    class TerminateGameSessionOutput
+      attr_accessor game_session: Types::GameSession
       SENSITIVE: []
     end
 

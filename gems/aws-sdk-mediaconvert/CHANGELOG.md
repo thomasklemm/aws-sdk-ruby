@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.147.0 (2025-01-02)
+------------------
+
+* Feature - This release adds support for the AVC3 codec and fixes an alignment issue with Japanese vertical captions.
+
 1.146.0 (2024-12-19)
 ------------------
 

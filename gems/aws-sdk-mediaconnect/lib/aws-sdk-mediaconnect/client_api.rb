@@ -38,7 +38,9 @@ module Aws::MediaConnect
     AddMediaStreamRequest = Shapes::StructureShape.new(name: 'AddMediaStreamRequest')
     AddOutputRequest = Shapes::StructureShape.new(name: 'AddOutputRequest')
     Algorithm = Shapes::StringShape.new(name: 'Algorithm')
+    AudioMonitoringSetting = Shapes::StructureShape.new(name: 'AudioMonitoringSetting')
     BadRequestException = Shapes::StructureShape.new(name: 'BadRequestException')
+    BlackFrames = Shapes::StructureShape.new(name: 'BlackFrames')
     Bridge = Shapes::StructureShape.new(name: 'Bridge')
     BridgeFlowOutput = Shapes::StructureShape.new(name: 'BridgeFlowOutput')
     BridgeFlowSource = Shapes::StructureShape.new(name: 'BridgeFlowSource')
@@ -51,6 +53,7 @@ module Aws::MediaConnect
     Colorimetry = Shapes::StringShape.new(name: 'Colorimetry')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ConnectionStatus = Shapes::StringShape.new(name: 'ConnectionStatus')
+    ContentQualityAnalysisState = Shapes::StringShape.new(name: 'ContentQualityAnalysisState')
     CreateBridge420Exception = Shapes::StructureShape.new(name: 'CreateBridge420Exception')
     CreateBridgeRequest = Shapes::StructureShape.new(name: 'CreateBridgeRequest')
     CreateBridgeResponse = Shapes::StructureShape.new(name: 'CreateBridgeResponse')
@@ -103,6 +106,7 @@ module Aws::MediaConnect
     FmtpRequest = Shapes::StructureShape.new(name: 'FmtpRequest')
     ForbiddenException = Shapes::StructureShape.new(name: 'ForbiddenException')
     FrameResolution = Shapes::StructureShape.new(name: 'FrameResolution')
+    FrozenFrames = Shapes::StructureShape.new(name: 'FrozenFrames')
     Gateway = Shapes::StructureShape.new(name: 'Gateway')
     GatewayBridgeSource = Shapes::StructureShape.new(name: 'GatewayBridgeSource')
     GatewayInstance = Shapes::StructureShape.new(name: 'GatewayInstance')
@@ -189,6 +193,7 @@ module Aws::MediaConnect
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
     SetGatewayBridgeSourceRequest = Shapes::StructureShape.new(name: 'SetGatewayBridgeSourceRequest')
     SetSourceRequest = Shapes::StructureShape.new(name: 'SetSourceRequest')
+    SilentAudio = Shapes::StructureShape.new(name: 'SilentAudio')
     Source = Shapes::StructureShape.new(name: 'Source')
     SourcePriority = Shapes::StructureShape.new(name: 'SourcePriority')
     SourceType = Shapes::StringShape.new(name: 'SourceType')
@@ -237,6 +242,7 @@ module Aws::MediaConnect
     UpdateGatewayInstanceResponse = Shapes::StructureShape.new(name: 'UpdateGatewayInstanceResponse')
     UpdateIngressGatewayBridgeRequest = Shapes::StructureShape.new(name: 'UpdateIngressGatewayBridgeRequest')
     UpdateMaintenance = Shapes::StructureShape.new(name: 'UpdateMaintenance')
+    VideoMonitoringSetting = Shapes::StructureShape.new(name: 'VideoMonitoringSetting')
     VpcInterface = Shapes::StructureShape.new(name: 'VpcInterface')
     VpcInterfaceAttachment = Shapes::StructureShape.new(name: 'VpcInterfaceAttachment')
     VpcInterfaceRequest = Shapes::StructureShape.new(name: 'VpcInterfaceRequest')
@@ -247,6 +253,7 @@ module Aws::MediaConnect
     __listOfAddBridgeSourceRequest = Shapes::ListShape.new(name: '__listOfAddBridgeSourceRequest')
     __listOfAddMediaStreamRequest = Shapes::ListShape.new(name: '__listOfAddMediaStreamRequest')
     __listOfAddOutputRequest = Shapes::ListShape.new(name: '__listOfAddOutputRequest')
+    __listOfAudioMonitoringSetting = Shapes::ListShape.new(name: '__listOfAudioMonitoringSetting')
     __listOfBridgeOutput = Shapes::ListShape.new(name: '__listOfBridgeOutput')
     __listOfBridgeSource = Shapes::ListShape.new(name: '__listOfBridgeSource')
     __listOfDestinationConfiguration = Shapes::ListShape.new(name: '__listOfDestinationConfiguration')
@@ -274,6 +281,7 @@ module Aws::MediaConnect
     __listOfSource = Shapes::ListShape.new(name: '__listOfSource')
     __listOfTransportStream = Shapes::ListShape.new(name: '__listOfTransportStream')
     __listOfTransportStreamProgram = Shapes::ListShape.new(name: '__listOfTransportStreamProgram')
+    __listOfVideoMonitoringSetting = Shapes::ListShape.new(name: '__listOfVideoMonitoringSetting')
     __listOfVpcInterface = Shapes::ListShape.new(name: '__listOfVpcInterface')
     __listOfVpcInterfaceRequest = Shapes::ListShape.new(name: '__listOfVpcInterfaceRequest')
     __listOf__integer = Shapes::ListShape.new(name: '__listOf__integer')
@@ -401,8 +409,15 @@ module Aws::MediaConnect
     AddOutputRequest.add_member(:output_status, Shapes::ShapeRef.new(shape: OutputStatus, location_name: "outputStatus"))
     AddOutputRequest.struct_class = Types::AddOutputRequest
 
+    AudioMonitoringSetting.add_member(:silent_audio, Shapes::ShapeRef.new(shape: SilentAudio, location_name: "silentAudio"))
+    AudioMonitoringSetting.struct_class = Types::AudioMonitoringSetting
+
     BadRequestException.add_member(:message, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "message"))
     BadRequestException.struct_class = Types::BadRequestException
+
+    BlackFrames.add_member(:state, Shapes::ShapeRef.new(shape: State, location_name: "state"))
+    BlackFrames.add_member(:threshold_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "thresholdSeconds"))
+    BlackFrames.struct_class = Types::BlackFrames
 
     Bridge.add_member(:bridge_arn, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "bridgeArn"))
     Bridge.add_member(:bridge_messages, Shapes::ShapeRef.new(shape: __listOfMessageDetail, location_name: "bridgeMessages"))
@@ -669,6 +684,10 @@ module Aws::MediaConnect
     FrameResolution.add_member(:frame_width, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "frameWidth"))
     FrameResolution.struct_class = Types::FrameResolution
 
+    FrozenFrames.add_member(:state, Shapes::ShapeRef.new(shape: State, location_name: "state"))
+    FrozenFrames.add_member(:threshold_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "thresholdSeconds"))
+    FrozenFrames.struct_class = Types::FrozenFrames
+
     Gateway.add_member(:egress_cidr_blocks, Shapes::ShapeRef.new(shape: __listOf__string, required: true, location_name: "egressCidrBlocks"))
     Gateway.add_member(:gateway_arn, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "gatewayArn"))
     Gateway.add_member(:gateway_messages, Shapes::ShapeRef.new(shape: __listOfMessageDetail, location_name: "gatewayMessages"))
@@ -888,6 +907,9 @@ module Aws::MediaConnect
     Messages.struct_class = Types::Messages
 
     MonitoringConfig.add_member(:thumbnail_state, Shapes::ShapeRef.new(shape: ThumbnailState, location_name: "thumbnailState"))
+    MonitoringConfig.add_member(:audio_monitoring_settings, Shapes::ShapeRef.new(shape: __listOfAudioMonitoringSetting, location_name: "audioMonitoringSettings"))
+    MonitoringConfig.add_member(:content_quality_analysis_state, Shapes::ShapeRef.new(shape: ContentQualityAnalysisState, location_name: "contentQualityAnalysisState"))
+    MonitoringConfig.add_member(:video_monitoring_settings, Shapes::ShapeRef.new(shape: __listOfVideoMonitoringSetting, location_name: "videoMonitoringSettings"))
     MonitoringConfig.struct_class = Types::MonitoringConfig
 
     MulticastSourceSettings.add_member(:multicast_source_ip, Shapes::ShapeRef.new(shape: __string, location_name: "multicastSourceIp"))
@@ -1038,6 +1060,10 @@ module Aws::MediaConnect
     SetSourceRequest.add_member(:whitelist_cidr, Shapes::ShapeRef.new(shape: __string, location_name: "whitelistCidr"))
     SetSourceRequest.add_member(:gateway_bridge_source, Shapes::ShapeRef.new(shape: SetGatewayBridgeSourceRequest, location_name: "gatewayBridgeSource"))
     SetSourceRequest.struct_class = Types::SetSourceRequest
+
+    SilentAudio.add_member(:state, Shapes::ShapeRef.new(shape: State, location_name: "state"))
+    SilentAudio.add_member(:threshold_seconds, Shapes::ShapeRef.new(shape: __integer, location_name: "thresholdSeconds"))
+    SilentAudio.struct_class = Types::SilentAudio
 
     Source.add_member(:data_transfer_subscriber_fee_percent, Shapes::ShapeRef.new(shape: __integer, location_name: "dataTransferSubscriberFeePercent"))
     Source.add_member(:decryption, Shapes::ShapeRef.new(shape: Encryption, location_name: "decryption"))
@@ -1305,6 +1331,10 @@ module Aws::MediaConnect
     UpdateMaintenance.add_member(:maintenance_start_hour, Shapes::ShapeRef.new(shape: __string, location_name: "maintenanceStartHour"))
     UpdateMaintenance.struct_class = Types::UpdateMaintenance
 
+    VideoMonitoringSetting.add_member(:black_frames, Shapes::ShapeRef.new(shape: BlackFrames, location_name: "blackFrames"))
+    VideoMonitoringSetting.add_member(:frozen_frames, Shapes::ShapeRef.new(shape: FrozenFrames, location_name: "frozenFrames"))
+    VideoMonitoringSetting.struct_class = Types::VideoMonitoringSetting
+
     VpcInterface.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "name"))
     VpcInterface.add_member(:network_interface_ids, Shapes::ShapeRef.new(shape: __listOf__string, required: true, location_name: "networkInterfaceIds"))
     VpcInterface.add_member(:network_interface_type, Shapes::ShapeRef.new(shape: NetworkInterfaceType, required: true, location_name: "networkInterfaceType"))
@@ -1330,6 +1360,8 @@ module Aws::MediaConnect
     __listOfAddMediaStreamRequest.member = Shapes::ShapeRef.new(shape: AddMediaStreamRequest)
 
     __listOfAddOutputRequest.member = Shapes::ShapeRef.new(shape: AddOutputRequest)
+
+    __listOfAudioMonitoringSetting.member = Shapes::ShapeRef.new(shape: AudioMonitoringSetting)
 
     __listOfBridgeOutput.member = Shapes::ShapeRef.new(shape: BridgeOutput)
 
@@ -1384,6 +1416,8 @@ module Aws::MediaConnect
     __listOfTransportStream.member = Shapes::ShapeRef.new(shape: TransportStream)
 
     __listOfTransportStreamProgram.member = Shapes::ShapeRef.new(shape: TransportStreamProgram)
+
+    __listOfVideoMonitoringSetting.member = Shapes::ShapeRef.new(shape: VideoMonitoringSetting)
 
     __listOfVpcInterface.member = Shapes::ShapeRef.new(shape: VpcInterface)
 

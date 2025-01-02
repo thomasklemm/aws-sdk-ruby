@@ -308,14 +308,14 @@ module Aws::SQS
     #   })
     # @param [Hash] options ({})
     # @option options [required, String] :queue_name
-    #   The name of the queue whose URL must be fetched. Maximum 80
-    #   characters. Valid values: alphanumeric characters, hyphens (`-`), and
-    #   underscores (`_`).
-    #
-    #   Queue URLs and names are case-sensitive.
+    #   (Required) The name of the queue for which you want to fetch the URL.
+    #   The name can be up to 80 characters long and can include alphanumeric
+    #   characters, hyphens (-), and underscores (\_). Queue URLs and names
+    #   are case-sensitive.
     # @option options [String] :queue_owner_aws_account_id
-    #   The Amazon Web Services account ID of the account that created the
-    #   queue.
+    #   (Optional) The Amazon Web Services account ID of the account that
+    #   created the queue. This is only required when you are attempting to
+    #   access a queue owned by another Amazon Web Services account.
     # @return [Queue]
     def get_queue_by_name(options = {})
       resp = Aws::Plugins::UserAgent.metric('RESOURCE_MODEL') do

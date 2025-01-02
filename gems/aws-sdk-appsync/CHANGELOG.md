@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.96.0 (2025-01-02)
+------------------
+
+* Feature - Modify UpdateGraphQLAPI operation and flag authenticationType as required.
+
 1.95.0 (2024-12-09)
 ------------------
 

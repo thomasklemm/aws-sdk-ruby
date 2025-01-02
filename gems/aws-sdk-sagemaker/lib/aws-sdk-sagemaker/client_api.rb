@@ -2566,6 +2566,7 @@ module Aws::SageMaker
     AdditionalS3DataSource.add_member(:s3_data_type, Shapes::ShapeRef.new(shape: AdditionalS3DataSourceDataType, required: true, location_name: "S3DataType"))
     AdditionalS3DataSource.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "S3Uri"))
     AdditionalS3DataSource.add_member(:compression_type, Shapes::ShapeRef.new(shape: CompressionType, location_name: "CompressionType"))
+    AdditionalS3DataSource.add_member(:etag, Shapes::ShapeRef.new(shape: String, location_name: "ETag"))
     AdditionalS3DataSource.struct_class = Types::AdditionalS3DataSource
 
     AgentVersion.add_member(:version, Shapes::ShapeRef.new(shape: EdgeVersion, required: true, location_name: "Version"))
@@ -8466,6 +8467,7 @@ module Aws::SageMaker
     ModelPackageContainerDefinition.add_member(:framework_version, Shapes::ShapeRef.new(shape: ModelPackageFrameworkVersion, location_name: "FrameworkVersion"))
     ModelPackageContainerDefinition.add_member(:nearest_model_name, Shapes::ShapeRef.new(shape: String, location_name: "NearestModelName"))
     ModelPackageContainerDefinition.add_member(:additional_s3_data_source, Shapes::ShapeRef.new(shape: AdditionalS3DataSource, location_name: "AdditionalS3DataSource"))
+    ModelPackageContainerDefinition.add_member(:model_data_etag, Shapes::ShapeRef.new(shape: String, location_name: "ModelDataETag"))
     ModelPackageContainerDefinition.struct_class = Types::ModelPackageContainerDefinition
 
     ModelPackageContainerDefinitionList.member = Shapes::ShapeRef.new(shape: ModelPackageContainerDefinition)
@@ -9682,6 +9684,8 @@ module Aws::SageMaker
     S3ModelDataSource.add_member(:model_access_config, Shapes::ShapeRef.new(shape: ModelAccessConfig, location_name: "ModelAccessConfig"))
     S3ModelDataSource.add_member(:hub_access_config, Shapes::ShapeRef.new(shape: InferenceHubAccessConfig, location_name: "HubAccessConfig"))
     S3ModelDataSource.add_member(:manifest_s3_uri, Shapes::ShapeRef.new(shape: S3ModelUri, location_name: "ManifestS3Uri"))
+    S3ModelDataSource.add_member(:etag, Shapes::ShapeRef.new(shape: String, location_name: "ETag"))
+    S3ModelDataSource.add_member(:manifest_etag, Shapes::ShapeRef.new(shape: String, location_name: "ManifestEtag"))
     S3ModelDataSource.struct_class = Types::S3ModelDataSource
 
     S3Presign.add_member(:iam_policy_constraints, Shapes::ShapeRef.new(shape: IamPolicyConstraints, location_name: "IamPolicyConstraints"))
@@ -9848,6 +9852,7 @@ module Aws::SageMaker
 
     SourceAlgorithm.add_member(:model_data_url, Shapes::ShapeRef.new(shape: Url, location_name: "ModelDataUrl"))
     SourceAlgorithm.add_member(:model_data_source, Shapes::ShapeRef.new(shape: ModelDataSource, location_name: "ModelDataSource"))
+    SourceAlgorithm.add_member(:model_data_etag, Shapes::ShapeRef.new(shape: String, location_name: "ModelDataETag"))
     SourceAlgorithm.add_member(:algorithm_name, Shapes::ShapeRef.new(shape: ArnOrName, required: true, location_name: "AlgorithmName"))
     SourceAlgorithm.struct_class = Types::SourceAlgorithm
 

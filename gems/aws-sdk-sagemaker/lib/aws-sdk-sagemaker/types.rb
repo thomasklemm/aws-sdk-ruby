@@ -263,12 +263,17 @@ module Aws::SageMaker
     #   is not compressed.
     #   @return [String]
     #
+    # @!attribute [rw] etag
+    #   The ETag associated with S3 URI.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/AdditionalS3DataSource AWS API Documentation
     #
     class AdditionalS3DataSource < Struct.new(
       :s3_data_type,
       :s3_uri,
-      :compression_type)
+      :compression_type,
+      :etag)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -34761,6 +34766,10 @@ module Aws::SageMaker
     #   Docker container for your model package.
     #   @return [Types::AdditionalS3DataSource]
     #
+    # @!attribute [rw] model_data_etag
+    #   The ETag associated with Model Data URL.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelPackageContainerDefinition AWS API Documentation
     #
     class ModelPackageContainerDefinition < Struct.new(
@@ -34775,7 +34784,8 @@ module Aws::SageMaker
       :framework,
       :framework_version,
       :nearest_model_name,
-      :additional_s3_data_source)
+      :additional_s3_data_source,
+      :model_data_etag)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -41805,6 +41815,14 @@ module Aws::SageMaker
     #   file that stores the artifact locations.
     #   @return [String]
     #
+    # @!attribute [rw] etag
+    #   The ETag associated with S3 URI.
+    #   @return [String]
+    #
+    # @!attribute [rw] manifest_etag
+    #   The ETag associated with Manifest S3URI.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/S3ModelDataSource AWS API Documentation
     #
     class S3ModelDataSource < Struct.new(
@@ -41813,7 +41831,9 @@ module Aws::SageMaker
       :compression_type,
       :model_access_config,
       :hub_access_config,
-      :manifest_s3_uri)
+      :manifest_s3_uri,
+      :etag,
+      :manifest_etag)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -42905,6 +42925,10 @@ module Aws::SageMaker
     #   creation.
     #   @return [Types::ModelDataSource]
     #
+    # @!attribute [rw] model_data_etag
+    #   The ETag associated with Model Data URL.
+    #   @return [String]
+    #
     # @!attribute [rw] algorithm_name
     #   The name of an algorithm that was used to create the model package.
     #   The algorithm must be either an algorithm resource in your SageMaker
@@ -42917,6 +42941,7 @@ module Aws::SageMaker
     class SourceAlgorithm < Struct.new(
       :model_data_url,
       :model_data_source,
+      :model_data_etag,
       :algorithm_name)
       SENSITIVE = []
       include Aws::Structure

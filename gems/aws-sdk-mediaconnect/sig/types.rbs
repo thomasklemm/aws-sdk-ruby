@@ -171,8 +171,19 @@ module Aws::MediaConnect
       SENSITIVE: []
     end
 
+    class AudioMonitoringSetting
+      attr_accessor silent_audio: Types::SilentAudio
+      SENSITIVE: []
+    end
+
     class BadRequestException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class BlackFrames
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor threshold_seconds: ::Integer
       SENSITIVE: []
     end
 
@@ -549,6 +560,12 @@ module Aws::MediaConnect
       SENSITIVE: []
     end
 
+    class FrozenFrames
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor threshold_seconds: ::Integer
+      SENSITIVE: []
+    end
+
     class Gateway
       attr_accessor egress_cidr_blocks: ::Array[::String]
       attr_accessor gateway_arn: ::String
@@ -859,6 +876,9 @@ module Aws::MediaConnect
 
     class MonitoringConfig
       attr_accessor thumbnail_state: ("ENABLED" | "DISABLED")
+      attr_accessor audio_monitoring_settings: ::Array[Types::AudioMonitoringSetting]
+      attr_accessor content_quality_analysis_state: ("ENABLED" | "DISABLED")
+      attr_accessor video_monitoring_settings: ::Array[Types::VideoMonitoringSetting]
       SENSITIVE: []
     end
 
@@ -1060,6 +1080,12 @@ module Aws::MediaConnect
       attr_accessor vpc_interface_name: ::String
       attr_accessor whitelist_cidr: ::String
       attr_accessor gateway_bridge_source: Types::SetGatewayBridgeSourceRequest
+      SENSITIVE: []
+    end
+
+    class SilentAudio
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor threshold_seconds: ::Integer
       SENSITIVE: []
     end
 
@@ -1412,6 +1438,12 @@ module Aws::MediaConnect
       attr_accessor maintenance_day: ("Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday")
       attr_accessor maintenance_scheduled_date: ::String
       attr_accessor maintenance_start_hour: ::String
+      SENSITIVE: []
+    end
+
+    class VideoMonitoringSetting
+      attr_accessor black_frames: Types::BlackFrames
+      attr_accessor frozen_frames: Types::FrozenFrames
       SENSITIVE: []
     end
 

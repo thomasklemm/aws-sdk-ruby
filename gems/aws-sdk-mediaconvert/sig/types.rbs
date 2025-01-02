@@ -954,6 +954,7 @@ module Aws::MediaConvert
       attr_accessor telecine: ("NONE" | "SOFT" | "HARD")
       attr_accessor temporal_adaptive_quantization: ("DISABLED" | "ENABLED")
       attr_accessor unregistered_sei_timecode: ("DISABLED" | "ENABLED")
+      attr_accessor write_mp_4_packaging_type: ("AVC1" | "AVC3")
       SENSITIVE: []
     end
 

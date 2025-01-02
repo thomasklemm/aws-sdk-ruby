@@ -71,6 +71,7 @@ module Aws::SageMaker
       attr_accessor s3_data_type: ("S3Object" | "S3Prefix")
       attr_accessor s3_uri: ::String
       attr_accessor compression_type: ("None" | "Gzip")
+      attr_accessor etag: ::String
       SENSITIVE: []
     end
 
@@ -7374,6 +7375,7 @@ module Aws::SageMaker
       attr_accessor framework_version: ::String
       attr_accessor nearest_model_name: ::String
       attr_accessor additional_s3_data_source: Types::AdditionalS3DataSource
+      attr_accessor model_data_etag: ::String
       SENSITIVE: []
     end
 
@@ -8785,6 +8787,8 @@ module Aws::SageMaker
       attr_accessor model_access_config: Types::ModelAccessConfig
       attr_accessor hub_access_config: Types::InferenceHubAccessConfig
       attr_accessor manifest_s3_uri: ::String
+      attr_accessor etag: ::String
+      attr_accessor manifest_etag: ::String
       SENSITIVE: []
     end
 
@@ -8996,6 +9000,7 @@ module Aws::SageMaker
     class SourceAlgorithm
       attr_accessor model_data_url: ::String
       attr_accessor model_data_source: Types::ModelDataSource
+      attr_accessor model_data_etag: ::String
       attr_accessor algorithm_name: ::String
       SENSITIVE: []
     end

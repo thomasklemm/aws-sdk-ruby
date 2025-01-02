@@ -480,6 +480,13 @@ module Aws::Organizations
     #   hour, if the command continues to fail with this error, contact
     #   [Amazon Web Services Support][2].
     #
+    # * ALL\_FEATURES\_MIGRATION\_ORGANIZATION\_SIZE\_LIMIT\_EXCEEDED: Your
+    #   organization has more than 5000 accounts, and you can only use the
+    #   standard migration process for organizations with less than 5000
+    #   accounts. Use the assisted migration process to enable all features
+    #   mode, or create a support case for assistance if you are unable to
+    #   use assisted migration.
+    #
     # * CANNOT\_REGISTER\_SUSPENDED\_ACCOUNT\_AS\_DELEGATED\_ADMINISTRATOR:
     #   You cannot register a suspended account as a delegated
     #   administrator.

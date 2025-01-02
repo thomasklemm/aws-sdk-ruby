@@ -599,6 +599,20 @@ module Aws::MediaConnect
       include Aws::Structure
     end
 
+    # Specifies the configuration for audio stream metrics monitoring.
+    #
+    # @!attribute [rw] silent_audio
+    #   Detects periods of silence.
+    #   @return [Types::SilentAudio]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/AudioMonitoringSetting AWS API Documentation
+    #
+    class AudioMonitoringSetting < Struct.new(
+      :silent_audio)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Exception raised by AWS Elemental MediaConnect. See the error message
     # and documentation for the operation for more information on the cause
     # of this exception.
@@ -610,6 +624,26 @@ module Aws::MediaConnect
     #
     class BadRequestException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configures settings for the BlackFrames metric.
+    #
+    # @!attribute [rw] state
+    #   Indicates whether the BlackFrames metric is enabled or disabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] threshold_seconds
+    #   Specifies the number of consecutive seconds of black frames that
+    #   triggers an event or alert.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/BlackFrames AWS API Documentation
+    #
+    class BlackFrames < Struct.new(
+      :state,
+      :threshold_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1950,6 +1984,26 @@ module Aws::MediaConnect
       include Aws::Structure
     end
 
+    # Configures settings for the FrozenFrames metric.
+    #
+    # @!attribute [rw] state
+    #   Indicates whether the FrozenFrames metric is enabled or disabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] threshold_seconds
+    #   Specifies the number of consecutive seconds of a static image that
+    #   triggers an event or alert.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/FrozenFrames AWS API Documentation
+    #
+    class FrozenFrames < Struct.new(
+      :state,
+      :threshold_seconds)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The settings for a gateway, including its networks.
     #
     # @!attribute [rw] egress_cidr_blocks
@@ -3097,10 +3151,25 @@ module Aws::MediaConnect
     #   The state of thumbnail monitoring.
     #   @return [String]
     #
+    # @!attribute [rw] audio_monitoring_settings
+    #   Contains the settings for audio stream metrics monitoring.
+    #   @return [Array<Types::AudioMonitoringSetting>]
+    #
+    # @!attribute [rw] content_quality_analysis_state
+    #   Indicates whether content quality analysis is enabled or disabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] video_monitoring_settings
+    #   Contains the settings for video stream metrics monitoring.
+    #   @return [Array<Types::VideoMonitoringSetting>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/MonitoringConfig AWS API Documentation
     #
     class MonitoringConfig < Struct.new(
-      :thumbnail_state)
+      :thumbnail_state,
+      :audio_monitoring_settings,
+      :content_quality_analysis_state,
+      :video_monitoring_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3875,6 +3944,26 @@ module Aws::MediaConnect
       :vpc_interface_name,
       :whitelist_cidr,
       :gateway_bridge_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configures settings for the SilentAudio metric.
+    #
+    # @!attribute [rw] state
+    #   Indicates whether the SilentAudio metric is enabled or disabled.
+    #   @return [String]
+    #
+    # @!attribute [rw] threshold_seconds
+    #   Specifies the number of consecutive seconds of silence that triggers
+    #   an event or alert.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/SilentAudio AWS API Documentation
+    #
+    class SilentAudio < Struct.new(
+      :state,
+      :threshold_seconds)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5267,6 +5356,25 @@ module Aws::MediaConnect
       :maintenance_day,
       :maintenance_scheduled_date,
       :maintenance_start_hour)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the configuration for video stream metrics monitoring.
+    #
+    # @!attribute [rw] black_frames
+    #   Detects video frames that are black.
+    #   @return [Types::BlackFrames]
+    #
+    # @!attribute [rw] frozen_frames
+    #   Detects video frames that have not changed.
+    #   @return [Types::FrozenFrames]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/VideoMonitoringSetting AWS API Documentation
+    #
+    class VideoMonitoringSetting < Struct.new(
+      :black_frames,
+      :frozen_frames)
       SENSITIVE = []
       include Aws::Structure
     end

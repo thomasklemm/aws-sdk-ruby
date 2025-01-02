@@ -1630,6 +1630,17 @@ module Aws
                         ) -> _TagResourceResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
 
+      interface _TerminateGameSessionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TerminateGameSessionOutput]
+        def game_session: () -> Types::GameSession
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/GameLift/Client.html#terminate_game_session-instance_method
+      def terminate_game_session: (
+                                    game_session_id: ::String,
+                                    termination_mode: ("TRIGGER_ON_PROCESS_TERMINATE" | "FORCE_TERMINATE")
+                                  ) -> _TerminateGameSessionResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TerminateGameSessionResponseSuccess
+
       interface _UntagResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
       end

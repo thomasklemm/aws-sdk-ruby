@@ -1209,7 +1209,8 @@ module Aws
                                         syntax: ("DEFAULT" | "RP2027")?,
                                         telecine: ("NONE" | "SOFT" | "HARD")?,
                                         temporal_adaptive_quantization: ("DISABLED" | "ENABLED")?,
-                                        unregistered_sei_timecode: ("DISABLED" | "ENABLED")?
+                                        unregistered_sei_timecode: ("DISABLED" | "ENABLED")?,
+                                        write_mp_4_packaging_type: ("AVC1" | "AVC3")?
                                       }?,
                                       h265_settings: {
                                         adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX" | "AUTO")?,
@@ -2657,7 +2658,8 @@ module Aws
                                                  syntax: ("DEFAULT" | "RP2027")?,
                                                  telecine: ("NONE" | "SOFT" | "HARD")?,
                                                  temporal_adaptive_quantization: ("DISABLED" | "ENABLED")?,
-                                                 unregistered_sei_timecode: ("DISABLED" | "ENABLED")?
+                                                 unregistered_sei_timecode: ("DISABLED" | "ENABLED")?,
+                                                 write_mp_4_packaging_type: ("AVC1" | "AVC3")?
                                                }?,
                                                h265_settings: {
                                                  adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX" | "AUTO")?,
@@ -3487,7 +3489,8 @@ module Aws
                                    syntax: ("DEFAULT" | "RP2027")?,
                                    telecine: ("NONE" | "SOFT" | "HARD")?,
                                    temporal_adaptive_quantization: ("DISABLED" | "ENABLED")?,
-                                   unregistered_sei_timecode: ("DISABLED" | "ENABLED")?
+                                   unregistered_sei_timecode: ("DISABLED" | "ENABLED")?,
+                                   write_mp_4_packaging_type: ("AVC1" | "AVC3")?
                                  }?,
                                  h265_settings: {
                                    adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX" | "AUTO")?,
@@ -5173,7 +5176,8 @@ module Aws
                                                  syntax: ("DEFAULT" | "RP2027")?,
                                                  telecine: ("NONE" | "SOFT" | "HARD")?,
                                                  temporal_adaptive_quantization: ("DISABLED" | "ENABLED")?,
-                                                 unregistered_sei_timecode: ("DISABLED" | "ENABLED")?
+                                                 unregistered_sei_timecode: ("DISABLED" | "ENABLED")?,
+                                                 write_mp_4_packaging_type: ("AVC1" | "AVC3")?
                                                }?,
                                                h265_settings: {
                                                  adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX" | "AUTO")?,
@@ -6002,7 +6006,8 @@ module Aws
                                    syntax: ("DEFAULT" | "RP2027")?,
                                    telecine: ("NONE" | "SOFT" | "HARD")?,
                                    temporal_adaptive_quantization: ("DISABLED" | "ENABLED")?,
-                                   unregistered_sei_timecode: ("DISABLED" | "ENABLED")?
+                                   unregistered_sei_timecode: ("DISABLED" | "ENABLED")?,
+                                   write_mp_4_packaging_type: ("AVC1" | "AVC3")?
                                  }?,
                                  h265_settings: {
                                    adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX" | "AUTO")?,

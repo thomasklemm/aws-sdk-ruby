@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.90.0 (2025-01-02)
+------------------
+
+* Feature - In-flight message typo fix from 20k to 120k.
+
 1.89.0 (2024-11-18)
 ------------------
 

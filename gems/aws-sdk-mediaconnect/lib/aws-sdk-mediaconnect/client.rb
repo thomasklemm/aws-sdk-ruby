@@ -1338,6 +1338,27 @@ module Aws::MediaConnect
     #     },
     #     source_monitoring_config: {
     #       thumbnail_state: "ENABLED", # accepts ENABLED, DISABLED
+    #       audio_monitoring_settings: [
+    #         {
+    #           silent_audio: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #         },
+    #       ],
+    #       content_quality_analysis_state: "ENABLED", # accepts ENABLED, DISABLED
+    #       video_monitoring_settings: [
+    #         {
+    #           black_frames: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #           frozen_frames: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #         },
+    #       ],
     #     },
     #   })
     #
@@ -1535,6 +1556,15 @@ module Aws::MediaConnect
     #   resp.flow.maintenance.maintenance_scheduled_date #=> String
     #   resp.flow.maintenance.maintenance_start_hour #=> String
     #   resp.flow.source_monitoring_config.thumbnail_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.content_quality_analysis_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.threshold_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/CreateFlow AWS API Documentation
     #
@@ -1997,6 +2027,15 @@ module Aws::MediaConnect
     #   resp.flow.maintenance.maintenance_scheduled_date #=> String
     #   resp.flow.maintenance.maintenance_start_hour #=> String
     #   resp.flow.source_monitoring_config.thumbnail_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.content_quality_analysis_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.threshold_seconds #=> Integer
     #   resp.messages.errors #=> Array
     #   resp.messages.errors[0] #=> String
     #
@@ -3331,6 +3370,27 @@ module Aws::MediaConnect
     #     },
     #     source_monitoring_config: {
     #       thumbnail_state: "ENABLED", # accepts ENABLED, DISABLED
+    #       audio_monitoring_settings: [
+    #         {
+    #           silent_audio: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #         },
+    #       ],
+    #       content_quality_analysis_state: "ENABLED", # accepts ENABLED, DISABLED
+    #       video_monitoring_settings: [
+    #         {
+    #           black_frames: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #           frozen_frames: {
+    #             state: "ENABLED", # accepts ENABLED, DISABLED
+    #             threshold_seconds: 1,
+    #           },
+    #         },
+    #       ],
     #     },
     #   })
     #
@@ -3528,6 +3588,15 @@ module Aws::MediaConnect
     #   resp.flow.maintenance.maintenance_scheduled_date #=> String
     #   resp.flow.maintenance.maintenance_start_hour #=> String
     #   resp.flow.source_monitoring_config.thumbnail_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.audio_monitoring_settings[0].silent_audio.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.content_quality_analysis_state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings #=> Array
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].black_frames.threshold_seconds #=> Integer
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.state #=> String, one of "ENABLED", "DISABLED"
+    #   resp.flow.source_monitoring_config.video_monitoring_settings[0].frozen_frames.threshold_seconds #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/UpdateFlow AWS API Documentation
     #
@@ -4136,7 +4205,7 @@ module Aws::MediaConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconnect'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

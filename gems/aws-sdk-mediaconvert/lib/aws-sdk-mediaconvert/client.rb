@@ -1164,6 +1164,7 @@ module Aws::MediaConvert
     #             telecine: "NONE", # accepts NONE, SOFT, HARD
     #             temporal_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             unregistered_sei_timecode: "DISABLED", # accepts DISABLED, ENABLED
+    #             write_mp_4_packaging_type: "AVC1", # accepts AVC1, AVC3
     #           },
     #           h265_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, LOW, MEDIUM, HIGH, HIGHER, MAX, AUTO
@@ -1875,6 +1876,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.telecine #=> String, one of "NONE", "SOFT", "HARD"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.temporal_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.unregistered_sei_timecode #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.write_mp_4_packaging_type #=> String, one of "AVC1", "AVC3"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX", "AUTO"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.alternate_transfer_function_sei #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
@@ -2851,6 +2853,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.telecine #=> String, one of "NONE", "SOFT", "HARD"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.temporal_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.unregistered_sei_timecode #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.write_mp_4_packaging_type #=> String, one of "AVC1", "AVC3"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX", "AUTO"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.alternate_transfer_function_sei #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
@@ -3695,6 +3698,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.telecine #=> String, one of "NONE", "SOFT", "HARD"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.temporal_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.unregistered_sei_timecode #=> String, one of "DISABLED", "ENABLED"
+    #   resp.presets[0].settings.video_description.codec_settings.h264_settings.write_mp_4_packaging_type #=> String, one of "AVC1", "AVC3"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX", "AUTO"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.alternate_transfer_function_sei #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
@@ -4816,6 +4820,7 @@ module Aws::MediaConvert
     #             telecine: "NONE", # accepts NONE, SOFT, HARD
     #             temporal_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             unregistered_sei_timecode: "DISABLED", # accepts DISABLED, ENABLED
+    #             write_mp_4_packaging_type: "AVC1", # accepts AVC1, AVC3
     #           },
     #           h265_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, LOW, MEDIUM, HIGH, HIGHER, MAX, AUTO
@@ -5524,6 +5529,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.telecine #=> String, one of "NONE", "SOFT", "HARD"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.temporal_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.unregistered_sei_timecode #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.write_mp_4_packaging_type #=> String, one of "AVC1", "AVC3"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX", "AUTO"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.alternate_transfer_function_sei #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
@@ -5885,7 +5891,7 @@ module Aws::MediaConvert
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconvert'
-      context[:gem_version] = '1.146.0'
+      context[:gem_version] = '1.147.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

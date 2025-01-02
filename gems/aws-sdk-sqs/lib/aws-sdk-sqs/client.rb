@@ -652,7 +652,7 @@ module Aws::SQS
     # increase the number of queues you use to process your messages. To
     # request a limit increase, [file a support request][2].
     #
-    # For FIFO queues, there can be a maximum of 20,000 in flight messages
+    # For FIFO queues, there can be a maximum of 120,000 in flight messages
     # (received from a queue by a consumer, but not yet deleted from the
     # queue). If you reach this limit, Amazon SQS returns no error messages.
     #
@@ -795,20 +795,24 @@ module Aws::SQS
     #
     #  </note>
     #
-    # To get the queue URL, use the ` GetQueueUrl ` action. ` GetQueueUrl `
-    # requires only the `QueueName` parameter. be aware of existing queue
-    # names:
+    # To retrieve the URL of a queue, use the [ `GetQueueUrl` ][3] action.
+    # This action only requires the [ `QueueName` ][4] parameter.
     #
-    # * If you provide the name of an existing queue along with the exact
-    #   names and values of all the queue's attributes, `CreateQueue`
-    #   returns the queue URL for the existing queue.
+    # When creating queues, keep the following points in mind:
     #
-    # * If the queue name, attribute names, or attribute values don't match
-    #   an existing queue, `CreateQueue` returns an error.
+    # * If you specify the name of an existing queue and provide the exact
+    #   same names and values for all its attributes, the [ `CreateQueue`
+    #   ][5] action will return the URL of the existing queue instead of
+    #   creating a new one.
+    #
+    # * If you attempt to create a queue with a name that already exists but
+    #   with different attribute names or values, the `CreateQueue` action
+    #   will return an error. This ensures that existing queues are not
+    #   inadvertently altered.
     #
     # <note markdown="1"> Cross-account permissions don't apply to this action. For more
     # information, see [Grant cross-account permissions to a role and a
-    # username][3] in the *Amazon SQS Developer Guide*.
+    # username][6] in the *Amazon SQS Developer Guide*.
     #
     #  </note>
     #
@@ -816,7 +820,10 @@ module Aws::SQS
     #
     # [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html#FIFO-queues-moving
     # [2]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/limits-queues.html
-    # [3]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name
+    # [3]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueUrl.html
+    # [4]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html#API_CreateQueue_RequestSyntax
+    # [5]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
+    # [6]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-customer-managed-policy-examples.html#grant-cross-account-permissions-to-role-and-user-name
     #
     # @option params [required, String] :queue_name
     #   The name of the new queue. The following limits apply to this name:
@@ -1100,12 +1107,14 @@ module Aws::SQS
     # automatically deletes messages left in a queue longer than the
     # retention period configured for the queue.
     #
-    # <note markdown="1"> The `ReceiptHandle` is associated with a *specific instance* of
-    # receiving a message. If you receive a message more than once, the
-    # `ReceiptHandle` is different each time you receive a message. When you
-    # use the `DeleteMessage` action, you must provide the most recently
-    # received `ReceiptHandle` for the message (otherwise, the request
-    # succeeds, but the message will not be deleted).
+    # <note markdown="1"> Each time you receive a message, meaning when a consumer retrieves a
+    # message from the queue, it comes with a unique `ReceiptHandle`. If you
+    # receive the same message more than once, you will get a different
+    # `ReceiptHandle` each time. When you want to delete a message using the
+    # `DeleteMessage` action, you must use the `ReceiptHandle` from the most
+    # recent time you received the message. If you use an old
+    # `ReceiptHandle`, the request will succeed, but the message might not
+    # be deleted.
     #
     #  For standard queues, it is possible to receive a message even after
     # you delete it. This might happen on rare occasions if one of the
@@ -1476,29 +1485,32 @@ module Aws::SQS
       req.send_request(options)
     end
 
-    # Returns the URL of an existing Amazon SQS queue.
+    # The `GetQueueUrl` API returns the URL of an existing Amazon SQS queue.
+    # This is useful when you know the queue's name but need to retrieve
+    # its URL for further operations.
     #
-    # To access a queue that belongs to another AWS account, use the
-    # `QueueOwnerAWSAccountId` parameter to specify the account ID of the
-    # queue's owner. The queue's owner must grant you permission to access
-    # the queue. For more information about shared queue access, see `
-    # AddPermission ` or see [Allow Developers to Write Messages to a Shared
-    # Queue][1] in the *Amazon SQS Developer Guide*.
+    # To access a queue owned by another Amazon Web Services account, use
+    # the `QueueOwnerAWSAccountId` parameter to specify the account ID of
+    # the queue's owner. Note that the queue owner must grant you the
+    # necessary permissions to access the queue. For more information about
+    # accessing shared queues, see the ` AddPermission ` API or [Allow
+    # developers to write messages to a shared queue][1] in the *Amazon SQS
+    # Developer Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-writing-an-sqs-policy.html#write-messages-to-shared-queue
     #
     # @option params [required, String] :queue_name
-    #   The name of the queue whose URL must be fetched. Maximum 80
-    #   characters. Valid values: alphanumeric characters, hyphens (`-`), and
-    #   underscores (`_`).
-    #
-    #   Queue URLs and names are case-sensitive.
+    #   (Required) The name of the queue for which you want to fetch the URL.
+    #   The name can be up to 80 characters long and can include alphanumeric
+    #   characters, hyphens (-), and underscores (\_). Queue URLs and names
+    #   are case-sensitive.
     #
     # @option params [String] :queue_owner_aws_account_id
-    #   The Amazon Web Services account ID of the account that created the
-    #   queue.
+    #   (Optional) The Amazon Web Services account ID of the account that
+    #   created the queue. This is only required when you are attempting to
+    #   access a queue owned by another Amazon Web Services account.
     #
     # @return [Types::GetQueueUrlResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1798,7 +1810,7 @@ module Aws::SQS
     # Developer Guide*.
     #
     # Short poll is the default behavior where a weighted random set of
-    # machines is sampled on a `ReceiveMessage` call. Thus, only the
+    # machines is sampled on a `ReceiveMessage` call. Therefore, only the
     # messages on the sampled machines are returned. If the number of
     # messages in the queue is small (fewer than 1,000), you most likely get
     # fewer messages than you requested per `ReceiveMessage` call. If the
@@ -1828,14 +1840,8 @@ module Aws::SQS
     # You can provide the `VisibilityTimeout` parameter in your request. The
     # parameter is applied to the messages that Amazon SQS returns in the
     # response. If you don't include the parameter, the overall visibility
-    # timeout for the queue is used for the returned messages. For more
-    # information, see [Visibility Timeout][4] in the *Amazon SQS Developer
-    # Guide*.
-    #
-    # A message that isn't deleted or a message whose visibility isn't
-    # extended before the visibility timeout expires counts as a failed
-    # receive. Depending on the configuration of the queue, the message
-    # might be sent to the dead-letter queue.
+    # timeout for the queue is used for the returned messages. The default
+    # visibility timeout for a queue is 30 seconds.
     #
     # <note markdown="1"> In the future, new attributes might be added. If you write code that
     # calls this action, we recommend that you structure your code so that
@@ -1848,7 +1854,6 @@ module Aws::SQS
     # [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html
     # [2]: https://www.ietf.org/rfc/rfc1321.txt
     # [3]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html
-    # [4]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     #
     # @option params [required, String] :queue_url
     #   The URL of the Amazon SQS queue from which messages are received.
@@ -1856,9 +1861,9 @@ module Aws::SQS
     #   Queue URLs and names are case-sensitive.
     #
     # @option params [Array<String>] :attribute_names
-    #   This parameter has been deprecated but will be supported for backward
-    #   compatibility. To provide attribute names, you are encouraged to use
-    #   `MessageSystemAttributeNames`.
+    #   This parameter has been discontinued but will be supported for
+    #   backward compatibility. To provide attribute names, you are encouraged
+    #   to use `MessageSystemAttributeNames`.
     #
     #   A list of attributes that need to be returned along with each message.
     #   These attributes include:
@@ -1975,14 +1980,47 @@ module Aws::SQS
     # @option params [Integer] :visibility_timeout
     #   The duration (in seconds) that the received messages are hidden from
     #   subsequent retrieve requests after being retrieved by a
-    #   `ReceiveMessage` request.
+    #   `ReceiveMessage` request. If not specified, the default visibility
+    #   timeout for the queue is used, which is 30 seconds.
+    #
+    #   Understanding `VisibilityTimeout`:
+    #
+    #   * When a message is received from a queue, it becomes temporarily
+    #     invisible to other consumers for the duration of the visibility
+    #     timeout. This prevents multiple consumers from processing the same
+    #     message simultaneously. If the message is not deleted or its
+    #     visibility timeout is not extended before the timeout expires, it
+    #     becomes visible again and can be retrieved by other consumers.
+    #
+    #   * Setting an appropriate visibility timeout is crucial. If it's too
+    #     short, the message might become visible again before processing is
+    #     complete, leading to duplicate processing. If it's too long, it
+    #     delays the reprocessing of messages if the initial processing fails.
+    #
+    #   * You can adjust the visibility timeout using the
+    #     `--visibility-timeout` parameter in the `receive-message` command to
+    #     match the processing time required by your application.
+    #
+    #   * A message that isn't deleted or a message whose visibility isn't
+    #     extended before the visibility timeout expires counts as a failed
+    #     receive. Depending on the configuration of the queue, the message
+    #     might be sent to the dead-letter queue.
+    #
+    #   For more information, see [Visibility Timeout][1] in the *Amazon SQS
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     #
     # @option params [Integer] :wait_time_seconds
     #   The duration (in seconds) for which the call waits for a message to
     #   arrive in the queue before returning. If a message is available, the
     #   call returns sooner than `WaitTimeSeconds`. If no messages are
     #   available and the wait time expires, the call does not return a
-    #   message list.
+    #   message list. If you are using the Java SDK, it returns a
+    #   `ReceiveMessageResponse` object, which has a empty list instead of a
+    #   Null object.
     #
     #   To avoid HTTP errors, ensure that the HTTP response timeout for
     #   `ReceiveMessage` requests is longer than the `WaitTimeSeconds`
@@ -2897,7 +2935,7 @@ module Aws::SQS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sqs'
-      context[:gem_version] = '1.89.0'
+      context[:gem_version] = '1.90.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

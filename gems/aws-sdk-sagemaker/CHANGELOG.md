@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.279.0 (2025-01-02)
+------------------
+
+* Feature - Adding ETag information with Model Artifacts for Model Registry
+
 1.278.0 (2024-12-20)
 ------------------
 
