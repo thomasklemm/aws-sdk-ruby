@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.174.0 (2025-01-03)
+------------------
+
+* Feature - Adding SDK reference examples for Amazon ECS operations.
+
 1.173.0 (2024-12-17)
 ------------------
 

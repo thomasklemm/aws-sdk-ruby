@@ -506,6 +506,46 @@ module Aws::ECS
     #
     #   * {Types::CreateCapacityProviderResponse#capacity_provider #capacity_provider} => Types::CapacityProvider
     #
+    #
+    # @example Example: To create a capacity provider 
+    #
+    #   # This example creates a capacity provider that uses the specified Auto Scaling group MyASG and has managed scaling and
+    #   # manager termination protection enabled. 
+    #
+    #   resp = client.create_capacity_provider({
+    #     name: "MyCapacityProvider", 
+    #     auto_scaling_group_provider: {
+    #       auto_scaling_group_arn: "arn:aws:autoscaling:us-east-1:123456789012:autoScalingGroup:57ffcb94-11f0-4d6d-bf60-3bac5EXAMPLE:autoScalingGroupName/MyASG", 
+    #       managed_scaling: {
+    #         status: "ENABLED", 
+    #         target_capacity: 100, 
+    #       }, 
+    #       managed_termination_protection: "ENABLED", 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     capacity_provider: {
+    #       name: "MyCapacityProvider", 
+    #       auto_scaling_group_provider: {
+    #         auto_scaling_group_arn: "arn:aws:autoscaling:us-east-1:132456789012:autoScalingGroup:57ffcb94-11f0-4d6d-bf60-3bac5EXAMPLE:autoScalingGroupName/MyASG", 
+    #         managed_scaling: {
+    #           instance_warmup_period: 300, 
+    #           maximum_scaling_step_size: 10000, 
+    #           minimum_scaling_step_size: 1, 
+    #           status: "ENABLED", 
+    #           target_capacity: 100, 
+    #         }, 
+    #         managed_termination_protection: "ENABLED", 
+    #       }, 
+    #       capacity_provider_arn: "arn:aws:ecs:us-east-1:123456789012:capacity-provider/MyCapacityProvider", 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_capacity_provider({
@@ -1931,6 +1971,64 @@ module Aws::ECS
     #
     #   * {Types::CreateTaskSetResponse#task_set #task_set} => Types::TaskSet
     #
+    #
+    # @example Example: To create a task set
+    #
+    #   # This example creates a task set in a service that uses the EXTERNAL deployment controller.
+    #
+    #   resp = client.create_task_set({
+    #     cluster: "MyCluster", 
+    #     network_configuration: {
+    #       awsvpc_configuration: {
+    #         security_groups: [
+    #           "sg-12344321", 
+    #         ], 
+    #         subnets: [
+    #           "subnet-12344321", 
+    #         ], 
+    #       }, 
+    #     }, 
+    #     service: "MyService", 
+    #     task_definition: "MyTaskDefinition:2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task_set: {
+    #       computed_desired_count: 0, 
+    #       created_at: Time.parse(1557128360.711), 
+    #       id: "ecs-svc/1234567890123456789", 
+    #       launch_type: "EC2", 
+    #       load_balancers: [
+    #       ], 
+    #       network_configuration: {
+    #         awsvpc_configuration: {
+    #           assign_public_ip: "DISABLED", 
+    #           security_groups: [
+    #             "sg-12344321", 
+    #           ], 
+    #           subnets: [
+    #             "subnet-12344321", 
+    #           ], 
+    #         }, 
+    #       }, 
+    #       pending_count: 0, 
+    #       running_count: 0, 
+    #       scale: {
+    #         value: 0, 
+    #         unit: "PERCENT", 
+    #       }, 
+    #       service_registries: [
+    #       ], 
+    #       stability_status: "STABILIZING", 
+    #       stability_status_at: Time.parse(1557128360.711), 
+    #       status: "ACTIVE", 
+    #       task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/MyTaskDefinition:2", 
+    #       task_set_arn: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #       updated_at: Time.parse(1557128360.711), 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_task_set({
@@ -2141,6 +2239,31 @@ module Aws::ECS
     #
     #   * {Types::DeleteAttributesResponse#attributes #attributes} => Array&lt;Types::Attribute&gt;
     #
+    #
+    # @example Example: To delete a custom attribute from an Amazon ECS instance
+    #
+    #   # This example deletes an attribute named stack from a container instance. 
+    #
+    #   resp = client.delete_attributes({
+    #     attributes: [
+    #       {
+    #         name: "stack", 
+    #         target_id: "aws:ecs:us-west-2:130757420319:container-instance/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     attributes: [
+    #       {
+    #         name: "stack", 
+    #         value: "production", 
+    #         target_id: "aws:ecs:us-west-2:130757420319:container-instance/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_attributes({
@@ -2204,6 +2327,37 @@ module Aws::ECS
     # @return [Types::DeleteCapacityProviderResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DeleteCapacityProviderResponse#capacity_provider #capacity_provider} => Types::CapacityProvider
+    #
+    #
+    # @example Example: To delete a specified capacity provider
+    #
+    #   # This example deletes a specified capacity provider. 
+    #
+    #   resp = client.delete_capacity_provider({
+    #     capacity_provider: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/ExampleCapacityProvider", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     capacity_provider: {
+    #       name: "ExampleCapacityProvider", 
+    #       auto_scaling_group_provider: {
+    #         auto_scaling_group_arn: "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:a1b2c3d4-5678-90ab-cdef-EXAMPLE11111:autoScalingGroupName/MyAutoScalingGroup", 
+    #         managed_scaling: {
+    #           maximum_scaling_step_size: 10000, 
+    #           minimum_scaling_step_size: 1, 
+    #           status: "ENABLED", 
+    #           target_capacity: 100, 
+    #         }, 
+    #         managed_termination_protection: "DISABLED", 
+    #       }, 
+    #       capacity_provider_arn: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/ExampleCapacityProvider", 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #       update_status: "DELETE_IN_PROGRESS", 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -2642,6 +2796,57 @@ module Aws::ECS
     #   * {Types::DeleteTaskDefinitionsResponse#task_definitions #task_definitions} => Array&lt;Types::TaskDefinition&gt;
     #   * {Types::DeleteTaskDefinitionsResponse#failures #failures} => Array&lt;Types::Failure&gt;
     #
+    #
+    # @example Example: To delete a task definition that has been deregistered
+    #
+    #   # This example deletes a specified deregistered task definition. 
+    #
+    #   resp = client.delete_task_definitions({
+    #     task_definitions: [
+    #       "Example-task-definition:1", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     failures: [
+    #     ], 
+    #     task_definitions: [
+    #       {
+    #         container_definitions: [
+    #           {
+    #             name: "wave", 
+    #             command: [
+    #               "apt-get update; apt-get install stress; while true; do stress --cpu $(( RANDOM % 4 )) -t $(( RANDOM % 10 )); done", 
+    #             ], 
+    #             cpu: 50, 
+    #             entry_point: [
+    #               "bash", 
+    #               "-c", 
+    #             ], 
+    #             environment: [
+    #             ], 
+    #             essential: true, 
+    #             image: "ubuntu", 
+    #             memory: 100, 
+    #             mount_points: [
+    #             ], 
+    #             port_mappings: [
+    #             ], 
+    #             volumes_from: [
+    #             ], 
+    #           }, 
+    #         ], 
+    #         family: "cpu-wave", 
+    #         revision: 1, 
+    #         status: "DELETE_IN_PROGRESS", 
+    #         task_definition_arn: "arn:aws:ecs:us-east-1:012345678910:task-definition/Example-task-definition:1", 
+    #         volumes: [
+    #         ], 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_task_definitions({
@@ -2863,6 +3068,55 @@ module Aws::ECS
     # @return [Types::DeleteTaskSetResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DeleteTaskSetResponse#task_set #task_set} => Types::TaskSet
+    #
+    #
+    # @example Example: To delete a task set within a service that uses the EXTERNAL deployment controller type
+    #
+    #   # This example deletes a task set and uses the force flag to force deletion if it hasn't scaled to zero.
+    #
+    #   resp = client.delete_task_set({
+    #     cluster: "MyCluster", 
+    #     force: true, 
+    #     service: "MyService", 
+    #     task_set: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task_set: {
+    #       computed_desired_count: 0, 
+    #       created_at: Time.parse(1557130260.276), 
+    #       id: "ecs-svc/1234567890123456789", 
+    #       launch_type: "EC2", 
+    #       load_balancers: [
+    #       ], 
+    #       network_configuration: {
+    #         awsvpc_configuration: {
+    #           assign_public_ip: "DISABLED", 
+    #           security_groups: [
+    #             "sg-12345678", 
+    #           ], 
+    #           subnets: [
+    #             "subnet-12345678", 
+    #           ], 
+    #         }, 
+    #       }, 
+    #       pending_count: 0, 
+    #       running_count: 0, 
+    #       scale: {
+    #         value: 0, 
+    #         unit: "PERCENT", 
+    #       }, 
+    #       service_registries: [
+    #       ], 
+    #       stability_status: "STABILIZING", 
+    #       stability_status_at: Time.parse(1557130290.707), 
+    #       status: "DRAINING", 
+    #       task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/sample-fargate:2", 
+    #       task_set_arn: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #       updated_at: Time.parse(1557130290.707), 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -3106,6 +3360,49 @@ module Aws::ECS
     #
     #   * {Types::DeregisterTaskDefinitionResponse#task_definition #task_definition} => Types::TaskDefinition
     #
+    #
+    # @example Example: To deregister a revision of a task definition
+    #
+    #   # This example deregisters the first revision of the curler task definition
+    #
+    #   resp = client.deregister_task_definition({
+    #     task_definition: "curler:1", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task_definition: {
+    #       container_definitions: [
+    #         {
+    #           name: "curler", 
+    #           command: [
+    #             "curl -v http://example.com/", 
+    #           ], 
+    #           cpu: 100, 
+    #           entry_point: [
+    #           ], 
+    #           environment: [
+    #           ], 
+    #           essential: true, 
+    #           image: "curl:latest", 
+    #           memory: 256, 
+    #           mount_points: [
+    #           ], 
+    #           port_mappings: [
+    #           ], 
+    #           volumes_from: [
+    #           ], 
+    #         }, 
+    #       ], 
+    #       family: "curler", 
+    #       revision: 1, 
+    #       status: "INACTIVE", 
+    #       task_definition_arn: "arn:aws:ecs:us-west-2:123456789012:task-definition/curler:1", 
+    #       volumes: [
+    #       ], 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.deregister_task_definition({
@@ -3336,6 +3633,91 @@ module Aws::ECS
     #   * {Types::DescribeCapacityProvidersResponse#capacity_providers #capacity_providers} => Array&lt;Types::CapacityProvider&gt;
     #   * {Types::DescribeCapacityProvidersResponse#failures #failures} => Array&lt;Types::Failure&gt;
     #   * {Types::DescribeCapacityProvidersResponse#next_token #next_token} => String
+    #
+    #
+    # @example Example: To describe all capacity providers
+    #
+    #   # This example retrieves details about all capacity providers. 
+    #
+    #   resp = client.describe_capacity_providers({
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     capacity_providers: [
+    #       {
+    #         name: "MyCapacityProvider", 
+    #         auto_scaling_group_provider: {
+    #           auto_scaling_group_arn: "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:a1b2c3d4-5678-90ab-cdef-EXAMPLE11111:autoScalingGroupName/MyAutoScalingGroup", 
+    #           managed_scaling: {
+    #             maximum_scaling_step_size: 1000, 
+    #             minimum_scaling_step_size: 1, 
+    #             status: "ENABLED", 
+    #             target_capacity: 100, 
+    #           }, 
+    #           managed_termination_protection: "ENABLED", 
+    #         }, 
+    #         capacity_provider_arn: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/MyCapacityProvider", 
+    #         status: "ACTIVE", 
+    #         tags: [
+    #         ], 
+    #       }, 
+    #       {
+    #         name: "FARGATE", 
+    #         capacity_provider_arn: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/FARGATE", 
+    #         status: "ACTIVE", 
+    #         tags: [
+    #         ], 
+    #       }, 
+    #       {
+    #         name: "FARGATE_SPOT", 
+    #         capacity_provider_arn: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/FARGATE_SPOT", 
+    #         status: "ACTIVE", 
+    #         tags: [
+    #         ], 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Example: To describe a specific capacity provider
+    #
+    #   # This example retrieves details about the capacity provider MyCapacityProvider
+    #
+    #   resp = client.describe_capacity_providers({
+    #     capacity_providers: [
+    #       "MyCapacityProvider", 
+    #     ], 
+    #     include: [
+    #       "TAGS", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     capacity_providers: [
+    #       {
+    #         name: "MyCapacityProvider", 
+    #         auto_scaling_group_provider: {
+    #           auto_scaling_group_arn: "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:a1b2c3d4-5678-90ab-cdef-EXAMPLE11111:autoScalingGroupName/MyAutoScalingGroup", 
+    #           managed_scaling: {
+    #             maximum_scaling_step_size: 1000, 
+    #             minimum_scaling_step_size: 1, 
+    #             status: "ENABLED", 
+    #             target_capacity: 100, 
+    #           }, 
+    #           managed_termination_protection: "ENABLED", 
+    #         }, 
+    #         capacity_provider_arn: "arn:aws:ecs:us-west-2:123456789012:capacity-provider/MyCapacityProvider", 
+    #         status: "ACTIVE", 
+    #         tags: [
+    #           {
+    #             key: "environment", 
+    #             value: "production", 
+    #           }, 
+    #         ], 
+    #       }, 
+    #     ], 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -3717,6 +4099,46 @@ module Aws::ECS
     #   * {Types::DescribeServiceDeploymentsResponse#service_deployments #service_deployments} => Array&lt;Types::ServiceDeployment&gt;
     #   * {Types::DescribeServiceDeploymentsResponse#failures #failures} => Array&lt;Types::Failure&gt;
     #
+    #
+    # @example Example: To describe a service deployment 
+    #
+    #   # This example describes a service deployment for the service sd-example in the example cluster. 
+    #
+    #   resp = client.describe_service_deployments({
+    #     service_deployment_arns: [
+    #       "arn:aws:ecs:us-west-2:123456789012:service-deployment/example/sd-example/NCWGC2ZR-taawPAYrIaU5", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     failures: [
+    #     ], 
+    #     service_deployments: [
+    #       {
+    #         cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/example", 
+    #         deployment_configuration: {
+    #           deployment_circuit_breaker: {
+    #             enable: false, 
+    #             rollback: false, 
+    #           }, 
+    #           maximum_percent: 200, 
+    #           minimum_healthy_percent: 100, 
+    #         }, 
+    #         service_arn: "arn:aws:ecs:us-west-2:123456789012:service/example/sd-example", 
+    #         service_deployment_arn: "arn:aws:ecs:us-west-2:123456789012:service-deployment/example/sd-example/NCWGC2ZR-taawPAYrIaU5", 
+    #         status: "PENDING", 
+    #         target_service_revision: {
+    #           arn: "arn:aws:ecs:us-west-2:123456789012:service-revision/example/sd-example/4980306466373577095", 
+    #           pending_task_count: 0, 
+    #           requested_task_count: 0, 
+    #           running_task_count: 0, 
+    #         }, 
+    #         updated_at: Time.parse("2024-09-10T16:49:35.572000+00:00"), 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.describe_service_deployments({
@@ -3808,6 +4230,46 @@ module Aws::ECS
     #
     #   * {Types::DescribeServiceRevisionsResponse#service_revisions #service_revisions} => Array&lt;Types::ServiceRevision&gt;
     #   * {Types::DescribeServiceRevisionsResponse#failures #failures} => Array&lt;Types::Failure&gt;
+    #
+    #
+    # @example Example: To describe a service revision 
+    #
+    #   # This example describes a service revision with the specified ARN
+    #
+    #   resp = client.describe_service_revisions({
+    #     service_revision_arns: [
+    #       "arn:aws:ecs:us-west-2:123456789012:service-revision/testc/sd1/4980306466373577095", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     failures: [
+    #     ], 
+    #     service_revisions: [
+    #       {
+    #         cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/example", 
+    #         created_at: Time.parse("2024-09-10T16:49:26.388000+00:00"), 
+    #         launch_type: "FARGATE", 
+    #         network_configuration: {
+    #           awsvpc_configuration: {
+    #             assign_public_ip: "ENABLED", 
+    #             security_groups: [
+    #               "sg-09605d60a6bc1b296", 
+    #             ], 
+    #             subnets: [
+    #               "subnet-0a4040e73895f04e1", 
+    #             ], 
+    #           }, 
+    #         }, 
+    #         platform_family: "DockerLinux", 
+    #         platform_version: "1.4.0", 
+    #         service_arn: "arn:aws:ecs:us-west-2:123456789012:service/example/sd-example", 
+    #         service_revision_arn: "arn:aws:ecs:us-west-2:123456789012:service-revision/example/sd-example/4980306466373577095", 
+    #         task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/large-ngingx:1", 
+    #       }, 
+    #     ], 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -4499,6 +4961,60 @@ module Aws::ECS
     #   * {Types::DescribeTaskSetsResponse#task_sets #task_sets} => Array&lt;Types::TaskSet&gt;
     #   * {Types::DescribeTaskSetsResponse#failures #failures} => Array&lt;Types::Failure&gt;
     #
+    #
+    # @example Example: To describe a task set 
+    #
+    #   # This example describes a task set in service MyService that uses an EXTERNAL deployment controller. 
+    #
+    #   resp = client.describe_task_sets({
+    #     cluster: "MyCluster", 
+    #     service: "MyService", 
+    #     task_sets: [
+    #       "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     failures: [
+    #     ], 
+    #     task_sets: [
+    #       {
+    #         computed_desired_count: 0, 
+    #         created_at: Time.parse(1557207715.195), 
+    #         id: "ecs-svc/1234567890123456789", 
+    #         launch_type: "EC2", 
+    #         load_balancers: [
+    #         ], 
+    #         network_configuration: {
+    #           awsvpc_configuration: {
+    #             assign_public_ip: "DISABLED", 
+    #             security_groups: [
+    #               "sg-1234431", 
+    #             ], 
+    #             subnets: [
+    #               "subnet-12344321", 
+    #             ], 
+    #           }, 
+    #         }, 
+    #         pending_count: 0, 
+    #         running_count: 0, 
+    #         scale: {
+    #           value: 0, 
+    #           unit: "PERCENT", 
+    #         }, 
+    #         service_registries: [
+    #         ], 
+    #         stability_status: "STEADY_STATE", 
+    #         stability_status_at: Time.parse(1557207740.014), 
+    #         status: "ACTIVE", 
+    #         task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/sample-fargate:2", 
+    #         task_set_arn: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #         updated_at: Time.parse(1557207740.014), 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.describe_task_sets({
@@ -4876,6 +5392,33 @@ module Aws::ECS
     #   * {Types::ExecuteCommandResponse#session #session} => Types::Session
     #   * {Types::ExecuteCommandResponse#task_arn #task_arn} => String
     #
+    #
+    # @example Example: To run a command remotely on a container in a task
+    #
+    #   # This example runs an interactive /bin/sh command on a container MyContainer. 
+    #
+    #   resp = client.execute_command({
+    #     cluster: "MyCluster", 
+    #     command: "/bin/sh", 
+    #     container: "MyContainer", 
+    #     interactive: true, 
+    #     task: "arn:aws:ecs:us-east-1:123456789012:task/MyCluster/d789e94343414c25b9f6bd59eEXAMPLE", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster_arn: "arn:aws:ecs:us-east-1:123456789012:cluster/MyCluster", 
+    #     container_arn: "arn:aws:ecs:us-east-1:123456789012:container/MyCluster/d789e94343414c25b9f6bd59eEXAMPLE/43ba4b77-37f7-4a41-b923-69d4abEXAMPLE", 
+    #     container_name: "MyContainer", 
+    #     interactive: true, 
+    #     session: {
+    #       session_id: "ecs-execute-command-794nnsxobsg4p2hiur6gxu9a9e", 
+    #       stream_url: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/ecs-execute-command-794nnsxobsg4p2hiur6gxu9a9e?role=publish_subscribe&cell-number=AAEAAfiZG4oybxqsYj3Zhm15s4J0W1k7d9nxVRenNO8Kl5nzAAAAAGdbWGl479/y/4IrTWPadUic3eBrMu3vmB7aPvI+s12lbpDc142y1KZy", 
+    #       token_value: "AAEAAcVb7ww10N9aNUI5Cl7K7DbHjbD2Ed4Mw6uaGYIc+UFNAAAAAGdbWGmMDaPbGfDkzrVIhyKEsc4CPT2hcToPU6yzlddPm7rRZvYQtpaAgsvQdjbCAd9OB6ohtDYfqZI9gzMqLKegXq0E+KbDcGPnQVODFNHmQxnR1BvC6vNcHqh6HAJuKnQD7RSYx/J5bfYNHj4hCYHuN0HNcueSDOOTRB/MBt5DBDY7Djv2uzs9FD0N1kcsGljZkZWLuPTVKHHyrU3zh0awfrFFC3RXvgaUCBnloIIvZeq2CjTesxn9JJS+3N4I0DVxfkHdWWBbBY/5+wH82JVTJpqN3yOAt74u/W7TvYBd7Xu2lQbvtpuAnEszl++bFG2ZoV3dfnmBkSnfD/qV1FJcEskbxUHKgmqe0Paouv4zwrQKNfWYfcv9xkWskqcExh07IeaxZz1tp/WegZ5D76sD6xYeuH+35TMNXMoY7oudLgxIXsA7b39ElM7orGi4Jy3W2tLyuNIvDoI2JI6ww4tYdEjYZnld9rhKwV9rDHk1Z8wjHMs++3BIkHrFQRsv7BFUWlZ9lyqO9GWlXeBe7dQtOeFNahBuJUE9z/xLHJn1x13VkdROKqUVHTJrT4sXAnI5roWiGPoQPVY7aHVYJnwjSxrPRWJBsgyHiVN3dAWTmeVMjp0VbOiJaLlpBI+AUWs8OeVRzuJSZ+1alETpK7Ukag7ma9K4lxq/N7IxYo2ub0cG/bvX42zQqdJAW+9St9sQ1QMaMvkSq1tdbLoOuY0QjN7JrkuKLFQA5bhs+o1YwItzIp7bNrzQ9Z9IN51qoGL5HDXQzi1kNFfYtAryhwt6BgtQU9Z0k+RpE+V5G+V68E0MMUvb313f0nRBYj1u5VKonWb708wADPbUU+s7nvbWuD5oLp1Z6A4iqI9Om0R4RrFASj/7fVY7r3raNXcIYA=", 
+    #     }, 
+    #     task_arn: "arn:aws:ecs:us-east-1:123456789012:task/MyCluster/d789e94343414c25b9f6bd59eEXAMPLE", 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.execute_command({
@@ -5170,6 +5713,29 @@ module Aws::ECS
     #
     # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
+    #
+    # @example Example: To list container instances that have a specific attribute
+    #
+    #   # This example lists attributes for a container instance with the attribute "stack" equal to the value "production".
+    #
+    #   resp = client.list_attributes({
+    #     attribute_name: "stack", 
+    #     attribute_value: "production", 
+    #     cluster: "MyCluster", 
+    #     target_type: "container-instance", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     attributes: [
+    #       {
+    #         name: "stack", 
+    #         value: "production", 
+    #         target_id: "arn:aws:ecs:us-west-2:123456789012:container-instance/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_attributes({
@@ -5380,9 +5946,9 @@ module Aws::ECS
     # This operation lists all the service deployments that meet the
     # specified filter criteria.
     #
-    # A service deployment happens when you release a softwre update for the
-    # service. You route traffic from the running service revisions to the
-    # new service revison and control the number of running tasks.
+    # A service deployment happens when you release a software update for
+    # the service. You route traffic from the running service revisions to
+    # the new service revison and control the number of running tasks.
     #
     # This API returns the values that you use for the request parameters in
     # [DescribeServiceRevisions][1].
@@ -5433,6 +5999,32 @@ module Aws::ECS
     #
     #   * {Types::ListServiceDeploymentsResponse#service_deployments #service_deployments} => Array&lt;Types::ServiceDeploymentBrief&gt;
     #   * {Types::ListServiceDeploymentsResponse#next_token #next_token} => String
+    #
+    #
+    # @example Example: To list service deployments that meet the specified criteria
+    #
+    #   # This example lists all successful service deployments for the service "sd-example" in the cluster "example".
+    #
+    #   resp = client.list_service_deployments({
+    #     cluster: "example", 
+    #     service: "sd-example", 
+    #     status: [
+    #       "SUCCESSFUL", 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     service_deployments: [
+    #       {
+    #         cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/example", 
+    #         service_arn: "arn:aws:ecs:us-west-2:123456789012:service/example/sd-example", 
+    #         service_deployment_arn: "arn:aws:ecs:us-west-2:123456789012:service-deployment/example/sd-example/NCWGC2ZR-taawPAYrIaU5", 
+    #         status: "SUCCESSFUL", 
+    #         target_service_revision_arn: "arn:aws:ecs:us-west-2:123456789012:service-revision/example/sd-example/4980306466373577095", 
+    #       }, 
+    #     ], 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -6484,6 +7076,33 @@ module Aws::ECS
     #
     #   * {Types::PutAttributesResponse#attributes #attributes} => Array&lt;Types::Attribute&gt;
     #
+    #
+    # @example Example: To create or update an attribute on a resource
+    #
+    #   # This example adds an attribute "stack" with the value "production" to a container instance.
+    #
+    #   resp = client.put_attributes({
+    #     attributes: [
+    #       {
+    #         name: "stack", 
+    #         value: "production", 
+    #         target_id: "arn:aws:ecs:us-west-2:123456789012:container-instance/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #       }, 
+    #     ], 
+    #     cluster: "MyCluster", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     attributes: [
+    #       {
+    #         name: "stack", 
+    #         value: "production", 
+    #         target_id: "arn:aws:ecs:us-west-2:123456789012:container-instance/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.put_attributes({
@@ -6591,6 +7210,260 @@ module Aws::ECS
     # @return [Types::PutClusterCapacityProvidersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::PutClusterCapacityProvidersResponse#cluster #cluster} => Types::Cluster
+    #
+    #
+    # @example Example: To add an existing capacity provider to a cluuster
+    #
+    #   # This example adds an existing capacity provider "MyCapacityProvider2" to a cluster that already has the capacity
+    #   # provider "MyCapacityProvider1" associated with it. Both "MyCapacityProvider2" and "MyCapacityProvider1" need to be
+    #   # specified. 
+    #
+    #   resp = client.put_cluster_capacity_providers({
+    #     capacity_providers: [
+    #       "MyCapacityProvider1", 
+    #       "MyCapacityProvider2", 
+    #     ], 
+    #     cluster: "MyCluster", 
+    #     default_capacity_provider_strategy: [
+    #       {
+    #         capacity_provider: "MyCapacityProvider1", 
+    #         weight: 1, 
+    #       }, 
+    #       {
+    #         capacity_provider: "MyCapacityProvider2", 
+    #         weight: 1, 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       attachments: [
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider1", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111", 
+    #             }, 
+    #           ], 
+    #           id: "0fb0c8f4-6edd-4de1-9b09-17e470ee1918", 
+    #           status: "ACTIVE", 
+    #         }, 
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider2", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE22222", 
+    #             }, 
+    #           ], 
+    #           id: "ae592060-2382-4663-9476-b015c685593c", 
+    #           status: "ACTIVE", 
+    #         }, 
+    #       ], 
+    #       attachments_status: "UPDATE_IN_PROGRESS", 
+    #       capacity_providers: [
+    #         "MyCapacityProvider1", 
+    #         "MyCapacityProvider2", 
+    #       ], 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/MyCluster", 
+    #       cluster_name: "MyCluster", 
+    #       default_capacity_provider_strategy: [
+    #         {
+    #           base: 0, 
+    #           capacity_provider: "MyCapacityProvider1", 
+    #           weight: 1, 
+    #         }, 
+    #         {
+    #           base: 0, 
+    #           capacity_provider: "MyCapacityProvider2", 
+    #           weight: 1, 
+    #         }, 
+    #       ], 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enabled", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
+    #
+    # @example Example: To remove a capacity provider from a cluster
+    #
+    #   # This example removes a capacity provider "MyCapacityProvider2" from a cluster that has both "MyCapacityProvider2" and
+    #   # "MyCapacityProvider1" associated with it. Only "MyCapacityProvider1" needs to be specified in this scenario. 
+    #
+    #   resp = client.put_cluster_capacity_providers({
+    #     capacity_providers: [
+    #       "MyCapacityProvider1", 
+    #     ], 
+    #     cluster: "MyCluster", 
+    #     default_capacity_provider_strategy: [
+    #       {
+    #         base: 0, 
+    #         capacity_provider: "MyCapacityProvider1", 
+    #         weight: 1, 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       attachments: [
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider1", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111", 
+    #             }, 
+    #           ], 
+    #           id: "0fb0c8f4-6edd-4de1-9b09-17e470ee1918", 
+    #           status: "ACTIVE", 
+    #         }, 
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider2", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE22222", 
+    #             }, 
+    #           ], 
+    #           id: "ae592060-2382-4663-9476-b015c685593c", 
+    #           status: "DELETING", 
+    #         }, 
+    #       ], 
+    #       attachments_status: "UPDATE_IN_PROGRESS", 
+    #       capacity_providers: [
+    #         "MyCapacityProvider1", 
+    #       ], 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/MyCluster", 
+    #       cluster_name: "MyCluster", 
+    #       default_capacity_provider_strategy: [
+    #         {
+    #           base: 0, 
+    #           capacity_provider: "MyCapacityProvider1", 
+    #           weight: 1, 
+    #         }, 
+    #       ], 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enabled", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
+    #
+    # @example Example: To remove all capacity providers from a cluster
+    #
+    #   # This example removes all capacity providers associated with a cluster. 
+    #
+    #   resp = client.put_cluster_capacity_providers({
+    #     capacity_providers: [
+    #     ], 
+    #     cluster: "MyCluster", 
+    #     default_capacity_provider_strategy: [
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       attachments: [
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider1", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE11111", 
+    #             }, 
+    #           ], 
+    #           id: "0fb0c8f4-6edd-4de1-9b09-17e470ee1918", 
+    #           status: "DELETING", 
+    #         }, 
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "MyCapacityProvider2", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-a1b2c3d4-5678-90ab-cdef-EXAMPLE22222", 
+    #             }, 
+    #           ], 
+    #           id: "ae592060-2382-4663-9476-b015c685593c", 
+    #           status: "DELETING", 
+    #         }, 
+    #       ], 
+    #       attachments_status: "UPDATE_IN_PROGRESS", 
+    #       capacity_providers: [
+    #       ], 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/MyCluster", 
+    #       cluster_name: "MyCluster", 
+    #       default_capacity_provider_strategy: [
+    #       ], 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enabled", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -8427,6 +9300,62 @@ module Aws::ECS
     #   * {Types::StartTaskResponse#tasks #tasks} => Array&lt;Types::Task&gt;
     #   * {Types::StartTaskResponse#failures #failures} => Array&lt;Types::Failure&gt;
     #
+    #
+    # @example Example: To start a new task
+    #
+    #   # This example starts a new task in the cluster "MyCluster" on the specified container instance using the latest revision
+    #   # of the "hello-world" task definition.
+    #
+    #   resp = client.start_task({
+    #     cluster: "MyCluster", 
+    #     container_instances: [
+    #       "4c543eed-f83f-47da-b1d8-3d23f1da4c64", 
+    #     ], 
+    #     task_definition: "hello-world", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     failures: [
+    #     ], 
+    #     tasks: [
+    #       {
+    #         version: 1, 
+    #         cluster_arn: "arn:aws:ecs:us-east-1:012345678910:cluster/default", 
+    #         container_instance_arn: "arn:aws:ecs:us-east-1:012345678910:container-instance/default/4c543eed-f83f-47da-b1d8-3d23f1da4c64", 
+    #         containers: [
+    #           {
+    #             name: "wordpress", 
+    #             container_arn: "arn:aws:ecs:us-east-1:012345678910:container/e76594d4-27e1-4c74-98b5-46a6435eb769", 
+    #             last_status: "PENDING", 
+    #             task_arn: "arn:aws:ecs:us-east-1:012345678910:task/default/fdf2c302-468c-4e55-b884-5331d816e7fb", 
+    #           }, 
+    #           {
+    #             name: "mysql", 
+    #             container_arn: "arn:aws:ecs:us-east-1:012345678910:container/default/b19106ea-4fa8-4f1d-9767-96922c82b070", 
+    #             last_status: "PENDING", 
+    #             task_arn: "arn:aws:ecs:us-east-1:012345678910:task/default/fdf2c302-468c-4e55-b884-5331d816e7fb", 
+    #           }, 
+    #         ], 
+    #         created_at: Time.parse(1479765460.842), 
+    #         desired_status: "RUNNING", 
+    #         last_status: "PENDING", 
+    #         overrides: {
+    #           container_overrides: [
+    #             {
+    #               name: "wordpress", 
+    #             }, 
+    #             {
+    #               name: "mysql", 
+    #             }, 
+    #           ], 
+    #         }, 
+    #         task_arn: "arn:aws:ecs:us-east-1:012345678910:task/default/fdf2c302-468c-4e55-b884-5331d816e7fb", 
+    #         task_definition_arn: "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.start_task({
@@ -8698,6 +9627,68 @@ module Aws::ECS
     # @return [Types::StopTaskResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StopTaskResponse#task #task} => Types::Task
+    #
+    #
+    # @example Example: To stop a task
+    #
+    #   # This example stops a task with ID "1dc5c17a-422b-4dc4-b493-371970c6c4d6" in cluster "MyCluster".
+    #
+    #   resp = client.stop_task({
+    #     cluster: "MyCluster", 
+    #     reason: "testing stop task.", 
+    #     task: "1dc5c17a-422b-4dc4-b493-371970c6c4d6", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task: {
+    #       version: 0, 
+    #       cluster_arn: "arn:aws:ecs:us-east-1:012345678910:cluster/MyCluster", 
+    #       container_instance_arn: "arn:aws:ecs:us-east-1:012345678910:container-instance/MyCluster/5991d8da-1d59-49d2-a31f-4230f9e73140", 
+    #       containers: [
+    #         {
+    #           name: "simple-app", 
+    #           container_arn: "arn:aws:ecs:us-east-1:012345678910:container/4df26bb4-f057-467b-a079-961675296e64", 
+    #           last_status: "RUNNING", 
+    #           network_bindings: [
+    #             {
+    #               bind_ip: "0.0.0.0", 
+    #               container_port: 80, 
+    #               host_port: 32774, 
+    #               protocol: "tcp", 
+    #             }, 
+    #           ], 
+    #           task_arn: "arn:aws:ecs:us-east-1:012345678910:task/MyCluster/1dc5c17a-422b-4dc4-b493-371970c6c4d6", 
+    #         }, 
+    #         {
+    #           name: "busybox", 
+    #           container_arn: "arn:aws:ecs:us-east-1:012345678910:container/e09064f7-7361-4c87-8ab9-8d073bbdbcb9", 
+    #           last_status: "RUNNING", 
+    #           network_bindings: [
+    #           ], 
+    #           task_arn: "arn:aws:ecs:us-east-1:012345678910:task/MyCluster/1dc5c17a-422b-4dc4-b493-371970c6c4d6", 
+    #         }, 
+    #       ], 
+    #       created_at: Time.parse(1476822811.295), 
+    #       desired_status: "STOPPED", 
+    #       last_status: "RUNNING", 
+    #       overrides: {
+    #         container_overrides: [
+    #           {
+    #             name: "simple-app", 
+    #           }, 
+    #           {
+    #             name: "busybox", 
+    #           }, 
+    #         ], 
+    #       }, 
+    #       started_at: Time.parse(1476822833.998), 
+    #       started_by: "ecs-svc/9223370560032507596", 
+    #       stopped_reason: "testing stop task.", 
+    #       task_arn: "arn:aws:ecs:us-east-1:012345678910:task/1dc5c17a-422b-4dc4-b493-371970c6c4d6", 
+    #       task_definition_arn: "arn:aws:ecs:us-east-1:012345678910:task-definition/console-sample-app-dynamic-ports:1", 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -9178,6 +10169,46 @@ module Aws::ECS
     #
     #   * {Types::UpdateCapacityProviderResponse#capacity_provider #capacity_provider} => Types::CapacityProvider
     #
+    #
+    # @example Example: To update a capacity provider's parameters
+    #
+    #   # This example updates the targetCapacity and instanceWarmupPeriod parameters for the capacity provider MyCapacityProvider
+    #   # to 90 and 150 respectively.
+    #
+    #   resp = client.update_capacity_provider({
+    #     name: "MyCapacityProvider", 
+    #     auto_scaling_group_provider: {
+    #       managed_scaling: {
+    #         instance_warmup_period: 150, 
+    #         status: "ENABLED", 
+    #         target_capacity: 90, 
+    #       }, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     capacity_provider: {
+    #       name: "MyCapacityProvider", 
+    #       auto_scaling_group_provider: {
+    #         auto_scaling_group_arn: "arn:aws:autoscaling:us-east-1:132456789012:autoScalingGroup:57ffcb94-11f0-4d6d-bf60-3bac5EXAMPLE:autoScalingGroupName/MyASG", 
+    #         managed_scaling: {
+    #           instance_warmup_period: 150, 
+    #           maximum_scaling_step_size: 10000, 
+    #           minimum_scaling_step_size: 1, 
+    #           status: "ENABLED", 
+    #           target_capacity: 90, 
+    #         }, 
+    #         managed_termination_protection: "ENABLED", 
+    #       }, 
+    #       capacity_provider_arn: "arn:aws:ecs:us-east-1:123456789012:capacity-provider/MyCapacityProvider", 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #       update_status: "UPDATE_COMPLETE", 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_capacity_provider({
@@ -9259,6 +10290,198 @@ module Aws::ECS
     # @return [Types::UpdateClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateClusterResponse#cluster #cluster} => Types::Cluster
+    #
+    #
+    # @example Example: To update a cluster's observability settings.
+    #
+    #   # This example turns on enhanced containerInsights in an existing cluster. 
+    #
+    #   resp = client.update_cluster({
+    #     cluster: "ECS-project-update-cluster", 
+    #     settings: [
+    #       {
+    #         name: "containerInsights", 
+    #         value: "enhanced", 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       attachments: [
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-152363a6-8c65-484c-b721-42c3e070ae93", 
+    #             }, 
+    #           ], 
+    #           id: "069d002b-7634-42e4-b1d4-544f4c8f6380", 
+    #           status: "CREATED", 
+    #         }, 
+    #         {
+    #           type: "managed_draining", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #             }, 
+    #             {
+    #               name: "autoScalingLifecycleHookName", 
+    #               value: "ecs-managed-draining-termination-hook", 
+    #             }, 
+    #           ], 
+    #           id: "08b5b6ca-45e9-4209-a65d-e962a27c490a", 
+    #           status: "CREATED", 
+    #         }, 
+    #         {
+    #           type: "sc", 
+    #           details: [
+    #           ], 
+    #           id: "45d0b36f-8cff-46b6-9380-1288744802ab", 
+    #           status: "ATTACHED", 
+    #         }, 
+    #       ], 
+    #       attachments_status: "UPDATE_COMPLETE", 
+    #       capacity_providers: [
+    #         "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #       ], 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/ECS-project-update-cluster", 
+    #       cluster_name: "ECS-project-update-cluster", 
+    #       default_capacity_provider_strategy: [
+    #         {
+    #           base: 0, 
+    #           capacity_provider: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #           weight: 1, 
+    #         }, 
+    #       ], 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       service_connect_defaults: {
+    #         namespace: "arn:aws:servicediscovery:us-west-2:123456789012:namespace/ns-igwrsylmy3kwvcdx", 
+    #       }, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enhanced", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
+    #
+    # @example Example: To update a cluster's Service Connect defaults.
+    #
+    #   # This example sets a default Service Connect namespace. 
+    #
+    #   resp = client.update_cluster({
+    #     cluster: "ECS-project-update-cluster", 
+    #     service_connect_defaults: {
+    #       namespace: "test", 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       attachments: [
+    #         {
+    #           type: "as_policy", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #             }, 
+    #             {
+    #               name: "scalingPolicyName", 
+    #               value: "ECSManagedAutoScalingPolicy-152363a6-8c65-484c-b721-42c3e070ae93", 
+    #             }, 
+    #           ], 
+    #           id: "069d002b-7634-42e4-b1d4-544f4c8f6380", 
+    #           status: "CREATED", 
+    #         }, 
+    #         {
+    #           type: "managed_draining", 
+    #           details: [
+    #             {
+    #               name: "capacityProviderName", 
+    #               value: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #             }, 
+    #             {
+    #               name: "autoScalingLifecycleHookName", 
+    #               value: "ecs-managed-draining-termination-hook", 
+    #             }, 
+    #           ], 
+    #           id: "08b5b6ca-45e9-4209-a65d-e962a27c490a", 
+    #           status: "CREATED", 
+    #         }, 
+    #         {
+    #           type: "sc", 
+    #           details: [
+    #           ], 
+    #           id: "45d0b36f-8cff-46b6-9380-1288744802ab", 
+    #           status: "DELETED", 
+    #         }, 
+    #         {
+    #           type: "sc", 
+    #           details: [
+    #           ], 
+    #           id: "3e6890c3-609c-4832-91de-d6ca891b3ef1", 
+    #           status: "ATTACHED", 
+    #         }, 
+    #         {
+    #           type: "sc", 
+    #           details: [
+    #           ], 
+    #           id: "961b8ec1-c2f1-4070-8495-e669b7668e90", 
+    #           status: "DELETED", 
+    #         }, 
+    #       ], 
+    #       attachments_status: "UPDATE_COMPLETE", 
+    #       capacity_providers: [
+    #         "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #       ], 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/ECS-project-update-cluster", 
+    #       cluster_name: "ECS-project-update-cluster", 
+    #       default_capacity_provider_strategy: [
+    #         {
+    #           base: 0, 
+    #           capacity_provider: "Infra-ECS-Cluster-ECS-project-update-cluster-d6bb6d5b-EC2CapacityProvider-3fIpdkLywwFt", 
+    #           weight: 1, 
+    #         }, 
+    #       ], 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       service_connect_defaults: {
+    #         namespace: "arn:aws:servicediscovery:us-west-2:123456789012:namespace/ns-dtjmxqpfi46ht7dr", 
+    #       }, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enhanced", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -9371,6 +10594,44 @@ module Aws::ECS
     #
     #   * {Types::UpdateClusterSettingsResponse#cluster #cluster} => Types::Cluster
     #
+    #
+    # @example Example: To update a cluster's settings
+    #
+    #   # This example enables CloudWatch Container Insights for the default cluster.
+    #
+    #   resp = client.update_cluster_settings({
+    #     cluster: "default", 
+    #     settings: [
+    #       {
+    #         name: "containerInsights", 
+    #         value: "enabled", 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     cluster: {
+    #       active_services_count: 0, 
+    #       cluster_arn: "arn:aws:ecs:us-west-2:123456789012:cluster/MyCluster", 
+    #       cluster_name: "default", 
+    #       pending_tasks_count: 0, 
+    #       registered_container_instances_count: 0, 
+    #       running_tasks_count: 0, 
+    #       settings: [
+    #         {
+    #           name: "containerInsights", 
+    #           value: "enabled", 
+    #         }, 
+    #       ], 
+    #       statistics: [
+    #       ], 
+    #       status: "ACTIVE", 
+    #       tags: [
+    #       ], 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_cluster_settings({
@@ -9482,6 +10743,29 @@ module Aws::ECS
     # @return [Types::UpdateContainerAgentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateContainerAgentResponse#container_instance #container_instance} => Types::ContainerInstance
+    #
+    #
+    # @example Example: To update the container agent version on a container instance
+    #
+    #   # This example updates the container agent version on the specified container instance in cluster MyCluster.
+    #
+    #   resp = client.update_container_agent({
+    #     cluster: "MyCluster", 
+    #     container_instance: "53ac7152-dcd1-4102-81f5-208962864132", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     container_instance: {
+    #       agent_connected: true, 
+    #       agent_update_status: "PENDING", 
+    #       version_info: {
+    #         agent_hash: "4023248", 
+    #         agent_version: "1.0.0", 
+    #         docker_version: "DockerVersion: 1.5.0", 
+    #       }, 
+    #     }, 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -9634,6 +10918,179 @@ module Aws::ECS
     #
     #   * {Types::UpdateContainerInstancesStateResponse#container_instances #container_instances} => Array&lt;Types::ContainerInstance&gt;
     #   * {Types::UpdateContainerInstancesStateResponse#failures #failures} => Array&lt;Types::Failure&gt;
+    #
+    #
+    # @example Example: To update the state of a container instance
+    #
+    #   # This example updates the state of the specified container instance in the default cluster to DRAINING. 
+    #
+    #   resp = client.update_container_instances_state({
+    #     cluster: "default", 
+    #     container_instances: [
+    #       "1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #     ], 
+    #     status: "DRAINING", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     container_instances: [
+    #       {
+    #         version: 30, 
+    #         agent_connected: true, 
+    #         attributes: [
+    #           {
+    #             name: "ecs.availability-zone", 
+    #             value: "us-west-2b", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.logging-driver.syslog", 
+    #           }, 
+    #           {
+    #             name: "ecs.instance-type", 
+    #             value: "c4.xlarge", 
+    #           }, 
+    #           {
+    #             name: "ecs.ami-id", 
+    #             value: "ami-a2ca61c2", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.task-iam-role-network-host", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.logging-driver.awslogs", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.logging-driver.json-file", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.17", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.privileged-container", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.18", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.19", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.ecr-auth", 
+    #           }, 
+    #           {
+    #             name: "ecs.os-type", 
+    #             value: "linux", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.20", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.21", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.22", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.task-iam-role", 
+    #           }, 
+    #           {
+    #             name: "com.amazonaws.ecs.capability.docker-remote-api.1.23", 
+    #           }, 
+    #         ], 
+    #         container_instance_arn: "arn:aws:ecs:us-west-2:012345678910:container-instance/default/1c3be8ed-df30-47b4-8f1e-6e68ebd01f34", 
+    #         ec2_instance_id: "i-05d99c76955727ec6", 
+    #         pending_tasks_count: 0, 
+    #         registered_resources: [
+    #           {
+    #             name: "CPU", 
+    #             type: "INTEGER", 
+    #             double_value: 0, 
+    #             integer_value: 4096, 
+    #             long_value: 0, 
+    #           }, 
+    #           {
+    #             name: "MEMORY", 
+    #             type: "INTEGER", 
+    #             double_value: 0, 
+    #             integer_value: 7482, 
+    #             long_value: 0, 
+    #           }, 
+    #           {
+    #             name: "PORTS", 
+    #             type: "STRINGSET", 
+    #             double_value: 0, 
+    #             integer_value: 0, 
+    #             long_value: 0, 
+    #             string_set_value: [
+    #               "22", 
+    #               "2376", 
+    #               "2375", 
+    #               "51678", 
+    #               "51679", 
+    #             ], 
+    #           }, 
+    #           {
+    #             name: "PORTS_UDP", 
+    #             type: "STRINGSET", 
+    #             double_value: 0, 
+    #             integer_value: 0, 
+    #             long_value: 0, 
+    #             string_set_value: [
+    #             ], 
+    #           }, 
+    #         ], 
+    #         remaining_resources: [
+    #           {
+    #             name: "CPU", 
+    #             type: "INTEGER", 
+    #             double_value: 0, 
+    #             integer_value: 4096, 
+    #             long_value: 0, 
+    #           }, 
+    #           {
+    #             name: "MEMORY", 
+    #             type: "INTEGER", 
+    #             double_value: 0, 
+    #             integer_value: 7482, 
+    #             long_value: 0, 
+    #           }, 
+    #           {
+    #             name: "PORTS", 
+    #             type: "STRINGSET", 
+    #             double_value: 0, 
+    #             integer_value: 0, 
+    #             long_value: 0, 
+    #             string_set_value: [
+    #               "22", 
+    #               "2376", 
+    #               "2375", 
+    #               "51678", 
+    #               "51679", 
+    #             ], 
+    #           }, 
+    #           {
+    #             name: "PORTS_UDP", 
+    #             type: "STRINGSET", 
+    #             double_value: 0, 
+    #             integer_value: 0, 
+    #             long_value: 0, 
+    #             string_set_value: [
+    #             ], 
+    #           }, 
+    #         ], 
+    #         running_tasks_count: 0, 
+    #         status: "DRAINING", 
+    #         version_info: {
+    #           agent_hash: "efe53c6", 
+    #           agent_version: "1.13.1", 
+    #           docker_version: "DockerVersion: 1.11.2", 
+    #         }, 
+    #       }, 
+    #     ], 
+    #     failures: [
+    #     ], 
+    #   }
     #
     # @example Request syntax with placeholder values
     #
@@ -10500,6 +11957,54 @@ module Aws::ECS
     #
     #   * {Types::UpdateServicePrimaryTaskSetResponse#task_set #task_set} => Types::TaskSet
     #
+    #
+    # @example Example: To update the primary task set for a service
+    #
+    #   # This example updates the primary task set for a service MyService that uses the EXTERNAL deployment controller type. 
+    #
+    #   resp = client.update_service_primary_task_set({
+    #     cluster: "MyCluster", 
+    #     primary_task_set: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #     service: "MyService", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task_set: {
+    #       computed_desired_count: 1, 
+    #       created_at: Time.parse(1557128360.711), 
+    #       id: "ecs-svc/1234567890123456789", 
+    #       launch_type: "EC2", 
+    #       load_balancers: [
+    #       ], 
+    #       network_configuration: {
+    #         awsvpc_configuration: {
+    #           assign_public_ip: "DISABLED", 
+    #           security_groups: [
+    #             "sg-12344312", 
+    #           ], 
+    #           subnets: [
+    #             "subnet-12344321", 
+    #           ], 
+    #         }, 
+    #       }, 
+    #       pending_count: 0, 
+    #       running_count: 0, 
+    #       scale: {
+    #         value: 50, 
+    #         unit: "PERCENT", 
+    #       }, 
+    #       service_registries: [
+    #       ], 
+    #       stability_status: "STABILIZING", 
+    #       stability_status_at: Time.parse(1557129279.914), 
+    #       status: "PRIMARY", 
+    #       task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/sample-fargate:2", 
+    #       task_set_arn: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #       updated_at: Time.parse(1557129412.653), 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_service_primary_task_set({
@@ -10764,6 +12269,58 @@ module Aws::ECS
     #
     #   * {Types::UpdateTaskSetResponse#task_set #task_set} => Types::TaskSet
     #
+    #
+    # @example Example: To update a task set
+    #
+    #   # This example updates the task set to adjust the scale.
+    #
+    #   resp = client.update_task_set({
+    #     cluster: "MyCluster", 
+    #     scale: {
+    #       value: 50, 
+    #       unit: "PERCENT", 
+    #     }, 
+    #     service: "MyService", 
+    #     task_set: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     task_set: {
+    #       computed_desired_count: 0, 
+    #       created_at: Time.parse(1557128360.711), 
+    #       id: "ecs-svc/1234567890123456789", 
+    #       launch_type: "EC2", 
+    #       load_balancers: [
+    #       ], 
+    #       network_configuration: {
+    #         awsvpc_configuration: {
+    #           assign_public_ip: "DISABLED", 
+    #           security_groups: [
+    #             "sg-12344321", 
+    #           ], 
+    #           subnets: [
+    #             "subnet-12344321", 
+    #           ], 
+    #         }, 
+    #       }, 
+    #       pending_count: 0, 
+    #       running_count: 0, 
+    #       scale: {
+    #         value: 50, 
+    #         unit: "PERCENT", 
+    #       }, 
+    #       service_registries: [
+    #       ], 
+    #       stability_status: "STABILIZING", 
+    #       stability_status_at: Time.parse(1557129279.914), 
+    #       status: "ACTIVE", 
+    #       task_definition: "arn:aws:ecs:us-west-2:123456789012:task-definition/sample-fargate:2", 
+    #       task_set_arn: "arn:aws:ecs:us-west-2:123456789012:task-set/MyCluster/MyService/ecs-svc/1234567890123456789", 
+    #       updated_at: Time.parse(1557129279.914), 
+    #     }, 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_task_set({
@@ -10849,7 +12406,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.173.0'
+      context[:gem_version] = '1.174.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

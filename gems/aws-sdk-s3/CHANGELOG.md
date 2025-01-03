@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.177.0 (2025-01-03)
+------------------
+
+* Feature - This change is only for updating the model regexp of CopySource which is not for validation but only for documentation and user guide change.
+
 1.176.1 (2024-12-12)
 ------------------
 

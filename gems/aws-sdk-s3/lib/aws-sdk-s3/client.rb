@@ -582,8 +582,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][2] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][3] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][3] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -627,7 +627,7 @@ module Aws::S3
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -815,8 +815,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][5] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][6] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -903,7 +903,7 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ErrorBestPractices.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html
@@ -1247,8 +1247,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][2] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][3] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][3] in the
+    #   *Amazon S3 User Guide*.
     #
     # * VPC endpoints don't support cross-Region requests (including
     #   copies). If you're using VPC endpoints, your source and destination
@@ -1387,7 +1387,7 @@ module Aws::S3
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/CopyingObjctsUsingRESTMPUapi.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [4]: https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html#manage-acct-regions-enable-standalone
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html
@@ -2310,8 +2310,8 @@ module Aws::S3
     #   information about endpoints in Availability Zones, see [Regional and
     #   Zonal endpoints for directory buckets in Availability Zones][4] in
     #   the *Amazon S3 User Guide*. For more information about endpoints in
-    #   Local Zones, see [Available Local Zone for directory buckets][5] in
-    #   the *Amazon S3 User Guide*.
+    #   Local Zones, see [Concepts for directory buckets in Local Zones][5]
+    #   in the *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -2403,7 +2403,7 @@ module Aws::S3
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateBucket.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-buckets-s3.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
@@ -2721,8 +2721,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][4] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][5] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][5] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -2924,7 +2924,7 @@ module Aws::S3
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
@@ -3677,8 +3677,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][3] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][4] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][4] in the
+    #   *Amazon S3 User Guide*.
     #
     # * <b> <code>CopyObject</code> API operation</b> - Unlike other Zonal
     #   endpoint API operations, the `CopyObject` API operation doesn't use
@@ -3784,7 +3784,7 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-APIs.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-optimizing-performance-guidelines-design-patterns.html#s3-express-optimizing-performance-session-authentication
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
@@ -3944,8 +3944,8 @@ module Aws::S3
     #   information about endpoints in Availability Zones, see [Regional and
     #   Zonal endpoints for directory buckets in Availability Zones][1] in
     #   the *Amazon S3 User Guide*. For more information about endpoints in
-    #   Local Zones, see [Available Local Zone for directory buckets][2] in
-    #   the *Amazon S3 User Guide*.
+    #   Local Zones, see [Concepts for directory buckets in Local Zones][2]
+    #   in the *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -3976,7 +3976,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
@@ -4441,8 +4441,8 @@ module Aws::S3
     #     information about endpoints in Availability Zones, see [Regional
     #     and Zonal endpoints for directory buckets in Availability
     #     Zones][3] in the *Amazon S3 User Guide*. For more information
-    #     about endpoints in Local Zones, see [Available Local Zone for
-    #     directory buckets][4] in the *Amazon S3 User Guide*.
+    #     about endpoints in Local Zones, see [Concepts for directory
+    #     buckets in Local Zones][4] in the *Amazon S3 User Guide*.
     #
     #      </note>
     # ^
@@ -4465,7 +4465,7 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html
@@ -4692,7 +4692,7 @@ module Aws::S3
     # about endpoints in Availability Zones, see [Regional and Zonal
     # endpoints for directory buckets in Availability Zones][1] in the
     # *Amazon S3 User Guide*. For more information about endpoints in Local
-    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # Zones, see [Concepts for directory buckets in Local Zones][2] in the
     # *Amazon S3 User Guide*.
     #
     #  </note>
@@ -4749,7 +4749,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
@@ -5042,8 +5042,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][3] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][4] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][4] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -5116,7 +5116,7 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectsfromVersioningSuspendedBuckets.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectDELETE.html#ExampleVersionObjectDelete
@@ -5270,6 +5270,15 @@ module Aws::S3
     #   * {Types::DeleteObjectOutput#request_charged #request_charged} => String
     #
     #
+    # @example Example: To delete an object (from a non-versioned bucket)
+    #
+    #   # The following example deletes an object from a non-versioned bucket.
+    #
+    #   resp = client.delete_object({
+    #     bucket: "ExampleBucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
     # @example Example: To delete an object
     #
     #   # The following example deletes an object from an S3 bucket.
@@ -5282,15 +5291,6 @@ module Aws::S3
     #   resp.to_h outputs the following:
     #   {
     #   }
-    #
-    # @example Example: To delete an object (from a non-versioned bucket)
-    #
-    #   # The following example deletes an object from a non-versioned bucket.
-    #
-    #   resp = client.delete_object({
-    #     bucket: "ExampleBucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
     #
     # @example Request syntax with placeholder values
     #
@@ -5470,8 +5470,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][1] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][2] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][2] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -5555,7 +5555,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -5708,42 +5708,6 @@ module Aws::S3
     #   * {Types::DeleteObjectsOutput#errors #errors} => Array&lt;Types::Error&gt;
     #
     #
-    # @example Example: To delete multiple objects from a versioned bucket
-    #
-    #   # The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the
-    #   # object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
-    #
-    #   resp = client.delete_objects({
-    #     bucket: "examplebucket", 
-    #     delete: {
-    #       objects: [
-    #         {
-    #           key: "objectkey1", 
-    #         }, 
-    #         {
-    #           key: "objectkey2", 
-    #         }, 
-    #       ], 
-    #       quiet: false, 
-    #     }, 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     deleted: [
-    #       {
-    #         delete_marker: true, 
-    #         delete_marker_version_id: "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F", 
-    #         key: "objectkey1", 
-    #       }, 
-    #       {
-    #         delete_marker: true, 
-    #         delete_marker_version_id: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt", 
-    #         key: "objectkey2", 
-    #       }, 
-    #     ], 
-    #   }
-    #
     # @example Example: To delete multiple object versions from a versioned bucket
     #
     #   # The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object
@@ -5776,6 +5740,42 @@ module Aws::S3
     #       {
     #         key: "HappyFace.jpg", 
     #         version_id: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Example: To delete multiple objects from a versioned bucket
+    #
+    #   # The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the
+    #   # object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
+    #
+    #   resp = client.delete_objects({
+    #     bucket: "examplebucket", 
+    #     delete: {
+    #       objects: [
+    #         {
+    #           key: "objectkey1", 
+    #         }, 
+    #         {
+    #           key: "objectkey2", 
+    #         }, 
+    #       ], 
+    #       quiet: false, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     deleted: [
+    #       {
+    #         delete_marker: true, 
+    #         delete_marker_version_id: "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F", 
+    #         key: "objectkey1", 
+    #       }, 
+    #       {
+    #         delete_marker: true, 
+    #         delete_marker_version_id: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt", 
+    #         key: "objectkey2", 
     #       }, 
     #     ], 
     #   }
@@ -6733,8 +6733,8 @@ module Aws::S3
     #     information about endpoints in Availability Zones, see [Regional
     #     and Zonal endpoints for directory buckets in Availability
     #     Zones][5] in the *Amazon S3 User Guide*. For more information
-    #     about endpoints in Local Zones, see [Available Local Zone for
-    #     directory buckets][6] in the *Amazon S3 User Guide*.
+    #     about endpoints in Local Zones, see [Concepts for directory
+    #     buckets in Local Zones][6] in the *Amazon S3 User Guide*.
     #
     #      </note>
     #
@@ -6768,7 +6768,7 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
@@ -7484,7 +7484,7 @@ module Aws::S3
     # about endpoints in Availability Zones, see [Regional and Zonal
     # endpoints for directory buckets in Availability Zones][1] in the
     # *Amazon S3 User Guide*. For more information about endpoints in Local
-    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # Zones, see [Concepts for directory buckets in Local Zones][2] in the
     # *Amazon S3 User Guide*.
     #
     #  </note>
@@ -7548,7 +7548,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
@@ -8176,8 +8176,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][2] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][3] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][3] in the *Amazon S3
+    # User Guide*.
     #
     # Permissions
     # : * **General purpose bucket permissions** - You must have the
@@ -8313,7 +8313,7 @@ module Aws::S3
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingSpecifyBucket
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -9019,8 +9019,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][1] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][2] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][2] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -9169,7 +9169,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -10040,8 +10040,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][5] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][6] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][6] in the
+    #   *Amazon S3 User Guide*.
     #
     #    </note>
     #
@@ -10051,7 +10051,7 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     #
     # @option params [required, String] :bucket
@@ -10291,8 +10291,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][6] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][7] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][7] in the
+    #   *Amazon S3 User Guide*.
     #
     #    </note>
     #
@@ -10309,7 +10309,7 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
     # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html
@@ -11231,7 +11231,7 @@ module Aws::S3
     # about endpoints in Availability Zones, see [Regional and Zonal
     # endpoints for directory buckets in Availability Zones][2] in the
     # *Amazon S3 User Guide*. For more information about endpoints in Local
-    # Zones, see [Available Local Zone for directory buckets][3] in the
+    # Zones, see [Concepts for directory buckets in Local Zones][3] in the
     # *Amazon S3 User Guide*.
     #
     #  </note>
@@ -11260,7 +11260,7 @@ module Aws::S3
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     #
@@ -11355,8 +11355,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][2] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][3] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][3] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -11417,7 +11417,7 @@ module Aws::S3
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -11606,48 +11606,6 @@ module Aws::S3
     # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     #
-    # @example Example: To list in-progress multipart uploads on a bucket
-    #
-    #   # The following example lists in-progress multipart uploads on a specific bucket.
-    #
-    #   resp = client.list_multipart_uploads({
-    #     bucket: "examplebucket", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     uploads: [
-    #       {
-    #         initiated: Time.parse("2014-05-01T05:40:58.000Z"), 
-    #         initiator: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         key: "JavaFile", 
-    #         owner: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         storage_class: "STANDARD", 
-    #         upload_id: "examplelUa.CInXklLQtSMJITdUnoZ1Y5GACB5UckOtspm5zbDMCkPF_qkfZzMiFZ6dksmcnqxJyIBvQMG9X9Q--", 
-    #       }, 
-    #       {
-    #         initiated: Time.parse("2014-05-01T05:41:27.000Z"), 
-    #         initiator: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         key: "JavaFile", 
-    #         owner: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         storage_class: "STANDARD", 
-    #         upload_id: "examplelo91lv1iwvWpvCiJWugw2xXLPAD7Z8cJyX9.WiIRgNrdG6Ldsn.9FtS63TCl1Uf5faTB.1U5Ckcbmdw--", 
-    #       }, 
-    #     ], 
-    #   }
-    #
     # @example Example: List next set of multipart uploads when previous result is truncated
     #
     #   # The following example specifies the upload-id-marker and key-marker from previous truncated response to retrieve next
@@ -11697,6 +11655,48 @@ module Aws::S3
     #         }, 
     #         storage_class: "STANDARD", 
     #         upload_id: "b7tZSqIlo91lv1iwvWpvCiJWugw2xXLPAD7Z8cJyX9.WiIRgNrdG6Ldsn.9FtS63TCl1Uf5faTB.1U5Ckcbmdw--", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Example: To list in-progress multipart uploads on a bucket
+    #
+    #   # The following example lists in-progress multipart uploads on a specific bucket.
+    #
+    #   resp = client.list_multipart_uploads({
+    #     bucket: "examplebucket", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     uploads: [
+    #       {
+    #         initiated: Time.parse("2014-05-01T05:40:58.000Z"), 
+    #         initiator: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         key: "JavaFile", 
+    #         owner: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         storage_class: "STANDARD", 
+    #         upload_id: "examplelUa.CInXklLQtSMJITdUnoZ1Y5GACB5UckOtspm5zbDMCkPF_qkfZzMiFZ6dksmcnqxJyIBvQMG9X9Q--", 
+    #       }, 
+    #       {
+    #         initiated: Time.parse("2014-05-01T05:41:27.000Z"), 
+    #         initiator: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         key: "JavaFile", 
+    #         owner: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         storage_class: "STANDARD", 
+    #         upload_id: "examplelo91lv1iwvWpvCiJWugw2xXLPAD7Z8cJyX9.WiIRgNrdG6Ldsn.9FtS63TCl1Uf5faTB.1U5Ckcbmdw--", 
     #       }, 
     #     ], 
     #   }
@@ -12248,8 +12248,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][3] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][4] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][4] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -12307,7 +12307,7 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/ListingKeysUsingAPIs.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
@@ -12596,8 +12596,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][3] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][4] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][4] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -12651,7 +12651,7 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
@@ -13611,7 +13611,7 @@ module Aws::S3
     # about endpoints in Availability Zones, see [Regional and Zonal
     # endpoints for directory buckets in Availability Zones][1] in the
     # *Amazon S3 User Guide*. For more information about endpoints in Local
-    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # Zones, see [Concepts for directory buckets in Local Zones][2] in the
     # *Amazon S3 User Guide*.
     #
     #  </note>
@@ -13719,7 +13719,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-key.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html
@@ -14364,8 +14364,8 @@ module Aws::S3
     #     information about endpoints in Availability Zones, see [Regional
     #     and Zonal endpoints for directory buckets in Availability
     #     Zones][7] in the *Amazon S3 User Guide*. For more information
-    #     about endpoints in Local Zones, see [Available Local Zone for
-    #     directory buckets][8] in the *Amazon S3 User Guide*.
+    #     about endpoints in Local Zones, see [Concepts for directory
+    #     buckets in Local Zones][8] in the *Amazon S3 User Guide*.
     #
     #      </note>
     #
@@ -14387,7 +14387,7 @@ module Aws::S3
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
     # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
@@ -15192,7 +15192,7 @@ module Aws::S3
     # about endpoints in Availability Zones, see [Regional and Zonal
     # endpoints for directory buckets in Availability Zones][1] in the
     # *Amazon S3 User Guide*. For more information about endpoints in Local
-    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # Zones, see [Concepts for directory buckets in Local Zones][2] in the
     # *Amazon S3 User Guide*.
     #
     #  </note>
@@ -15256,7 +15256,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
@@ -16220,8 +16220,8 @@ module Aws::S3
     #   endpoints in Availability Zones, see [Regional and Zonal endpoints
     #   for directory buckets in Availability Zones][1] in the *Amazon S3
     #   User Guide*. For more information about endpoints in Local Zones,
-    #   see [Available Local Zone for directory buckets][2] in the *Amazon
-    #   S3 User Guide*.
+    #   see [Concepts for directory buckets in Local Zones][2] in the
+    #   *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -16313,7 +16313,7 @@ module Aws::S3
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/AddingObjectstoVersioningEnabledBuckets.html
@@ -16975,24 +16975,56 @@ module Aws::S3
     #   * {Types::PutObjectOutput#request_charged #request_charged} => String
     #
     #
-    # @example Example: To upload an object (specify optional headers)
+    # @example Example: To upload an object and specify canned ACL.
     #
-    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
-    #   # storage class and use server-side encryption.
+    #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
+    #   # access to authenticated users. If the bucket is versioning enabled, S3 returns version ID in response.
     #
     #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
+    #     acl: "authenticated-read", 
+    #     body: "filetoupload", 
     #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     server_side_encryption: "AES256", 
-    #     storage_class: "STANDARD_IA", 
+    #     key: "exampleobject", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
+    #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
+    #   }
+    #
+    # @example Example: To create an object.
+    #
+    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "objectkey", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
+    #   }
+    #
+    # @example Example: To upload an object and specify optional tags
+    #
+    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
+    #   # S3 returns version ID of the newly created object.
+    #
+    #   resp = client.put_object({
+    #     body: "c:\\HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #     tagging: "key1=value1&key2=value2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
     #   }
     #
     # @example Example: To upload an object and specify server-side encryption and object tags
@@ -17015,61 +17047,24 @@ module Aws::S3
     #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
     #   }
     #
-    # @example Example: To upload object and specify user-defined metadata
+    # @example Example: To upload an object (specify optional headers)
     #
-    #   # The following example creates an object. The request also specifies optional metadata. If the bucket is versioning
-    #   # enabled, S3 returns version ID in response.
-    #
-    #   resp = client.put_object({
-    #     body: "filetoupload", 
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     metadata: {
-    #       "metadata1" => "value1", 
-    #       "metadata2" => "value2", 
-    #     }, 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
-    #   }
-    #
-    # @example Example: To upload an object and specify canned ACL.
-    #
-    #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
-    #   # access to authenticated users. If the bucket is versioning enabled, S3 returns version ID in response.
+    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
+    #   # storage class and use server-side encryption.
     #
     #   resp = client.put_object({
-    #     acl: "authenticated-read", 
-    #     body: "filetoupload", 
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
-    #   }
-    #
-    # @example Example: To upload an object and specify optional tags
-    #
-    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
-    #   # S3 returns version ID of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "c:\\HappyFace.jpg", 
+    #     body: "HappyFace.jpg", 
     #     bucket: "examplebucket", 
     #     key: "HappyFace.jpg", 
-    #     tagging: "key1=value1&key2=value2", 
+    #     server_side_encryption: "AES256", 
+    #     storage_class: "STANDARD_IA", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
     #   }
     #
     # @example Example: To upload an object
@@ -17089,20 +17084,25 @@ module Aws::S3
     #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
     #   }
     #
-    # @example Example: To create an object.
+    # @example Example: To upload object and specify user-defined metadata
     #
-    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
+    #   # The following example creates an object. The request also specifies optional metadata. If the bucket is versioning
+    #   # enabled, S3 returns version ID in response.
     #
     #   resp = client.put_object({
     #     body: "filetoupload", 
     #     bucket: "examplebucket", 
-    #     key: "objectkey", 
+    #     key: "exampleobject", 
+    #     metadata: {
+    #       "metadata1" => "value1", 
+    #       "metadata2" => "value2", 
+    #     }, 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
+    #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
     #   }
     #
     # @example Streaming a file from disk
@@ -19071,8 +19071,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][5] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][6] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -19206,7 +19206,7 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
@@ -19516,8 +19516,8 @@ module Aws::S3
     # endpoints in Availability Zones, see [Regional and Zonal endpoints for
     # directory buckets in Availability Zones][5] in the *Amazon S3 User
     # Guide*. For more information about endpoints in Local Zones, see
-    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
-    # Guide*.
+    # [Concepts for directory buckets in Local Zones][6] in the *Amazon S3
+    # User Guide*.
     #
     #  </note>
     #
@@ -19662,7 +19662,7 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectOperations.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
     # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
@@ -19971,6 +19971,26 @@ module Aws::S3
     #   * {Types::UploadPartCopyOutput#request_charged #request_charged} => String
     #
     #
+    # @example Example: To upload a part by copying data from an existing object as data source
+    #
+    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
+    #
+    #   resp = client.upload_part_copy({
+    #     bucket: "examplebucket", 
+    #     copy_source: "/bucketname/sourceobjectkey", 
+    #     key: "examplelargeobject", 
+    #     part_number: 1, 
+    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     copy_part_result: {
+    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
+    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
+    #     }, 
+    #   }
+    #
     # @example Example: To upload a part by copying byte range from an existing object as data source
     #
     #   # The following example uploads a part of a multipart upload by copying a specified byte range from an existing object as
@@ -19990,26 +20010,6 @@ module Aws::S3
     #     copy_part_result: {
     #       etag: "\"65d16d19e65a7508a51f043180edcc36\"", 
     #       last_modified: Time.parse("2016-12-29T21:44:28.000Z"), 
-    #     }, 
-    #   }
-    #
-    # @example Example: To upload a part by copying data from an existing object as data source
-    #
-    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
-    #
-    #   resp = client.upload_part_copy({
-    #     bucket: "examplebucket", 
-    #     copy_source: "/bucketname/sourceobjectkey", 
-    #     key: "examplelargeobject", 
-    #     part_number: 1, 
-    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     copy_part_result: {
-    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
-    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
     #     }, 
     #   }
     #
@@ -20471,7 +20471,7 @@ module Aws::S3
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3'
-      context[:gem_version] = '1.176.1'
+      context[:gem_version] = '1.177.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

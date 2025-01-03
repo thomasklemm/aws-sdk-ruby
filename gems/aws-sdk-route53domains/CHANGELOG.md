@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.73.0 (2025-01-03)
+------------------
+
+* Feature - Doc only update for Route 53 Domains that fixes several customer-reported issues
+
 1.72.0 (2024-12-12)
 ------------------
 

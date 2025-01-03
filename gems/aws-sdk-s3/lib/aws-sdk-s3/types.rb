@@ -2478,11 +2478,13 @@ module Aws::S3
     #   choose a Region to optimize latency, minimize costs, or address
     #   regulatory requirements. For example, if you reside in Europe, you
     #   will probably find it advantageous to create buckets in the Europe
-    #   (Ireland) Region. For more information, see [Accessing a bucket][1]
-    #   in the *Amazon S3 User Guide*.
+    #   (Ireland) Region.
     #
     #   If you don't specify a Region, the bucket is created in the US East
     #   (N. Virginia) Region (us-east-1) by default.
+    #
+    #   For a list of the valid values for all of the Amazon Web Services
+    #   Regions, see [Regions and Endpoints][1].
     #
     #   <note markdown="1"> This functionality is not supported for directory buckets.
     #
@@ -2490,17 +2492,17 @@ module Aws::S3
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html#access-bucket-intro
+    #   [1]: https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
     #   @return [String]
     #
     # @!attribute [rw] location
     #   Specifies the location where the bucket will be created.
     #
     #   <b>Directory buckets </b> - The location type is Availability Zone
-    #   or Local Zone. When the location type is Local Zone, your Local Zone
-    #   must be in opt-in status. Otherwise, you get an HTTP `400 Bad
-    #   Request` error with the error code `Access denied`. To learn more
-    #   about opt-in Local Zones, see [Opt-in Dedicated Local Zones][1]in
+    #   or Local Zone. To use the Local Zone location type, your account
+    #   must be enabled for Dedicated Local Zones. Otherwise, you get an
+    #   HTTP `403 Forbidden` error with the error code `AccessDenied`. To
+    #   learn more, see [Enable accounts for Dedicated Local Zones][1] in
     #   the *Amazon S3 User Guide*.
     #
     #   <note markdown="1"> This functionality is only supported by directory buckets.
@@ -11669,8 +11671,8 @@ module Aws::S3
     # Specifies the location where the bucket will be created.
     #
     # For directory buckets, the location type is Availability Zone or Local
-    # Zone. For more information about directory buckets, see [Directory
-    # buckets][1] in the *Amazon S3 User Guide*.
+    # Zone. For more information about directory buckets, see [Working with
+    # directory buckets][1] in the *Amazon S3 User Guide*.
     #
     # <note markdown="1"> This functionality is only supported by directory buckets.
     #

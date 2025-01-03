@@ -115,7 +115,8 @@ module Aws::Route53Domains
     #   @return [String]
     #
     # @!attribute [rw] invoice_id
-    #   The ID of the invoice that is associated with the billing record.
+    #   Deprecated property. This field is retained in report structure for
+    #   backwards compatibility, but will appear blank.
     #   @return [String]
     #
     # @!attribute [rw] bill_date
