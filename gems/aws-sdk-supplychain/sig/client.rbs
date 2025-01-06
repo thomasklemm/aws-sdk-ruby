@@ -176,6 +176,7 @@ module Aws
                              ?instance_name: ::String,
                              ?instance_description: ::String,
                              ?kms_key_arn: ::String,
+                             ?web_app_dns_domain: ::String,
                              ?tags: Hash[::String, ::String],
                              ?client_token: ::String
                            ) -> _CreateInstanceResponseSuccess

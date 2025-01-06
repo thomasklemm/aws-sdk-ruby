@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.20.0 (2025-01-06)
+------------------
+
+* Feature - Allow vanity DNS domain when creating a new ASC instance
+
 1.19.0 (2024-10-25)
 ------------------
 

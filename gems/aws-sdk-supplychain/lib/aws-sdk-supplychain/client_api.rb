@@ -180,6 +180,7 @@ module Aws::SupplyChain
     CreateInstanceRequest.add_member(:instance_name, Shapes::ShapeRef.new(shape: InstanceName, location_name: "instanceName"))
     CreateInstanceRequest.add_member(:instance_description, Shapes::ShapeRef.new(shape: InstanceDescription, location_name: "instanceDescription"))
     CreateInstanceRequest.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "kmsKeyArn"))
+    CreateInstanceRequest.add_member(:web_app_dns_domain, Shapes::ShapeRef.new(shape: InstanceWebAppDnsDomain, location_name: "webAppDnsDomain"))
     CreateInstanceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateInstanceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateInstanceRequest.struct_class = Types::CreateInstanceRequest

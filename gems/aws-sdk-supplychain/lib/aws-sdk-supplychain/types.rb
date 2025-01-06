@@ -211,7 +211,7 @@ module Aws::SupplyChain
     #
     # @!attribute [rw] schema
     #   The custom schema of the data lake dataset and is only required when
-    #   the name space is *default*.
+    #   the name space is **default**.
     #   @return [Types::DataLakeDatasetSchema]
     #
     # @!attribute [rw] description
@@ -267,6 +267,13 @@ module Aws::SupplyChain
     #   KMS key.
     #   @return [String]
     #
+    # @!attribute [rw] web_app_dns_domain
+    #   The DNS subdomain of the web app. This would be "example" in the
+    #   URL "example.scn.global.on.aws". You can set this to a custom
+    #   value, as long as the domain isn't already being used by someone
+    #   else. The name may only include alphanumeric characters and hyphens.
+    #   @return [String]
+    #
     # @!attribute [rw] tags
     #   The Amazon Web Services tags of an instance to be created.
     #   @return [Hash<String,String>]
@@ -284,6 +291,7 @@ module Aws::SupplyChain
       :instance_name,
       :instance_description,
       :kms_key_arn,
+      :web_app_dns_domain,
       :tags,
       :client_token)
       SENSITIVE = []
@@ -707,11 +715,13 @@ module Aws::SupplyChain
     #   @return [String]
     #
     # @!attribute [rw] namespace
-    #   The namespace of the dataset. The available values are:
+    #   The name space of the dataset. The available values are:
     #
-    #   * asc: for [ AWS Supply Chain supported datasets ][1].
+    #   * **asc** - For information on the Amazon Web Services Supply Chain
+    #     supported datasets see
+    #     [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
-    #   * default: for datasets with custom user-defined schemas.
+    #   * **default** - For datasets with custom user-defined schemas.
     #
     #
     #
@@ -719,8 +729,9 @@ module Aws::SupplyChain
     #   @return [String]
     #
     # @!attribute [rw] name
-    #   The name of the dataset. If the namespace is *asc*, the name must be
-    #   one of the supported [data entities ][1].
+    #   The name of the dataset. For **asc** name space, the name must be
+    #   one of the supported data entities under
+    #   [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
     #
     #
@@ -744,7 +755,7 @@ module Aws::SupplyChain
     #   @return [String]
     #
     # @!attribute [rw] namespace
-    #   The namespace of deleted dataset.
+    #   The name space of deleted dataset.
     #   @return [String]
     #
     # @!attribute [rw] name
@@ -1073,11 +1084,13 @@ module Aws::SupplyChain
     #   @return [String]
     #
     # @!attribute [rw] namespace
-    #   The namespace of the dataset. The available values are:
+    #   The name space of the dataset. The available values are:
     #
-    #   * asc: for [ AWS Supply Chain supported datasets ][1].
+    #   * **asc** - For information on the Amazon Web Services Supply Chain
+    #     supported datasets see
+    #     [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
-    #   * default: for datasets with custom user-defined schemas.
+    #   * **default** - For datasets with custom user-defined schemas.
     #
     #
     #
@@ -1225,8 +1238,7 @@ module Aws::SupplyChain
     #
     # @!attribute [rw] data
     #   The data payload of the event. For more information on the data
-    #   schema to use, see [Data entities supported in AWS Supply Chain
-    #   ][1].
+    #   schema to use, see [Data entities supported in AWS Supply Chain][1].
     #
     #
     #

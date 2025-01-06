@@ -726,7 +726,7 @@ module Aws::SupplyChain
     #
     # @option params [Types::DataLakeDatasetSchema] :schema
     #   The custom schema of the data lake dataset and is only required when
-    #   the name space is *default*.
+    #   the name space is **default**.
     #
     # @option params [String] :description
     #   The description of the dataset.
@@ -1067,6 +1067,12 @@ module Aws::SupplyChain
     #   the Amazon Web Services owned KMS key. If you don't provide anything
     #   here, AWS Supply Chain uses the Amazon Web Services owned KMS key.
     #
+    # @option params [String] :web_app_dns_domain
+    #   The DNS subdomain of the web app. This would be "example" in the URL
+    #   "example.scn.global.on.aws". You can set this to a custom value, as
+    #   long as the domain isn't already being used by someone else. The name
+    #   may only include alphanumeric characters and hyphens.
+    #
     # @option params [Hash<String,String>] :tags
     #   The Amazon Web Services tags of an instance to be created.
     #
@@ -1132,6 +1138,7 @@ module Aws::SupplyChain
     #     instance_name: "InstanceName",
     #     instance_description: "InstanceDescription",
     #     kms_key_arn: "KmsKeyArn",
+    #     web_app_dns_domain: "InstanceWebAppDnsDomain",
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -1219,19 +1226,22 @@ module Aws::SupplyChain
     #   The AWS Supply Chain instance identifier.
     #
     # @option params [required, String] :namespace
-    #   The namespace of the dataset. The available values are:
+    #   The name space of the dataset. The available values are:
     #
-    #   * asc: for [ AWS Supply Chain supported datasets ][1].
+    #   * **asc** - For information on the Amazon Web Services Supply Chain
+    #     supported datasets see
+    #     [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
-    #   * default: for datasets with custom user-defined schemas.
+    #   * **default** - For datasets with custom user-defined schemas.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html
     #
     # @option params [required, String] :name
-    #   The name of the dataset. If the namespace is *asc*, the name must be
-    #   one of the supported [data entities ][1].
+    #   The name of the dataset. For **asc** name space, the name must be one
+    #   of the supported data entities under
+    #   [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
     #
     #
@@ -2054,11 +2064,13 @@ module Aws::SupplyChain
     #   The Amazon Web Services Supply Chain instance identifier.
     #
     # @option params [required, String] :namespace
-    #   The namespace of the dataset. The available values are:
+    #   The name space of the dataset. The available values are:
     #
-    #   * asc: for [ AWS Supply Chain supported datasets ][1].
+    #   * **asc** - For information on the Amazon Web Services Supply Chain
+    #     supported datasets see
+    #     [https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html][1].
     #
-    #   * default: for datasets with custom user-defined schemas.
+    #   * **default** - For datasets with custom user-defined schemas.
     #
     #
     #
@@ -2594,7 +2606,7 @@ module Aws::SupplyChain
     #
     # @option params [required, String] :data
     #   The data payload of the event. For more information on the data schema
-    #   to use, see [Data entities supported in AWS Supply Chain ][1].
+    #   to use, see [Data entities supported in AWS Supply Chain][1].
     #
     #
     #
@@ -3592,7 +3604,7 @@ module Aws::SupplyChain
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-supplychain'
-      context[:gem_version] = '1.19.0'
+      context[:gem_version] = '1.20.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

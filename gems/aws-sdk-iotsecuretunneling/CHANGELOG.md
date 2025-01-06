@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.48.0 (2025-01-06)
+------------------
+
+* Feature - Adds dualstack endpoint support for IoT Secure Tunneling
+
 1.47.0 (2024-10-18)
 ------------------
 

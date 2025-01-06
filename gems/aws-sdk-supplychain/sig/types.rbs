@@ -74,6 +74,7 @@ module Aws::SupplyChain
       attr_accessor instance_name: ::String
       attr_accessor instance_description: ::String
       attr_accessor kms_key_arn: ::String
+      attr_accessor web_app_dns_domain: ::String
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor client_token: ::String
       SENSITIVE: []
