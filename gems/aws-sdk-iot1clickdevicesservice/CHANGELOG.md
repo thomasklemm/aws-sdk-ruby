@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Feature - IoT 1Click Devices Service has been removed from the SDK because it has been discontinued.
+
 1.62.0 (2024-10-18)
 ------------------
 
