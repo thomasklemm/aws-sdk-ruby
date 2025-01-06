@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Feature - IoT 1Click Projects has been removed from the SDK because it has been discontinued.
+
 1.64.0 (2024-11-06)
 ------------------
 
