@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.65.0 (2025-01-07)
+------------------
+
+* Feature - Code Generated Changes, see `./build_tools` or `aws-sdk-core`'s CHANGELOG.md for details.
+
 * Feature - IoT 1Click Projects has been removed from the SDK because it has been discontinued.
 
 1.64.0 (2024-11-06)

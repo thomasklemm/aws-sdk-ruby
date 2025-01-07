@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.63.0 (2025-01-07)
+------------------
+
+* Feature - Code Generated Changes, see `./build_tools` or `aws-sdk-core`'s CHANGELOG.md for details.
+
 * Feature - IoT 1Click Devices Service has been removed from the SDK because it has been discontinued.
 
 1.62.0 (2024-10-18)
