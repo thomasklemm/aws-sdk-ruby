@@ -190,8 +190,6 @@ module Aws
   autoload :InternetMonitor, 'aws-sdk-internetmonitor'
   autoload :Invoicing, 'aws-sdk-invoicing'
   autoload :IoT, 'aws-sdk-iot'
-  autoload :IoT1ClickDevicesService, 'aws-sdk-iot1clickdevicesservice'
-  autoload :IoT1ClickProjects, 'aws-sdk-iot1clickprojects'
   autoload :IoTAnalytics, 'aws-sdk-iotanalytics'
   autoload :IoTDataPlane, 'aws-sdk-iotdataplane'
   autoload :IoTDeviceAdvisor, 'aws-sdk-iotdeviceadvisor'

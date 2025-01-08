@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.222.0 (2025-01-08)
+------------------
+
+* Feature - Removed a dependency on the deprecated `aws-sdk-iot1clickprojects` gem.
+
+* Feature - Removed a dependency on the deprecated `aws-sdk-iot1clickdevicesservice` gem.
+
 3.221.0 (2024-12-17)
 ------------------
 

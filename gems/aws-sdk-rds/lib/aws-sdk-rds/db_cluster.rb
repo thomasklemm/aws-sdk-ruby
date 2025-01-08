@@ -1397,12 +1397,6 @@ module Aws::RDS
     #   also query your database from inside the RDS console with the RDS
     #   query editor.
     #
-    #   RDS Data API is supported with the following DB clusters:
-    #
-    #   * Aurora PostgreSQL Serverless v2 and provisioned
-    #
-    #   * Aurora PostgreSQL and Aurora MySQL Serverless v1
-    #
     #   For more information, see [Using RDS Data API][1] in the *Amazon
     #   Aurora User Guide*.
     #
@@ -2983,7 +2977,8 @@ module Aws::RDS
     #   cluster, or a provisioned clone from an Aurora Serverless v1 cluster.
     #   To create a clone that is an Aurora Serverless v1 cluster, the
     #   original cluster must be an Aurora Serverless v1 cluster or an
-    #   encrypted provisioned cluster.
+    #   encrypted provisioned cluster. To create a full copy that is an Aurora
+    #   Serverless v1 cluster, specify the engine mode `serverless`.
     #
     #   Valid for: Aurora DB clusters only
     # @option options [String] :db_cluster_instance_class

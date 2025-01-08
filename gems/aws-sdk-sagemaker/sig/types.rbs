@@ -792,6 +792,7 @@ module Aws::SageMaker
       attr_accessor threads_per_core: ::Integer
       attr_accessor instance_storage_configs: ::Array[Types::ClusterInstanceStorageConfig]
       attr_accessor private_primary_ip: ::String
+      attr_accessor private_primary_ipv_6: ::String
       attr_accessor private_dns_hostname: ::String
       attr_accessor placement: Types::ClusterInstancePlacement
       SENSITIVE: []

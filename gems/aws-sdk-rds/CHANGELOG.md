@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.265.0 (2025-01-08)
+------------------
+
+* Feature - Updates Amazon RDS documentation to clarify the RestoreDBClusterToPointInTime description.
+
 1.264.0 (2024-12-27)
 ------------------
 

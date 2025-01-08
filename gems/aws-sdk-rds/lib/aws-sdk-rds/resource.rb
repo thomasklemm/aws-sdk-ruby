@@ -571,12 +571,6 @@ module Aws::RDS
     #   also query your database from inside the RDS console with the RDS
     #   query editor.
     #
-    #   RDS Data API is supported with the following DB clusters:
-    #
-    #   * Aurora PostgreSQL Serverless v2 and provisioned
-    #
-    #   * Aurora PostgreSQL and Aurora MySQL Serverless v1
-    #
     #   For more information, see [Using RDS Data API][1] in the *Amazon
     #   Aurora User Guide*.
     #

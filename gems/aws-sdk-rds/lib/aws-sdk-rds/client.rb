@@ -3137,12 +3137,6 @@ module Aws::RDS
     #   also query your database from inside the RDS console with the RDS
     #   query editor.
     #
-    #   RDS Data API is supported with the following DB clusters:
-    #
-    #   * Aurora PostgreSQL Serverless v2 and provisioned
-    #
-    #   * Aurora PostgreSQL and Aurora MySQL Serverless v1
-    #
     #   For more information, see [Using RDS Data API][1] in the *Amazon
     #   Aurora User Guide*.
     #
@@ -20584,10 +20578,10 @@ module Aws::RDS
     #   type to take effect.
     #
     #   If you choose to migrate your DB instance from using standard storage
-    #   to using Provisioned IOPS, or from using Provisioned IOPS to using
-    #   standard storage, the process can take time. The duration of the
-    #   migration depends on several factors such as database load, storage
-    #   size, storage type (standard or Provisioned IOPS), amount of IOPS
+    #   to Provisioned IOPS (io1), or from Provisioned IOPS to standard
+    #   storage, the process can take time. The duration of the migration
+    #   depends on several factors such as database load, storage size,
+    #   storage type (standard or Provisioned IOPS), amount of IOPS
     #   provisioned (if any), and the number of prior scale storage
     #   operations. Typical migration times are under 24 hours, but the
     #   process can take up to several days in some cases. During the
@@ -20597,6 +20591,8 @@ module Aws::RDS
     #   can take place for the instance, including modifying the instance,
     #   rebooting the instance, deleting the instance, creating a read replica
     #   for the instance, and creating a DB snapshot of the instance.
+    #
+    #
     #
     #   Constraints:
     #
@@ -20657,13 +20653,13 @@ module Aws::RDS
     #   for the `Iops` parameter.
     #
     #   If you choose to migrate your DB instance from using standard storage
-    #   to using Provisioned IOPS, or from using Provisioned IOPS to using
-    #   standard storage, the process can take time. The duration of the
-    #   migration depends on several factors such as database load, storage
-    #   size, storage type (standard or Provisioned IOPS), amount of IOPS
-    #   provisioned (if any), and the number of prior scale storage
-    #   operations. Typical migration times are under 24 hours, but the
-    #   process can take up to several days in some cases. During the
+    #   to gp2 (General Purpose SSD), gp3, or Provisioned IOPS (io1), or from
+    #   these storage types to standard storage, the process can take time.
+    #   The duration of the migration depends on several factors such as
+    #   database load, storage size, storage type (standard or Provisioned
+    #   IOPS), amount of IOPS provisioned (if any), and the number of prior
+    #   scale storage operations. Typical migration times are under 24 hours,
+    #   but the process can take up to several days in some cases. During the
     #   migration, the DB instance is available for use, but might experience
     #   performance degradation. While the migration takes place, nightly
     #   backups for the instance are suspended. No other Amazon RDS operations
@@ -26612,7 +26608,8 @@ module Aws::RDS
     #   cluster, or a provisioned clone from an Aurora Serverless v1 cluster.
     #   To create a clone that is an Aurora Serverless v1 cluster, the
     #   original cluster must be an Aurora Serverless v1 cluster or an
-    #   encrypted provisioned cluster.
+    #   encrypted provisioned cluster. To create a full copy that is an Aurora
+    #   Serverless v1 cluster, specify the engine mode `serverless`.
     #
     #   Valid for: Aurora DB clusters only
     #
@@ -31874,7 +31871,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.264.0'
+      context[:gem_version] = '1.265.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

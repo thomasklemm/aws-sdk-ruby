@@ -12798,6 +12798,7 @@ module Aws::SageMaker
     #   resp.node_details.instance_storage_configs #=> Array
     #   resp.node_details.instance_storage_configs[0].ebs_volume_config.volume_size_in_gb #=> Integer
     #   resp.node_details.private_primary_ip #=> String
+    #   resp.node_details.private_primary_ipv_6 #=> String
     #   resp.node_details.private_dns_hostname #=> String
     #   resp.node_details.placement.availability_zone #=> String
     #   resp.node_details.placement.availability_zone_id #=> String
@@ -29445,7 +29446,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.279.0'
+      context[:gem_version] = '1.280.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

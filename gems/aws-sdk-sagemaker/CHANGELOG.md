@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.280.0 (2025-01-08)
+------------------
+
+* Feature - Adds support for IPv6 for SageMaker HyperPod cluster nodes.
+
 1.279.0 (2025-01-02)
 ------------------
 

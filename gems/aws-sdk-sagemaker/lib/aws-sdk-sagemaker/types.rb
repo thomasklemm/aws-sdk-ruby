@@ -4547,6 +4547,11 @@ module Aws::SageMaker
     #   node.
     #   @return [String]
     #
+    # @!attribute [rw] private_primary_ipv_6
+    #   The private primary IPv6 address of the SageMaker HyperPod cluster
+    #   node.
+    #   @return [String]
+    #
     # @!attribute [rw] private_dns_hostname
     #   The private DNS hostname of the SageMaker HyperPod cluster node.
     #   @return [String]
@@ -4568,6 +4573,7 @@ module Aws::SageMaker
       :threads_per_core,
       :instance_storage_configs,
       :private_primary_ip,
+      :private_primary_ipv_6,
       :private_dns_hostname,
       :placement)
       SENSITIVE = []
@@ -34696,8 +34702,8 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] image
-    #   The Amazon EC2 Container Registry (Amazon ECR) path where inference
-    #   code is stored.
+    #   The Amazon EC2 Container Registry path where inference code is
+    #   stored.
     #
     #   If you are using your own custom algorithm instead of an algorithm
     #   provided by SageMaker, the inference code must meet SageMaker
@@ -41609,7 +41615,7 @@ module Aws::SageMaker
     #   manifest file containing a list of object keys that you want
     #   SageMaker to use for model training.
     #
-    #   If you choose `AugmentedManifestFile`, S3Uri identifies an object
+    #   If you choose `AugmentedManifestFile`, `S3Uri` identifies an object
     #   that is an augmented manifest file in JSON lines format. This file
     #   contains the data you want to use for model training.
     #   `AugmentedManifestFile` can only be used if the Channel's input
@@ -41820,7 +41826,7 @@ module Aws::SageMaker
     #   @return [String]
     #
     # @!attribute [rw] manifest_etag
-    #   The ETag associated with Manifest S3URI.
+    #   The ETag associated with Manifest S3 URI.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/S3ModelDataSource AWS API Documentation

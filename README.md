@@ -384,8 +384,6 @@ RubyGems.org page under "LINKS" section.
 | AWS Import/Export                                     | Aws::ImportExport                        | aws-sdk-importexport                        | 2010-06-01  |
 | AWS Invoicing                                         | Aws::Invoicing                           | aws-sdk-invoicing                           | 2024-12-01  |
 | AWS IoT                                               | Aws::IoT                                 | aws-sdk-iot                                 | 2015-05-28  |
-| AWS IoT 1-Click Devices Service                       | Aws::IoT1ClickDevicesService             | aws-sdk-iot1clickdevicesservice             | 2018-05-14  |
-| AWS IoT 1-Click Projects Service                      | Aws::IoT1ClickProjects                   | aws-sdk-iot1clickprojects                   | 2018-05-14  |
 | AWS IoT Analytics                                     | Aws::IoTAnalytics                        | aws-sdk-iotanalytics                        | 2017-11-27  |
 | AWS IoT Core Device Advisor                           | Aws::IoTDeviceAdvisor                    | aws-sdk-iotdeviceadvisor                    | 2020-09-18  |
 | AWS IoT Data Plane                                    | Aws::IoTDataPlane                        | aws-sdk-iotdataplane                        | 2015-05-28  |

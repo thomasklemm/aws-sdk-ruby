@@ -302,6 +302,7 @@ module Aws::SageMaker
     ClusterOrchestratorEksConfig = Shapes::StructureShape.new(name: 'ClusterOrchestratorEksConfig')
     ClusterPrivateDnsHostname = Shapes::StringShape.new(name: 'ClusterPrivateDnsHostname')
     ClusterPrivatePrimaryIp = Shapes::StringShape.new(name: 'ClusterPrivatePrimaryIp')
+    ClusterPrivatePrimaryIpv6 = Shapes::StringShape.new(name: 'ClusterPrivatePrimaryIpv6')
     ClusterSchedulerConfigArn = Shapes::StringShape.new(name: 'ClusterSchedulerConfigArn')
     ClusterSchedulerConfigId = Shapes::StringShape.new(name: 'ClusterSchedulerConfigId')
     ClusterSchedulerConfigSummary = Shapes::StructureShape.new(name: 'ClusterSchedulerConfigSummary')
@@ -3176,6 +3177,7 @@ module Aws::SageMaker
     ClusterNodeDetails.add_member(:threads_per_core, Shapes::ShapeRef.new(shape: ClusterThreadsPerCore, location_name: "ThreadsPerCore"))
     ClusterNodeDetails.add_member(:instance_storage_configs, Shapes::ShapeRef.new(shape: ClusterInstanceStorageConfigs, location_name: "InstanceStorageConfigs"))
     ClusterNodeDetails.add_member(:private_primary_ip, Shapes::ShapeRef.new(shape: ClusterPrivatePrimaryIp, location_name: "PrivatePrimaryIp"))
+    ClusterNodeDetails.add_member(:private_primary_ipv_6, Shapes::ShapeRef.new(shape: ClusterPrivatePrimaryIpv6, location_name: "PrivatePrimaryIpv6"))
     ClusterNodeDetails.add_member(:private_dns_hostname, Shapes::ShapeRef.new(shape: ClusterPrivateDnsHostname, location_name: "PrivateDnsHostname"))
     ClusterNodeDetails.add_member(:placement, Shapes::ShapeRef.new(shape: ClusterInstancePlacement, location_name: "Placement"))
     ClusterNodeDetails.struct_class = Types::ClusterNodeDetails

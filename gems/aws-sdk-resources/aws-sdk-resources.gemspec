@@ -200,8 +200,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-internetmonitor', '~> 1')
   spec.add_dependency('aws-sdk-invoicing', '~> 1')
   spec.add_dependency('aws-sdk-iot', '~> 1')
-  spec.add_dependency('aws-sdk-iot1clickdevicesservice', '~> 1')
-  spec.add_dependency('aws-sdk-iot1clickprojects', '~> 1')
   spec.add_dependency('aws-sdk-iotanalytics', '~> 1')
   spec.add_dependency('aws-sdk-iotdataplane', '~> 1')
   spec.add_dependency('aws-sdk-iotdeviceadvisor', '~> 1')

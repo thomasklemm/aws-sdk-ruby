@@ -429,8 +429,6 @@ module Aws
             'InternetMonitor' => 'internetmonitor',
             'Invoicing' => 'invoicing',
             'IoT' => 'iot',
-            'IoT1ClickDevicesService' => 'devices.iot1click',
-            'IoT1ClickProjects' => 'projects.iot1click',
             'IoTAnalytics' => 'iotanalytics',
             'IoTDeviceAdvisor' => 'api.iotdeviceadvisor',
             'IoTEvents' => 'iotevents',
