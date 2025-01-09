@@ -135,6 +135,7 @@ module Aws::CodeBuild
     FleetStatus = Shapes::StructureShape.new(name: 'FleetStatus')
     FleetStatusCode = Shapes::StringShape.new(name: 'FleetStatusCode')
     Fleets = Shapes::ListShape.new(name: 'Fleets')
+    FleetsAllowed = Shapes::ListShape.new(name: 'FleetsAllowed')
     GetReportGroupTrendInput = Shapes::StructureShape.new(name: 'GetReportGroupTrendInput')
     GetReportGroupTrendOutput = Shapes::StructureShape.new(name: 'GetReportGroupTrendOutput')
     GetResourcePolicyInput = Shapes::StructureShape.new(name: 'GetResourcePolicyInput')
@@ -364,6 +365,7 @@ module Aws::CodeBuild
 
     BatchRestrictions.add_member(:maximum_builds_allowed, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "maximumBuildsAllowed"))
     BatchRestrictions.add_member(:compute_types_allowed, Shapes::ShapeRef.new(shape: ComputeTypesAllowed, location_name: "computeTypesAllowed"))
+    BatchRestrictions.add_member(:fleets_allowed, Shapes::ShapeRef.new(shape: FleetsAllowed, location_name: "fleetsAllowed"))
     BatchRestrictions.struct_class = Types::BatchRestrictions
 
     Build.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "id"))
@@ -750,6 +752,8 @@ module Aws::CodeBuild
     FleetStatus.struct_class = Types::FleetStatus
 
     Fleets.member = Shapes::ShapeRef.new(shape: Fleet)
+
+    FleetsAllowed.member = Shapes::ShapeRef.new(shape: NonEmptyString)
 
     GetReportGroupTrendInput.add_member(:report_group_arn, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "reportGroupArn"))
     GetReportGroupTrendInput.add_member(:num_of_reports, Shapes::ShapeRef.new(shape: PageSize, location_name: "numOfReports"))

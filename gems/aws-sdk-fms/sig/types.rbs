@@ -840,6 +840,7 @@ module Aws::FMS
       attr_accessor resource_set_ids: ::Array[::String]
       attr_accessor policy_description: ::String
       attr_accessor policy_status: ("ACTIVE" | "OUT_OF_ADMIN_SCOPE")
+      attr_accessor resource_tag_logical_operator: ("AND" | "OR")
       SENSITIVE: []
     end
 

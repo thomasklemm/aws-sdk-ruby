@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.139.0 (2025-01-09)
+------------------
+
+* Feature - AWS CodeBuild Now Supports BuildBatch in Reserved Capacity and Lambda
+
 1.138.0 (2024-11-18)
 ------------------
 

@@ -1060,6 +1060,7 @@ module Aws::FMS
     #   resp.policy.resource_set_ids[0] #=> String
     #   resp.policy.policy_description #=> String
     #   resp.policy.policy_status #=> String, one of "ACTIVE", "OUT_OF_ADMIN_SCOPE"
+    #   resp.policy.resource_tag_logical_operator #=> String, one of "AND", "OR"
     #   resp.policy_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fms-2018-01-01/GetPolicy AWS API Documentation
@@ -2685,6 +2686,7 @@ module Aws::FMS
     #       resource_set_ids: ["Base62Id"],
     #       policy_description: "ResourceDescription",
     #       policy_status: "ACTIVE", # accepts ACTIVE, OUT_OF_ADMIN_SCOPE
+    #       resource_tag_logical_operator: "AND", # accepts AND, OR
     #     },
     #     tag_list: [
     #       {
@@ -2744,6 +2746,7 @@ module Aws::FMS
     #   resp.policy.resource_set_ids[0] #=> String
     #   resp.policy.policy_description #=> String
     #   resp.policy.policy_status #=> String, one of "ACTIVE", "OUT_OF_ADMIN_SCOPE"
+    #   resp.policy.resource_tag_logical_operator #=> String, one of "AND", "OR"
     #   resp.policy_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fms-2018-01-01/PutPolicy AWS API Documentation
@@ -2954,7 +2957,7 @@ module Aws::FMS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-fms'
-      context[:gem_version] = '1.86.0'
+      context[:gem_version] = '1.87.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

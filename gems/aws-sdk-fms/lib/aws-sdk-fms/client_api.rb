@@ -263,6 +263,7 @@ module Aws::FMS
     ResourceSetSummaryList = Shapes::ListShape.new(name: 'ResourceSetSummaryList')
     ResourceTag = Shapes::StructureShape.new(name: 'ResourceTag')
     ResourceTagKey = Shapes::StringShape.new(name: 'ResourceTagKey')
+    ResourceTagLogicalOperator = Shapes::StringShape.new(name: 'ResourceTagLogicalOperator')
     ResourceTagValue = Shapes::StringShape.new(name: 'ResourceTagValue')
     ResourceTags = Shapes::ListShape.new(name: 'ResourceTags')
     ResourceType = Shapes::StringShape.new(name: 'ResourceType')
@@ -970,6 +971,7 @@ module Aws::FMS
     Policy.add_member(:resource_set_ids, Shapes::ShapeRef.new(shape: ResourceSetIds, location_name: "ResourceSetIds"))
     Policy.add_member(:policy_description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "PolicyDescription"))
     Policy.add_member(:policy_status, Shapes::ShapeRef.new(shape: CustomerPolicyStatus, location_name: "PolicyStatus"))
+    Policy.add_member(:resource_tag_logical_operator, Shapes::ShapeRef.new(shape: ResourceTagLogicalOperator, location_name: "ResourceTagLogicalOperator"))
     Policy.struct_class = Types::Policy
 
     PolicyComplianceDetail.add_member(:policy_owner, Shapes::ShapeRef.new(shape: AWSAccountId, location_name: "PolicyOwner"))

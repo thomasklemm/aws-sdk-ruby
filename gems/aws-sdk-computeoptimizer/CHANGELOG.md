@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.72.0 (2025-01-09)
+------------------
+
+* Feature - This release expands AWS Compute Optimizer rightsizing recommendation support for Amazon EC2 Auto Scaling groups to include those with scaling policies and multiple instance types.
+
 1.71.0 (2024-11-20)
 ------------------
 

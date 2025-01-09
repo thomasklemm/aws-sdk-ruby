@@ -587,7 +587,8 @@ module Aws
                           exclude_map: Hash[("ACCOUNT" | "ORG_UNIT"), Array[::String]]?,
                           resource_set_ids: Array[::String]?,
                           policy_description: ::String?,
-                          policy_status: ("ACTIVE" | "OUT_OF_ADMIN_SCOPE")?
+                          policy_status: ("ACTIVE" | "OUT_OF_ADMIN_SCOPE")?,
+                          resource_tag_logical_operator: ("AND" | "OR")?
                         },
                         ?tag_list: Array[
                           {

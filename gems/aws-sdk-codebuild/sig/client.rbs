@@ -365,7 +365,8 @@ module Aws
                               combine_artifacts: bool?,
                               restrictions: {
                                 maximum_builds_allowed: ::Integer?,
-                                compute_types_allowed: Array[::String]?
+                                compute_types_allowed: Array[::String]?,
+                                fleets_allowed: Array[::String]?
                               }?,
                               timeout_in_mins: ::Integer?,
                               batch_report_mode: ("REPORT_INDIVIDUAL_BUILDS" | "REPORT_AGGREGATED_BATCH")?
@@ -1046,7 +1047,8 @@ module Aws
                                  combine_artifacts: bool?,
                                  restrictions: {
                                    maximum_builds_allowed: ::Integer?,
-                                   compute_types_allowed: Array[::String]?
+                                   compute_types_allowed: Array[::String]?,
+                                   fleets_allowed: Array[::String]?
                                  }?,
                                  timeout_in_mins: ::Integer?,
                                  batch_report_mode: ("REPORT_INDIVIDUAL_BUILDS" | "REPORT_AGGREGATED_BATCH")?
@@ -1287,7 +1289,8 @@ module Aws
                               combine_artifacts: bool?,
                               restrictions: {
                                 maximum_builds_allowed: ::Integer?,
-                                compute_types_allowed: Array[::String]?
+                                compute_types_allowed: Array[::String]?,
+                                fleets_allowed: Array[::String]?
                               }?,
                               timeout_in_mins: ::Integer?,
                               batch_report_mode: ("REPORT_INDIVIDUAL_BUILDS" | "REPORT_AGGREGATED_BATCH")?

@@ -58,26 +58,48 @@ module Aws::ComputeOptimizer
       include Aws::Structure
     end
 
-    # Describes the configuration of an Auto Scaling group.
+    # Describes the configuration of an EC2 Auto Scaling group.
     #
     # @!attribute [rw] desired_capacity
-    #   The desired capacity, or number of instances, for the Auto Scaling
-    #   group.
+    #   The desired capacity, or number of instances, for the EC2 Auto
+    #   Scaling group.
     #   @return [Integer]
     #
     # @!attribute [rw] min_size
-    #   The minimum size, or minimum number of instances, for the Auto
+    #   The minimum size, or minimum number of instances, for the EC2 Auto
     #   Scaling group.
     #   @return [Integer]
     #
     # @!attribute [rw] max_size
-    #   The maximum size, or maximum number of instances, for the Auto
+    #   The maximum size, or maximum number of instances, for the EC2 Auto
     #   Scaling group.
     #   @return [Integer]
     #
     # @!attribute [rw] instance_type
-    #   The instance type for the Auto Scaling group.
+    #   The instance type for the EC2 Auto Scaling group.
     #   @return [String]
+    #
+    # @!attribute [rw] allocation_strategy
+    #   Describes the allocation strategy that the EC2 Auto Scaling group
+    #   uses. This field is only available for EC2 Auto Scaling groups with
+    #   mixed instance types.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_instance_hour_reduction_percentage
+    #   Describes the projected percentage reduction in instance hours after
+    #   adopting the recommended configuration. This field is only available
+    #   for EC2 Auto Scaling groups with scaling policies.
+    #   @return [Float]
+    #
+    # @!attribute [rw] type
+    #   Describes whether the EC2 Auto Scaling group has a single instance
+    #   type or a mixed instance type configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] mixed_instance_types
+    #   List the instance types within an EC2 Auto Scaling group that has
+    #   mixed instance types.
+    #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/AutoScalingGroupConfiguration AWS API Documentation
     #
@@ -85,7 +107,11 @@ module Aws::ComputeOptimizer
       :desired_capacity,
       :min_size,
       :max_size,
-      :instance_type)
+      :instance_type,
+      :allocation_strategy,
+      :estimated_instance_hour_reduction_percentage,
+      :type,
+      :mixed_instance_types)
       SENSITIVE = []
       include Aws::Structure
     end

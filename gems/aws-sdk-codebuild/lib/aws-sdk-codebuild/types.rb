@@ -281,11 +281,22 @@ module Aws::CodeBuild
     #   [1]: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
     #   @return [Array<String>]
     #
+    # @!attribute [rw] fleets_allowed
+    #   An array of strings that specify the fleets that are allowed for the
+    #   batch build. See [Run builds on reserved capacity fleets][1] in the
+    #   *CodeBuild User Guide* for more information.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/codebuild/latest/userguide/fleets.html
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchRestrictions AWS API Documentation
     #
     class BatchRestrictions < Struct.new(
       :maximum_builds_allowed,
-      :compute_types_allowed)
+      :compute_types_allowed,
+      :fleets_allowed)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5006,8 +5017,9 @@ module Aws::CodeBuild
     #   Set to true to report the status of a build's start and finish to
     #   your source provider. This option is valid only when your source
     #   provider is GitHub, GitHub Enterprise, GitLab, GitLab Self Managed,
-    #   or Bitbucket. If this is set and you use a different source
-    #   provider, an `invalidInputException` is thrown.
+    #   GitLab, GitLab Self Managed, or Bitbucket. If this is set and you
+    #   use a different source provider, an `invalidInputException` is
+    #   thrown.
     #
     #   To be able to report the build status to the source provider, the
     #   user associated with the source provider must have write access to
@@ -6276,8 +6288,8 @@ module Aws::CodeBuild
     # @!attribute [rw] report_build_status_override
     #   Set to true to report to your source provider the status of a
     #   build's start and completion. If you use this option with a source
-    #   provider other than GitHub, GitHub Enterprise, or Bitbucket, an
-    #   `invalidInputException` is thrown.
+    #   provider other than GitHub, GitHub Enterprise, GitLab, GitLab Self
+    #   Managed, or Bitbucket, an `invalidInputException` is thrown.
     #
     #   To be able to report the build status to the source provider, the
     #   user associated with the source provider must have write access to

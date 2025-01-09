@@ -618,6 +618,8 @@ module Aws::CodeBuild
     #   resp.build_batches[0].build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.build_batches[0].build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.build_batches[0].build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.build_batches[0].build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.build_batches[0].build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.build_batches[0].build_batch_config.timeout_in_mins #=> Integer
     #   resp.build_batches[0].build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.build_batches[0].build_groups #=> Array
@@ -1030,6 +1032,8 @@ module Aws::CodeBuild
     #   resp.projects[0].build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.projects[0].build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.projects[0].build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.projects[0].build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.projects[0].build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.projects[0].build_batch_config.timeout_in_mins #=> Integer
     #   resp.projects[0].build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.projects[0].concurrent_build_limit #=> Integer
@@ -1765,6 +1769,7 @@ module Aws::CodeBuild
     #       restrictions: {
     #         maximum_builds_allowed: 1,
     #         compute_types_allowed: ["NonEmptyString"],
+    #         fleets_allowed: ["NonEmptyString"],
     #       },
     #       timeout_in_mins: 1,
     #       batch_report_mode: "REPORT_INDIVIDUAL_BUILDS", # accepts REPORT_INDIVIDUAL_BUILDS, REPORT_AGGREGATED_BATCH
@@ -1898,6 +1903,8 @@ module Aws::CodeBuild
     #   resp.project.build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.project.build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.project.build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.project.build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.project.build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.project.build_batch_config.timeout_in_mins #=> Integer
     #   resp.project.build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.project.concurrent_build_limit #=> Integer
@@ -3735,6 +3742,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.build_batch.build_batch_config.timeout_in_mins #=> Integer
     #   resp.build_batch.build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.build_batch.build_groups #=> Array
@@ -3909,8 +3918,8 @@ module Aws::CodeBuild
     # @option params [Boolean] :report_build_status_override
     #   Set to true to report to your source provider the status of a build's
     #   start and completion. If you use this option with a source provider
-    #   other than GitHub, GitHub Enterprise, or Bitbucket, an
-    #   `invalidInputException` is thrown.
+    #   other than GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or
+    #   Bitbucket, an `invalidInputException` is thrown.
     #
     #   To be able to report the build status to the source provider, the user
     #   associated with the source provider must have write access to the
@@ -4637,6 +4646,7 @@ module Aws::CodeBuild
     #       restrictions: {
     #         maximum_builds_allowed: 1,
     #         compute_types_allowed: ["NonEmptyString"],
+    #         fleets_allowed: ["NonEmptyString"],
     #       },
     #       timeout_in_mins: 1,
     #       batch_report_mode: "REPORT_INDIVIDUAL_BUILDS", # accepts REPORT_INDIVIDUAL_BUILDS, REPORT_AGGREGATED_BATCH
@@ -4758,6 +4768,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.build_batch.build_batch_config.timeout_in_mins #=> Integer
     #   resp.build_batch.build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.build_batch.build_groups #=> Array
@@ -5080,6 +5092,8 @@ module Aws::CodeBuild
     #   resp.build_batch.build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.build_batch.build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.build_batch.build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.build_batch.build_batch_config.timeout_in_mins #=> Integer
     #   resp.build_batch.build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.build_batch.build_groups #=> Array
@@ -5733,6 +5747,7 @@ module Aws::CodeBuild
     #       restrictions: {
     #         maximum_builds_allowed: 1,
     #         compute_types_allowed: ["NonEmptyString"],
+    #         fleets_allowed: ["NonEmptyString"],
     #       },
     #       timeout_in_mins: 1,
     #       batch_report_mode: "REPORT_INDIVIDUAL_BUILDS", # accepts REPORT_INDIVIDUAL_BUILDS, REPORT_AGGREGATED_BATCH
@@ -5866,6 +5881,8 @@ module Aws::CodeBuild
     #   resp.project.build_batch_config.restrictions.maximum_builds_allowed #=> Integer
     #   resp.project.build_batch_config.restrictions.compute_types_allowed #=> Array
     #   resp.project.build_batch_config.restrictions.compute_types_allowed[0] #=> String
+    #   resp.project.build_batch_config.restrictions.fleets_allowed #=> Array
+    #   resp.project.build_batch_config.restrictions.fleets_allowed[0] #=> String
     #   resp.project.build_batch_config.timeout_in_mins #=> Integer
     #   resp.project.build_batch_config.batch_report_mode #=> String, one of "REPORT_INDIVIDUAL_BUILDS", "REPORT_AGGREGATED_BATCH"
     #   resp.project.concurrent_build_limit #=> Integer
@@ -6141,7 +6158,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.138.0'
+      context[:gem_version] = '1.139.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

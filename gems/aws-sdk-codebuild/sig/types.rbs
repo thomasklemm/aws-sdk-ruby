@@ -99,6 +99,7 @@ module Aws::CodeBuild
     class BatchRestrictions
       attr_accessor maximum_builds_allowed: ::Integer
       attr_accessor compute_types_allowed: ::Array[::String]
+      attr_accessor fleets_allowed: ::Array[::String]
       SENSITIVE: []
     end
 

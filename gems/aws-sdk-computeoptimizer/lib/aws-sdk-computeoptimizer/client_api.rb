@@ -20,6 +20,8 @@ module Aws::ComputeOptimizer
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     AccountIds = Shapes::ListShape.new(name: 'AccountIds')
     AllocatedStorage = Shapes::IntegerShape.new(name: 'AllocatedStorage')
+    AllocationStrategy = Shapes::StringShape.new(name: 'AllocationStrategy')
+    AsgType = Shapes::StringShape.new(name: 'AsgType')
     AutoScalingConfiguration = Shapes::StringShape.new(name: 'AutoScalingConfiguration')
     AutoScalingGroupArn = Shapes::StringShape.new(name: 'AutoScalingGroupArn')
     AutoScalingGroupArns = Shapes::ListShape.new(name: 'AutoScalingGroupArns')
@@ -315,9 +317,13 @@ module Aws::ComputeOptimizer
     MigrationEffort = Shapes::StringShape.new(name: 'MigrationEffort')
     MinSize = Shapes::IntegerShape.new(name: 'MinSize')
     MissingAuthenticationToken = Shapes::StructureShape.new(name: 'MissingAuthenticationToken')
+    MixedInstanceType = Shapes::StringShape.new(name: 'MixedInstanceType')
+    MixedInstanceTypes = Shapes::ListShape.new(name: 'MixedInstanceTypes')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NullableCpu = Shapes::IntegerShape.new(name: 'NullableCpu')
+    NullableEstimatedInstanceHourReductionPercentage = Shapes::FloatShape.new(name: 'NullableEstimatedInstanceHourReductionPercentage')
     NullableIOPS = Shapes::IntegerShape.new(name: 'NullableIOPS')
+    NullableInstanceType = Shapes::StringShape.new(name: 'NullableInstanceType')
     NullableMaxAllocatedStorage = Shapes::IntegerShape.new(name: 'NullableMaxAllocatedStorage')
     NullableMemory = Shapes::IntegerShape.new(name: 'NullableMemory')
     NullableMemoryReservation = Shapes::IntegerShape.new(name: 'NullableMemoryReservation')
@@ -470,7 +476,11 @@ module Aws::ComputeOptimizer
     AutoScalingGroupConfiguration.add_member(:desired_capacity, Shapes::ShapeRef.new(shape: DesiredCapacity, location_name: "desiredCapacity"))
     AutoScalingGroupConfiguration.add_member(:min_size, Shapes::ShapeRef.new(shape: MinSize, location_name: "minSize"))
     AutoScalingGroupConfiguration.add_member(:max_size, Shapes::ShapeRef.new(shape: MaxSize, location_name: "maxSize"))
-    AutoScalingGroupConfiguration.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
+    AutoScalingGroupConfiguration.add_member(:instance_type, Shapes::ShapeRef.new(shape: NullableInstanceType, location_name: "instanceType"))
+    AutoScalingGroupConfiguration.add_member(:allocation_strategy, Shapes::ShapeRef.new(shape: AllocationStrategy, location_name: "allocationStrategy"))
+    AutoScalingGroupConfiguration.add_member(:estimated_instance_hour_reduction_percentage, Shapes::ShapeRef.new(shape: NullableEstimatedInstanceHourReductionPercentage, location_name: "estimatedInstanceHourReductionPercentage"))
+    AutoScalingGroupConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: AsgType, location_name: "type"))
+    AutoScalingGroupConfiguration.add_member(:mixed_instance_types, Shapes::ShapeRef.new(shape: MixedInstanceTypes, location_name: "mixedInstanceTypes"))
     AutoScalingGroupConfiguration.struct_class = Types::AutoScalingGroupConfiguration
 
     AutoScalingGroupEstimatedMonthlySavings.add_member(:currency, Shapes::ShapeRef.new(shape: Currency, location_name: "currency"))
@@ -1269,6 +1279,8 @@ module Aws::ComputeOptimizer
 
     MissingAuthenticationToken.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     MissingAuthenticationToken.struct_class = Types::MissingAuthenticationToken
+
+    MixedInstanceTypes.member = Shapes::ShapeRef.new(shape: MixedInstanceType)
 
     OptInRequiredException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     OptInRequiredException.struct_class = Types::OptInRequiredException

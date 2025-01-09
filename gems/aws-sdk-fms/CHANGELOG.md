@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.87.0 (2025-01-09)
+------------------
+
+* Feature - AWS Firewall Manager now lets you combine multiple resource tags using the logical AND operator or the logical OR operator.
+
 1.86.0 (2024-11-18)
 ------------------
 
