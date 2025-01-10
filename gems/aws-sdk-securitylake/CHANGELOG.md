@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2025-01-10)
+------------------
+
+* Feature - Doc only update for ServiceName that fixes several customer-reported issues
+
 1.33.0 (2024-11-06)
 ------------------
 

@@ -831,7 +831,7 @@ module Aws::STS
     #   The regex used to validate this parameter is a string of characters
     #   consisting of upper- and lower-case alphanumeric characters with no
     #   spaces. You can also include underscores or any of the following
-    #   characters: =,.@-. You cannot use a value that begins with the text
+    #   characters: +=,.@-. You cannot use a value that begins with the text
     #   `aws:`. This prefix is reserved for Amazon Web Services internal use.
     #
     #
@@ -1514,8 +1514,9 @@ module Aws::STS
     #   authenticating the user who is using your application with a web
     #   identity provider before the application makes an
     #   `AssumeRoleWithWebIdentity` call. Timestamps in the token must be
-    #   formatted as either an integer or a long integer. Only tokens with RSA
-    #   algorithms (RS256) are supported.
+    #   formatted as either an integer or a long integer. Tokens must be
+    #   signed using either RSA keys (RS256, RS384, or RS512) or ECDSA keys
+    #   (ES256, ES384, or ES512).
     #
     # @option params [String] :provider_id
     #   The fully qualified host component of the domain name of the OAuth 2.0
@@ -1708,14 +1709,14 @@ module Aws::STS
     end
 
     # Returns a set of short term credentials you can use to perform
-    # privileged tasks in a member account.
+    # privileged tasks on a member account in your organization.
     #
-    # Before you can launch a privileged session, you must have enabled
-    # centralized root access in your organization. For steps to enable this
-    # feature, see [Centralize root access for member accounts][1] in the
-    # *IAM User Guide*.
+    # Before you can launch a privileged session, you must have centralized
+    # root access in your organization. For steps to enable this feature,
+    # see [Centralize root access for member accounts][1] in the *IAM User
+    # Guide*.
     #
-    # <note markdown="1"> The global endpoint is not supported for AssumeRoot. You must send
+    # <note markdown="1"> The STS global endpoint is not supported for AssumeRoot. You must send
     # this request to a Regional STS endpoint. For more information, see
     # [Endpoints][2].
     #
@@ -1737,9 +1738,7 @@ module Aws::STS
     # @option params [required, Types::PolicyDescriptorType] :task_policy_arn
     #   The identity based policy that scopes the session to the privileged
     #   tasks that can be performed. You can use one of following Amazon Web
-    #   Services managed policies to scope root session actions. You can add
-    #   additional customer managed policies to further limit the permissions
-    #   for the root session.
+    #   Services managed policies to scope root session actions.
     #
     #   * [IAMAuditRootUserCredentials][1]
     #
@@ -2573,7 +2572,7 @@ module Aws::STS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-core'
-      context[:gem_version] = '3.214.1'
+      context[:gem_version] = '3.215.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

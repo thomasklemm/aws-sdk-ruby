@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.215.0 (2025-01-10)
+------------------
+
+* Feature - Updated Aws::STS::Client with the latest API changes.
+
+* Feature - Fixed typos in the descriptions.
+
 3.214.1 (2024-12-28)
 ------------------
 

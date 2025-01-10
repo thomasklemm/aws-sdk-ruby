@@ -183,65 +183,12 @@ module Aws::SecurityLake
     # @!attribute [rw] event_classes
     #   The Open Cybersecurity Schema Framework (OCSF) event classes which
     #   describes the type of data that the custom source will send to
-    #   Security Lake. The supported event classes are:
+    #   Security Lake. For the list of supported event classes, see the
+    #   [Amazon Security Lake User Guide][1].
     #
-    #   * `ACCESS_ACTIVITY`
     #
-    #   * `FILE_ACTIVITY`
     #
-    #   * `KERNEL_ACTIVITY`
-    #
-    #   * `KERNEL_EXTENSION`
-    #
-    #   * `MEMORY_ACTIVITY`
-    #
-    #   * `MODULE_ACTIVITY`
-    #
-    #   * `PROCESS_ACTIVITY`
-    #
-    #   * `REGISTRY_KEY_ACTIVITY`
-    #
-    #   * `REGISTRY_VALUE_ACTIVITY`
-    #
-    #   * `RESOURCE_ACTIVITY`
-    #
-    #   * `SCHEDULED_JOB_ACTIVITY`
-    #
-    #   * `SECURITY_FINDING`
-    #
-    #   * `ACCOUNT_CHANGE`
-    #
-    #   * `AUTHENTICATION`
-    #
-    #   * `AUTHORIZATION`
-    #
-    #   * `ENTITY_MANAGEMENT_AUDIT`
-    #
-    #   * `DHCP_ACTIVITY`
-    #
-    #   * `NETWORK_ACTIVITY`
-    #
-    #   * `DNS_ACTIVITY`
-    #
-    #   * `FTP_ACTIVITY`
-    #
-    #   * `HTTP_ACTIVITY`
-    #
-    #   * `RDP_ACTIVITY`
-    #
-    #   * `SMB_ACTIVITY`
-    #
-    #   * `SSH_ACTIVITY`
-    #
-    #   * `CONFIG_STATE`
-    #
-    #   * `INVENTORY_INFO`
-    #
-    #   * `EMAIL_ACTIVITY`
-    #
-    #   * `API_ACTIVITY`
-    #
-    #   * `CLOUD_API`
+    #   [1]: https://docs.aws.amazon.com/security-lake/latest/userguide/adding-custom-sources.html#ocsf-eventclass
     #   @return [Array<String>]
     #
     # @!attribute [rw] source_name
@@ -841,67 +788,15 @@ module Aws::SecurityLake
     #   @return [String]
     #
     # @!attribute [rw] event_classes
-    #   The Open Cybersecurity Schema Framework (OCSF) event classes which
+    #   The Open Cybersecurity Schema Framework (OCSF) event classes
     #   describes the type of data that the custom source will send to
-    #   Security Lake. The supported event classes are:
+    #   Security Lake. For the list of supported event classes, see
+    #   [Supported OCSF Event classes][1] in the Amazon Security Lake User
+    #   Guide.
     #
-    #   * `ACCESS_ACTIVITY`
     #
-    #   * `FILE_ACTIVITY`
     #
-    #   * `KERNEL_ACTIVITY`
-    #
-    #   * `KERNEL_EXTENSION`
-    #
-    #   * `MEMORY_ACTIVITY`
-    #
-    #   * `MODULE_ACTIVITY`
-    #
-    #   * `PROCESS_ACTIVITY`
-    #
-    #   * `REGISTRY_KEY_ACTIVITY`
-    #
-    #   * `REGISTRY_VALUE_ACTIVITY`
-    #
-    #   * `RESOURCE_ACTIVITY`
-    #
-    #   * `SCHEDULED_JOB_ACTIVITY`
-    #
-    #   * `SECURITY_FINDING`
-    #
-    #   * `ACCOUNT_CHANGE`
-    #
-    #   * `AUTHENTICATION`
-    #
-    #   * `AUTHORIZATION`
-    #
-    #   * `ENTITY_MANAGEMENT_AUDIT`
-    #
-    #   * `DHCP_ACTIVITY`
-    #
-    #   * `NETWORK_ACTIVITY`
-    #
-    #   * `DNS_ACTIVITY`
-    #
-    #   * `FTP_ACTIVITY`
-    #
-    #   * `HTTP_ACTIVITY`
-    #
-    #   * `RDP_ACTIVITY`
-    #
-    #   * `SMB_ACTIVITY`
-    #
-    #   * `SSH_ACTIVITY`
-    #
-    #   * `CONFIG_STATE`
-    #
-    #   * `INVENTORY_INFO`
-    #
-    #   * `EMAIL_ACTIVITY`
-    #
-    #   * `API_ACTIVITY`
-    #
-    #   * `CLOUD_API`
+    #   [1]: https://docs.aws.amazon.com/security-lake/latest/userguide/adding-custom-sources.html#ocsf-eventclass.html
     #   @return [Array<String>]
     #
     # @!attribute [rw] source_name

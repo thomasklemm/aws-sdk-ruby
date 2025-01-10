@@ -757,6 +757,8 @@ module Aws::Redshift
     # @!attribute [rw] publicly_accessible
     #   A boolean value that, if `true`, indicates that the cluster can be
     #   accessed from a public network.
+    #
+    #   Default: false
     #   @return [Boolean]
     #
     # @!attribute [rw] encrypted
@@ -2196,12 +2198,15 @@ module Aws::Redshift
     #
     # @!attribute [rw] publicly_accessible
     #   If `true`, the cluster can be accessed from a public network.
+    #
+    #   Default: false
     #   @return [Boolean]
     #
     # @!attribute [rw] encrypted
-    #   If `true`, the data in the cluster is encrypted at rest.
+    #   If `true`, the data in the cluster is encrypted at rest. If you set
+    #   the value on this parameter to `false`, the request will fail.
     #
-    #   Default: false
+    #   Default: true
     #   @return [Boolean]
     #
     # @!attribute [rw] hsm_client_certificate_identifier
@@ -8381,6 +8386,8 @@ module Aws::Redshift
     # @!attribute [rw] publicly_accessible
     #   If `true`, the cluster can be accessed from a public network. Only
     #   clusters in VPCs can be set to be publicly available.
+    #
+    #   Default: false
     #   @return [Boolean]
     #
     # @!attribute [rw] elastic_ip
@@ -10596,6 +10603,8 @@ module Aws::Redshift
     #
     # @!attribute [rw] publicly_accessible
     #   If `true`, the cluster can be accessed from a public network.
+    #
+    #   Default: false
     #   @return [Boolean]
     #
     # @!attribute [rw] owner_account

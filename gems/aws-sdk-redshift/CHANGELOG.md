@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.134.0 (2025-01-10)
+------------------
+
+* Feature - Additions to the PubliclyAccessible and Encrypted parameters clarifying what the defaults are.
+
 1.133.0 (2024-12-03)
 ------------------
 

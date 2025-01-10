@@ -1535,10 +1535,13 @@ module Aws::Redshift
     # @option params [Boolean] :publicly_accessible
     #   If `true`, the cluster can be accessed from a public network.
     #
-    # @option params [Boolean] :encrypted
-    #   If `true`, the data in the cluster is encrypted at rest.
-    #
     #   Default: false
+    #
+    # @option params [Boolean] :encrypted
+    #   If `true`, the data in the cluster is encrypted at rest. If you set
+    #   the value on this parameter to `false`, the request will fail.
+    #
+    #   Default: true
     #
     # @option params [String] :hsm_client_certificate_identifier
     #   Specifies the name of the HSM client certificate the Amazon Redshift
@@ -9102,6 +9105,8 @@ module Aws::Redshift
     #   If `true`, the cluster can be accessed from a public network. Only
     #   clusters in VPCs can be set to be publicly available.
     #
+    #   Default: false
+    #
     # @option params [String] :elastic_ip
     #   The Elastic IP (EIP) address for the cluster.
     #
@@ -11814,6 +11819,8 @@ module Aws::Redshift
     # @option params [Boolean] :publicly_accessible
     #   If `true`, the cluster can be accessed from a public network.
     #
+    #   Default: false
+    #
     # @option params [String] :owner_account
     #   The Amazon Web Services account used to create or copy the snapshot.
     #   Required if you are restoring a snapshot you do not own, optional if
@@ -12932,7 +12939,7 @@ module Aws::Redshift
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-redshift'
-      context[:gem_version] = '1.133.0'
+      context[:gem_version] = '1.134.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

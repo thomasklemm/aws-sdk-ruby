@@ -510,65 +510,12 @@ module Aws::SecurityLake
     # @option params [Array<String>] :event_classes
     #   The Open Cybersecurity Schema Framework (OCSF) event classes which
     #   describes the type of data that the custom source will send to
-    #   Security Lake. The supported event classes are:
+    #   Security Lake. For the list of supported event classes, see the
+    #   [Amazon Security Lake User Guide][1].
     #
-    #   * `ACCESS_ACTIVITY`
     #
-    #   * `FILE_ACTIVITY`
     #
-    #   * `KERNEL_ACTIVITY`
-    #
-    #   * `KERNEL_EXTENSION`
-    #
-    #   * `MEMORY_ACTIVITY`
-    #
-    #   * `MODULE_ACTIVITY`
-    #
-    #   * `PROCESS_ACTIVITY`
-    #
-    #   * `REGISTRY_KEY_ACTIVITY`
-    #
-    #   * `REGISTRY_VALUE_ACTIVITY`
-    #
-    #   * `RESOURCE_ACTIVITY`
-    #
-    #   * `SCHEDULED_JOB_ACTIVITY`
-    #
-    #   * `SECURITY_FINDING`
-    #
-    #   * `ACCOUNT_CHANGE`
-    #
-    #   * `AUTHENTICATION`
-    #
-    #   * `AUTHORIZATION`
-    #
-    #   * `ENTITY_MANAGEMENT_AUDIT`
-    #
-    #   * `DHCP_ACTIVITY`
-    #
-    #   * `NETWORK_ACTIVITY`
-    #
-    #   * `DNS_ACTIVITY`
-    #
-    #   * `FTP_ACTIVITY`
-    #
-    #   * `HTTP_ACTIVITY`
-    #
-    #   * `RDP_ACTIVITY`
-    #
-    #   * `SMB_ACTIVITY`
-    #
-    #   * `SSH_ACTIVITY`
-    #
-    #   * `CONFIG_STATE`
-    #
-    #   * `INVENTORY_INFO`
-    #
-    #   * `EMAIL_ACTIVITY`
-    #
-    #   * `API_ACTIVITY`
-    #
-    #   * `CLOUD_API`
+    #   [1]: https://docs.aws.amazon.com/security-lake/latest/userguide/adding-custom-sources.html#ocsf-eventclass
     #
     # @option params [required, String] :source_name
     #   Specify the name for a third-party custom source. This must be a
@@ -767,6 +714,16 @@ module Aws::SecurityLake
     # Automatically enables Amazon Security Lake for new member accounts in
     # your organization. Security Lake is not automatically enabled for any
     # existing member accounts in your organization.
+    #
+    # This operation merges the new data lake organization configuration
+    # with the existing configuration for Security Lake in your
+    # organization. If you want to create a new data lake organization
+    # configuration, you must delete the existing one using
+    # [DeleteDataLakeOrganizationConfiguration][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/security-lake/latest/APIReference/API_DeleteDataLakeOrganizationConfiguration.html
     #
     # @option params [Array<Types::DataLakeAutoEnableNewAccountConfiguration>] :auto_enable_new_account
     #   Enable Security Lake with the specified configuration settings, to
@@ -2032,7 +1989,7 @@ module Aws::SecurityLake
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-securitylake'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
