@@ -301,6 +301,7 @@ module Aws
             body: body
           )
           expect(signature.headers['x-amz-content-sha256']).to eq(Digest::SHA256.hexdigest('abc'))
+          body.unlink
         end
 
         it 'reads non-file IO objects into  memory to compute checksusm' do
@@ -313,7 +314,7 @@ module Aws
         end
 
         it 'does not read the body if X-Amz-Content-Sha256 if already present' do
-          body = double('http-payload')
+          body = StringIO.new('body')
           expect(body).to_not receive(:read)
           expect(body).to_not receive(:rewind)
           signature = Signer.new(options).sign_request(
@@ -348,7 +349,7 @@ module Aws
               'Foo' => 'foo',
               'Bar' => 'bar  bar',
               'Bar2' => '"bar bar"',
-              'Content-Length' => 9,
+              'Content-Length' => '9',
               'X-Amz-Date' => '20120101T112233Z',
             },
             body: StringIO.new('http-body')

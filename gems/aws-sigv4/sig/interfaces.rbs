@@ -1,0 +1,15 @@
+module Aws
+  module Sigv4
+    interface _Credentials
+      def access_key_id: () -> String
+      def secret_access_key: () -> String
+      def session_token: () -> String?
+      def set?: () -> bool
+    end
+
+    interface _CredentialsProvider
+      def credentials: () -> _Credentials
+      def set?: () -> bool
+    end
+  end
+end

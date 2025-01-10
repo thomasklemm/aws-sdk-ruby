@@ -205,7 +205,7 @@ module Aws
       # @option request [required, String] :http_method One of
       #   'GET', 'HEAD', 'PUT', 'POST', 'PATCH', or 'DELETE'
       #
-      # @option request [required, String, URI::HTTPS, URI::HTTP] :url
+      # @option request [required, String, URI::HTTP, URI::HTTPS] :url
       #   The request URI. Must be a valid HTTP or HTTPS URI.
       #
       # @option request [optional, Hash] :headers ({}) A hash of headers
@@ -383,7 +383,7 @@ module Aws
       # @option options [required, String] :http_method The HTTP request method,
       #   e.g. 'GET', 'HEAD', 'PUT', 'POST', 'PATCH', or 'DELETE'.
       #
-      # @option options [required, String, HTTPS::URI, HTTP::URI] :url
+      # @option options [required, String, URI::HTTP, URI::HTTPS] :url
       #   The URI to sign.
       #
       # @option options [Hash] :headers ({}) Headers that should

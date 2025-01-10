@@ -7,7 +7,7 @@ module Aws
     class Request
 
       # @option options [required, String] :http_method
-      # @option options [required, HTTP::URI, HTTPS::URI, String] :endpoint
+      # @option options [required, String, URI::HTTP, URI::HTTPS] :endpoint
       # @option options [Hash<String,String>] :headers ({})
       # @option options [String, IO] :body ('')
       def initialize(options = {})
@@ -30,12 +30,12 @@ module Aws
         @http_method
       end
 
-      # @param [String, HTTP::URI, HTTPS::URI] endpoint
+      # @param [String, URI::HTTP, URI::HTTPS] endpoint
       def endpoint=(endpoint)
         @endpoint = URI.parse(endpoint.to_s)
       end
 
-      # @return [HTTP::URI, HTTPS::URI]
+      # @return [URI::HTTP, URI::HTTPS]
       def endpoint
         @endpoint
       end

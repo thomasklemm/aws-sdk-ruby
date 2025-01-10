@@ -1,0 +1,51 @@
+module Aws
+  module Sigv4
+    class Signer
+      def initialize: (
+        service: String,
+        region: String,
+        ?access_key_id: String,
+        ?secret_access_key: String,
+        ?session_token: String,
+        ?credentials: _Credentials,
+        ?credentials_provider: _CredentialsProvider,
+        ?unsigned_headers: Array[String],
+        ?uri_escape_path: bool,
+        ?apply_checksum_header: bool,
+        ?signing_algorithm: :sigv4 | :sigv4a | :'sigv4-s3express',
+        ?omit_session_token: bool,
+        ?normalize_path: bool,
+      ) -> void
+      | (?Hash[Symbol, untyped]) -> void
+
+      attr_reader service: String
+      attr_reader region: String
+      attr_reader credentials_provider: _CredentialsProvider
+      attr_reader unsigned_headers: Array[String]
+      attr_reader apply_checksum_header: bool
+
+      def sign_request: (
+        http_method: String,
+        url: String | URI::HTTPS | URI::HTTP,
+        ?headers: Hash[String, String],
+        ?body: String | IO | StringIO | Tempfile,
+      ) -> Signature
+
+      def sign_event: (
+        String,
+        String,
+        untyped
+      ) -> [Hash[String, untyped], String]
+
+      def presign_url: (
+        http_method: String,
+        url: String | URI::HTTP | URI::HTTPS,
+        ?headers: Hash[String, String],
+        ?expires_in: Integer,
+        ?body: String | IO,
+        ?body_digest: String,
+        ?time: Time,
+      ) -> (URI::HTTP | URI::HTTPS)
+    end
+  end
+end

@@ -33,6 +33,9 @@ jobs:
           bundle config set --local with 'build rbs'
           bundle install
 
+      - name: Install rbs collection
+        run: rbs collection install
+
       - name: Build SDK
         run: bundle exec rake build
 

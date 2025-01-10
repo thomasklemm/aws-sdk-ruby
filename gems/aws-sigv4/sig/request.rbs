@@ -1,0 +1,25 @@
+module Aws
+  module Sigv4
+    class Request
+      def initialize: (
+          http_method: String,
+          endpoint: String | URI::HTTP | URI::HTTPS,
+          ?headers: Hash[String, String],
+          ?body: String | IO
+        ) -> void
+        | (?Hash[Symbol, untyped]) -> void
+
+      def http_method=: (String http_method) -> void
+      def http_method: () -> String
+
+      def endpoint: () -> (URI::HTTP | URI::HTTPS)
+      def endpoint=: (String | URI::HTTP | URI::HTTPS endpoint) -> void
+
+      def headers=: (Hash[String, String] headers) -> void
+      def headers: () -> Hash[String, String]
+
+      def body=: (String | IO body) -> void
+      def body: () -> (String | IO)
+    end
+  end
+end

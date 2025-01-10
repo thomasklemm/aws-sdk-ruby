@@ -1,0 +1,12 @@
+module Aws
+  module Sigv4
+    class Signature
+      attr_accessor headers: Hash[String, String]
+      attr_accessor canonical_request: String
+      attr_accessor string_to_sign: String
+      attr_accessor content_sha256: String
+      attr_accessor signature: String
+      attr_accessor extra: Hash[untyped, untyped]
+    end
+  end
+end
