@@ -87,6 +87,21 @@ module Aws::KafkaConnect
       SENSITIVE: []
     end
 
+    class ConnectorOperationStep
+      attr_accessor step_type: ("INITIALIZE_UPDATE" | "FINALIZE_UPDATE" | "UPDATE_WORKER_SETTING" | "UPDATE_CONNECTOR_CONFIGURATION" | "VALIDATE_UPDATE")
+      attr_accessor step_state: ("PENDING" | "IN_PROGRESS" | "COMPLETED" | "FAILED" | "CANCELLED")
+      SENSITIVE: []
+    end
+
+    class ConnectorOperationSummary
+      attr_accessor connector_operation_arn: ::String
+      attr_accessor connector_operation_type: ("UPDATE_WORKER_SETTING" | "UPDATE_CONNECTOR_CONFIGURATION" | "ISOLATE_CONNECTOR" | "RESTORE_CONNECTOR")
+      attr_accessor connector_operation_state: ("PENDING" | "UPDATE_IN_PROGRESS" | "UPDATE_COMPLETE" | "UPDATE_FAILED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_FAILED" | "ROLLBACK_COMPLETE")
+      attr_accessor creation_time: ::Time
+      attr_accessor end_time: ::Time
+      SENSITIVE: []
+    end
+
     class ConnectorSummary
       attr_accessor capacity: Types::CapacityDescription
       attr_accessor connector_arn: ::String
@@ -118,8 +133,8 @@ module Aws::KafkaConnect
       attr_accessor log_delivery: Types::LogDelivery
       attr_accessor plugins: ::Array[Types::Plugin]
       attr_accessor service_execution_role_arn: ::String
-      attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor worker_configuration: Types::WorkerConfiguration
+      attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: [:connector_configuration]
     end
 
@@ -246,6 +261,27 @@ module Aws::KafkaConnect
       SENSITIVE: []
     end
 
+    class DescribeConnectorOperationRequest
+      attr_accessor connector_operation_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeConnectorOperationResponse
+      attr_accessor connector_arn: ::String
+      attr_accessor connector_operation_arn: ::String
+      attr_accessor connector_operation_state: ("PENDING" | "UPDATE_IN_PROGRESS" | "UPDATE_COMPLETE" | "UPDATE_FAILED" | "ROLLBACK_IN_PROGRESS" | "ROLLBACK_FAILED" | "ROLLBACK_COMPLETE")
+      attr_accessor connector_operation_type: ("UPDATE_WORKER_SETTING" | "UPDATE_CONNECTOR_CONFIGURATION" | "ISOLATE_CONNECTOR" | "RESTORE_CONNECTOR")
+      attr_accessor operation_steps: ::Array[Types::ConnectorOperationStep]
+      attr_accessor origin_worker_setting: Types::WorkerSetting
+      attr_accessor origin_connector_configuration: ::Hash[::String, ::String]
+      attr_accessor target_worker_setting: Types::WorkerSetting
+      attr_accessor target_connector_configuration: ::Hash[::String, ::String]
+      attr_accessor error_info: Types::StateDescription
+      attr_accessor creation_time: ::Time
+      attr_accessor end_time: ::Time
+      SENSITIVE: [:origin_connector_configuration, :target_connector_configuration]
+    end
+
     class DescribeConnectorRequest
       attr_accessor connector_arn: ::String
       SENSITIVE: []
@@ -267,8 +303,8 @@ module Aws::KafkaConnect
       attr_accessor log_delivery: Types::LogDeliveryDescription
       attr_accessor plugins: ::Array[Types::PluginDescription]
       attr_accessor service_execution_role_arn: ::String
-      attr_accessor state_description: Types::StateDescription
       attr_accessor worker_configuration: Types::WorkerConfigurationDescription
+      attr_accessor state_description: Types::StateDescription
       SENSITIVE: [:connector_configuration]
     end
 
@@ -355,6 +391,19 @@ module Aws::KafkaConnect
       SENSITIVE: []
     end
 
+    class ListConnectorOperationsRequest
+      attr_accessor connector_arn: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListConnectorOperationsResponse
+      attr_accessor connector_operations: ::Array[Types::ConnectorOperationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListConnectorsRequest
       attr_accessor connector_name_prefix: ::String
       attr_accessor max_results: ::Integer
@@ -370,8 +419,8 @@ module Aws::KafkaConnect
 
     class ListCustomPluginsRequest
       attr_accessor max_results: ::Integer
-      attr_accessor name_prefix: ::String
       attr_accessor next_token: ::String
+      attr_accessor name_prefix: ::String
       SENSITIVE: []
     end
 
@@ -393,8 +442,8 @@ module Aws::KafkaConnect
 
     class ListWorkerConfigurationsRequest
       attr_accessor max_results: ::Integer
-      attr_accessor name_prefix: ::String
       attr_accessor next_token: ::String
+      attr_accessor name_prefix: ::String
       SENSITIVE: []
     end
 
@@ -546,14 +595,16 @@ module Aws::KafkaConnect
 
     class UpdateConnectorRequest
       attr_accessor capacity: Types::CapacityUpdate
+      attr_accessor connector_configuration: ::Hash[::String, ::String]
       attr_accessor connector_arn: ::String
       attr_accessor current_version: ::String
-      SENSITIVE: []
+      SENSITIVE: [:connector_configuration]
     end
 
     class UpdateConnectorResponse
       attr_accessor connector_arn: ::String
       attr_accessor connector_state: ("RUNNING" | "CREATING" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor connector_operation_arn: ::String
       SENSITIVE: []
     end
 
@@ -617,6 +668,11 @@ module Aws::KafkaConnect
       attr_accessor cloud_watch_logs: Types::CloudWatchLogsLogDeliveryDescription
       attr_accessor firehose: Types::FirehoseLogDeliveryDescription
       attr_accessor s3: Types::S3LogDeliveryDescription
+      SENSITIVE: []
+    end
+
+    class WorkerSetting
+      attr_accessor capacity: Types::CapacityDescription
       SENSITIVE: []
     end
   end

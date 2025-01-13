@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2025-01-13)
+------------------
+
+* Feature - Support updating connector configuration via UpdateConnector API. Release Operations API to monitor the status of the connector operation.
+
 1.33.0 (2024-10-18)
 ------------------
 

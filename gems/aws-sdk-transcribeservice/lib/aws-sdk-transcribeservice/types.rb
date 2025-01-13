@@ -247,6 +247,11 @@ module Aws::TranscribeService
     #   Indicates which speaker is on which channel.
     #   @return [Array<Types::ChannelDefinition>]
     #
+    # @!attribute [rw] tags
+    #   The tags, each in the form of a key:value pair, assigned to the
+    #   specified call analytics job.
+    #   @return [Array<Types::Tag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/CallAnalyticsJob AWS API Documentation
     #
     class CallAnalyticsJob < Struct.new(
@@ -265,7 +270,8 @@ module Aws::TranscribeService
       :data_access_role_arn,
       :identified_language_score,
       :settings,
-      :channel_definitions)
+      :channel_definitions,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -561,6 +567,11 @@ module Aws::TranscribeService
     #   UTC-7 on May 5, 2022.
     #   @return [Time]
     #
+    # @!attribute [rw] tags
+    #   The tags, each in the form of a key:value pair, assigned to the
+    #   specified call analytics category.
+    #   @return [Array<Types::Tag>]
+    #
     # @!attribute [rw] input_type
     #   The input type associated with the specified category. `POST_CALL`
     #   refers to a category that is applied to batch transcriptions;
@@ -575,6 +586,7 @@ module Aws::TranscribeService
       :rules,
       :create_time,
       :last_update_time,
+      :tags,
       :input_type)
       SENSITIVE = []
       include Aws::Structure
@@ -679,6 +691,18 @@ module Aws::TranscribeService
     #   30 seconds of the call.
     #   @return [Array<Types::Rule>]
     #
+    # @!attribute [rw] tags
+    #   Adds one or more custom tags, each in the form of a key:value pair,
+    #   to a new call analytics category at the time you start this new job.
+    #
+    #   To learn more about using tags with Amazon Transcribe, refer to
+    #   [Tagging resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html
+    #   @return [Array<Types::Tag>]
+    #
     # @!attribute [rw] input_type
     #   Choose whether you want to create a real-time or a post-call
     #   category for your Call Analytics transcription.
@@ -700,6 +724,7 @@ module Aws::TranscribeService
     class CreateCallAnalyticsCategoryRequest < Struct.new(
       :category_name,
       :rules,
+      :tags,
       :input_type)
       SENSITIVE = []
       include Aws::Structure
@@ -4009,6 +4034,18 @@ module Aws::TranscribeService
     #   job.
     #   @return [Types::CallAnalyticsJobSettings]
     #
+    # @!attribute [rw] tags
+    #   Adds one or more custom tags, each in the form of a key:value pair,
+    #   to a new call analytics job at the time you start this new job.
+    #
+    #   To learn more about using tags with Amazon Transcribe, refer to
+    #   [Tagging resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html
+    #   @return [Array<Types::Tag>]
+    #
     # @!attribute [rw] channel_definitions
     #   Makes it possible to specify which speaker is on which channel. For
     #   example, if your agent is the first participant to speak, you would
@@ -4026,6 +4063,7 @@ module Aws::TranscribeService
       :output_encryption_kms_key_id,
       :data_access_role_arn,
       :settings,
+      :tags,
       :channel_definitions)
       SENSITIVE = []
       include Aws::Structure

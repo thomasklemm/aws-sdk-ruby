@@ -284,6 +284,59 @@ module Aws::KafkaConnect
       include Aws::Structure
     end
 
+    # Details of a step that is involved in a connector's operation.
+    #
+    # @!attribute [rw] step_type
+    #   The step type of the operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] step_state
+    #   The step state of the operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ConnectorOperationStep AWS API Documentation
+    #
+    class ConnectorOperationStep < Struct.new(
+      :step_type,
+      :step_state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary of a connector operation.
+    #
+    # @!attribute [rw] connector_operation_arn
+    #   The Amazon Resource Name (ARN) of the connector operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] connector_operation_type
+    #   The type of connector operation performed.
+    #   @return [String]
+    #
+    # @!attribute [rw] connector_operation_state
+    #   The state of the connector operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The time when operation was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time when operation ended.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ConnectorOperationSummary AWS API Documentation
+    #
+    class ConnectorOperationSummary < Struct.new(
+      :connector_operation_arn,
+      :connector_operation_type,
+      :connector_operation_state,
+      :creation_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Summary of a connector.
     #
     # @!attribute [rw] capacity
@@ -432,13 +485,13 @@ module Aws::KafkaConnect
     #   that allow it to write to the S3 destination bucket.
     #   @return [String]
     #
-    # @!attribute [rw] tags
-    #   The tags you want to attach to the connector.
-    #   @return [Hash<String,String>]
-    #
     # @!attribute [rw] worker_configuration
     #   Specifies which worker configuration to use with the connector.
     #   @return [Types::WorkerConfiguration]
+    #
+    # @!attribute [rw] tags
+    #   The tags you want to attach to the connector.
+    #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/CreateConnectorRequest AWS API Documentation
     #
@@ -454,8 +507,8 @@ module Aws::KafkaConnect
       :log_delivery,
       :plugins,
       :service_execution_role_arn,
-      :tags,
-      :worker_configuration)
+      :worker_configuration,
+      :tags)
       SENSITIVE = [:connector_configuration]
       include Aws::Structure
     end
@@ -869,6 +922,85 @@ module Aws::KafkaConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] connector_operation_arn
+    #   ARN of the connector operation to be described.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/DescribeConnectorOperationRequest AWS API Documentation
+    #
+    class DescribeConnectorOperationRequest < Struct.new(
+      :connector_operation_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connector_arn
+    #   The Amazon Resource Name (ARN) of the connector.
+    #   @return [String]
+    #
+    # @!attribute [rw] connector_operation_arn
+    #   The Amazon Resource Name (ARN) of the connector operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] connector_operation_state
+    #   The state of the connector operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] connector_operation_type
+    #   The type of connector operation performed.
+    #   @return [String]
+    #
+    # @!attribute [rw] operation_steps
+    #   The array of operation steps taken.
+    #   @return [Array<Types::ConnectorOperationStep>]
+    #
+    # @!attribute [rw] origin_worker_setting
+    #   The origin worker setting.
+    #   @return [Types::WorkerSetting]
+    #
+    # @!attribute [rw] origin_connector_configuration
+    #   The origin connector configuration.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] target_worker_setting
+    #   The target worker setting.
+    #   @return [Types::WorkerSetting]
+    #
+    # @!attribute [rw] target_connector_configuration
+    #   The target connector configuration.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] error_info
+    #   Details about the state of a resource.
+    #   @return [Types::StateDescription]
+    #
+    # @!attribute [rw] creation_time
+    #   The time when the operation was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time when the operation ended.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/DescribeConnectorOperationResponse AWS API Documentation
+    #
+    class DescribeConnectorOperationResponse < Struct.new(
+      :connector_arn,
+      :connector_operation_arn,
+      :connector_operation_state,
+      :connector_operation_type,
+      :operation_steps,
+      :origin_worker_setting,
+      :origin_connector_configuration,
+      :target_worker_setting,
+      :target_connector_configuration,
+      :error_info,
+      :creation_time,
+      :end_time)
+      SENSITIVE = [:origin_connector_configuration, :target_connector_configuration]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] connector_arn
     #   The Amazon Resource Name (ARN) of the connector that you want to
     #   describe.
@@ -948,13 +1080,13 @@ module Aws::KafkaConnect
     #   to access Amazon Web Services resources.
     #   @return [String]
     #
-    # @!attribute [rw] state_description
-    #   Details about the state of a connector.
-    #   @return [Types::StateDescription]
-    #
     # @!attribute [rw] worker_configuration
     #   Specifies which worker configuration was used for the connector.
     #   @return [Types::WorkerConfigurationDescription]
+    #
+    # @!attribute [rw] state_description
+    #   Details about the state of a connector.
+    #   @return [Types::StateDescription]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/DescribeConnectorResponse AWS API Documentation
     #
@@ -974,8 +1106,8 @@ module Aws::KafkaConnect
       :log_delivery,
       :plugins,
       :service_execution_role_arn,
-      :state_description,
-      :worker_configuration)
+      :worker_configuration,
+      :state_description)
       SENSITIVE = [:connector_configuration]
       include Aws::Structure
     end
@@ -1249,6 +1381,50 @@ module Aws::KafkaConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] connector_arn
+    #   The Amazon Resource Name (ARN) of the connector for which to list
+    #   operations.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   Maximum number of connector operations to fetch in one get request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If the response is truncated, it includes a NextToken. Send this
+    #   NextToken in a subsequent request to continue listing from where it
+    #   left off.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ListConnectorOperationsRequest AWS API Documentation
+    #
+    class ListConnectorOperationsRequest < Struct.new(
+      :connector_arn,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connector_operations
+    #   An array of connector operation descriptions.
+    #   @return [Array<Types::ConnectorOperationSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If the response is truncated, it includes a NextToken. Send this
+    #   NextToken in a subsequent request to continue listing from where it
+    #   left off.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ListConnectorOperationsResponse AWS API Documentation
+    #
+    class ListConnectorOperationsResponse < Struct.new(
+      :connector_operations,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] connector_name_prefix
     #   The name prefix that you want to use to search for and list
     #   connectors.
@@ -1297,10 +1473,6 @@ module Aws::KafkaConnect
     #   The maximum number of custom plugins to list in one response.
     #   @return [Integer]
     #
-    # @!attribute [rw] name_prefix
-    #   Lists custom plugin names that start with the specified text string.
-    #   @return [String]
-    #
     # @!attribute [rw] next_token
     #   If the response of a ListCustomPlugins operation is truncated, it
     #   will include a NextToken. Send this NextToken in a subsequent
@@ -1308,12 +1480,16 @@ module Aws::KafkaConnect
     #   off.
     #   @return [String]
     #
+    # @!attribute [rw] name_prefix
+    #   Lists custom plugin names that start with the specified text string.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ListCustomPluginsRequest AWS API Documentation
     #
     class ListCustomPluginsRequest < Struct.new(
       :max_results,
-      :name_prefix,
-      :next_token)
+      :next_token,
+      :name_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1368,11 +1544,6 @@ module Aws::KafkaConnect
     #   The maximum number of worker configurations to list in one response.
     #   @return [Integer]
     #
-    # @!attribute [rw] name_prefix
-    #   Lists worker configuration names that start with the specified text
-    #   string.
-    #   @return [String]
-    #
     # @!attribute [rw] next_token
     #   If the response of a ListWorkerConfigurations operation is
     #   truncated, it will include a NextToken. Send this NextToken in a
@@ -1380,12 +1551,17 @@ module Aws::KafkaConnect
     #   operation left off.
     #   @return [String]
     #
+    # @!attribute [rw] name_prefix
+    #   Lists worker configuration names that start with the specified text
+    #   string.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ListWorkerConfigurationsRequest AWS API Documentation
     #
     class ListWorkerConfigurationsRequest < Struct.new(
       :max_results,
-      :name_prefix,
-      :next_token)
+      :next_token,
+      :name_prefix)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1839,6 +2015,11 @@ module Aws::KafkaConnect
     #   The target capacity.
     #   @return [Types::CapacityUpdate]
     #
+    # @!attribute [rw] connector_configuration
+    #   A map of keys to values that represent the configuration for the
+    #   connector.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] connector_arn
     #   The Amazon Resource Name (ARN) of the connector that you want to
     #   update.
@@ -1852,9 +2033,10 @@ module Aws::KafkaConnect
     #
     class UpdateConnectorRequest < Struct.new(
       :capacity,
+      :connector_configuration,
       :connector_arn,
       :current_version)
-      SENSITIVE = []
+      SENSITIVE = [:connector_configuration]
       include Aws::Structure
     end
 
@@ -1866,11 +2048,16 @@ module Aws::KafkaConnect
     #   The state of the connector.
     #   @return [String]
     #
+    # @!attribute [rw] connector_operation_arn
+    #   The Amazon Resource Name (ARN) of the connector operation.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/UpdateConnectorResponse AWS API Documentation
     #
     class UpdateConnectorResponse < Struct.new(
       :connector_arn,
-      :connector_state)
+      :connector_state,
+      :connector_operation_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2090,6 +2277,20 @@ module Aws::KafkaConnect
       :cloud_watch_logs,
       :firehose,
       :s3)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about worker setting of a connector
+    #
+    # @!attribute [rw] capacity
+    #   A description of the connector's capacity.
+    #   @return [Types::CapacityDescription]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/WorkerSetting AWS API Documentation
+    #
+    class WorkerSetting < Struct.new(
+      :capacity)
       SENSITIVE = []
       include Aws::Structure
     end

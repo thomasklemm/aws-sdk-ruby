@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.111.0 (2025-01-13)
+------------------
+
+* Feature - This update provides tagging support for Transcribe's Call Analytics Jobs and Call Analytics Categories.
+
 1.110.0 (2024-10-18)
 ------------------
 

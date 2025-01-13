@@ -4084,6 +4084,11 @@ module Aws::EC2
     #   duration has elapsed. You can't cancel a future-dated Capacity
     #   Reservation during the commitment duration.
     #
+    # <note markdown="1"> You can't modify or cancel a Capacity Block. For more information,
+    # see [Capacity Blocks for ML][1].
+    #
+    #  </note>
+    #
     # If a future-dated Capacity Reservation enters the `delayed` state, the
     # commitment duration is waived, and you can cancel it as soon as it
     # enters the `active` state.
@@ -4094,6 +4099,10 @@ module Aws::EC2
     # Capacity Reservation, launch On-Demand Instance capacity, or run in
     # any open Capacity Reservation that has matching attributes and
     # sufficient capacity.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html
     #
     # @option params [required, String] :capacity_reservation_id
     #   The ID of the Capacity Reservation to be cancelled.
@@ -4937,7 +4946,7 @@ module Aws::EC2
     # Snapshots copied to an Outpost are encrypted by default using the
     # default encryption key for the Region, or a different key that you
     # specify in the request using **KmsKeyId**. Outposts do not support
-    # unencrypted snapshots. For more information, [ Amazon EBS local
+    # unencrypted snapshots. For more information, see [Amazon EBS local
     # snapshots on Outposts][1] in the *Amazon EBS User Guide*.
     #
     # Snapshots created by copying another snapshot have an arbitrary volume
@@ -5971,6 +5980,12 @@ module Aws::EC2
     #   on Amazon Web Services provided clients when a VPN session is
     #   established.
     #
+    # @option params [Boolean] :disconnect_on_session_timeout
+    #   Indicates whether the client VPN session is disconnected after the
+    #   maximum timeout specified in `SessionTimeoutHours` is reached. If
+    #   `true`, users are prompted to reconnect client VPN. If `false`, client
+    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #
     # @return [Types::CreateClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateClientVpnEndpointResult#client_vpn_endpoint_id #client_vpn_endpoint_id} => String
@@ -6032,6 +6047,7 @@ module Aws::EC2
     #       enabled: false,
     #       banner_text: "String",
     #     },
+    #     disconnect_on_session_timeout: false,
     #   })
     #
     # @example Response structure
@@ -12176,7 +12192,7 @@ module Aws::EC2
     #   the same Region as the volume.
     #
     # * If the source volume is in a Local Zone, you can create the snapshot
-    #   in the same Local Zone or in parent Amazon Web Services Region.
+    #   in the same Local Zone or in its parent Amazon Web Services Region.
     #
     # * If the source volume is on an Outpost, you can create the snapshot
     #   on the same Outpost or in its parent Amazon Web Services Region.
@@ -12204,8 +12220,8 @@ module Aws::EC2
     # Snapshots that are taken from encrypted volumes are automatically
     # encrypted. Volumes that are created from encrypted snapshots are also
     # automatically encrypted. Your encrypted volumes and any associated
-    # snapshots always remain protected. For more information, [Amazon EBS
-    # encryption][1] in the *Amazon EBS User Guide*.
+    # snapshots always remain protected. For more information, see [Amazon
+    # EBS encryption][1] in the *Amazon EBS User Guide*.
     #
     #
     #
@@ -12381,8 +12397,8 @@ module Aws::EC2
     #   in the same Region as the instance.
     #
     # * If the source instance is in a Local Zone, you can create the
-    #   snapshots in the same Local Zone or in parent Amazon Web Services
-    #   Region.
+    #   snapshots in the same Local Zone or in its parent Amazon Web
+    #   Services Region.
     #
     # * If the source instance is on an Outpost, you can create the
     #   snapshots on the same Outpost or in its parent Amazon Web Services
@@ -18481,7 +18497,7 @@ module Aws::EC2
     # the volume.
     #
     # You cannot delete a snapshot of the root device of an EBS volume used
-    # by a registered AMI. You must first de-register the AMI before you can
+    # by a registered AMI. You must first deregister the AMI before you can
     # delete the snapshot.
     #
     # For more information, see [Delete an Amazon EBS snapshot][1] in the
@@ -21536,6 +21552,15 @@ module Aws::EC2
     # Amazon Web Services Region that you're currently using. With Capacity
     # Blocks, you purchase a specific instance type for a period of time.
     #
+    # To search for an available Capacity Block offering, you specify a
+    # reservation duration and instance count. You must select one of the
+    # following options.
+    #
+    # * For reservation durations<b> 1-day increments up 14 days and 7-day
+    #   increments up to 182 days total</b>
+    #
+    # * For instance count<b> 1, 2, 4, 8, 16, 32, or 64 instances</b>
+    #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -22420,6 +22445,7 @@ module Aws::EC2
     #   resp.client_vpn_endpoints[0].session_timeout_hours #=> Integer
     #   resp.client_vpn_endpoints[0].client_login_banner_options.enabled #=> Boolean
     #   resp.client_vpn_endpoints[0].client_login_banner_options.banner_text #=> String
+    #   resp.client_vpn_endpoints[0].disconnect_on_session_timeout #=> Boolean
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnEndpoints AWS API Documentation
@@ -26406,7 +26432,8 @@ module Aws::EC2
     #   * `p3dn.24xlarge` \| `p4d.24xlarge` \| `p4de.24xlarge` \|
     #     `p5.48xlarge` \| `p5e.48xlarge` \| `p5en.48xlarge`
     #
-    #   * `trn1.2xlarge` \| `trn1.32xlarge` \| `trn1n.32xlarge`
+    #   * `trn1.2xlarge` \| `trn1.32xlarge` \| `trn1n.32xlarge` \|
+    #     `trn2.48xlarge` \| `trn2u.48xlarge`
     #
     # For more information, see [Amazon EC2 instance topology][1] in the
     # *Amazon EC2 User Guide*.
@@ -31749,6 +31776,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -49015,6 +49049,12 @@ module Aws::EC2
     #   on Amazon Web Services provided clients when a VPN session is
     #   established.
     #
+    # @option params [Boolean] :disconnect_on_session_timeout
+    #   Indicates whether the client VPN session is disconnected after the
+    #   maximum timeout specified in `sessionTimeoutHours` is reached. If
+    #   `true`, users are prompted to reconnect client VPN. If `false`, client
+    #   VPN attempts to reconnect automatically. The default value is `false`.
+    #
     # @return [Types::ModifyClientVpnEndpointResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyClientVpnEndpointResult#return #return} => Boolean
@@ -49049,6 +49089,7 @@ module Aws::EC2
     #       enabled: false,
     #       banner_text: "String",
     #     },
+    #     disconnect_on_session_timeout: false,
     #   })
     #
     # @example Response structure
@@ -63115,7 +63156,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.498.0'
+      context[:gem_version] = '1.499.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

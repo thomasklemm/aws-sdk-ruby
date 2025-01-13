@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2025-01-13)
+------------------
+
+* Feature - With this release, Bedrock Evaluation will now support latency-optimized inference for foundation models.
+
 1.32.0 (2024-12-04)
 ------------------
 

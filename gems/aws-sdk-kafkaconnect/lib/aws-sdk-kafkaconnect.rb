@@ -49,12 +49,13 @@ module Aws::KafkaConnect
   end
   autoload :Client, 'aws-sdk-kafkaconnect/client'
   autoload :Errors, 'aws-sdk-kafkaconnect/errors'
+  autoload :Waiters, 'aws-sdk-kafkaconnect/waiters'
   autoload :Resource, 'aws-sdk-kafkaconnect/resource'
   autoload :EndpointParameters, 'aws-sdk-kafkaconnect/endpoint_parameters'
   autoload :EndpointProvider, 'aws-sdk-kafkaconnect/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-kafkaconnect/endpoints'
 
-  GEM_VERSION = '1.33.0'
+  GEM_VERSION = '1.34.0'
 
 end
 

@@ -6295,6 +6295,13 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerResponseOptions]
     #
+    # @!attribute [rw] disconnect_on_session_timeout
+    #   Indicates whether the client VPN session is disconnected after the
+    #   maximum `sessionTimeoutHours` is reached. If `true`, users are
+    #   prompted to reconnect client VPN. If `false`, client VPN attempts to
+    #   reconnect automatically. The default value is `false`.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ClientVpnEndpoint AWS API Documentation
     #
     class ClientVpnEndpoint < Struct.new(
@@ -6320,7 +6327,8 @@ module Aws::EC2
       :self_service_portal_url,
       :client_connect_options,
       :session_timeout_hours,
-      :client_login_banner_options)
+      :client_login_banner_options,
+      :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8115,6 +8123,14 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerOptions]
     #
+    # @!attribute [rw] disconnect_on_session_timeout
+    #   Indicates whether the client VPN session is disconnected after the
+    #   maximum timeout specified in `SessionTimeoutHours` is reached. If
+    #   `true`, users are prompted to reconnect client VPN. If `false`,
+    #   client VPN attempts to reconnect automatically. The default value is
+    #   `false`.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateClientVpnEndpointRequest AWS API Documentation
     #
     class CreateClientVpnEndpointRequest < Struct.new(
@@ -8135,7 +8151,8 @@ module Aws::EC2
       :self_service_portal,
       :client_connect_options,
       :session_timeout_hours,
-      :client_login_banner_options)
+      :client_login_banner_options,
+      :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24966,6 +24983,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -42360,7 +42384,8 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] no_device
-    #   suppress the specified device included in the block device mapping.
+    #   Suppresses the specified device included in the block device
+    #   mapping.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceBlockDeviceMappingSpecification AWS API Documentation
@@ -43411,15 +43436,9 @@ module Aws::EC2
     #   @return [Array<Types::PrivateIpAddressSpecification>]
     #
     # @!attribute [rw] secondary_private_ip_address_count
-    #   The number of secondary private IPv4 addresses. You can't specify
-    #   this option and specify more than one private IP address using the
-    #   private IP addresses option. You cannot specify this option if
-    #   you're launching more than one instance in a [RunInstances][1]
-    #   request.
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html
+    #   The number of secondary private IPv4 addresses. You can’t specify
+    #   this parameter and also specify a secondary private IP address using
+    #   the `PrivateIpAddress` parameter.
     #   @return [Integer]
     #
     # @!attribute [rw] subnet_id
@@ -50658,6 +50677,14 @@ module Aws::EC2
     #   is established.
     #   @return [Types::ClientLoginBannerOptions]
     #
+    # @!attribute [rw] disconnect_on_session_timeout
+    #   Indicates whether the client VPN session is disconnected after the
+    #   maximum timeout specified in `sessionTimeoutHours` is reached. If
+    #   `true`, users are prompted to reconnect client VPN. If `false`,
+    #   client VPN attempts to reconnect automatically. The default value is
+    #   `false`.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyClientVpnEndpointRequest AWS API Documentation
     #
     class ModifyClientVpnEndpointRequest < Struct.new(
@@ -50674,7 +50701,8 @@ module Aws::EC2
       :self_service_portal,
       :client_connect_options,
       :session_timeout_hours,
-      :client_login_banner_options)
+      :client_login_banner_options,
+      :disconnect_on_session_timeout)
       SENSITIVE = []
       include Aws::Structure
     end

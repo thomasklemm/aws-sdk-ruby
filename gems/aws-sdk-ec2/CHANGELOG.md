@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.499.0 (2025-01-13)
+------------------
+
+* Feature - Add support for DisconnectOnSessionTimeout flag in CreateClientVpnEndpoint and ModifyClientVpnEndpoint requests and DescribeClientVpnEndpoints responses
+
 1.498.0 (2024-12-16)
 ------------------
 

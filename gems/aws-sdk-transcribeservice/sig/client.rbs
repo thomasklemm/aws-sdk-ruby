@@ -155,6 +155,12 @@ module Aws
                                                 }?
                                               },
                                             ],
+                                            ?tags: Array[
+                                              {
+                                                key: ::String,
+                                                value: ::String
+                                              },
+                                            ],
                                             ?input_type: ("REAL_TIME" | "POST_CALL")
                                           ) -> _CreateCallAnalyticsCategoryResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCallAnalyticsCategoryResponseSuccess
@@ -591,6 +597,12 @@ module Aws
                                           generate_abstractive_summary: bool
                                         }?
                                       },
+                                      ?tags: Array[
+                                        {
+                                          key: ::String,
+                                          value: ::String
+                                        },
+                                      ],
                                       ?channel_definitions: Array[
                                         {
                                           channel_id: ::Integer?,

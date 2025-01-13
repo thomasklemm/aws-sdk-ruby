@@ -622,6 +622,9 @@ module Aws::Bedrock
     #           bedrock_model: {
     #             model_identifier: "EvaluationModelIdentifier", # required
     #             inference_params: "EvaluationModelInferenceParams",
+    #             performance_config: {
+    #               latency: "standard", # accepts standard, optimized
+    #             },
     #           },
     #         },
     #       ],
@@ -2221,6 +2224,7 @@ module Aws::Bedrock
     #   resp.inference_config.models #=> Array
     #   resp.inference_config.models[0].bedrock_model.model_identifier #=> String
     #   resp.inference_config.models[0].bedrock_model.inference_params #=> String
+    #   resp.inference_config.models[0].bedrock_model.performance_config.latency #=> String, one of "standard", "optimized"
     #   resp.inference_config.rag_configs #=> Array
     #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_id #=> String
     #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.number_of_results #=> Integer
@@ -4633,7 +4637,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1303,11 +1303,16 @@ module Aws::Bedrock
     #   change how the model behaves during inference.
     #   @return [String]
     #
+    # @!attribute [rw] performance_config
+    #   Specifies performance settings for the model or inference profile.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluationBedrockModel AWS API Documentation
     #
     class EvaluationBedrockModel < Struct.new(
       :model_identifier,
-      :inference_params)
+      :inference_params,
+      :performance_config)
       SENSITIVE = [:inference_params]
       include Aws::Structure
     end
@@ -5974,6 +5979,21 @@ module Aws::Bedrock
     #
     class OutputDataConfig < Struct.new(
       :s3_uri)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains performance settings for a model.
+    #
+    # @!attribute [rw] latency
+    #   Specifies whether to use the latency-optimized or standard version
+    #   of a model or inference profile.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/PerformanceConfiguration AWS API Documentation
+    #
+    class PerformanceConfiguration < Struct.new(
+      :latency)
       SENSITIVE = []
       include Aws::Structure
     end

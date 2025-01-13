@@ -254,6 +254,7 @@ module Aws::TranscribeService
     CallAnalyticsJob.add_member(:identified_language_score, Shapes::ShapeRef.new(shape: IdentifiedLanguageScore, location_name: "IdentifiedLanguageScore"))
     CallAnalyticsJob.add_member(:settings, Shapes::ShapeRef.new(shape: CallAnalyticsJobSettings, location_name: "Settings"))
     CallAnalyticsJob.add_member(:channel_definitions, Shapes::ShapeRef.new(shape: ChannelDefinitions, location_name: "ChannelDefinitions"))
+    CallAnalyticsJob.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CallAnalyticsJob.struct_class = Types::CallAnalyticsJob
 
     CallAnalyticsJobDetails.add_member(:skipped, Shapes::ShapeRef.new(shape: CallAnalyticsSkippedFeatureList, location_name: "Skipped"))
@@ -292,6 +293,7 @@ module Aws::TranscribeService
     CategoryProperties.add_member(:rules, Shapes::ShapeRef.new(shape: RuleList, location_name: "Rules"))
     CategoryProperties.add_member(:create_time, Shapes::ShapeRef.new(shape: DateTime, location_name: "CreateTime"))
     CategoryProperties.add_member(:last_update_time, Shapes::ShapeRef.new(shape: DateTime, location_name: "LastUpdateTime"))
+    CategoryProperties.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CategoryProperties.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     CategoryProperties.struct_class = Types::CategoryProperties
 
@@ -313,6 +315,7 @@ module Aws::TranscribeService
 
     CreateCallAnalyticsCategoryRequest.add_member(:category_name, Shapes::ShapeRef.new(shape: CategoryName, required: true, location_name: "CategoryName"))
     CreateCallAnalyticsCategoryRequest.add_member(:rules, Shapes::ShapeRef.new(shape: RuleList, required: true, location_name: "Rules"))
+    CreateCallAnalyticsCategoryRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateCallAnalyticsCategoryRequest.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     CreateCallAnalyticsCategoryRequest.struct_class = Types::CreateCallAnalyticsCategoryRequest
 
@@ -779,6 +782,7 @@ module Aws::TranscribeService
     StartCallAnalyticsJobRequest.add_member(:output_encryption_kms_key_id, Shapes::ShapeRef.new(shape: KMSKeyId, location_name: "OutputEncryptionKMSKeyId"))
     StartCallAnalyticsJobRequest.add_member(:data_access_role_arn, Shapes::ShapeRef.new(shape: DataAccessRoleArn, location_name: "DataAccessRoleArn"))
     StartCallAnalyticsJobRequest.add_member(:settings, Shapes::ShapeRef.new(shape: CallAnalyticsJobSettings, location_name: "Settings"))
+    StartCallAnalyticsJobRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     StartCallAnalyticsJobRequest.add_member(:channel_definitions, Shapes::ShapeRef.new(shape: ChannelDefinitions, location_name: "ChannelDefinitions"))
     StartCallAnalyticsJobRequest.struct_class = Types::StartCallAnalyticsJobRequest
 

@@ -346,6 +346,7 @@ module Aws::Bedrock
     class EvaluationBedrockModel
       attr_accessor model_identifier: ::String
       attr_accessor inference_params: ::String
+      attr_accessor performance_config: Types::PerformanceConfiguration
       SENSITIVE: [:inference_params]
     end
 
@@ -1445,6 +1446,11 @@ module Aws::Bedrock
 
     class OutputDataConfig
       attr_accessor s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class PerformanceConfiguration
+      attr_accessor latency: ("standard" | "optimized")
       SENSITIVE: []
     end
 

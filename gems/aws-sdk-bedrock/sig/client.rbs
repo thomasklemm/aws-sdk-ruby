@@ -157,7 +157,10 @@ module Aws
                                        {
                                          bedrock_model: {
                                            model_identifier: ::String,
-                                           inference_params: ::String?
+                                           inference_params: ::String?,
+                                           performance_config: {
+                                             latency: ("standard" | "optimized")?
+                                           }?
                                          }?
                                        },
                                      ]?,

@@ -495,11 +495,11 @@ module Aws::KafkaConnect
     #   connector that has Amazon S3 as a destination must have permissions
     #   that allow it to write to the S3 destination bucket.
     #
-    # @option params [Hash<String,String>] :tags
-    #   The tags you want to attach to the connector.
-    #
     # @option params [Types::WorkerConfiguration] :worker_configuration
     #   Specifies which worker configuration to use with the connector.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags you want to attach to the connector.
     #
     # @return [Types::CreateConnectorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -574,12 +574,12 @@ module Aws::KafkaConnect
     #       },
     #     ],
     #     service_execution_role_arn: "__string", # required
-    #     tags: {
-    #       "TagKey" => "TagValue",
-    #     },
     #     worker_configuration: {
     #       revision: 1, # required
     #       worker_configuration_arn: "__string", # required
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
     #     },
     #   })
     #
@@ -828,8 +828,8 @@ module Aws::KafkaConnect
     #   * {Types::DescribeConnectorResponse#log_delivery #log_delivery} => Types::LogDeliveryDescription
     #   * {Types::DescribeConnectorResponse#plugins #plugins} => Array&lt;Types::PluginDescription&gt;
     #   * {Types::DescribeConnectorResponse#service_execution_role_arn #service_execution_role_arn} => String
-    #   * {Types::DescribeConnectorResponse#state_description #state_description} => Types::StateDescription
     #   * {Types::DescribeConnectorResponse#worker_configuration #worker_configuration} => Types::WorkerConfigurationDescription
+    #   * {Types::DescribeConnectorResponse#state_description #state_description} => Types::StateDescription
     #
     # @example Request syntax with placeholder values
     #
@@ -873,10 +873,10 @@ module Aws::KafkaConnect
     #   resp.plugins[0].custom_plugin.custom_plugin_arn #=> String
     #   resp.plugins[0].custom_plugin.revision #=> Integer
     #   resp.service_execution_role_arn #=> String
-    #   resp.state_description.code #=> String
-    #   resp.state_description.message #=> String
     #   resp.worker_configuration.revision #=> Integer
     #   resp.worker_configuration.worker_configuration_arn #=> String
+    #   resp.state_description.code #=> String
+    #   resp.state_description.message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/DescribeConnector AWS API Documentation
     #
@@ -884,6 +884,73 @@ module Aws::KafkaConnect
     # @param [Hash] params ({})
     def describe_connector(params = {}, options = {})
       req = build_request(:describe_connector, params)
+      req.send_request(options)
+    end
+
+    # Returns information about the specified connector's operations.
+    #
+    # @option params [required, String] :connector_operation_arn
+    #   ARN of the connector operation to be described.
+    #
+    # @return [Types::DescribeConnectorOperationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeConnectorOperationResponse#connector_arn #connector_arn} => String
+    #   * {Types::DescribeConnectorOperationResponse#connector_operation_arn #connector_operation_arn} => String
+    #   * {Types::DescribeConnectorOperationResponse#connector_operation_state #connector_operation_state} => String
+    #   * {Types::DescribeConnectorOperationResponse#connector_operation_type #connector_operation_type} => String
+    #   * {Types::DescribeConnectorOperationResponse#operation_steps #operation_steps} => Array&lt;Types::ConnectorOperationStep&gt;
+    #   * {Types::DescribeConnectorOperationResponse#origin_worker_setting #origin_worker_setting} => Types::WorkerSetting
+    #   * {Types::DescribeConnectorOperationResponse#origin_connector_configuration #origin_connector_configuration} => Hash&lt;String,String&gt;
+    #   * {Types::DescribeConnectorOperationResponse#target_worker_setting #target_worker_setting} => Types::WorkerSetting
+    #   * {Types::DescribeConnectorOperationResponse#target_connector_configuration #target_connector_configuration} => Hash&lt;String,String&gt;
+    #   * {Types::DescribeConnectorOperationResponse#error_info #error_info} => Types::StateDescription
+    #   * {Types::DescribeConnectorOperationResponse#creation_time #creation_time} => Time
+    #   * {Types::DescribeConnectorOperationResponse#end_time #end_time} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_connector_operation({
+    #     connector_operation_arn: "__string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connector_arn #=> String
+    #   resp.connector_operation_arn #=> String
+    #   resp.connector_operation_state #=> String, one of "PENDING", "UPDATE_IN_PROGRESS", "UPDATE_COMPLETE", "UPDATE_FAILED", "ROLLBACK_IN_PROGRESS", "ROLLBACK_FAILED", "ROLLBACK_COMPLETE"
+    #   resp.connector_operation_type #=> String, one of "UPDATE_WORKER_SETTING", "UPDATE_CONNECTOR_CONFIGURATION", "ISOLATE_CONNECTOR", "RESTORE_CONNECTOR"
+    #   resp.operation_steps #=> Array
+    #   resp.operation_steps[0].step_type #=> String, one of "INITIALIZE_UPDATE", "FINALIZE_UPDATE", "UPDATE_WORKER_SETTING", "UPDATE_CONNECTOR_CONFIGURATION", "VALIDATE_UPDATE"
+    #   resp.operation_steps[0].step_state #=> String, one of "PENDING", "IN_PROGRESS", "COMPLETED", "FAILED", "CANCELLED"
+    #   resp.origin_worker_setting.capacity.auto_scaling.max_worker_count #=> Integer
+    #   resp.origin_worker_setting.capacity.auto_scaling.mcu_count #=> Integer
+    #   resp.origin_worker_setting.capacity.auto_scaling.min_worker_count #=> Integer
+    #   resp.origin_worker_setting.capacity.auto_scaling.scale_in_policy.cpu_utilization_percentage #=> Integer
+    #   resp.origin_worker_setting.capacity.auto_scaling.scale_out_policy.cpu_utilization_percentage #=> Integer
+    #   resp.origin_worker_setting.capacity.provisioned_capacity.mcu_count #=> Integer
+    #   resp.origin_worker_setting.capacity.provisioned_capacity.worker_count #=> Integer
+    #   resp.origin_connector_configuration #=> Hash
+    #   resp.origin_connector_configuration["__string"] #=> String
+    #   resp.target_worker_setting.capacity.auto_scaling.max_worker_count #=> Integer
+    #   resp.target_worker_setting.capacity.auto_scaling.mcu_count #=> Integer
+    #   resp.target_worker_setting.capacity.auto_scaling.min_worker_count #=> Integer
+    #   resp.target_worker_setting.capacity.auto_scaling.scale_in_policy.cpu_utilization_percentage #=> Integer
+    #   resp.target_worker_setting.capacity.auto_scaling.scale_out_policy.cpu_utilization_percentage #=> Integer
+    #   resp.target_worker_setting.capacity.provisioned_capacity.mcu_count #=> Integer
+    #   resp.target_worker_setting.capacity.provisioned_capacity.worker_count #=> Integer
+    #   resp.target_connector_configuration #=> Hash
+    #   resp.target_connector_configuration["__string"] #=> String
+    #   resp.error_info.code #=> String
+    #   resp.error_info.message #=> String
+    #   resp.creation_time #=> Time
+    #   resp.end_time #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/DescribeConnectorOperation AWS API Documentation
+    #
+    # @overload describe_connector_operation(params = {})
+    # @param [Hash] params ({})
+    def describe_connector_operation(params = {}, options = {})
+      req = build_request(:describe_connector_operation, params)
       req.send_request(options)
     end
 
@@ -978,6 +1045,54 @@ module Aws::KafkaConnect
       req.send_request(options)
     end
 
+    # Lists information about a connector's operation(s).
+    #
+    # @option params [required, String] :connector_arn
+    #   The Amazon Resource Name (ARN) of the connector for which to list
+    #   operations.
+    #
+    # @option params [Integer] :max_results
+    #   Maximum number of connector operations to fetch in one get request.
+    #
+    # @option params [String] :next_token
+    #   If the response is truncated, it includes a NextToken. Send this
+    #   NextToken in a subsequent request to continue listing from where it
+    #   left off.
+    #
+    # @return [Types::ListConnectorOperationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConnectorOperationsResponse#connector_operations #connector_operations} => Array&lt;Types::ConnectorOperationSummary&gt;
+    #   * {Types::ListConnectorOperationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_connector_operations({
+    #     connector_arn: "__string", # required
+    #     max_results: 1,
+    #     next_token: "__string",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connector_operations #=> Array
+    #   resp.connector_operations[0].connector_operation_arn #=> String
+    #   resp.connector_operations[0].connector_operation_type #=> String, one of "UPDATE_WORKER_SETTING", "UPDATE_CONNECTOR_CONFIGURATION", "ISOLATE_CONNECTOR", "RESTORE_CONNECTOR"
+    #   resp.connector_operations[0].connector_operation_state #=> String, one of "PENDING", "UPDATE_IN_PROGRESS", "UPDATE_COMPLETE", "UPDATE_FAILED", "ROLLBACK_IN_PROGRESS", "ROLLBACK_FAILED", "ROLLBACK_COMPLETE"
+    #   resp.connector_operations[0].creation_time #=> Time
+    #   resp.connector_operations[0].end_time #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/ListConnectorOperations AWS API Documentation
+    #
+    # @overload list_connector_operations(params = {})
+    # @param [Hash] params ({})
+    def list_connector_operations(params = {}, options = {})
+      req = build_request(:list_connector_operations, params)
+      req.send_request(options)
+    end
+
     # Returns a list of all the connectors in this account and Region. The
     # list is limited to connectors whose name starts with the specified
     # prefix. The response also includes a description of each of the listed
@@ -1064,13 +1179,13 @@ module Aws::KafkaConnect
     # @option params [Integer] :max_results
     #   The maximum number of custom plugins to list in one response.
     #
-    # @option params [String] :name_prefix
-    #   Lists custom plugin names that start with the specified text string.
-    #
     # @option params [String] :next_token
     #   If the response of a ListCustomPlugins operation is truncated, it will
     #   include a NextToken. Send this NextToken in a subsequent request to
     #   continue listing from where the previous operation left off.
+    #
+    # @option params [String] :name_prefix
+    #   Lists custom plugin names that start with the specified text string.
     #
     # @return [Types::ListCustomPluginsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1083,8 +1198,8 @@ module Aws::KafkaConnect
     #
     #   resp = client.list_custom_plugins({
     #     max_results: 1,
-    #     name_prefix: "__string",
     #     next_token: "__string",
+    #     name_prefix: "__string",
     #   })
     #
     # @example Response structure
@@ -1151,15 +1266,15 @@ module Aws::KafkaConnect
     # @option params [Integer] :max_results
     #   The maximum number of worker configurations to list in one response.
     #
-    # @option params [String] :name_prefix
-    #   Lists worker configuration names that start with the specified text
-    #   string.
-    #
     # @option params [String] :next_token
     #   If the response of a ListWorkerConfigurations operation is truncated,
     #   it will include a NextToken. Send this NextToken in a subsequent
     #   request to continue listing from where the previous operation left
     #   off.
+    #
+    # @option params [String] :name_prefix
+    #   Lists worker configuration names that start with the specified text
+    #   string.
     #
     # @return [Types::ListWorkerConfigurationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1172,8 +1287,8 @@ module Aws::KafkaConnect
     #
     #   resp = client.list_worker_configurations({
     #     max_results: 1,
-    #     name_prefix: "__string",
     #     next_token: "__string",
+    #     name_prefix: "__string",
     #   })
     #
     # @example Response structure
@@ -1256,8 +1371,12 @@ module Aws::KafkaConnect
 
     # Updates the specified connector.
     #
-    # @option params [required, Types::CapacityUpdate] :capacity
+    # @option params [Types::CapacityUpdate] :capacity
     #   The target capacity.
+    #
+    # @option params [Hash<String,String>] :connector_configuration
+    #   A map of keys to values that represent the configuration for the
+    #   connector.
     #
     # @option params [required, String] :connector_arn
     #   The Amazon Resource Name (ARN) of the connector that you want to
@@ -1270,11 +1389,12 @@ module Aws::KafkaConnect
     #
     #   * {Types::UpdateConnectorResponse#connector_arn #connector_arn} => String
     #   * {Types::UpdateConnectorResponse#connector_state #connector_state} => String
+    #   * {Types::UpdateConnectorResponse#connector_operation_arn #connector_operation_arn} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_connector({
-    #     capacity: { # required
+    #     capacity: {
     #       auto_scaling: {
     #         max_worker_count: 1, # required
     #         mcu_count: 1, # required
@@ -1291,6 +1411,9 @@ module Aws::KafkaConnect
     #         worker_count: 1, # required
     #       },
     #     },
+    #     connector_configuration: {
+    #       "__string" => "__string",
+    #     },
     #     connector_arn: "__string", # required
     #     current_version: "__string", # required
     #   })
@@ -1299,6 +1422,7 @@ module Aws::KafkaConnect
     #
     #   resp.connector_arn #=> String
     #   resp.connector_state #=> String, one of "RUNNING", "CREATING", "UPDATING", "DELETING", "FAILED"
+    #   resp.connector_operation_arn #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kafkaconnect-2021-09-14/UpdateConnector AWS API Documentation
     #
@@ -1327,7 +1451,7 @@ module Aws::KafkaConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-kafkaconnect'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

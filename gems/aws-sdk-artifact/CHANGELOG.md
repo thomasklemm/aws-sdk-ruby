@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.16.0 (2025-01-13)
+------------------
+
+* Feature - Support resolving regional API calls to partition's leader region endpoint.
+
 1.15.0 (2024-12-11)
 ------------------
 

@@ -500,6 +500,17 @@ module Aws::TranscribeService
     #   customer's sentiment was positive during the last 30 seconds of the
     #   call.
     #
+    # @option params [Array<Types::Tag>] :tags
+    #   Adds one or more custom tags, each in the form of a key:value pair, to
+    #   a new call analytics category at the time you start this new job.
+    #
+    #   To learn more about using tags with Amazon Transcribe, refer to
+    #   [Tagging resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html
+    #
     # @option params [String] :input_type
     #   Choose whether you want to create a real-time or a post-call category
     #   for your Call Analytics transcription.
@@ -595,6 +606,12 @@ module Aws::TranscribeService
     #         },
     #       },
     #     ],
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
     #     input_type: "REAL_TIME", # accepts REAL_TIME, POST_CALL
     #   })
     #
@@ -650,6 +667,9 @@ module Aws::TranscribeService
     #   resp.category_properties.rules[0].sentiment_filter.negate #=> Boolean
     #   resp.category_properties.create_time #=> Time
     #   resp.category_properties.last_update_time #=> Time
+    #   resp.category_properties.tags #=> Array
+    #   resp.category_properties.tags[0].key #=> String
+    #   resp.category_properties.tags[0].value #=> String
     #   resp.category_properties.input_type #=> String, one of "REAL_TIME", "POST_CALL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/CreateCallAnalyticsCategory AWS API Documentation
@@ -1505,6 +1525,9 @@ module Aws::TranscribeService
     #   resp.category_properties.rules[0].sentiment_filter.negate #=> Boolean
     #   resp.category_properties.create_time #=> Time
     #   resp.category_properties.last_update_time #=> Time
+    #   resp.category_properties.tags #=> Array
+    #   resp.category_properties.tags[0].key #=> String
+    #   resp.category_properties.tags[0].value #=> String
     #   resp.category_properties.input_type #=> String, one of "REAL_TIME", "POST_CALL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/GetCallAnalyticsCategory AWS API Documentation
@@ -1587,6 +1610,9 @@ module Aws::TranscribeService
     #   resp.call_analytics_job.channel_definitions #=> Array
     #   resp.call_analytics_job.channel_definitions[0].channel_id #=> Integer
     #   resp.call_analytics_job.channel_definitions[0].participant_role #=> String, one of "AGENT", "CUSTOMER"
+    #   resp.call_analytics_job.tags #=> Array
+    #   resp.call_analytics_job.tags[0].key #=> String
+    #   resp.call_analytics_job.tags[0].value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/GetCallAnalyticsJob AWS API Documentation
     #
@@ -2023,6 +2049,9 @@ module Aws::TranscribeService
     #   resp.categories[0].rules[0].sentiment_filter.negate #=> Boolean
     #   resp.categories[0].create_time #=> Time
     #   resp.categories[0].last_update_time #=> Time
+    #   resp.categories[0].tags #=> Array
+    #   resp.categories[0].tags[0].key #=> String
+    #   resp.categories[0].tags[0].value #=> String
     #   resp.categories[0].input_type #=> String, one of "REAL_TIME", "POST_CALL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/ListCallAnalyticsCategories AWS API Documentation
@@ -2790,6 +2819,17 @@ module Aws::TranscribeService
     #   vocabulary filters, and custom vocabularies to your Call Analytics
     #   job.
     #
+    # @option params [Array<Types::Tag>] :tags
+    #   Adds one or more custom tags, each in the form of a key:value pair, to
+    #   a new call analytics job at the time you start this new job.
+    #
+    #   To learn more about using tags with Amazon Transcribe, refer to
+    #   [Tagging resources][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html
+    #
     # @option params [Array<Types::ChannelDefinition>] :channel_definitions
     #   Makes it possible to specify which speaker is on which channel. For
     #   example, if your agent is the first participant to speak, you would
@@ -2834,6 +2874,12 @@ module Aws::TranscribeService
     #         generate_abstractive_summary: false, # required
     #       },
     #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
     #     channel_definitions: [
     #       {
     #         channel_id: 1,
@@ -2881,6 +2927,9 @@ module Aws::TranscribeService
     #   resp.call_analytics_job.channel_definitions #=> Array
     #   resp.call_analytics_job.channel_definitions[0].channel_id #=> Integer
     #   resp.call_analytics_job.channel_definitions[0].participant_role #=> String, one of "AGENT", "CUSTOMER"
+    #   resp.call_analytics_job.tags #=> Array
+    #   resp.call_analytics_job.tags[0].key #=> String
+    #   resp.call_analytics_job.tags[0].value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/StartCallAnalyticsJob AWS API Documentation
     #
@@ -4208,6 +4257,9 @@ module Aws::TranscribeService
     #   resp.category_properties.rules[0].sentiment_filter.negate #=> Boolean
     #   resp.category_properties.create_time #=> Time
     #   resp.category_properties.last_update_time #=> Time
+    #   resp.category_properties.tags #=> Array
+    #   resp.category_properties.tags[0].key #=> String
+    #   resp.category_properties.tags[0].value #=> String
     #   resp.category_properties.input_type #=> String, one of "REAL_TIME", "POST_CALL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/UpdateCallAnalyticsCategory AWS API Documentation
@@ -4481,7 +4533,7 @@ module Aws::TranscribeService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transcribeservice'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

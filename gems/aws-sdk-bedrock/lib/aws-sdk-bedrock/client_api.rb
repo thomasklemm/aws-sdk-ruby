@@ -370,6 +370,8 @@ module Aws::Bedrock
     OrchestrationConfiguration = Shapes::StructureShape.new(name: 'OrchestrationConfiguration')
     OutputDataConfig = Shapes::StructureShape.new(name: 'OutputDataConfig')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
+    PerformanceConfigLatency = Shapes::StringShape.new(name: 'PerformanceConfigLatency')
+    PerformanceConfiguration = Shapes::StructureShape.new(name: 'PerformanceConfiguration')
     PositiveInteger = Shapes::IntegerShape.new(name: 'PositiveInteger')
     PromptRouterArn = Shapes::StringShape.new(name: 'PromptRouterArn')
     PromptRouterDescription = Shapes::StringShape.new(name: 'PromptRouterDescription')
@@ -731,6 +733,7 @@ module Aws::Bedrock
 
     EvaluationBedrockModel.add_member(:model_identifier, Shapes::ShapeRef.new(shape: EvaluationModelIdentifier, required: true, location_name: "modelIdentifier"))
     EvaluationBedrockModel.add_member(:inference_params, Shapes::ShapeRef.new(shape: EvaluationModelInferenceParams, location_name: "inferenceParams"))
+    EvaluationBedrockModel.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     EvaluationBedrockModel.struct_class = Types::EvaluationBedrockModel
 
     EvaluationConfig.add_member(:automated, Shapes::ShapeRef.new(shape: AutomatedEvaluationConfig, location_name: "automated"))
@@ -1625,6 +1628,9 @@ module Aws::Bedrock
 
     OutputDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
     OutputDataConfig.struct_class = Types::OutputDataConfig
+
+    PerformanceConfiguration.add_member(:latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location_name: "latency"))
+    PerformanceConfiguration.struct_class = Types::PerformanceConfiguration
 
     PromptRouterSummaries.member = Shapes::ShapeRef.new(shape: PromptRouterSummary)
 
