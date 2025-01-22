@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.216.1 (2025-01-22)
+------------------
+
 * Issue - Use epoch seconds instead of milliseconds in cbor encode/decode.
 
 * Issue - Add handling of block in response delegation (#3169). 
