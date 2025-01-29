@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.93.0 (2025-01-29)
+------------------
+
+* Feature - Add support for Dualstack and Dualstack-with-FIPS Endpoints
+
 1.92.0 (2025-01-15)
 ------------------
 
