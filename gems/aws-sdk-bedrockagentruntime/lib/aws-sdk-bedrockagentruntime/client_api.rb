@@ -1008,6 +1008,7 @@ module Aws::BedrockAgentRuntime
     InputPrompt.struct_class = Types::InputPrompt
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
+    InternalServerException.add_member(:reason, Shapes::ShapeRef.new(shape: String, location_name: "reason"))
     InternalServerException.struct_class = Types::InternalServerException
 
     InvocationInput.add_member(:action_group_invocation_input, Shapes::ShapeRef.new(shape: ActionGroupInvocationInput, location_name: "actionGroupInvocationInput"))

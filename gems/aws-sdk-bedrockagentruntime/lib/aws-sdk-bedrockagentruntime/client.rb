@@ -1206,6 +1206,7 @@ module Aws::BedrockAgentRuntime
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
+    #   event.reason #=> String
     #
     #   For :model_not_ready_exception event available at #on_model_not_ready_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -1936,6 +1937,7 @@ module Aws::BedrockAgentRuntime
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
+    #   event.reason #=> String
     #
     #   For :resource_not_found_exception event available at #on_resource_not_found_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -2596,6 +2598,7 @@ module Aws::BedrockAgentRuntime
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
+    #   event.reason #=> String
     #
     #   For :resource_not_found_exception event available at #on_resource_not_found_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -3204,6 +3207,7 @@ module Aws::BedrockAgentRuntime
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
+    #   event.reason #=> String
     #
     #   For :optimized_prompt_event event available at #on_optimized_prompt_event_event callback and response eventstream enumerator:
     #   event.optimized_prompt.text_prompt.text #=> String
@@ -3820,6 +3824,9 @@ module Aws::BedrockAgentRuntime
     #
     #  </note>
     #
+    # This operation requires permission for the `
+    # bedrock:RetrieveAndGenerate` action.
+    #
     # @option params [required, Types::RetrieveAndGenerateInput] :input
     #   Contains the query to be made to the knowledge base.
     #
@@ -4295,6 +4302,7 @@ module Aws::BedrockAgentRuntime
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
+    #   event.reason #=> String
     #
     #   For :output event available at #on_output_event callback and response eventstream enumerator:
     #   event.text #=> String
@@ -4356,7 +4364,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.40.0'
+      context[:gem_version] = '1.41.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -91,6 +91,8 @@ module Aws::QBusiness
     BrowserExtension = Shapes::StringShape.new(name: 'BrowserExtension')
     BrowserExtensionConfiguration = Shapes::StructureShape.new(name: 'BrowserExtensionConfiguration')
     BrowserExtensionList = Shapes::ListShape.new(name: 'BrowserExtensionList')
+    CancelSubscriptionRequest = Shapes::StructureShape.new(name: 'CancelSubscriptionRequest')
+    CancelSubscriptionResponse = Shapes::StructureShape.new(name: 'CancelSubscriptionResponse')
     ChatInput = Shapes::StructureShape.new(name: 'ChatInput')
     ChatInputStream = Shapes::StructureShape.new(name: 'ChatInputStream')
     ChatMode = Shapes::StringShape.new(name: 'ChatMode')
@@ -127,6 +129,8 @@ module Aws::QBusiness
     CreatePluginResponse = Shapes::StructureShape.new(name: 'CreatePluginResponse')
     CreateRetrieverRequest = Shapes::StructureShape.new(name: 'CreateRetrieverRequest')
     CreateRetrieverResponse = Shapes::StructureShape.new(name: 'CreateRetrieverResponse')
+    CreateSubscriptionRequest = Shapes::StructureShape.new(name: 'CreateSubscriptionRequest')
+    CreateSubscriptionResponse = Shapes::StructureShape.new(name: 'CreateSubscriptionResponse')
     CreateUserRequest = Shapes::StructureShape.new(name: 'CreateUserRequest')
     CreateUserRequestUserAliasesList = Shapes::ListShape.new(name: 'CreateUserRequestUserAliasesList')
     CreateUserResponse = Shapes::StructureShape.new(name: 'CreateUserResponse')
@@ -248,6 +252,7 @@ module Aws::QBusiness
     GetUserResponse = Shapes::StructureShape.new(name: 'GetUserResponse')
     GetWebExperienceRequest = Shapes::StructureShape.new(name: 'GetWebExperienceRequest')
     GetWebExperienceResponse = Shapes::StructureShape.new(name: 'GetWebExperienceResponse')
+    GroupIdentifier = Shapes::StringShape.new(name: 'GroupIdentifier')
     GroupMembers = Shapes::StructureShape.new(name: 'GroupMembers')
     GroupName = Shapes::StringShape.new(name: 'GroupName')
     GroupStatus = Shapes::StringShape.new(name: 'GroupStatus')
@@ -316,6 +321,8 @@ module Aws::QBusiness
     ListPluginsResponse = Shapes::StructureShape.new(name: 'ListPluginsResponse')
     ListRetrieversRequest = Shapes::StructureShape.new(name: 'ListRetrieversRequest')
     ListRetrieversResponse = Shapes::StructureShape.new(name: 'ListRetrieversResponse')
+    ListSubscriptionsRequest = Shapes::StructureShape.new(name: 'ListSubscriptionsRequest')
+    ListSubscriptionsResponse = Shapes::StructureShape.new(name: 'ListSubscriptionsResponse')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     ListWebExperiencesRequest = Shapes::StructureShape.new(name: 'ListWebExperiencesRequest')
@@ -339,6 +346,7 @@ module Aws::QBusiness
     MaxResultsIntegerForListPluginTypeMetadata = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPluginTypeMetadata')
     MaxResultsIntegerForListPlugins = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPlugins')
     MaxResultsIntegerForListRetrieversRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListRetrieversRequest')
+    MaxResultsIntegerForListSubscriptions = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListSubscriptions')
     MaxResultsIntegerForListWebExperiencesRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListWebExperiencesRequest')
     MediaExtractionConfiguration = Shapes::StructureShape.new(name: 'MediaExtractionConfiguration')
     MediaId = Shapes::StringShape.new(name: 'MediaId')
@@ -452,7 +460,13 @@ module Aws::QBusiness
     StringListAttributeBoostingConfiguration = Shapes::StructureShape.new(name: 'StringListAttributeBoostingConfiguration')
     SubnetId = Shapes::StringShape.new(name: 'SubnetId')
     SubnetIds = Shapes::ListShape.new(name: 'SubnetIds')
+    Subscription = Shapes::StructureShape.new(name: 'Subscription')
+    SubscriptionArn = Shapes::StringShape.new(name: 'SubscriptionArn')
+    SubscriptionDetails = Shapes::StructureShape.new(name: 'SubscriptionDetails')
+    SubscriptionId = Shapes::StringShape.new(name: 'SubscriptionId')
+    SubscriptionPrincipal = Shapes::UnionShape.new(name: 'SubscriptionPrincipal')
     SubscriptionType = Shapes::StringShape.new(name: 'SubscriptionType')
+    Subscriptions = Shapes::ListShape.new(name: 'Subscriptions')
     SyncSchedule = Shapes::StringShape.new(name: 'SyncSchedule')
     SystemMessageId = Shapes::StringShape.new(name: 'SystemMessageId')
     SystemMessageOverride = Shapes::StringShape.new(name: 'SystemMessageOverride')
@@ -491,6 +505,8 @@ module Aws::QBusiness
     UpdatePluginResponse = Shapes::StructureShape.new(name: 'UpdatePluginResponse')
     UpdateRetrieverRequest = Shapes::StructureShape.new(name: 'UpdateRetrieverRequest')
     UpdateRetrieverResponse = Shapes::StructureShape.new(name: 'UpdateRetrieverResponse')
+    UpdateSubscriptionRequest = Shapes::StructureShape.new(name: 'UpdateSubscriptionRequest')
+    UpdateSubscriptionResponse = Shapes::StructureShape.new(name: 'UpdateSubscriptionResponse')
     UpdateUserRequest = Shapes::StructureShape.new(name: 'UpdateUserRequest')
     UpdateUserResponse = Shapes::StructureShape.new(name: 'UpdateUserResponse')
     UpdateWebExperienceRequest = Shapes::StructureShape.new(name: 'UpdateWebExperienceRequest')
@@ -500,6 +516,7 @@ module Aws::QBusiness
     UserAliases = Shapes::ListShape.new(name: 'UserAliases')
     UserGroups = Shapes::ListShape.new(name: 'UserGroups')
     UserId = Shapes::StringShape.new(name: 'UserId')
+    UserIdentifier = Shapes::StringShape.new(name: 'UserIdentifier')
     UserIds = Shapes::ListShape.new(name: 'UserIds')
     UserMessage = Shapes::StringShape.new(name: 'UserMessage')
     UsersAndGroups = Shapes::StructureShape.new(name: 'UsersAndGroups')
@@ -742,6 +759,15 @@ module Aws::QBusiness
 
     BrowserExtensionList.member = Shapes::ShapeRef.new(shape: BrowserExtension)
 
+    CancelSubscriptionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    CancelSubscriptionRequest.add_member(:subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, required: true, location: "uri", location_name: "subscriptionId"))
+    CancelSubscriptionRequest.struct_class = Types::CancelSubscriptionRequest
+
+    CancelSubscriptionResponse.add_member(:subscription_arn, Shapes::ShapeRef.new(shape: SubscriptionArn, location_name: "subscriptionArn"))
+    CancelSubscriptionResponse.add_member(:current_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "currentSubscription"))
+    CancelSubscriptionResponse.add_member(:next_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "nextSubscription"))
+    CancelSubscriptionResponse.struct_class = Types::CancelSubscriptionResponse
+
     ChatInput.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     ChatInput.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
     ChatInput.add_member(:user_groups, Shapes::ShapeRef.new(shape: UserGroups, location: "querystring", location_name: "userGroups"))
@@ -936,6 +962,18 @@ module Aws::QBusiness
     CreateRetrieverResponse.add_member(:retriever_id, Shapes::ShapeRef.new(shape: RetrieverId, location_name: "retrieverId"))
     CreateRetrieverResponse.add_member(:retriever_arn, Shapes::ShapeRef.new(shape: RetrieverArn, location_name: "retrieverArn"))
     CreateRetrieverResponse.struct_class = Types::CreateRetrieverResponse
+
+    CreateSubscriptionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    CreateSubscriptionRequest.add_member(:principal, Shapes::ShapeRef.new(shape: SubscriptionPrincipal, required: true, location_name: "principal"))
+    CreateSubscriptionRequest.add_member(:type, Shapes::ShapeRef.new(shape: SubscriptionType, required: true, location_name: "type"))
+    CreateSubscriptionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateSubscriptionRequest.struct_class = Types::CreateSubscriptionRequest
+
+    CreateSubscriptionResponse.add_member(:subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "subscriptionId"))
+    CreateSubscriptionResponse.add_member(:subscription_arn, Shapes::ShapeRef.new(shape: SubscriptionArn, location_name: "subscriptionArn"))
+    CreateSubscriptionResponse.add_member(:current_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "currentSubscription"))
+    CreateSubscriptionResponse.add_member(:next_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "nextSubscription"))
+    CreateSubscriptionResponse.struct_class = Types::CreateSubscriptionResponse
 
     CreateUserRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     CreateUserRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "userId"))
@@ -1632,6 +1670,15 @@ module Aws::QBusiness
     ListRetrieversResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListRetrieversResponse.struct_class = Types::ListRetrieversResponse
 
+    ListSubscriptionsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    ListSubscriptionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListSubscriptionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListSubscriptions, location: "querystring", location_name: "maxResults"))
+    ListSubscriptionsRequest.struct_class = Types::ListSubscriptionsRequest
+
+    ListSubscriptionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListSubscriptionsResponse.add_member(:subscriptions, Shapes::ShapeRef.new(shape: Subscriptions, location_name: "subscriptions"))
+    ListSubscriptionsResponse.struct_class = Types::ListSubscriptionsResponse
+
     ListTagsForResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location: "uri", location_name: "resourceARN"))
     ListTagsForResourceRequest.struct_class = Types::ListTagsForResourceRequest
 
@@ -1918,6 +1965,26 @@ module Aws::QBusiness
 
     SubnetIds.member = Shapes::ShapeRef.new(shape: SubnetId)
 
+    Subscription.add_member(:subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "subscriptionId"))
+    Subscription.add_member(:subscription_arn, Shapes::ShapeRef.new(shape: SubscriptionArn, location_name: "subscriptionArn"))
+    Subscription.add_member(:principal, Shapes::ShapeRef.new(shape: SubscriptionPrincipal, location_name: "principal"))
+    Subscription.add_member(:current_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "currentSubscription"))
+    Subscription.add_member(:next_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "nextSubscription"))
+    Subscription.struct_class = Types::Subscription
+
+    SubscriptionDetails.add_member(:type, Shapes::ShapeRef.new(shape: SubscriptionType, location_name: "type"))
+    SubscriptionDetails.struct_class = Types::SubscriptionDetails
+
+    SubscriptionPrincipal.add_member(:user, Shapes::ShapeRef.new(shape: UserIdentifier, location_name: "user"))
+    SubscriptionPrincipal.add_member(:group, Shapes::ShapeRef.new(shape: GroupIdentifier, location_name: "group"))
+    SubscriptionPrincipal.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    SubscriptionPrincipal.add_member_subclass(:user, Types::SubscriptionPrincipal::User)
+    SubscriptionPrincipal.add_member_subclass(:group, Types::SubscriptionPrincipal::Group)
+    SubscriptionPrincipal.add_member_subclass(:unknown, Types::SubscriptionPrincipal::Unknown)
+    SubscriptionPrincipal.struct_class = Types::SubscriptionPrincipal
+
+    Subscriptions.member = Shapes::ShapeRef.new(shape: Subscription)
+
     Tag.add_member(:key, Shapes::ShapeRef.new(shape: TagKey, required: true, location_name: "key"))
     Tag.add_member(:value, Shapes::ShapeRef.new(shape: TagValue, required: true, location_name: "value"))
     Tag.struct_class = Types::Tag
@@ -2047,6 +2114,16 @@ module Aws::QBusiness
     UpdateRetrieverRequest.struct_class = Types::UpdateRetrieverRequest
 
     UpdateRetrieverResponse.struct_class = Types::UpdateRetrieverResponse
+
+    UpdateSubscriptionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    UpdateSubscriptionRequest.add_member(:subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, required: true, location: "uri", location_name: "subscriptionId"))
+    UpdateSubscriptionRequest.add_member(:type, Shapes::ShapeRef.new(shape: SubscriptionType, required: true, location_name: "type"))
+    UpdateSubscriptionRequest.struct_class = Types::UpdateSubscriptionRequest
+
+    UpdateSubscriptionResponse.add_member(:subscription_arn, Shapes::ShapeRef.new(shape: SubscriptionArn, location_name: "subscriptionArn"))
+    UpdateSubscriptionResponse.add_member(:current_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "currentSubscription"))
+    UpdateSubscriptionResponse.add_member(:next_subscription, Shapes::ShapeRef.new(shape: SubscriptionDetails, location_name: "nextSubscription"))
+    UpdateSubscriptionResponse.struct_class = Types::UpdateSubscriptionResponse
 
     UpdateUserRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     UpdateUserRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "userId"))
@@ -2182,6 +2259,19 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
       end)
 
+      api.add_operation(:cancel_subscription, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CancelSubscription"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/applications/{applicationId}/subscriptions/{subscriptionId}"
+        o.input = Shapes::ShapeRef.new(shape: CancelSubscriptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: CancelSubscriptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:chat, Seahorse::Model::Operation.new.tap do |o|
         o.name = "Chat"
         o.http_method = "POST"
@@ -2303,6 +2393,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:create_subscription, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateSubscription"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/subscriptions"
+        o.input = Shapes::ShapeRef.new(shape: CreateSubscriptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateSubscriptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:create_user, Seahorse::Model::Operation.new.tap do |o|
@@ -2955,6 +3059,26 @@ module Aws::QBusiness
         )
       end)
 
+      api.add_operation(:list_subscriptions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListSubscriptions"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/subscriptions"
+        o.input = Shapes::ShapeRef.new(shape: ListSubscriptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListSubscriptionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_tags_for_resource, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListTagsForResource"
         o.http_method = "GET"
@@ -3191,6 +3315,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:update_subscription, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateSubscription"
+        o.http_method = "PUT"
+        o.http_request_uri = "/applications/{applicationId}/subscriptions/{subscriptionId}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateSubscriptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateSubscriptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:update_user, Seahorse::Model::Operation.new.tap do |o|

@@ -39,9 +39,6 @@ module Aws::ECRPublic
           end
           if Aws::Endpoints::Matchers.boolean_equals?(use_dual_stack, true)
             if Aws::Endpoints::Matchers.boolean_equals?(true, Aws::Endpoints::Matchers.attr(partition_result, "supportsDualStack"))
-              if Aws::Endpoints::Matchers.string_equals?("aws", Aws::Endpoints::Matchers.attr(partition_result, "name"))
-                return Aws::Endpoints::Endpoint.new(url: "https://ecr-public.#{region}.api.aws", headers: {}, properties: {})
-              end
               return Aws::Endpoints::Endpoint.new(url: "https://api.ecr-public.#{region}.#{partition_result['dualStackDnsSuffix']}", headers: {}, properties: {})
             end
             raise ArgumentError, "DualStack is enabled but this partition does not support DualStack"

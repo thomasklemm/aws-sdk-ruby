@@ -285,6 +285,19 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class CancelSubscriptionRequest
+      attr_accessor application_id: ::String
+      attr_accessor subscription_id: ::String
+      SENSITIVE: []
+    end
+
+    class CancelSubscriptionResponse
+      attr_accessor subscription_arn: ::String
+      attr_accessor current_subscription: Types::SubscriptionDetails
+      attr_accessor next_subscription: Types::SubscriptionDetails
+      SENSITIVE: []
+    end
+
     class ChatInput
       attr_accessor application_id: ::String
       attr_accessor user_id: ::String
@@ -514,6 +527,22 @@ module Aws::QBusiness
     class CreateRetrieverResponse
       attr_accessor retriever_id: ::String
       attr_accessor retriever_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateSubscriptionRequest
+      attr_accessor application_id: ::String
+      attr_accessor principal: Types::SubscriptionPrincipal
+      attr_accessor type: ("Q_LITE" | "Q_BUSINESS")
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class CreateSubscriptionResponse
+      attr_accessor subscription_id: ::String
+      attr_accessor subscription_arn: ::String
+      attr_accessor current_subscription: Types::SubscriptionDetails
+      attr_accessor next_subscription: Types::SubscriptionDetails
       SENSITIVE: []
     end
 
@@ -1426,6 +1455,19 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ListSubscriptionsRequest
+      attr_accessor application_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSubscriptionsResponse
+      attr_accessor next_token: ::String
+      attr_accessor subscriptions: ::Array[Types::Subscription]
+      SENSITIVE: []
+    end
+
     class ListTagsForResourceRequest
       attr_accessor resource_arn: ::String
       SENSITIVE: []
@@ -1803,6 +1845,34 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class Subscription
+      attr_accessor subscription_id: ::String
+      attr_accessor subscription_arn: ::String
+      attr_accessor principal: Types::SubscriptionPrincipal
+      attr_accessor current_subscription: Types::SubscriptionDetails
+      attr_accessor next_subscription: Types::SubscriptionDetails
+      SENSITIVE: []
+    end
+
+    class SubscriptionDetails
+      attr_accessor type: ("Q_LITE" | "Q_BUSINESS")
+      SENSITIVE: []
+    end
+
+    class SubscriptionPrincipal
+      attr_accessor user: ::String
+      attr_accessor group: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class User < SubscriptionPrincipal
+      end
+      class Group < SubscriptionPrincipal
+      end
+      class Unknown < SubscriptionPrincipal
+      end
+    end
+
     class Tag
       attr_accessor key: ::String
       attr_accessor value: ::String
@@ -1966,6 +2036,20 @@ module Aws::QBusiness
     end
 
     class UpdateRetrieverResponse < Aws::EmptyStructure
+    end
+
+    class UpdateSubscriptionRequest
+      attr_accessor application_id: ::String
+      attr_accessor subscription_id: ::String
+      attr_accessor type: ("Q_LITE" | "Q_BUSINESS")
+      SENSITIVE: []
+    end
+
+    class UpdateSubscriptionResponse
+      attr_accessor subscription_arn: ::String
+      attr_accessor current_subscription: Types::SubscriptionDetails
+      attr_accessor next_subscription: Types::SubscriptionDetails
+      SENSITIVE: []
     end
 
     class UpdateUserRequest

@@ -750,6 +750,7 @@ module Aws::BedrockAgentRuntime
 
     class InternalServerException
       attr_accessor message: ::String
+      attr_accessor reason: ::String
       attr_accessor event_type: untyped
       SENSITIVE: []
     end

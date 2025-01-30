@@ -2663,10 +2663,17 @@ module Aws::BedrockAgentRuntime
     # @!attribute [rw] message
     #   @return [String]
     #
+    # @!attribute [rw] reason
+    #   The reason for the exception. If the reason is
+    #   `BEDROCK_MODEL_INVOCATION_SERVICE_UNAVAILABLE`, the model invocation
+    #   service is unavailable. Retry your request.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InternalServerException AWS API Documentation
     #
     class InternalServerException < Struct.new(
       :message,
+      :reason,
       :event_type)
       SENSITIVE = []
       include Aws::Structure

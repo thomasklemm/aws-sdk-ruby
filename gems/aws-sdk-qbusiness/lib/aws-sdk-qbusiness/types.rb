@@ -109,7 +109,7 @@ module Aws::QBusiness
     # Specifies an allowed action and its associated filter configuration.
     #
     # @!attribute [rw] action
-    #   The Q Business action that is allowed.
+    #   The Amazon Q Business action that is allowed.
     #   @return [String]
     #
     # @!attribute [rw] filter_configuration
@@ -512,7 +512,7 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] statement_id
@@ -520,12 +520,13 @@ module Aws::QBusiness
     #   @return [String]
     #
     # @!attribute [rw] actions
-    #   The list of Q Business actions that the ISV is allowed to perform.
+    #   The list of Amazon Q Business actions that the ISV is allowed to
+    #   perform.
     #   @return [Array<String>]
     #
     # @!attribute [rw] principal
-    #   The Amazon Resource Name (ARN) of the IAM role for the ISV that is
-    #   being granted permission.
+    #   The Amazon Resource Name of the IAM role for the ISV that is being
+    #   granted permission.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatePermissionRequest AWS API Documentation
@@ -1089,6 +1090,48 @@ module Aws::QBusiness
     #
     class BrowserExtensionConfiguration < Struct.new(
       :enabled_browser_extensions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business application for which the
+    #   subscription is being cancelled.
+    #   @return [String]
+    #
+    # @!attribute [rw] subscription_id
+    #   The identifier of the Amazon Q Business subscription being
+    #   cancelled.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CancelSubscriptionRequest AWS API Documentation
+    #
+    class CancelSubscriptionRequest < Struct.new(
+      :application_id,
+      :subscription_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] subscription_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q Business subscription
+    #   being cancelled.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_subscription
+    #   The type of your current Amazon Q Business subscription.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @!attribute [rw] next_subscription
+    #   The type of the Amazon Q Business subscription for the next month.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CancelSubscriptionResponse AWS API Documentation
+    #
+    class CancelSubscriptionResponse < Struct.new(
+      :subscription_arn,
+      :current_subscription,
+      :next_subscription)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1681,7 +1724,7 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] principal
@@ -1728,7 +1771,7 @@ module Aws::QBusiness
     #   @return [String]
     #
     # @!attribute [rw] idc_application_arn
-    #   The Amazon Resource Name (ARN) of the AWS IAM Identity Center
+    #   The Amazon Resource Name (ARN) of the IAM Identity Center
     #   application created for this data accessor.
     #   @return [String]
     #
@@ -2112,6 +2155,68 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business application the subscription
+    #   should be added to.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The IAM Identity Center `UserId` or `GroupId` of a user or group in
+    #   the IAM Identity Center instance connected to the Amazon Q Business
+    #   application.
+    #   @return [Types::SubscriptionPrincipal]
+    #
+    # @!attribute [rw] type
+    #   The type of Amazon Q Business subscription you want to create.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A token that you provide to identify the request to create a
+    #   subscription for your Amazon Q Business application.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateSubscriptionRequest AWS API Documentation
+    #
+    class CreateSubscriptionRequest < Struct.new(
+      :application_id,
+      :principal,
+      :type,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] subscription_id
+    #   The identifier of the Amazon Q Business subscription created.
+    #   @return [String]
+    #
+    # @!attribute [rw] subscription_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q Business subscription
+    #   created.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_subscription
+    #   The type of your current Amazon Q Business subscription.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @!attribute [rw] next_subscription
+    #   The type of the Amazon Q Business subscription for the next month.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateSubscriptionResponse AWS API Documentation
+    #
+    class CreateSubscriptionResponse < Struct.new(
+      :subscription_id,
+      :subscription_arn,
+      :current_subscription,
+      :next_subscription)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
     #   The identifier of the application for which the user mapping will be
     #   created.
     #   @return [String]
@@ -2370,8 +2475,8 @@ module Aws::QBusiness
     #   @return [String]
     #
     # @!attribute [rw] idc_application_arn
-    #   The Amazon Resource Name (ARN) of the associated AWS IAM Identity
-    #   Center application.
+    #   The Amazon Resource Name (ARN) of the associated IAM Identity Center
+    #   application.
     #   @return [String]
     #
     # @!attribute [rw] principal
@@ -2649,7 +2754,7 @@ module Aws::QBusiness
     class DeleteConversationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] data_accessor_id
@@ -2864,7 +2969,7 @@ module Aws::QBusiness
     class DeleteWebExperienceResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] statement_id
@@ -3692,7 +3797,7 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] data_accessor_id
@@ -3721,12 +3826,12 @@ module Aws::QBusiness
     #   @return [String]
     #
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application associated with
-    #   this data accessor.
+    #   The unique identifier of the Amazon Q Business application
+    #   associated with this data accessor.
     #   @return [String]
     #
     # @!attribute [rw] idc_application_arn
-    #   The Amazon Resource Name (ARN) of the AWS IAM Identity Center
+    #   The Amazon Resource Name (ARN) of the IAM Identity Center
     #   application associated with this data accessor.
     #   @return [String]
     #
@@ -4174,7 +4279,7 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetPolicyRequest AWS API Documentation
@@ -4988,7 +5093,7 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] next_token
@@ -5585,6 +5690,52 @@ module Aws::QBusiness
     class ListRetrieversResponse < Struct.new(
       :retrievers,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business application linked to the
+    #   subscription.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the `maxResults` response was incomplete because there is more
+    #   data to retrieve, Amazon Q Business returns a pagination token in
+    #   the response. You can use this pagination token to retrieve the next
+    #   set of Amazon Q Business subscriptions.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of Amazon Q Business subscriptions to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListSubscriptionsRequest AWS API Documentation
+    #
+    class ListSubscriptionsRequest < Struct.new(
+      :application_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response is truncated, Amazon Q Business returns this token.
+    #   You can use this token in a subsequent request to retrieve the next
+    #   set of subscriptions.
+    #   @return [String]
+    #
+    # @!attribute [rw] subscriptions
+    #   An array of summary information on the subscriptions configured for
+    #   an Amazon Q Business application.
+    #   @return [Array<Types::Subscription>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListSubscriptionsResponse AWS API Documentation
+    #
+    class ListSubscriptionsResponse < Struct.new(
+      :next_token,
+      :subscriptions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6290,9 +6441,7 @@ module Aws::QBusiness
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role that has access to the
-    #   S3 file that contains your list of users that belong to a group.The
-    #   Amazon Resource Name (ARN) of an IAM role that has access to the S3
-    #   file that contains your list of users that belong to a group.
+    #   S3 file that contains your list of users that belong to a group.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/PutGroupRequest AWS API Documentation
@@ -6650,7 +6799,8 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application to search.
+    #   The unique identifier of the Amazon Q Business application to
+    #   search.
     #   @return [String]
     #
     # @!attribute [rw] query_text
@@ -6925,6 +7075,101 @@ module Aws::QBusiness
       :boosting_level)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Information about an Amazon Q Business subscription.
+    #
+    # Subscriptions are used to provide access for an IAM Identity Center
+    # user or a group to an Amazon Q Business application.
+    #
+    # Amazon Q Business offers two subscription tiers: `Q_LITE` and
+    # `Q_BUSINESS`. Subscription tier determines feature access for the
+    # user. For more information on subscriptions and pricing tiers, see
+    # [Amazon Q Business pricing][1].
+    #
+    #
+    #
+    # [1]: https://aws.amazon.com/q/business/pricing/
+    #
+    # @!attribute [rw] subscription_id
+    #   The identifier of the Amazon Q Business subscription to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] subscription_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q Business subscription
+    #   that was updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The IAM Identity Center `UserId` or `GroupId` of a user or group in
+    #   the IAM Identity Center instance connected to the Amazon Q Business
+    #   application.
+    #   @return [Types::SubscriptionPrincipal]
+    #
+    # @!attribute [rw] current_subscription
+    #   The type of your current Amazon Q Business subscription.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @!attribute [rw] next_subscription
+    #   The type of the Amazon Q Business subscription for the next month.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Subscription AWS API Documentation
+    #
+    class Subscription < Struct.new(
+      :subscription_id,
+      :subscription_arn,
+      :principal,
+      :current_subscription,
+      :next_subscription)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The details of an Amazon Q Business subscription.
+    #
+    # @!attribute [rw] type
+    #   The type of an Amazon Q Business subscription.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/SubscriptionDetails AWS API Documentation
+    #
+    class SubscriptionDetails < Struct.new(
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A user or group in the IAM Identity Center instance connected to the
+    # Amazon Q Business application.
+    #
+    # @note SubscriptionPrincipal is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note SubscriptionPrincipal is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of SubscriptionPrincipal corresponding to the set member.
+    #
+    # @!attribute [rw] user
+    #   The identifier of a user in the IAM Identity Center instance
+    #   connected to the Amazon Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] group
+    #   The identifier of a group in the IAM Identity Center instance
+    #   connected to the Amazon Q Business application.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/SubscriptionPrincipal AWS API Documentation
+    #
+    class SubscriptionPrincipal < Struct.new(
+      :user,
+      :group,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class User < SubscriptionPrincipal; end
+      class Group < SubscriptionPrincipal; end
+      class Unknown < SubscriptionPrincipal; end
     end
 
     # A list of key/value pairs that identify an index, FAQ, or data source.
@@ -7276,7 +7521,7 @@ module Aws::QBusiness
     class UpdateChatControlsConfigurationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
-    #   The unique identifier of the Q Business application.
+    #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] data_accessor_id
@@ -7520,6 +7765,52 @@ module Aws::QBusiness
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateRetrieverResponse AWS API Documentation
     #
     class UpdateRetrieverResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business application where the
+    #   subscription update should take effect.
+    #   @return [String]
+    #
+    # @!attribute [rw] subscription_id
+    #   The identifier of the Amazon Q Business subscription to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the Amazon Q Business subscription to be updated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateSubscriptionRequest AWS API Documentation
+    #
+    class UpdateSubscriptionRequest < Struct.new(
+      :application_id,
+      :subscription_id,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] subscription_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q Business subscription
+    #   that was updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_subscription
+    #   The type of your current Amazon Q Business subscription.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @!attribute [rw] next_subscription
+    #   The type of the Amazon Q Business subscription for the next month.
+    #   @return [Types::SubscriptionDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateSubscriptionResponse AWS API Documentation
+    #
+    class UpdateSubscriptionResponse < Struct.new(
+      :subscription_arn,
+      :current_subscription,
+      :next_subscription)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] application_id
     #   The identifier of the application the user is attached to.

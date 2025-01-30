@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.27.0 (2025-01-30)
+------------------
+
+* Feature - Added APIs to manage QBusiness user subscriptions
+
 1.26.0 (2025-01-15)
 ------------------
 

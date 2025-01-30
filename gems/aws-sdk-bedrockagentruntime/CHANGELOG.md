@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2025-01-30)
+------------------
+
+* Feature - Add a 'reason' field to InternalServerException
+
 1.40.0 (2025-01-22)
 ------------------
 
