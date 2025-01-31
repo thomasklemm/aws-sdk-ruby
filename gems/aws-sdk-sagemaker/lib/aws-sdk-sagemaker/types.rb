@@ -1342,6 +1342,16 @@ module Aws::SageMaker
     # @!attribute [rw] resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/AppDetails AWS API Documentation
@@ -4768,6 +4778,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] custom_images
@@ -26379,6 +26399,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] custom_images
@@ -40139,6 +40169,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] custom_images
@@ -40198,6 +40238,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/RStudioServerProDomainSettings AWS API Documentation
@@ -40221,6 +40271,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] r_studio_connect_url
@@ -41442,12 +41502,22 @@ module Aws::SageMaker
     # Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     # version, and the instance type that the version runs on.
     #
+    # <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    # passed, `SageMakerImageVersionArn` is used. Any updates to
+    # `SageMakerImageArn` will not take effect if `SageMakerImageVersionArn`
+    # already exists in the `ResourceSpec` because
+    # `SageMakerImageVersionArn` always takes precedence. To clear the value
+    # set for `SageMakerImageVersionArn`, pass `None` as the value.
+    #
+    #  </note>
+    #
     # @!attribute [rw] sage_maker_image_arn
     #   The ARN of the SageMaker AI image that the image version belongs to.
     #   @return [String]
     #
     # @!attribute [rw] sage_maker_image_version_arn
-    #   The ARN of the image version created on the instance.
+    #   The ARN of the image version created on the instance. To clear the
+    #   value set for `SageMakerImageVersionArn`, pass `None` as the value.
     #   @return [String]
     #
     # @!attribute [rw] sage_maker_image_version_alias
@@ -43020,6 +43090,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] app_lifecycle_management
@@ -43110,6 +43190,16 @@ module Aws::SageMaker
     # @!attribute [rw] default_resource_spec
     #   Specifies the ARN's of a SageMaker AI image and SageMaker AI image
     #   version, and the instance type that the version runs on.
+    #
+    #   <note markdown="1"> When both `SageMakerImageVersionArn` and `SageMakerImageArn` are
+    #   passed, `SageMakerImageVersionArn` is used. Any updates to
+    #   `SageMakerImageArn` will not take effect if
+    #   `SageMakerImageVersionArn` already exists in the `ResourceSpec`
+    #   because `SageMakerImageVersionArn` always takes precedence. To clear
+    #   the value set for `SageMakerImageVersionArn`, pass `None` as the
+    #   value.
+    #
+    #    </note>
     #   @return [Types::ResourceSpec]
     #
     # @!attribute [rw] code_repositories

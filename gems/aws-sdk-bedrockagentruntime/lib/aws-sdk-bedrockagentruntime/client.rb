@@ -4289,6 +4289,27 @@ module Aws::BedrockAgentRuntime
     #   event.citation.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.citation.retrieved_references[0].location.web_location.url #=> String
     #   event.citation.retrieved_references[0].metadata #=> Hash
+    #   event.generated_response_part.text_response_part.span.end #=> Integer
+    #   event.generated_response_part.text_response_part.span.start #=> Integer
+    #   event.generated_response_part.text_response_part.text #=> String
+    #   event.retrieved_references #=> Array
+    #   event.retrieved_references[0].content.byte_content #=> String
+    #   event.retrieved_references[0].content.row #=> Array
+    #   event.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
+    #   event.retrieved_references[0].content.text #=> String
+    #   event.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
+    #   event.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.retrieved_references[0].location.kendra_document_location.uri #=> String
+    #   event.retrieved_references[0].location.s3_location.uri #=> String
+    #   event.retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.retrieved_references[0].location.share_point_location.url #=> String
+    #   event.retrieved_references[0].location.sql_location.query #=> String
+    #   event.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
+    #   event.retrieved_references[0].location.web_location.url #=> String
+    #   event.retrieved_references[0].metadata #=> Hash
     #
     #   For :conflict_exception event available at #on_conflict_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -4364,7 +4385,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.41.0'
+      context[:gem_version] = '1.42.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

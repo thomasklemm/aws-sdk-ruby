@@ -577,7 +577,9 @@ module Aws::BedrockAgentRuntime
     Citation.add_member(:retrieved_references, Shapes::ShapeRef.new(shape: RetrievedReferences, location_name: "retrievedReferences"))
     Citation.struct_class = Types::Citation
 
-    CitationEvent.add_member(:citation, Shapes::ShapeRef.new(shape: Citation, location_name: "citation"))
+    CitationEvent.add_member(:citation, Shapes::ShapeRef.new(shape: Citation, deprecated: true, location_name: "citation", metadata: {"deprecatedMessage"=>"Citation is deprecated. Please use GeneratedResponsePart and RetrievedReferences for citation event."}))
+    CitationEvent.add_member(:generated_response_part, Shapes::ShapeRef.new(shape: GeneratedResponsePart, location_name: "generatedResponsePart"))
+    CitationEvent.add_member(:retrieved_references, Shapes::ShapeRef.new(shape: RetrievedReferences, location_name: "retrievedReferences"))
     CitationEvent.struct_class = Types::CitationEvent
 
     Citations.member = Shapes::ShapeRef.new(shape: Citation)
