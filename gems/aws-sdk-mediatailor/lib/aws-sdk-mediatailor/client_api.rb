@@ -123,6 +123,7 @@ module Aws::MediaTailor
     LogConfigurationForChannel = Shapes::StructureShape.new(name: 'LogConfigurationForChannel')
     LogType = Shapes::StringShape.new(name: 'LogType')
     LogTypes = Shapes::ListShape.new(name: 'LogTypes')
+    LoggingStrategy = Shapes::StringShape.new(name: 'LoggingStrategy')
     Long = Shapes::IntegerShape.new(name: 'Long')
     ManifestProcessingRules = Shapes::StructureShape.new(name: 'ManifestProcessingRules')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
@@ -192,6 +193,7 @@ module Aws::MediaTailor
     __listOfAvailMatchingCriteria = Shapes::ListShape.new(name: '__listOfAvailMatchingCriteria')
     __listOfChannel = Shapes::ListShape.new(name: '__listOfChannel')
     __listOfLiveSource = Shapes::ListShape.new(name: '__listOfLiveSource')
+    __listOfLoggingStrategies = Shapes::ListShape.new(name: '__listOfLoggingStrategies')
     __listOfPlaybackConfiguration = Shapes::ListShape.new(name: '__listOfPlaybackConfiguration')
     __listOfPrefetchSchedule = Shapes::ListShape.new(name: '__listOfPrefetchSchedule')
     __listOfScheduleAdBreak = Shapes::ListShape.new(name: '__listOfScheduleAdBreak')
@@ -308,10 +310,12 @@ module Aws::MediaTailor
 
     ConfigureLogsForPlaybackConfigurationRequest.add_member(:percent_enabled, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "PercentEnabled"))
     ConfigureLogsForPlaybackConfigurationRequest.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "PlaybackConfigurationName"))
+    ConfigureLogsForPlaybackConfigurationRequest.add_member(:enabled_logging_strategies, Shapes::ShapeRef.new(shape: __listOfLoggingStrategies, location_name: "EnabledLoggingStrategies"))
     ConfigureLogsForPlaybackConfigurationRequest.struct_class = Types::ConfigureLogsForPlaybackConfigurationRequest
 
     ConfigureLogsForPlaybackConfigurationResponse.add_member(:percent_enabled, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "PercentEnabled"))
     ConfigureLogsForPlaybackConfigurationResponse.add_member(:playback_configuration_name, Shapes::ShapeRef.new(shape: __string, location_name: "PlaybackConfigurationName"))
+    ConfigureLogsForPlaybackConfigurationResponse.add_member(:enabled_logging_strategies, Shapes::ShapeRef.new(shape: __listOfLoggingStrategies, location_name: "EnabledLoggingStrategies"))
     ConfigureLogsForPlaybackConfigurationResponse.struct_class = Types::ConfigureLogsForPlaybackConfigurationResponse
 
     CreateChannelRequest.add_member(:channel_name, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "ChannelName"))
@@ -722,6 +726,7 @@ module Aws::MediaTailor
     LiveSource.struct_class = Types::LiveSource
 
     LogConfiguration.add_member(:percent_enabled, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "PercentEnabled"))
+    LogConfiguration.add_member(:enabled_logging_strategies, Shapes::ShapeRef.new(shape: __listOfLoggingStrategies, location_name: "EnabledLoggingStrategies"))
     LogConfiguration.struct_class = Types::LogConfiguration
 
     LogConfigurationForChannel.add_member(:log_types, Shapes::ShapeRef.new(shape: LogTypes, location_name: "LogTypes"))
@@ -1051,6 +1056,8 @@ module Aws::MediaTailor
     __listOfChannel.member = Shapes::ShapeRef.new(shape: Channel)
 
     __listOfLiveSource.member = Shapes::ShapeRef.new(shape: LiveSource)
+
+    __listOfLoggingStrategies.member = Shapes::ShapeRef.new(shape: LoggingStrategy)
 
     __listOfPlaybackConfiguration.member = Shapes::ShapeRef.new(shape: PlaybackConfiguration)
 

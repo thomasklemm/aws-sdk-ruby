@@ -166,13 +166,13 @@ module Aws::MediaTailor
     # on ads that the ad decision server (ADS) returns.
     #
     # @!attribute [rw] streaming_media_file_conditioning
-    #   For ads that have media files with streaming delivery, indicates
-    #   what transcoding action MediaTailor it first receives these ads from
-    #   the ADS. `TRANSCODE` indicates that MediaTailor must transcode the
-    #   ads. `NONE` indicates that you have already transcoded the ads
-    #   outside of MediaTailor and don't need them transcoded as part of
-    #   the ad insertion workflow. For more information about ad
-    #   conditioning see
+    #   For ads that have media files with streaming delivery and supported
+    #   file extensions, indicates what transcoding action MediaTailor takes
+    #   when it first receives these ads from the ADS. `TRANSCODE` indicates
+    #   that MediaTailor must transcode the ads. `NONE` indicates that you
+    #   have already transcoded the ads outside of MediaTailor and don't
+    #   need them transcoded as part of the ad insertion workflow. For more
+    #   information about ad conditioning see
     #   [https://docs.aws.amazon.com/precondition-ads.html][1].
     #
     #
@@ -651,11 +651,29 @@ module Aws::MediaTailor
     #   The name of the playback configuration.
     #   @return [String]
     #
+    # @!attribute [rw] enabled_logging_strategies
+    #   The method used for collecting logs from AWS Elemental MediaTailor.
+    #   To configure MediaTailor to send logs directly to Amazon CloudWatch
+    #   Logs, choose `LEGACY_CLOUDWATCH`. To configure MediaTailor to send
+    #   logs to CloudWatch, which then vends the logs to your destination of
+    #   choice, choose `VENDED_LOGS`. Supported destinations are CloudWatch
+    #   Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream.
+    #
+    #   To use vended logs, you must configure the delivery destination in
+    #   Amazon CloudWatch, as described in [Enable logging from AWS
+    #   services, Logging that requires additional permissions \[V2\]][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-vended-logs-permissions-V2
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/ConfigureLogsForPlaybackConfigurationRequest AWS API Documentation
     #
     class ConfigureLogsForPlaybackConfigurationRequest < Struct.new(
       :percent_enabled,
-      :playback_configuration_name)
+      :playback_configuration_name,
+      :enabled_logging_strategies)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -669,11 +687,21 @@ module Aws::MediaTailor
     #   The name of the playback configuration.
     #   @return [String]
     #
+    # @!attribute [rw] enabled_logging_strategies
+    #   The method used for collecting logs from AWS Elemental MediaTailor.
+    #   `LEGACY_CLOUDWATCH` indicates that MediaTailor is sending logs
+    #   directly to Amazon CloudWatch Logs. `VENDED_LOGS` indicates that
+    #   MediaTailor is sending logs to CloudWatch, which then vends the logs
+    #   to your destination of choice. Supported destinations are CloudWatch
+    #   Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/ConfigureLogsForPlaybackConfigurationResponse AWS API Documentation
     #
     class ConfigureLogsForPlaybackConfigurationResponse < Struct.new(
       :percent_enabled,
-      :playback_configuration_name)
+      :playback_configuration_name,
+      :enabled_logging_strategies)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2216,7 +2244,8 @@ module Aws::MediaTailor
     #
     # @!attribute [rw] ad_conditioning_configuration
     #   The setting that indicates what conditioning MediaTailor will
-    #   perform on ads that the ad decision server (ADS) returns.
+    #   perform on ads that the ad decision server (ADS) returns, and what
+    #   priority MediaTailor uses when inserting ads.
     #   @return [Types::AdConditioningConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/GetPlaybackConfigurationResponse AWS API Documentation
@@ -2881,10 +2910,20 @@ module Aws::MediaTailor
     #   [1]: https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html
     #   @return [Integer]
     #
+    # @!attribute [rw] enabled_logging_strategies
+    #   The method used for collecting logs from AWS Elemental MediaTailor.
+    #   `LEGACY_CLOUDWATCH` indicates that MediaTailor is sending logs
+    #   directly to Amazon CloudWatch Logs. `VENDED_LOGS` indicates that
+    #   MediaTailor is sending logs to CloudWatch, which then vends the logs
+    #   to your destination of choice. Supported destinations are CloudWatch
+    #   Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/LogConfiguration AWS API Documentation
     #
     class LogConfiguration < Struct.new(
-      :percent_enabled)
+      :percent_enabled,
+      :enabled_logging_strategies)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3079,7 +3118,8 @@ module Aws::MediaTailor
     #
     # @!attribute [rw] ad_conditioning_configuration
     #   The setting that indicates what conditioning MediaTailor will
-    #   perform on ads that the ad decision server (ADS) returns.
+    #   perform on ads that the ad decision server (ADS) returns, and what
+    #   priority MediaTailor uses when inserting ads.
     #   @return [Types::AdConditioningConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/PlaybackConfiguration AWS API Documentation
@@ -3383,7 +3423,8 @@ module Aws::MediaTailor
     #
     # @!attribute [rw] ad_conditioning_configuration
     #   The setting that indicates what conditioning MediaTailor will
-    #   perform on ads that the ad decision server (ADS) returns.
+    #   perform on ads that the ad decision server (ADS) returns, and what
+    #   priority MediaTailor uses when inserting ads.
     #   @return [Types::AdConditioningConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/PutPlaybackConfigurationRequest AWS API Documentation
@@ -3555,7 +3596,8 @@ module Aws::MediaTailor
     #
     # @!attribute [rw] ad_conditioning_configuration
     #   The setting that indicates what conditioning MediaTailor will
-    #   perform on ads that the ad decision server (ADS) returns.
+    #   perform on ads that the ad decision server (ADS) returns, and what
+    #   priority MediaTailor uses when inserting ads.
     #   @return [Types::AdConditioningConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/PutPlaybackConfigurationResponse AWS API Documentation

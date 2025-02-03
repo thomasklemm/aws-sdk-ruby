@@ -93,11 +93,13 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfigureLogsForPlaybackConfigurationResponse]
         def percent_enabled: () -> ::Integer
         def playback_configuration_name: () -> ::String
+        def enabled_logging_strategies: () -> ::Array[("VENDED_LOGS" | "LEGACY_CLOUDWATCH")]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaTailor/Client.html#configure_logs_for_playback_configuration-instance_method
       def configure_logs_for_playback_configuration: (
                                                        percent_enabled: ::Integer,
-                                                       playback_configuration_name: ::String
+                                                       playback_configuration_name: ::String,
+                                                       ?enabled_logging_strategies: Array[("VENDED_LOGS" | "LEGACY_CLOUDWATCH")]
                                                      ) -> _ConfigureLogsForPlaybackConfigurationResponseSuccess
                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ConfigureLogsForPlaybackConfigurationResponseSuccess
 

@@ -133,12 +133,14 @@ module Aws::MediaTailor
     class ConfigureLogsForPlaybackConfigurationRequest
       attr_accessor percent_enabled: ::Integer
       attr_accessor playback_configuration_name: ::String
+      attr_accessor enabled_logging_strategies: ::Array[("VENDED_LOGS" | "LEGACY_CLOUDWATCH")]
       SENSITIVE: []
     end
 
     class ConfigureLogsForPlaybackConfigurationResponse
       attr_accessor percent_enabled: ::Integer
       attr_accessor playback_configuration_name: ::String
+      attr_accessor enabled_logging_strategies: ::Array[("VENDED_LOGS" | "LEGACY_CLOUDWATCH")]
       SENSITIVE: []
     end
 
@@ -687,6 +689,7 @@ module Aws::MediaTailor
 
     class LogConfiguration
       attr_accessor percent_enabled: ::Integer
+      attr_accessor enabled_logging_strategies: ::Array[("VENDED_LOGS" | "LEGACY_CLOUDWATCH")]
       SENSITIVE: []
     end
 

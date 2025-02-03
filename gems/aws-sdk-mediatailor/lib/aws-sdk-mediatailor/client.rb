@@ -526,22 +526,42 @@ module Aws::MediaTailor
     # @option params [required, String] :playback_configuration_name
     #   The name of the playback configuration.
     #
+    # @option params [Array<String>] :enabled_logging_strategies
+    #   The method used for collecting logs from AWS Elemental MediaTailor. To
+    #   configure MediaTailor to send logs directly to Amazon CloudWatch Logs,
+    #   choose `LEGACY_CLOUDWATCH`. To configure MediaTailor to send logs to
+    #   CloudWatch, which then vends the logs to your destination of choice,
+    #   choose `VENDED_LOGS`. Supported destinations are CloudWatch Logs log
+    #   group, Amazon S3 bucket, and Amazon Data Firehose stream.
+    #
+    #   To use vended logs, you must configure the delivery destination in
+    #   Amazon CloudWatch, as described in [Enable logging from AWS services,
+    #   Logging that requires additional permissions \[V2\]][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-vended-logs-permissions-V2
+    #
     # @return [Types::ConfigureLogsForPlaybackConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ConfigureLogsForPlaybackConfigurationResponse#percent_enabled #percent_enabled} => Integer
     #   * {Types::ConfigureLogsForPlaybackConfigurationResponse#playback_configuration_name #playback_configuration_name} => String
+    #   * {Types::ConfigureLogsForPlaybackConfigurationResponse#enabled_logging_strategies #enabled_logging_strategies} => Array&lt;String&gt;
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.configure_logs_for_playback_configuration({
     #     percent_enabled: 1, # required
     #     playback_configuration_name: "__string", # required
+    #     enabled_logging_strategies: ["VENDED_LOGS"], # accepts VENDED_LOGS, LEGACY_CLOUDWATCH
     #   })
     #
     # @example Response structure
     #
     #   resp.percent_enabled #=> Integer
     #   resp.playback_configuration_name #=> String
+    #   resp.enabled_logging_strategies #=> Array
+    #   resp.enabled_logging_strategies[0] #=> String, one of "VENDED_LOGS", "LEGACY_CLOUDWATCH"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/ConfigureLogsForPlaybackConfiguration AWS API Documentation
     #
@@ -1991,6 +2011,8 @@ module Aws::MediaTailor
     #   resp.live_pre_roll_configuration.ad_decision_server_url #=> String
     #   resp.live_pre_roll_configuration.max_duration_seconds #=> Integer
     #   resp.log_configuration.percent_enabled #=> Integer
+    #   resp.log_configuration.enabled_logging_strategies #=> Array
+    #   resp.log_configuration.enabled_logging_strategies[0] #=> String, one of "VENDED_LOGS", "LEGACY_CLOUDWATCH"
     #   resp.manifest_processing_rules.ad_marker_passthrough.enabled #=> Boolean
     #   resp.name #=> String
     #   resp.personalization_threshold_seconds #=> Integer
@@ -2305,6 +2327,8 @@ module Aws::MediaTailor
     #   resp.items[0].live_pre_roll_configuration.ad_decision_server_url #=> String
     #   resp.items[0].live_pre_roll_configuration.max_duration_seconds #=> Integer
     #   resp.items[0].log_configuration.percent_enabled #=> Integer
+    #   resp.items[0].log_configuration.enabled_logging_strategies #=> Array
+    #   resp.items[0].log_configuration.enabled_logging_strategies[0] #=> String, one of "VENDED_LOGS", "LEGACY_CLOUDWATCH"
     #   resp.items[0].manifest_processing_rules.ad_marker_passthrough.enabled #=> Boolean
     #   resp.items[0].name #=> String
     #   resp.items[0].personalization_threshold_seconds #=> Integer
@@ -2689,7 +2713,8 @@ module Aws::MediaTailor
     #
     # @option params [Types::AdConditioningConfiguration] :ad_conditioning_configuration
     #   The setting that indicates what conditioning MediaTailor will perform
-    #   on ads that the ad decision server (ADS) returns.
+    #   on ads that the ad decision server (ADS) returns, and what priority
+    #   MediaTailor uses when inserting ads.
     #
     # @return [Types::PutPlaybackConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2785,6 +2810,8 @@ module Aws::MediaTailor
     #   resp.live_pre_roll_configuration.ad_decision_server_url #=> String
     #   resp.live_pre_roll_configuration.max_duration_seconds #=> Integer
     #   resp.log_configuration.percent_enabled #=> Integer
+    #   resp.log_configuration.enabled_logging_strategies #=> Array
+    #   resp.log_configuration.enabled_logging_strategies[0] #=> String, one of "VENDED_LOGS", "LEGACY_CLOUDWATCH"
     #   resp.manifest_processing_rules.ad_marker_passthrough.enabled #=> Boolean
     #   resp.name #=> String
     #   resp.personalization_threshold_seconds #=> Integer
@@ -3477,7 +3504,7 @@ module Aws::MediaTailor
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediatailor'
-      context[:gem_version] = '1.93.0'
+      context[:gem_version] = '1.94.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
