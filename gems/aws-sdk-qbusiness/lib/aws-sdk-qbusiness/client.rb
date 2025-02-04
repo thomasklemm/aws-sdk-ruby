@@ -2530,8 +2530,8 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
-    # Gets information about an chat controls configured for an existing
-    # Amazon Q Business application.
+    # Gets information about chat controls configured for an existing Amazon
+    # Q Business application.
     #
     # @option params [required, String] :application_id
     #   The identifier of the application for which the chat controls are
@@ -2549,6 +2549,7 @@ module Aws::QBusiness
     # @return [Types::GetChatControlsConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetChatControlsConfigurationResponse#response_scope #response_scope} => String
+    #   * {Types::GetChatControlsConfigurationResponse#orchestration_configuration #orchestration_configuration} => Types::AppliedOrchestrationConfiguration
     #   * {Types::GetChatControlsConfigurationResponse#blocked_phrases #blocked_phrases} => Types::BlockedPhrasesConfiguration
     #   * {Types::GetChatControlsConfigurationResponse#topic_configurations #topic_configurations} => Array&lt;Types::TopicConfiguration&gt;
     #   * {Types::GetChatControlsConfigurationResponse#creator_mode_configuration #creator_mode_configuration} => Types::AppliedCreatorModeConfiguration
@@ -2567,6 +2568,7 @@ module Aws::QBusiness
     # @example Response structure
     #
     #   resp.response_scope #=> String, one of "ENTERPRISE_CONTENT_ONLY", "EXTENDED_KNOWLEDGE_ENABLED"
+    #   resp.orchestration_configuration.control #=> String, one of "ENABLED", "DISABLED"
     #   resp.blocked_phrases.blocked_phrases #=> Array
     #   resp.blocked_phrases.blocked_phrases[0] #=> String
     #   resp.blocked_phrases.system_message_override #=> String
@@ -4761,7 +4763,7 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
-    # Updates an set of chat controls configured for an existing Amazon Q
+    # Updates a set of chat controls configured for an existing Amazon Q
     # Business application.
     #
     # @option params [required, String] :application_id
@@ -4781,6 +4783,9 @@ module Aws::QBusiness
     #   system to generate answers only from your enterprise data, or also
     #   uses the large language models (LLM) knowledge to respons to end user
     #   questions in chat.
+    #
+    # @option params [Types::OrchestrationConfiguration] :orchestration_configuration
+    #   The chat response orchestration settings for your application.
     #
     # @option params [Types::BlockedPhrasesConfigurationUpdate] :blocked_phrases_configuration_update
     #   The phrases blocked from chat by your chat control configuration.
@@ -4802,6 +4807,9 @@ module Aws::QBusiness
     #     application_id: "ApplicationId", # required
     #     client_token: "ClientToken",
     #     response_scope: "ENTERPRISE_CONTENT_ONLY", # accepts ENTERPRISE_CONTENT_ONLY, EXTENDED_KNOWLEDGE_ENABLED
+    #     orchestration_configuration: {
+    #       control: "ENABLED", # required, accepts ENABLED, DISABLED
+    #     },
     #     blocked_phrases_configuration_update: {
     #       blocked_phrases_to_create_or_update: ["BlockedPhrase"],
     #       blocked_phrases_to_delete: ["BlockedPhrase"],
@@ -5602,7 +5610,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.27.0'
+      context[:gem_version] = '1.28.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

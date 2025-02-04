@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.285.0 (2025-02-04)
+------------------
+
+* Feature - IPv6 support for Hyperpod clusters
+
 1.284.0 (2025-01-31)
 ------------------
 

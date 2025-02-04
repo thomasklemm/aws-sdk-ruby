@@ -1960,15 +1960,28 @@ module Aws::SageMaker
     #   The instance groups to be created in the SageMaker HyperPod cluster.
     #
     # @option params [Types::VpcConfig] :vpc_config
-    #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
-    #   jobs, hosted models, and compute resources have access to. You can
-    #   control access to and from your resources by configuring a VPC. For
-    #   more information, see [Give SageMaker Access to Resources in your
-    #   Amazon VPC][1].
+    #   Specifies the Amazon Virtual Private Cloud (VPC) that is associated
+    #   with the Amazon SageMaker HyperPod cluster. You can control access to
+    #   and from your resources by configuring your VPC. For more information,
+    #   see [Give SageMaker access to resources in your Amazon VPC][1].
+    #
+    #   <note markdown="1"> If you configure your VPC with IPv6 support and specify subnets with
+    #   IPv6 addressing enabled in your VPC configuration, the cluster
+    #   automatically uses IPv6 addressing for network communication.
+    #
+    #    For information about adding IPv6 support for your VPC, see [IPv6
+    #   support for your VPC][2].
+    #
+    #    For information about creating a new VPC for use with IPv6, see
+    #   [Create a VPC][3].
+    #
+    #    </note>
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html
+    #   [2]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html
+    #   [3]: https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html
     #
     # @option params [Array<Types::Tag>] :tags
     #   Custom tags for managing the SageMaker HyperPod cluster as an Amazon
@@ -29469,7 +29482,7 @@ module Aws::SageMaker
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sagemaker'
-      context[:gem_version] = '1.284.0'
+      context[:gem_version] = '1.285.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

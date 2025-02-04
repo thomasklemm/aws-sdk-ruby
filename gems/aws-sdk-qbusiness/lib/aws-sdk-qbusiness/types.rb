@@ -511,6 +511,30 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # The chat orchestration specific admin controls configured for an
+    # Amazon Q Business application. Determines whether Amazon Q Business
+    # automatically routes chat requests across configured plugins and data
+    # sources in your Amazon Q Business application.
+    #
+    # For more information, see [Chat orchestration settings][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails-global-controls.html#guardrails-global-orchestration
+    #
+    # @!attribute [rw] control
+    #   Information about whether chat orchestration is enabled or disabled
+    #   for an Amazon Q Business application.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AppliedOrchestrationConfiguration AWS API Documentation
+    #
+    class AppliedOrchestrationConfiguration < Struct.new(
+      :control)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] application_id
     #   The unique identifier of the Amazon Q Business application.
     #   @return [String]
@@ -3764,6 +3788,20 @@ module Aws::QBusiness
     #   knowledge to respons to end user questions in chat.
     #   @return [String]
     #
+    # @!attribute [rw] orchestration_configuration
+    #   The chat response orchestration settings for your application.
+    #
+    #   <note markdown="1"> Chat orchestration is optimized to work for English language
+    #   content. For more details on language support in Amazon Q Business,
+    #   see [Supported languages][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-languages.html
+    #   @return [Types::AppliedOrchestrationConfiguration]
+    #
     # @!attribute [rw] blocked_phrases
     #   The phrases blocked from chat by your chat control configuration.
     #   @return [Types::BlockedPhrasesConfiguration]
@@ -3788,6 +3826,7 @@ module Aws::QBusiness
     #
     class GetChatControlsConfigurationResponse < Struct.new(
       :response_scope,
+      :orchestration_configuration,
       :blocked_phrases,
       :topic_configurations,
       :creator_mode_configuration,
@@ -6122,6 +6161,32 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # Configuration information required to enable chat orchestration for
+    # your Amazon Q Business application.
+    #
+    # <note markdown="1"> Chat orchestration is optimized to work for English language content.
+    # For more details on language support in Amazon Q Business, see
+    # [Supported languages][1].
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-languages.html
+    #
+    # @!attribute [rw] control
+    #   Status information about whether chat orchestration is activated or
+    #   deactivated for your Amazon Q Business application.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/OrchestrationConfiguration AWS API Documentation
+    #
+    class OrchestrationConfiguration < Struct.new(
+      :control)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Configuration information about chat response personalization. For
     # more information, see [Personalizing chat responses][1].
     #
@@ -7486,6 +7551,10 @@ module Aws::QBusiness
     #   end user questions in chat.
     #   @return [String]
     #
+    # @!attribute [rw] orchestration_configuration
+    #   The chat response orchestration settings for your application.
+    #   @return [Types::OrchestrationConfiguration]
+    #
     # @!attribute [rw] blocked_phrases_configuration_update
     #   The phrases blocked from chat by your chat control configuration.
     #   @return [Types::BlockedPhrasesConfigurationUpdate]
@@ -7508,6 +7577,7 @@ module Aws::QBusiness
       :application_id,
       :client_token,
       :response_scope,
+      :orchestration_configuration,
       :blocked_phrases_configuration_update,
       :topic_configurations_to_create_or_update,
       :topic_configurations_to_delete,

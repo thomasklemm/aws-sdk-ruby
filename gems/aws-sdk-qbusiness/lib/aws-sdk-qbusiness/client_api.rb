@@ -49,6 +49,7 @@ module Aws::QBusiness
     Applications = Shapes::ListShape.new(name: 'Applications')
     AppliedAttachmentsConfiguration = Shapes::StructureShape.new(name: 'AppliedAttachmentsConfiguration')
     AppliedCreatorModeConfiguration = Shapes::StructureShape.new(name: 'AppliedCreatorModeConfiguration')
+    AppliedOrchestrationConfiguration = Shapes::StructureShape.new(name: 'AppliedOrchestrationConfiguration')
     AssociatePermissionRequest = Shapes::StructureShape.new(name: 'AssociatePermissionRequest')
     AssociatePermissionResponse = Shapes::StructureShape.new(name: 'AssociatePermissionResponse')
     Attachment = Shapes::StructureShape.new(name: 'Attachment')
@@ -376,6 +377,8 @@ module Aws::QBusiness
     NumberAttributeBoostingType = Shapes::StringShape.new(name: 'NumberAttributeBoostingType')
     OAuth2ClientCredentialConfiguration = Shapes::StructureShape.new(name: 'OAuth2ClientCredentialConfiguration')
     OpenIDConnectProviderConfiguration = Shapes::StructureShape.new(name: 'OpenIDConnectProviderConfiguration')
+    OrchestrationConfiguration = Shapes::StructureShape.new(name: 'OrchestrationConfiguration')
+    OrchestrationControl = Shapes::StringShape.new(name: 'OrchestrationControl')
     Origin = Shapes::StringShape.new(name: 'Origin')
     Payload = Shapes::StringShape.new(name: 'Payload')
     PersonalizationConfiguration = Shapes::StructureShape.new(name: 'PersonalizationConfiguration')
@@ -641,6 +644,9 @@ module Aws::QBusiness
 
     AppliedCreatorModeConfiguration.add_member(:creator_mode_control, Shapes::ShapeRef.new(shape: CreatorModeControl, required: true, location_name: "creatorModeControl"))
     AppliedCreatorModeConfiguration.struct_class = Types::AppliedCreatorModeConfiguration
+
+    AppliedOrchestrationConfiguration.add_member(:control, Shapes::ShapeRef.new(shape: OrchestrationControl, required: true, location_name: "control"))
+    AppliedOrchestrationConfiguration.struct_class = Types::AppliedOrchestrationConfiguration
 
     AssociatePermissionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     AssociatePermissionRequest.add_member(:statement_id, Shapes::ShapeRef.new(shape: StatementId, required: true, location_name: "statementId"))
@@ -1294,6 +1300,7 @@ module Aws::QBusiness
     GetChatControlsConfigurationRequest.struct_class = Types::GetChatControlsConfigurationRequest
 
     GetChatControlsConfigurationResponse.add_member(:response_scope, Shapes::ShapeRef.new(shape: ResponseScope, location_name: "responseScope"))
+    GetChatControlsConfigurationResponse.add_member(:orchestration_configuration, Shapes::ShapeRef.new(shape: AppliedOrchestrationConfiguration, location_name: "orchestrationConfiguration"))
     GetChatControlsConfigurationResponse.add_member(:blocked_phrases, Shapes::ShapeRef.new(shape: BlockedPhrasesConfiguration, location_name: "blockedPhrases"))
     GetChatControlsConfigurationResponse.add_member(:topic_configurations, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurations"))
     GetChatControlsConfigurationResponse.add_member(:creator_mode_configuration, Shapes::ShapeRef.new(shape: AppliedCreatorModeConfiguration, location_name: "creatorModeConfiguration"))
@@ -1757,6 +1764,9 @@ module Aws::QBusiness
     OpenIDConnectProviderConfiguration.add_member(:secrets_role, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "secretsRole"))
     OpenIDConnectProviderConfiguration.struct_class = Types::OpenIDConnectProviderConfiguration
 
+    OrchestrationConfiguration.add_member(:control, Shapes::ShapeRef.new(shape: OrchestrationControl, required: true, location_name: "control"))
+    OrchestrationConfiguration.struct_class = Types::OrchestrationConfiguration
+
     PersonalizationConfiguration.add_member(:personalization_control_mode, Shapes::ShapeRef.new(shape: PersonalizationControlMode, required: true, location_name: "personalizationControlMode"))
     PersonalizationConfiguration.struct_class = Types::PersonalizationConfiguration
 
@@ -2054,6 +2064,7 @@ module Aws::QBusiness
     UpdateChatControlsConfigurationRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     UpdateChatControlsConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     UpdateChatControlsConfigurationRequest.add_member(:response_scope, Shapes::ShapeRef.new(shape: ResponseScope, location_name: "responseScope"))
+    UpdateChatControlsConfigurationRequest.add_member(:orchestration_configuration, Shapes::ShapeRef.new(shape: OrchestrationConfiguration, location_name: "orchestrationConfiguration"))
     UpdateChatControlsConfigurationRequest.add_member(:blocked_phrases_configuration_update, Shapes::ShapeRef.new(shape: BlockedPhrasesConfigurationUpdate, location_name: "blockedPhrasesConfigurationUpdate"))
     UpdateChatControlsConfigurationRequest.add_member(:topic_configurations_to_create_or_update, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurationsToCreateOrUpdate"))
     UpdateChatControlsConfigurationRequest.add_member(:topic_configurations_to_delete, Shapes::ShapeRef.new(shape: TopicConfigurations, location_name: "topicConfigurationsToDelete"))

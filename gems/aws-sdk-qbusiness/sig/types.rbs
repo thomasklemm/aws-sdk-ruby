@@ -138,6 +138,11 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class AppliedOrchestrationConfiguration
+      attr_accessor control: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
     class AssociatePermissionRequest
       attr_accessor application_id: ::String
       attr_accessor statement_id: ::String
@@ -956,6 +961,7 @@ module Aws::QBusiness
 
     class GetChatControlsConfigurationResponse
       attr_accessor response_scope: ("ENTERPRISE_CONTENT_ONLY" | "EXTENDED_KNOWLEDGE_ENABLED")
+      attr_accessor orchestration_configuration: Types::AppliedOrchestrationConfiguration
       attr_accessor blocked_phrases: Types::BlockedPhrasesConfiguration
       attr_accessor topic_configurations: ::Array[Types::TopicConfiguration]
       attr_accessor creator_mode_configuration: Types::AppliedCreatorModeConfiguration
@@ -1572,6 +1578,11 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class OrchestrationConfiguration
+      attr_accessor control: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
     class PersonalizationConfiguration
       attr_accessor personalization_control_mode: ("ENABLED" | "DISABLED")
       SENSITIVE: []
@@ -1960,6 +1971,7 @@ module Aws::QBusiness
       attr_accessor application_id: ::String
       attr_accessor client_token: ::String
       attr_accessor response_scope: ("ENTERPRISE_CONTENT_ONLY" | "EXTENDED_KNOWLEDGE_ENABLED")
+      attr_accessor orchestration_configuration: Types::OrchestrationConfiguration
       attr_accessor blocked_phrases_configuration_update: Types::BlockedPhrasesConfigurationUpdate
       attr_accessor topic_configurations_to_create_or_update: ::Array[Types::TopicConfiguration]
       attr_accessor topic_configurations_to_delete: ::Array[Types::TopicConfiguration]

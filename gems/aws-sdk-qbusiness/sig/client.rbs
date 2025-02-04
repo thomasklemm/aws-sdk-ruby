@@ -967,6 +967,7 @@ module Aws
       interface _GetChatControlsConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetChatControlsConfigurationResponse]
         def response_scope: () -> ("ENTERPRISE_CONTENT_ONLY" | "EXTENDED_KNOWLEDGE_ENABLED")
+        def orchestration_configuration: () -> Types::AppliedOrchestrationConfiguration
         def blocked_phrases: () -> Types::BlockedPhrasesConfiguration
         def topic_configurations: () -> ::Array[Types::TopicConfiguration]
         def creator_mode_configuration: () -> Types::AppliedCreatorModeConfiguration
@@ -1633,6 +1634,9 @@ module Aws
                                                 application_id: ::String,
                                                 ?client_token: ::String,
                                                 ?response_scope: ("ENTERPRISE_CONTENT_ONLY" | "EXTENDED_KNOWLEDGE_ENABLED"),
+                                                ?orchestration_configuration: {
+                                                  control: ("ENABLED" | "DISABLED")
+                                                },
                                                 ?blocked_phrases_configuration_update: {
                                                   blocked_phrases_to_create_or_update: Array[::String]?,
                                                   blocked_phrases_to_delete: Array[::String]?,
