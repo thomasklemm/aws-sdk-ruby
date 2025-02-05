@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.268.0 (2025-02-05)
+------------------
+
+* Feature - Documentation updates to clarify the description for the parameter AllocatedStorage for the DB cluster data type, the description for the parameter DeleteAutomatedBackups for the DeleteDBCluster API operation, and removing an outdated note for the CreateDBParameterGroup API operation.
+
 1.267.0 (2025-01-31)
 ------------------
 

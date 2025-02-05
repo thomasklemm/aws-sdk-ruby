@@ -6534,13 +6534,13 @@ module Aws::RDS
     # @!attribute [rw] data_filter
     #   Data filtering options for the integration. For more information,
     #   see [Data filtering for Aurora zero-ETL integrations with Amazon
-    #   Redshift][1].
-    #
-    #   Valid for: Integrations with Aurora MySQL source DB clusters only
+    #   Redshift][1] or [Data filtering for Amazon RDS zero-ETL integrations
+    #   with Amazon Redshift][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/zero-etl.filtering.html
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/zero-etl.filtering.html
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -6803,11 +6803,9 @@ module Aws::RDS
     # [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
     #
     # @!attribute [rw] allocated_storage
-    #   For all database engines except Amazon Aurora, `AllocatedStorage`
-    #   specifies the allocated storage size in gibibytes (GiB). For Aurora,
-    #   `AllocatedStorage` always returns 1, because Aurora DB cluster
-    #   storage size isn't fixed, but instead automatically adjusts as
-    #   needed.
+    #   `AllocatedStorage` specifies the allocated storage size in gibibytes
+    #   (GiB). For Aurora, `AllocatedStorage` can vary because Aurora DB
+    #   cluster storage size adjusts as needed.
     #   @return [Integer]
     #
     # @!attribute [rw] availability_zones
@@ -11599,7 +11597,8 @@ module Aws::RDS
     #   Specifies whether to remove automated backups immediately after the
     #   DB cluster is deleted. This parameter isn't case-sensitive. The
     #   default is to remove automated backups immediately after the DB
-    #   cluster is deleted.
+    #   cluster is deleted, unless the Amazon Web Services Backup policy
+    #   specifies a point-in-time restore rule.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DeleteDBClusterMessage AWS API Documentation
@@ -19755,6 +19754,8 @@ module Aws::RDS
     #   begin with a letter and must contain only ASCII letters, digits, and
     #   hyphens; it can't end with a hyphen or contain two consecutive
     #   hyphens.
+    #
+    #   You can't rename the `default` target group.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/ModifyDBProxyTargetGroupRequest AWS API Documentation
@@ -20206,11 +20207,13 @@ module Aws::RDS
     # @!attribute [rw] data_filter
     #   A new data filter for the integration. For more information, see
     #   [Data filtering for Aurora zero-ETL integrations with Amazon
-    #   Redshift][1].
+    #   Redshift][1] or [Data filtering for Amazon RDS zero-ETL integrations
+    #   with Amazon Redshift][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Zero_ETL_Filtering.html
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/zero-etl.filtering.html
     #   @return [String]
     #
     # @!attribute [rw] description

@@ -35,10 +35,9 @@ module Aws::RDS
     end
     alias :db_cluster_identifier :id
 
-    # For all database engines except Amazon Aurora, `AllocatedStorage`
-    # specifies the allocated storage size in gibibytes (GiB). For Aurora,
-    # `AllocatedStorage` always returns 1, because Aurora DB cluster storage
-    # size isn't fixed, but instead automatically adjusts as needed.
+    # `AllocatedStorage` specifies the allocated storage size in gibibytes
+    # (GiB). For Aurora, `AllocatedStorage` can vary because Aurora DB
+    # cluster storage size adjusts as needed.
     # @return [Integer]
     def allocated_storage
       data[:allocated_storage]
@@ -1906,7 +1905,8 @@ module Aws::RDS
     #   Specifies whether to remove automated backups immediately after the DB
     #   cluster is deleted. This parameter isn't case-sensitive. The default
     #   is to remove automated backups immediately after the DB cluster is
-    #   deleted.
+    #   deleted, unless the Amazon Web Services Backup policy specifies a
+    #   point-in-time restore rule.
     # @return [DBCluster]
     def delete(options = {})
       options = options.merge(db_cluster_identifier: @id)

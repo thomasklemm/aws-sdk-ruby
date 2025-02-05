@@ -7051,22 +7051,6 @@ module Aws::RDS
     #
     # This command doesn't apply to RDS Custom.
     #
-    # After you create a DB parameter group, you should wait at least 5
-    # minutes before creating your first DB instance that uses that DB
-    # parameter group as the default parameter group. This allows Amazon RDS
-    # to fully complete the create action before the parameter group is used
-    # as the default for a new DB instance. This is especially important for
-    # parameters that are critical when creating the default database for a
-    # DB instance, such as the character set for the default database
-    # defined by the `character_set_database` parameter. You can use the
-    # *Parameter Groups* option of the [Amazon RDS console][1] or the
-    # *DescribeDBParameters* command to verify that your DB parameter group
-    # has been created or modified.
-    #
-    #
-    #
-    # [1]: https://console.aws.amazon.com/rds/
-    #
     # @option params [required, String] :db_parameter_group_name
     #   The name of the DB parameter group.
     #
@@ -8367,13 +8351,13 @@ module Aws::RDS
     # @option params [String] :data_filter
     #   Data filtering options for the integration. For more information, see
     #   [Data filtering for Aurora zero-ETL integrations with Amazon
-    #   Redshift][1].
-    #
-    #   Valid for: Integrations with Aurora MySQL source DB clusters only
+    #   Redshift][1] or [Data filtering for Amazon RDS zero-ETL integrations
+    #   with Amazon Redshift][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/zero-etl.filtering.html
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/zero-etl.filtering.html
     #
     # @option params [String] :description
     #   A description of the integration.
@@ -9157,7 +9141,8 @@ module Aws::RDS
     #   Specifies whether to remove automated backups immediately after the DB
     #   cluster is deleted. This parameter isn't case-sensitive. The default
     #   is to remove automated backups immediately after the DB cluster is
-    #   deleted.
+    #   deleted, unless the Amazon Web Services Backup policy specifies a
+    #   point-in-time restore rule.
     #
     # @return [Types::DeleteDBClusterResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -21914,6 +21899,8 @@ module Aws::RDS
     #   hyphens; it can't end with a hyphen or contain two consecutive
     #   hyphens.
     #
+    #   You can't rename the `default` target group.
+    #
     # @return [Types::ModifyDBProxyTargetGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyDBProxyTargetGroupResponse#db_proxy_target_group #db_proxy_target_group} => Types::DBProxyTargetGroup
@@ -22839,12 +22826,6 @@ module Aws::RDS
 
     # Modifies a zero-ETL integration with Amazon Redshift.
     #
-    # <note markdown="1"> Currently, you can only modify integrations that have Aurora MySQL
-    # source DB clusters. Integrations with Aurora PostgreSQL and RDS
-    # sources currently don't support modifying the integration.
-    #
-    #  </note>
-    #
     # @option params [required, String] :integration_identifier
     #   The unique identifier of the integration to modify.
     #
@@ -22853,11 +22834,14 @@ module Aws::RDS
     #
     # @option params [String] :data_filter
     #   A new data filter for the integration. For more information, see [Data
-    #   filtering for Aurora zero-ETL integrations with Amazon Redshift][1].
+    #   filtering for Aurora zero-ETL integrations with Amazon Redshift][1] or
+    #   [Data filtering for Amazon RDS zero-ETL integrations with Amazon
+    #   Redshift][2].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Zero_ETL_Filtering.html
+    #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/zero-etl.filtering.html
     #
     # @option params [String] :description
     #   A new description for the integration.
@@ -31908,7 +31892,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.267.0'
+      context[:gem_version] = '1.268.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
