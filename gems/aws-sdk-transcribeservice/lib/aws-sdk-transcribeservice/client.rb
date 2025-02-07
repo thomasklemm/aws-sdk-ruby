@@ -1689,6 +1689,7 @@ module Aws::TranscribeService
     #   resp.medical_scribe_job.settings.vocabulary_name #=> String
     #   resp.medical_scribe_job.settings.vocabulary_filter_name #=> String
     #   resp.medical_scribe_job.settings.vocabulary_filter_method #=> String, one of "remove", "mask", "tag"
+    #   resp.medical_scribe_job.settings.clinical_note_generation_settings.note_template #=> String, one of "HISTORY_AND_PHYSICAL", "GIRPP"
     #   resp.medical_scribe_job.data_access_role_arn #=> String
     #   resp.medical_scribe_job.channel_definitions #=> Array
     #   resp.medical_scribe_job.channel_definitions[0].channel_id #=> Integer
@@ -3163,6 +3164,9 @@ module Aws::TranscribeService
     #       vocabulary_name: "VocabularyName",
     #       vocabulary_filter_name: "VocabularyFilterName",
     #       vocabulary_filter_method: "remove", # accepts remove, mask, tag
+    #       clinical_note_generation_settings: {
+    #         note_template: "HISTORY_AND_PHYSICAL", # accepts HISTORY_AND_PHYSICAL, GIRPP
+    #       },
     #     },
     #     channel_definitions: [
     #       {
@@ -3197,6 +3201,7 @@ module Aws::TranscribeService
     #   resp.medical_scribe_job.settings.vocabulary_name #=> String
     #   resp.medical_scribe_job.settings.vocabulary_filter_name #=> String
     #   resp.medical_scribe_job.settings.vocabulary_filter_method #=> String, one of "remove", "mask", "tag"
+    #   resp.medical_scribe_job.settings.clinical_note_generation_settings.note_template #=> String, one of "HISTORY_AND_PHYSICAL", "GIRPP"
     #   resp.medical_scribe_job.data_access_role_arn #=> String
     #   resp.medical_scribe_job.channel_definitions #=> Array
     #   resp.medical_scribe_job.channel_definitions[0].channel_id #=> Integer
@@ -3586,8 +3591,11 @@ module Aws::TranscribeService
     #   For a list of supported languages and their associated language codes,
     #   refer to the [Supported languages][1] table.
     #
-    #   <note markdown="1"> To transcribe speech in Modern Standard Arabic (`ar-SA`), your media
-    #   file must be encoded at a sample rate of 16,000 Hz or higher.
+    #   <note markdown="1"> To transcribe speech in Modern Standard Arabic (`ar-SA`) in Amazon Web
+    #   Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services
+    #   GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary, ca-west-1)
+    #   and Africa (Cape Town, af-south-1), your media file must be encoded at
+    #   a sample rate of 16,000 Hz or higher.
     #
     #    </note>
     #
@@ -3826,8 +3834,11 @@ module Aws::TranscribeService
     #
     #   For more information, refer to [Supported languages][1].
     #
-    #   To transcribe speech in Modern Standard Arabic (`ar-SA`), your media
-    #   file must be encoded at a sample rate of 16,000 Hz or higher.
+    #   To transcribe speech in Modern Standard Arabic (`ar-SA`)in Amazon Web
+    #   Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services
+    #   GovCloud (US) (US-East, us-gov-east-1), in Canada (Calgary) ca-west-1
+    #   and Africa (Cape Town) af-south-1, your media file must be encoded at
+    #   a sample rate of 16,000 Hz or higher.
     #
     #
     #
@@ -4556,7 +4567,7 @@ module Aws::TranscribeService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transcribeservice'
-      context[:gem_version] = '1.113.0'
+      context[:gem_version] = '1.114.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.75.0 (2025-02-07)
+------------------
+
+* Feature - Adds documentation for dimension groups and dimensions to analyze locks for Database Insights.
+
 1.74.0 (2025-02-06)
 ------------------
 

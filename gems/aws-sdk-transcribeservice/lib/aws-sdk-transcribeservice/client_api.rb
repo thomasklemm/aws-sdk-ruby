@@ -36,6 +36,7 @@ module Aws::TranscribeService
     ChannelDefinition = Shapes::StructureShape.new(name: 'ChannelDefinition')
     ChannelDefinitions = Shapes::ListShape.new(name: 'ChannelDefinitions')
     ChannelId = Shapes::IntegerShape.new(name: 'ChannelId')
+    ClinicalNoteGenerationSettings = Shapes::StructureShape.new(name: 'ClinicalNoteGenerationSettings')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentRedaction = Shapes::StructureShape.new(name: 'ContentRedaction')
     CreateCallAnalyticsCategoryRequest = Shapes::StructureShape.new(name: 'CreateCallAnalyticsCategoryRequest')
@@ -133,6 +134,7 @@ module Aws::TranscribeService
     MedicalScribeJobSummaries = Shapes::ListShape.new(name: 'MedicalScribeJobSummaries')
     MedicalScribeJobSummary = Shapes::StructureShape.new(name: 'MedicalScribeJobSummary')
     MedicalScribeLanguageCode = Shapes::StringShape.new(name: 'MedicalScribeLanguageCode')
+    MedicalScribeNoteTemplate = Shapes::StringShape.new(name: 'MedicalScribeNoteTemplate')
     MedicalScribeOutput = Shapes::StructureShape.new(name: 'MedicalScribeOutput')
     MedicalScribeParticipantRole = Shapes::StringShape.new(name: 'MedicalScribeParticipantRole')
     MedicalScribeSettings = Shapes::StructureShape.new(name: 'MedicalScribeSettings')
@@ -304,6 +306,9 @@ module Aws::TranscribeService
     ChannelDefinition.struct_class = Types::ChannelDefinition
 
     ChannelDefinitions.member = Shapes::ShapeRef.new(shape: ChannelDefinition)
+
+    ClinicalNoteGenerationSettings.add_member(:note_template, Shapes::ShapeRef.new(shape: MedicalScribeNoteTemplate, location_name: "NoteTemplate"))
+    ClinicalNoteGenerationSettings.struct_class = Types::ClinicalNoteGenerationSettings
 
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     ConflictException.struct_class = Types::ConflictException
@@ -673,6 +678,7 @@ module Aws::TranscribeService
     MedicalScribeSettings.add_member(:vocabulary_name, Shapes::ShapeRef.new(shape: VocabularyName, location_name: "VocabularyName"))
     MedicalScribeSettings.add_member(:vocabulary_filter_name, Shapes::ShapeRef.new(shape: VocabularyFilterName, location_name: "VocabularyFilterName"))
     MedicalScribeSettings.add_member(:vocabulary_filter_method, Shapes::ShapeRef.new(shape: VocabularyFilterMethod, location_name: "VocabularyFilterMethod"))
+    MedicalScribeSettings.add_member(:clinical_note_generation_settings, Shapes::ShapeRef.new(shape: ClinicalNoteGenerationSettings, location_name: "ClinicalNoteGenerationSettings"))
     MedicalScribeSettings.struct_class = Types::MedicalScribeSettings
 
     MedicalTranscript.add_member(:transcript_file_uri, Shapes::ShapeRef.new(shape: Uri, location_name: "TranscriptFileUri"))

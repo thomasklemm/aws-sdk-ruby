@@ -382,6 +382,7 @@ module Aws::PI
     PerformanceInsightsMetric.add_member(:metric, Shapes::ShapeRef.new(shape: DescriptiveString, location_name: "Metric"))
     PerformanceInsightsMetric.add_member(:display_name, Shapes::ShapeRef.new(shape: DescriptiveString, location_name: "DisplayName"))
     PerformanceInsightsMetric.add_member(:dimensions, Shapes::ShapeRef.new(shape: DescriptiveMap, location_name: "Dimensions"))
+    PerformanceInsightsMetric.add_member(:filter, Shapes::ShapeRef.new(shape: DescriptiveMap, location_name: "Filter"))
     PerformanceInsightsMetric.add_member(:value, Shapes::ShapeRef.new(shape: Double, location_name: "Value"))
     PerformanceInsightsMetric.struct_class = Types::PerformanceInsightsMetric
 

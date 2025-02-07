@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.151.0 (2025-02-07)
+------------------
+
+* Feature - This release adds support for Animated GIF output, forced chroma sample positioning metadata, and Extensible Wave Container format
+
 1.150.0 (2025-02-06)
 ------------------
 

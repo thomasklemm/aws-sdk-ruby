@@ -521,6 +521,7 @@ module Aws::TranscribeStreamingService
     #   resp.medical_scribe_stream_details.encryption_settings.kms_key_id #=> String
     #   resp.medical_scribe_stream_details.stream_status #=> String, one of "IN_PROGRESS", "PAUSED", "FAILED", "COMPLETED"
     #   resp.medical_scribe_stream_details.post_stream_analytics_settings.clinical_note_generation_settings.output_bucket_name #=> String
+    #   resp.medical_scribe_stream_details.post_stream_analytics_settings.clinical_note_generation_settings.note_template #=> String, one of "HISTORY_AND_PHYSICAL", "GIRPP"
     #   resp.medical_scribe_stream_details.post_stream_analytics_result.clinical_note_generation_result.clinical_note_output_location #=> String
     #   resp.medical_scribe_stream_details.post_stream_analytics_result.clinical_note_generation_result.transcript_output_location #=> String
     #   resp.medical_scribe_stream_details.post_stream_analytics_result.clinical_note_generation_result.status #=> String, one of "IN_PROGRESS", "FAILED", "COMPLETED"
@@ -553,7 +554,7 @@ module Aws::TranscribeStreamingService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transcribestreamingservice'
-      context[:gem_version] = '1.75.0'
+      context[:gem_version] = '1.76.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

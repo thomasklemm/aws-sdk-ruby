@@ -86,6 +86,7 @@ module Aws::TranscribeStreamingService
     MedicalScribeLanguageCode = Shapes::StringShape.new(name: 'MedicalScribeLanguageCode')
     MedicalScribeMediaEncoding = Shapes::StringShape.new(name: 'MedicalScribeMediaEncoding')
     MedicalScribeMediaSampleRateHertz = Shapes::IntegerShape.new(name: 'MedicalScribeMediaSampleRateHertz')
+    MedicalScribeNoteTemplate = Shapes::StringShape.new(name: 'MedicalScribeNoteTemplate')
     MedicalScribeParticipantRole = Shapes::StringShape.new(name: 'MedicalScribeParticipantRole')
     MedicalScribePostStreamAnalyticsResult = Shapes::StructureShape.new(name: 'MedicalScribePostStreamAnalyticsResult')
     MedicalScribePostStreamAnalyticsSettings = Shapes::StructureShape.new(name: 'MedicalScribePostStreamAnalyticsSettings')
@@ -213,6 +214,7 @@ module Aws::TranscribeStreamingService
     ClinicalNoteGenerationResult.struct_class = Types::ClinicalNoteGenerationResult
 
     ClinicalNoteGenerationSettings.add_member(:output_bucket_name, Shapes::ShapeRef.new(shape: BucketName, required: true, location_name: "OutputBucketName"))
+    ClinicalNoteGenerationSettings.add_member(:note_template, Shapes::ShapeRef.new(shape: MedicalScribeNoteTemplate, location_name: "NoteTemplate"))
     ClinicalNoteGenerationSettings.struct_class = Types::ClinicalNoteGenerationSettings
 
     ConfigurationEvent.add_member(:channel_definitions, Shapes::ShapeRef.new(shape: ChannelDefinitions, location_name: "ChannelDefinitions"))

@@ -899,7 +899,7 @@ module Aws::EKS
     #     Amazon EKS doesn't change the add-on resource properties. Creation
     #     of the add-on might fail if conflicts are detected. This option
     #     works differently during the update operation. For more information,
-    #     see [UpdateAddon][1].
+    #     see [ `UpdateAddon` ][1].
     #
     #   If you don't currently have the self-managed version of the add-on
     #   installed on your cluster, the Amazon EKS add-on is installed. Amazon
@@ -3023,6 +3023,12 @@ module Aws::EKS
     #   List of specific cluster versions to describe.
     #
     # @option params [String] :status
+    #   This field is deprecated. Use `versionStatus` instead, as that field
+    #   matches for input and output of this action.
+    #
+    #   Filter versions by their current status.
+    #
+    # @option params [String] :version_status
     #   Filter versions by their current status.
     #
     # @return [Types::DescribeClusterVersionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
@@ -3042,6 +3048,7 @@ module Aws::EKS
     #     include_all: false,
     #     cluster_versions: ["String"],
     #     status: "unsupported", # accepts unsupported, standard-support, extended-support
+    #     version_status: "UNSUPPORTED", # accepts UNSUPPORTED, STANDARD_SUPPORT, EXTENDED_SUPPORT
     #   })
     #
     # @example Response structure
@@ -3056,6 +3063,7 @@ module Aws::EKS
     #   resp.cluster_versions[0].end_of_standard_support_date #=> Time
     #   resp.cluster_versions[0].end_of_extended_support_date #=> Time
     #   resp.cluster_versions[0].status #=> String, one of "unsupported", "standard-support", "extended-support"
+    #   resp.cluster_versions[0].version_status #=> String, one of "UNSUPPORTED", "STANDARD_SUPPORT", "EXTENDED_SUPPORT"
     #   resp.cluster_versions[0].kubernetes_patch_version #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/DescribeClusterVersions AWS API Documentation
@@ -3406,7 +3414,7 @@ module Aws::EKS
 
     # Describes an update to an Amazon EKS resource.
     #
-    # When the status of the update is `Succeeded`, the update is complete.
+    # When the status of the update is `Successful`, the update is complete.
     # If an update fails, the status is `Failed`, and an error detail
     # explains the reason for the failure.
     #
@@ -4388,10 +4396,11 @@ module Aws::EKS
     # Any Kubernetes cluster can be connected to the Amazon EKS control
     # plane to view current information about the cluster and its nodes.
     #
-    # Cluster connection requires two steps. First, send a `
-    # RegisterClusterRequest ` to add it to the Amazon EKS control plane.
+    # Cluster connection requires two steps. First, send a [
+    # `RegisterClusterRequest` ][1] to add it to the Amazon EKS control
+    # plane.
     #
-    # Second, a [Manifest][1] containing the `activationID` and
+    # Second, a [Manifest][2] containing the `activationID` and
     # `activationCode` must be applied to the Kubernetes cluster through
     # it's native provider to provide visibility.
     #
@@ -4402,7 +4411,8 @@ module Aws::EKS
     #
     #
     #
-    # [1]: https://amazon-eks.s3.us-west-2.amazonaws.com/eks-connector/manifests/eks-connector/latest/eks-connector.yaml
+    # [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_RegisterClusterRequest.html
+    # [2]: https://amazon-eks.s3.us-west-2.amazonaws.com/eks-connector/manifests/eks-connector/latest/eks-connector.yaml
     #
     # @option params [required, String] :name
     #   A unique name for this cluster in your Amazon Web Services Region.
@@ -5004,7 +5014,7 @@ module Aws::EKS
     # Updates an Amazon EKS cluster to the specified Kubernetes version.
     # Your cluster continues to function during the update. The response
     # output includes an update ID that you can use to track the status of
-    # your cluster update with the DescribeUpdate API operation.
+    # your cluster update with the [ `DescribeUpdate` ][1] API operation.
     #
     # Cluster updates are asynchronous, and they should finish within a few
     # minutes. During an update, the cluster status moves to `UPDATING`
@@ -5015,6 +5025,10 @@ module Aws::EKS
     # If your cluster has managed node groups attached to it, all of your
     # node groups' Kubernetes versions must match the cluster's Kubernetes
     # version in order to update the cluster to a new Kubernetes version.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeUpdate.html
     #
     # @option params [required, String] :name
     #   The name of the Amazon EKS cluster to update.
@@ -5124,9 +5138,13 @@ module Aws::EKS
     # Updates an Amazon EKS managed node group configuration. Your node
     # group continues to function during the update. The response output
     # includes an update ID that you can use to track the status of your
-    # node group update with the DescribeUpdate API operation. You can
-    # update the Kubernetes labels and taints for a node group and the
+    # node group update with the [ `DescribeUpdate` ][1] API operation. You
+    # can update the Kubernetes labels and taints for a node group and the
     # scaling and version update configuration.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeUpdate.html
     #
     # @option params [required, String] :cluster_name
     #   The name of your cluster.
@@ -5451,7 +5469,7 @@ module Aws::EKS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eks'
-      context[:gem_version] = '1.128.0'
+      context[:gem_version] = '1.129.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

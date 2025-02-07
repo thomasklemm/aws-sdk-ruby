@@ -248,7 +248,8 @@
       "type":"structure",
       "required":["OutputBucketName"],
       "members":{
-        "OutputBucketName":{"shape":"BucketName"}
+        "OutputBucketName":{"shape":"BucketName"},
+        "NoteTemplate":{"shape":"MedicalScribeNoteTemplate"}
       }
     },
     "ClinicalNoteGenerationStatus":{
@@ -634,6 +635,13 @@
       "type":"integer",
       "max":48000,
       "min":16000
+    },
+    "MedicalScribeNoteTemplate":{
+      "type":"string",
+      "enum":[
+        "HISTORY_AND_PHYSICAL",
+        "GIRPP"
+      ]
     },
     "MedicalScribeParticipantRole":{
       "type":"string",

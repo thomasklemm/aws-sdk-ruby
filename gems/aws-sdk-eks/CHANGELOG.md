@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.129.0 (2025-02-07)
+------------------
+
+* Feature - Introduce versionStatus field to take place of status field in EKS DescribeClusterVersions API
+
 1.128.0 (2025-02-06)
 ------------------
 

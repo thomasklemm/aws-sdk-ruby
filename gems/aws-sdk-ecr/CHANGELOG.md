@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.96.0 (2025-02-07)
+------------------
+
+* Feature - Adds support to handle the new basic scanning daily quota.
+
 1.95.0 (2025-02-06)
 ------------------
 

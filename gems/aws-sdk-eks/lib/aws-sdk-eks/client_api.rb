@@ -320,6 +320,7 @@ module Aws::EKS
     UpdateType = Shapes::StringShape.new(name: 'UpdateType')
     UpgradePolicyRequest = Shapes::StructureShape.new(name: 'UpgradePolicyRequest')
     UpgradePolicyResponse = Shapes::StructureShape.new(name: 'UpgradePolicyResponse')
+    VersionStatus = Shapes::StringShape.new(name: 'VersionStatus')
     VpcConfigRequest = Shapes::StructureShape.new(name: 'VpcConfigRequest')
     VpcConfigResponse = Shapes::StructureShape.new(name: 'VpcConfigResponse')
     ZeroCapacity = Shapes::IntegerShape.new(name: 'ZeroCapacity')
@@ -546,6 +547,7 @@ module Aws::EKS
     ClusterVersionInformation.add_member(:end_of_standard_support_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endOfStandardSupportDate"))
     ClusterVersionInformation.add_member(:end_of_extended_support_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endOfExtendedSupportDate"))
     ClusterVersionInformation.add_member(:status, Shapes::ShapeRef.new(shape: ClusterVersionStatus, location_name: "status"))
+    ClusterVersionInformation.add_member(:version_status, Shapes::ShapeRef.new(shape: VersionStatus, location_name: "versionStatus"))
     ClusterVersionInformation.add_member(:kubernetes_patch_version, Shapes::ShapeRef.new(shape: String, location_name: "kubernetesPatchVersion"))
     ClusterVersionInformation.struct_class = Types::ClusterVersionInformation
 
@@ -807,7 +809,8 @@ module Aws::EKS
     DescribeClusterVersionsRequest.add_member(:default_only, Shapes::ShapeRef.new(shape: BoxedBoolean, location: "querystring", location_name: "defaultOnly"))
     DescribeClusterVersionsRequest.add_member(:include_all, Shapes::ShapeRef.new(shape: BoxedBoolean, location: "querystring", location_name: "includeAll"))
     DescribeClusterVersionsRequest.add_member(:cluster_versions, Shapes::ShapeRef.new(shape: StringList, location: "querystring", location_name: "clusterVersions"))
-    DescribeClusterVersionsRequest.add_member(:status, Shapes::ShapeRef.new(shape: ClusterVersionStatus, location: "querystring", location_name: "status"))
+    DescribeClusterVersionsRequest.add_member(:status, Shapes::ShapeRef.new(shape: ClusterVersionStatus, deprecated: true, location: "querystring", location_name: "status", metadata: {"deprecatedMessage"=>"status has been replaced by versionStatus", "deprecatedSince"=>"2025-02-15"}))
+    DescribeClusterVersionsRequest.add_member(:version_status, Shapes::ShapeRef.new(shape: VersionStatus, location: "querystring", location_name: "versionStatus"))
     DescribeClusterVersionsRequest.struct_class = Types::DescribeClusterVersionsRequest
 
     DescribeClusterVersionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))

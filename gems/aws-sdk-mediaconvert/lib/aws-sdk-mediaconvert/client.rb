@@ -833,7 +833,7 @@ module Aws::MediaConvert
     #             wav_settings: {
     #               bit_depth: 1,
     #               channels: 1,
-    #               format: "RIFF", # accepts RIFF, RF64
+    #               format: "RIFF", # accepts RIFF, RF64, EXTENSIBLE
     #               sample_rate: 1,
     #             },
     #           },
@@ -946,7 +946,7 @@ module Aws::MediaConvert
     #             },
     #             webvtt_destination_settings: {
     #               accessibility: "DISABLED", # accepts DISABLED, ENABLED
-    #               style_passthrough: "ENABLED", # accepts ENABLED, DISABLED, STRICT
+    #               style_passthrough: "ENABLED", # accepts ENABLED, DISABLED, STRICT, MERGE
     #             },
     #           },
     #           language_code: "ENG", # accepts ENG, SPA, FRA, DEU, GER, ZHO, ARA, HIN, JPN, RUS, POR, ITA, URD, VIE, KOR, PAN, ABK, AAR, AFR, AKA, SQI, AMH, ARG, HYE, ASM, AVA, AVE, AYM, AZE, BAM, BAK, EUS, BEL, BEN, BIH, BIS, BOS, BRE, BUL, MYA, CAT, KHM, CHA, CHE, NYA, CHU, CHV, COR, COS, CRE, HRV, CES, DAN, DIV, NLD, DZO, ENM, EPO, EST, EWE, FAO, FIJ, FIN, FRM, FUL, GLA, GLG, LUG, KAT, ELL, GRN, GUJ, HAT, HAU, HEB, HER, HMO, HUN, ISL, IDO, IBO, IND, INA, ILE, IKU, IPK, GLE, JAV, KAL, KAN, KAU, KAS, KAZ, KIK, KIN, KIR, KOM, KON, KUA, KUR, LAO, LAT, LAV, LIM, LIN, LIT, LUB, LTZ, MKD, MLG, MSA, MAL, MLT, GLV, MRI, MAR, MAH, MON, NAU, NAV, NDE, NBL, NDO, NEP, SME, NOR, NOB, NNO, OCI, OJI, ORI, ORM, OSS, PLI, FAS, POL, PUS, QUE, QAA, RON, ROH, RUN, SMO, SAG, SAN, SRD, SRB, SNA, III, SND, SIN, SLK, SLV, SOM, SOT, SUN, SWA, SSW, SWE, TGL, TAH, TGK, TAM, TAT, TEL, THA, BOD, TIR, TON, TSO, TSN, TUR, TUK, TWI, UIG, UKR, UZB, VEN, VOL, WLN, CYM, FRY, WOL, XHO, YID, YOR, ZHA, ZUL, ORJ, QPC, TNG, SRP
@@ -970,7 +970,7 @@ module Aws::MediaConvert
     #           timed_metadata_scheme_id_uri: "__stringMax1000",
     #           timed_metadata_value: "__stringMax1000",
     #         },
-    #         container: "F4V", # accepts F4V, ISMV, M2TS, M3U8, CMFC, MOV, MP4, MPD, MXF, OGG, WEBM, RAW, Y4M
+    #         container: "F4V", # accepts F4V, GIF, ISMV, M2TS, M3U8, CMFC, MOV, MP4, MPD, MXF, OGG, WEBM, RAW, Y4M
     #         f4v_settings: {
     #           moov_placement: "PROGRESSIVE_DOWNLOAD", # accepts PROGRESSIVE_DOWNLOAD, NORMAL
     #         },
@@ -1094,13 +1094,14 @@ module Aws::MediaConvert
     #       video_description: {
     #         afd_signaling: "NONE", # accepts NONE, AUTO, FIXED
     #         anti_alias: "DISABLED", # accepts DISABLED, ENABLED
+    #         chroma_position_mode: "AUTO", # accepts AUTO, FORCE_CENTER, FORCE_TOP_LEFT
     #         codec_settings: {
     #           av_1_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, LOW, MEDIUM, HIGH, HIGHER, MAX
     #             bit_depth: "BIT_8", # accepts BIT_8, BIT_10
     #             film_grain_synthesis: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -1120,7 +1121,7 @@ module Aws::MediaConvert
     #               quality_tuning_level: "SINGLE_PASS", # accepts SINGLE_PASS, MULTI_PASS
     #             },
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "PROGRESSIVE", # accepts PROGRESSIVE, TOP_FIELD, BOTTOM_FIELD, FOLLOW_TOP_FIELD, FOLLOW_BOTTOM_FIELD
@@ -1128,12 +1129,18 @@ module Aws::MediaConvert
     #             slow_pal: "DISABLED", # accepts DISABLED, ENABLED
     #             telecine: "NONE", # accepts NONE, HARD
     #           },
-    #           codec: "AV1", # accepts AV1, AVC_INTRA, FRAME_CAPTURE, H_264, H_265, MPEG2, PASSTHROUGH, PRORES, UNCOMPRESSED, VC3, VP8, VP9, XAVC
+    #           codec: "AV1", # accepts AV1, AVC_INTRA, FRAME_CAPTURE, GIF, H_264, H_265, MPEG2, PASSTHROUGH, PRORES, UNCOMPRESSED, VC3, VP8, VP9, XAVC
     #           frame_capture_settings: {
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             max_captures: 1,
     #             quality: 1,
+    #           },
+    #           gif_settings: {
+    #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE
+    #             framerate_denominator: 1,
+    #             framerate_numerator: 1,
     #           },
     #           h264_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, AUTO, LOW, MEDIUM, HIGH, HIGHER, MAX
@@ -1150,7 +1157,7 @@ module Aws::MediaConvert
     #             field_encoding: "PAFF", # accepts PAFF, FORCE_FIELD, MBAFF
     #             flicker_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_b_reference: "DISABLED", # accepts DISABLED, ENABLED
@@ -1204,7 +1211,7 @@ module Aws::MediaConvert
     #             end_of_stream_markers: "INCLUDE", # accepts INCLUDE, SUPPRESS
     #             flicker_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_b_reference: "DISABLED", # accepts DISABLED, ENABLED
@@ -1249,7 +1256,7 @@ module Aws::MediaConvert
     #             codec_profile: "MAIN", # accepts MAIN, PROFILE_422
     #             dynamic_sub_gop: "ADAPTIVE", # accepts ADAPTIVE, STATIC
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_closed_cadence: 1,
@@ -1281,7 +1288,7 @@ module Aws::MediaConvert
     #             chroma_sampling: "PRESERVE_444_SAMPLING", # accepts PRESERVE_444_SAMPLING, SUBSAMPLE_TO_422
     #             codec_profile: "APPLE_PRORES_422", # accepts APPLE_PRORES_422, APPLE_PRORES_422_HQ, APPLE_PRORES_422_LT, APPLE_PRORES_422_PROXY, APPLE_PRORES_4444, APPLE_PRORES_4444_XQ
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "PROGRESSIVE", # accepts PROGRESSIVE, TOP_FIELD, BOTTOM_FIELD, FOLLOW_TOP_FIELD, FOLLOW_BOTTOM_FIELD
@@ -1295,7 +1302,7 @@ module Aws::MediaConvert
     #           uncompressed_settings: {
     #             fourcc: "I420", # accepts I420, I422, I444
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "INTERLACED", # accepts INTERLACED, PROGRESSIVE
@@ -1305,7 +1312,7 @@ module Aws::MediaConvert
     #           },
     #           vc_3_settings: {
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "INTERLACED", # accepts INTERLACED, PROGRESSIVE
@@ -1317,7 +1324,7 @@ module Aws::MediaConvert
     #           vp_8_settings: {
     #             bitrate: 1,
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -1332,7 +1339,7 @@ module Aws::MediaConvert
     #           vp_9_settings: {
     #             bitrate: 1,
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -1348,7 +1355,7 @@ module Aws::MediaConvert
     #             adaptive_quantization: "OFF", # accepts OFF, AUTO, LOW, MEDIUM, HIGH, HIGHER, MAX
     #             entropy_encoding: "AUTO", # accepts AUTO, CABAC, CAVLC
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             profile: "XAVC_HD_INTRA_CBG", # accepts XAVC_HD_INTRA_CBG, XAVC_4K_INTRA_CBG, XAVC_4K_INTRA_VBR, XAVC_HD, XAVC_4K
@@ -1619,7 +1626,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.audio_descriptions[0].codec_settings.vorbis_settings.vbr_quality #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.bit_depth #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.channels #=> Integer
-    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64"
+    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64", "EXTENSIBLE"
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.sample_rate #=> Integer
     #   resp.preset.settings.audio_descriptions[0].custom_language_code #=> String
     #   resp.preset.settings.audio_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
@@ -1705,7 +1712,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.teletext_destination_settings.page_types[0] #=> String, one of "PAGE_TYPE_INITIAL", "PAGE_TYPE_SUBTITLE", "PAGE_TYPE_ADDL_INFO", "PAGE_TYPE_PROGRAM_SCHEDULE", "PAGE_TYPE_HEARING_IMPAIRED_SUBTITLE"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.accessibility #=> String, one of "DISABLED", "ENABLED"
-    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT"
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT", "MERGE"
     #   resp.preset.settings.caption_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
     #   resp.preset.settings.caption_descriptions[0].language_description #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -1722,7 +1729,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_box_version #=> String, one of "VERSION_0", "VERSION_1"
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_scheme_id_uri #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_value #=> String
-    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
+    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "GIF", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
     #   resp.preset.settings.container_settings.f4v_settings.moov_placement #=> String, one of "PROGRESSIVE_DOWNLOAD", "NORMAL"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_buffer_model #=> String, one of "DVB", "ATSC"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -1823,11 +1830,12 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.mxf_settings.xavc_profile_settings.max_anc_data_size #=> Integer
     #   resp.preset.settings.video_description.afd_signaling #=> String, one of "NONE", "AUTO", "FIXED"
     #   resp.preset.settings.video_description.anti_alias #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.chroma_position_mode #=> String, one of "AUTO", "FORCE_CENTER", "FORCE_TOP_LEFT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.bit_depth #=> String, one of "BIT_8", "BIT_10"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.film_grain_synthesis #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.gop_size #=> Float
@@ -1841,18 +1849,22 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_class #=> String, one of "CLASS_50", "CLASS_100", "CLASS_200", "CLASS_4K_2K"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_uhd_settings.quality_tuning_level #=> String, one of "SINGLE_PASS", "MULTI_PASS"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.scan_type_conversion_mode #=> String, one of "INTERLACED", "INTERLACED_OPTIMIZE"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.telecine #=> String, one of "NONE", "HARD"
-    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
+    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "GIF", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.max_captures #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.quality #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_denominator #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.strength #=> String, one of "LOW", "MEDIUM", "HIGH", "AUTO", "OFF"
@@ -1865,7 +1877,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.field_encoding #=> String, one of "PAFF", "FORCE_FIELD", "MBAFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -1913,7 +1925,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h265_settings.end_of_stream_markers #=> String, one of "INCLUDE", "SUPPRESS"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -1954,7 +1966,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.codec_profile #=> String, one of "MAIN", "PROFILE_422"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.dynamic_sub_gop #=> String, one of "ADAPTIVE", "STATIC"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.gop_closed_cadence #=> Integer
@@ -1984,7 +1996,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.chroma_sampling #=> String, one of "PRESERVE_444_SAMPLING", "SUBSAMPLE_TO_422"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.codec_profile #=> String, one of "APPLE_PRORES_422", "APPLE_PRORES_422_HQ", "APPLE_PRORES_422_LT", "APPLE_PRORES_422_PROXY", "APPLE_PRORES_4444", "APPLE_PRORES_4444_XQ"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
@@ -1996,7 +2008,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.fourcc #=> String, one of "I420", "I422", "I444"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -2004,7 +2016,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -2014,7 +2026,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.vc_3_class #=> String, one of "CLASS_145_8BIT", "CLASS_220_8BIT", "CLASS_220_10BIT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.gop_size #=> Float
@@ -2027,7 +2039,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.rate_control_mode #=> String, one of "VBR"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.gop_size #=> Float
@@ -2041,7 +2053,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.entropy_encoding #=> String, one of "AUTO", "CABAC", "CAVLC"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.profile #=> String, one of "XAVC_HD_INTRA_CBG", "XAVC_4K_INTRA_CBG", "XAVC_4K_INTRA_VBR", "XAVC_HD", "XAVC_4K"
@@ -2597,7 +2609,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.audio_descriptions[0].codec_settings.vorbis_settings.vbr_quality #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.bit_depth #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.channels #=> Integer
-    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64"
+    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64", "EXTENSIBLE"
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.sample_rate #=> Integer
     #   resp.preset.settings.audio_descriptions[0].custom_language_code #=> String
     #   resp.preset.settings.audio_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
@@ -2683,7 +2695,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.teletext_destination_settings.page_types[0] #=> String, one of "PAGE_TYPE_INITIAL", "PAGE_TYPE_SUBTITLE", "PAGE_TYPE_ADDL_INFO", "PAGE_TYPE_PROGRAM_SCHEDULE", "PAGE_TYPE_HEARING_IMPAIRED_SUBTITLE"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.accessibility #=> String, one of "DISABLED", "ENABLED"
-    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT"
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT", "MERGE"
     #   resp.preset.settings.caption_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
     #   resp.preset.settings.caption_descriptions[0].language_description #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -2700,7 +2712,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_box_version #=> String, one of "VERSION_0", "VERSION_1"
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_scheme_id_uri #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_value #=> String
-    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
+    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "GIF", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
     #   resp.preset.settings.container_settings.f4v_settings.moov_placement #=> String, one of "PROGRESSIVE_DOWNLOAD", "NORMAL"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_buffer_model #=> String, one of "DVB", "ATSC"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -2801,11 +2813,12 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.mxf_settings.xavc_profile_settings.max_anc_data_size #=> Integer
     #   resp.preset.settings.video_description.afd_signaling #=> String, one of "NONE", "AUTO", "FIXED"
     #   resp.preset.settings.video_description.anti_alias #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.chroma_position_mode #=> String, one of "AUTO", "FORCE_CENTER", "FORCE_TOP_LEFT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.bit_depth #=> String, one of "BIT_8", "BIT_10"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.film_grain_synthesis #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.gop_size #=> Float
@@ -2819,18 +2832,22 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_class #=> String, one of "CLASS_50", "CLASS_100", "CLASS_200", "CLASS_4K_2K"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_uhd_settings.quality_tuning_level #=> String, one of "SINGLE_PASS", "MULTI_PASS"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.scan_type_conversion_mode #=> String, one of "INTERLACED", "INTERLACED_OPTIMIZE"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.telecine #=> String, one of "NONE", "HARD"
-    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
+    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "GIF", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.max_captures #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.quality #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_denominator #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.strength #=> String, one of "LOW", "MEDIUM", "HIGH", "AUTO", "OFF"
@@ -2843,7 +2860,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.field_encoding #=> String, one of "PAFF", "FORCE_FIELD", "MBAFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -2891,7 +2908,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h265_settings.end_of_stream_markers #=> String, one of "INCLUDE", "SUPPRESS"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -2932,7 +2949,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.codec_profile #=> String, one of "MAIN", "PROFILE_422"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.dynamic_sub_gop #=> String, one of "ADAPTIVE", "STATIC"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.gop_closed_cadence #=> Integer
@@ -2962,7 +2979,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.chroma_sampling #=> String, one of "PRESERVE_444_SAMPLING", "SUBSAMPLE_TO_422"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.codec_profile #=> String, one of "APPLE_PRORES_422", "APPLE_PRORES_422_HQ", "APPLE_PRORES_422_LT", "APPLE_PRORES_422_PROXY", "APPLE_PRORES_4444", "APPLE_PRORES_4444_XQ"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
@@ -2974,7 +2991,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.fourcc #=> String, one of "I420", "I422", "I444"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -2982,7 +2999,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -2992,7 +3009,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.vc_3_class #=> String, one of "CLASS_145_8BIT", "CLASS_220_8BIT", "CLASS_220_10BIT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.gop_size #=> Float
@@ -3005,7 +3022,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.rate_control_mode #=> String, one of "VBR"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.gop_size #=> Float
@@ -3019,7 +3036,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.entropy_encoding #=> String, one of "AUTO", "CABAC", "CAVLC"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.profile #=> String, one of "XAVC_HD_INTRA_CBG", "XAVC_4K_INTRA_CBG", "XAVC_4K_INTRA_VBR", "XAVC_HD", "XAVC_4K"
@@ -3443,7 +3460,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.audio_descriptions[0].codec_settings.vorbis_settings.vbr_quality #=> Integer
     #   resp.presets[0].settings.audio_descriptions[0].codec_settings.wav_settings.bit_depth #=> Integer
     #   resp.presets[0].settings.audio_descriptions[0].codec_settings.wav_settings.channels #=> Integer
-    #   resp.presets[0].settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64"
+    #   resp.presets[0].settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64", "EXTENSIBLE"
     #   resp.presets[0].settings.audio_descriptions[0].codec_settings.wav_settings.sample_rate #=> Integer
     #   resp.presets[0].settings.audio_descriptions[0].custom_language_code #=> String
     #   resp.presets[0].settings.audio_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
@@ -3529,7 +3546,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.teletext_destination_settings.page_types[0] #=> String, one of "PAGE_TYPE_INITIAL", "PAGE_TYPE_SUBTITLE", "PAGE_TYPE_ADDL_INFO", "PAGE_TYPE_PROGRAM_SCHEDULE", "PAGE_TYPE_HEARING_IMPAIRED_SUBTITLE"
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED"
     #   resp.presets[0].settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.accessibility #=> String, one of "DISABLED", "ENABLED"
-    #   resp.presets[0].settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT"
+    #   resp.presets[0].settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT", "MERGE"
     #   resp.presets[0].settings.caption_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
     #   resp.presets[0].settings.caption_descriptions[0].language_description #=> String
     #   resp.presets[0].settings.container_settings.cmfc_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -3546,7 +3563,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.container_settings.cmfc_settings.timed_metadata_box_version #=> String, one of "VERSION_0", "VERSION_1"
     #   resp.presets[0].settings.container_settings.cmfc_settings.timed_metadata_scheme_id_uri #=> String
     #   resp.presets[0].settings.container_settings.cmfc_settings.timed_metadata_value #=> String
-    #   resp.presets[0].settings.container_settings.container #=> String, one of "F4V", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
+    #   resp.presets[0].settings.container_settings.container #=> String, one of "F4V", "GIF", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
     #   resp.presets[0].settings.container_settings.f4v_settings.moov_placement #=> String, one of "PROGRESSIVE_DOWNLOAD", "NORMAL"
     #   resp.presets[0].settings.container_settings.m2ts_settings.audio_buffer_model #=> String, one of "DVB", "ATSC"
     #   resp.presets[0].settings.container_settings.m2ts_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -3647,11 +3664,12 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.container_settings.mxf_settings.xavc_profile_settings.max_anc_data_size #=> Integer
     #   resp.presets[0].settings.video_description.afd_signaling #=> String, one of "NONE", "AUTO", "FIXED"
     #   resp.presets[0].settings.video_description.anti_alias #=> String, one of "DISABLED", "ENABLED"
+    #   resp.presets[0].settings.video_description.chroma_position_mode #=> String, one of "AUTO", "FORCE_CENTER", "FORCE_TOP_LEFT"
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.bit_depth #=> String, one of "BIT_8", "BIT_10"
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.film_grain_synthesis #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.av_1_settings.gop_size #=> Float
@@ -3665,18 +3683,22 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.avc_intra_class #=> String, one of "CLASS_50", "CLASS_100", "CLASS_200", "CLASS_4K_2K"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.avc_intra_uhd_settings.quality_tuning_level #=> String, one of "SINGLE_PASS", "MULTI_PASS"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.scan_type_conversion_mode #=> String, one of "INTERLACED", "INTERLACED_OPTIMIZE"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.avc_intra_settings.telecine #=> String, one of "NONE", "HARD"
-    #   resp.presets[0].settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
+    #   resp.presets[0].settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "GIF", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
     #   resp.presets[0].settings.video_description.codec_settings.frame_capture_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.frame_capture_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.frame_capture_settings.max_captures #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.frame_capture_settings.quality #=> Integer
+    #   resp.presets[0].settings.video_description.codec_settings.gif_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
+    #   resp.presets[0].settings.video_description.codec_settings.gif_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE"
+    #   resp.presets[0].settings.video_description.codec_settings.gif_settings.framerate_denominator #=> Integer
+    #   resp.presets[0].settings.video_description.codec_settings.gif_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.strength #=> String, one of "LOW", "MEDIUM", "HIGH", "AUTO", "OFF"
@@ -3689,7 +3711,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.field_encoding #=> String, one of "PAFF", "FORCE_FIELD", "MBAFF"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.h264_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -3737,7 +3759,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.end_of_stream_markers #=> String, one of "INCLUDE", "SUPPRESS"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.h265_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -3778,7 +3800,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.codec_profile #=> String, one of "MAIN", "PROFILE_422"
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.dynamic_sub_gop #=> String, one of "ADAPTIVE", "STATIC"
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.mpeg_2_settings.gop_closed_cadence #=> Integer
@@ -3808,7 +3830,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.chroma_sampling #=> String, one of "PRESERVE_444_SAMPLING", "SUBSAMPLE_TO_422"
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.codec_profile #=> String, one of "APPLE_PRORES_422", "APPLE_PRORES_422_HQ", "APPLE_PRORES_422_LT", "APPLE_PRORES_422_PROXY", "APPLE_PRORES_4444", "APPLE_PRORES_4444_XQ"
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
@@ -3820,7 +3842,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.prores_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.fourcc #=> String, one of "I420", "I422", "I444"
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -3828,7 +3850,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.presets[0].settings.video_description.codec_settings.uncompressed_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -3838,7 +3860,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.vc_3_settings.vc_3_class #=> String, one of "CLASS_145_8BIT", "CLASS_220_8BIT", "CLASS_220_10BIT"
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.bitrate #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.gop_size #=> Float
@@ -3851,7 +3873,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.vp_8_settings.rate_control_mode #=> String, one of "VBR"
     #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.bitrate #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.vp_9_settings.gop_size #=> Float
@@ -3865,7 +3887,7 @@ module Aws::MediaConvert
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.entropy_encoding #=> String, one of "AUTO", "CABAC", "CAVLC"
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.framerate_denominator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.framerate_numerator #=> Integer
     #   resp.presets[0].settings.video_description.codec_settings.xavc_settings.profile #=> String, one of "XAVC_HD_INTRA_CBG", "XAVC_4K_INTRA_CBG", "XAVC_4K_INTRA_VBR", "XAVC_HD", "XAVC_4K"
@@ -4493,7 +4515,7 @@ module Aws::MediaConvert
     #             wav_settings: {
     #               bit_depth: 1,
     #               channels: 1,
-    #               format: "RIFF", # accepts RIFF, RF64
+    #               format: "RIFF", # accepts RIFF, RF64, EXTENSIBLE
     #               sample_rate: 1,
     #             },
     #           },
@@ -4606,7 +4628,7 @@ module Aws::MediaConvert
     #             },
     #             webvtt_destination_settings: {
     #               accessibility: "DISABLED", # accepts DISABLED, ENABLED
-    #               style_passthrough: "ENABLED", # accepts ENABLED, DISABLED, STRICT
+    #               style_passthrough: "ENABLED", # accepts ENABLED, DISABLED, STRICT, MERGE
     #             },
     #           },
     #           language_code: "ENG", # accepts ENG, SPA, FRA, DEU, GER, ZHO, ARA, HIN, JPN, RUS, POR, ITA, URD, VIE, KOR, PAN, ABK, AAR, AFR, AKA, SQI, AMH, ARG, HYE, ASM, AVA, AVE, AYM, AZE, BAM, BAK, EUS, BEL, BEN, BIH, BIS, BOS, BRE, BUL, MYA, CAT, KHM, CHA, CHE, NYA, CHU, CHV, COR, COS, CRE, HRV, CES, DAN, DIV, NLD, DZO, ENM, EPO, EST, EWE, FAO, FIJ, FIN, FRM, FUL, GLA, GLG, LUG, KAT, ELL, GRN, GUJ, HAT, HAU, HEB, HER, HMO, HUN, ISL, IDO, IBO, IND, INA, ILE, IKU, IPK, GLE, JAV, KAL, KAN, KAU, KAS, KAZ, KIK, KIN, KIR, KOM, KON, KUA, KUR, LAO, LAT, LAV, LIM, LIN, LIT, LUB, LTZ, MKD, MLG, MSA, MAL, MLT, GLV, MRI, MAR, MAH, MON, NAU, NAV, NDE, NBL, NDO, NEP, SME, NOR, NOB, NNO, OCI, OJI, ORI, ORM, OSS, PLI, FAS, POL, PUS, QUE, QAA, RON, ROH, RUN, SMO, SAG, SAN, SRD, SRB, SNA, III, SND, SIN, SLK, SLV, SOM, SOT, SUN, SWA, SSW, SWE, TGL, TAH, TGK, TAM, TAT, TEL, THA, BOD, TIR, TON, TSO, TSN, TUR, TUK, TWI, UIG, UKR, UZB, VEN, VOL, WLN, CYM, FRY, WOL, XHO, YID, YOR, ZHA, ZUL, ORJ, QPC, TNG, SRP
@@ -4630,7 +4652,7 @@ module Aws::MediaConvert
     #           timed_metadata_scheme_id_uri: "__stringMax1000",
     #           timed_metadata_value: "__stringMax1000",
     #         },
-    #         container: "F4V", # accepts F4V, ISMV, M2TS, M3U8, CMFC, MOV, MP4, MPD, MXF, OGG, WEBM, RAW, Y4M
+    #         container: "F4V", # accepts F4V, GIF, ISMV, M2TS, M3U8, CMFC, MOV, MP4, MPD, MXF, OGG, WEBM, RAW, Y4M
     #         f4v_settings: {
     #           moov_placement: "PROGRESSIVE_DOWNLOAD", # accepts PROGRESSIVE_DOWNLOAD, NORMAL
     #         },
@@ -4754,13 +4776,14 @@ module Aws::MediaConvert
     #       video_description: {
     #         afd_signaling: "NONE", # accepts NONE, AUTO, FIXED
     #         anti_alias: "DISABLED", # accepts DISABLED, ENABLED
+    #         chroma_position_mode: "AUTO", # accepts AUTO, FORCE_CENTER, FORCE_TOP_LEFT
     #         codec_settings: {
     #           av_1_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, LOW, MEDIUM, HIGH, HIGHER, MAX
     #             bit_depth: "BIT_8", # accepts BIT_8, BIT_10
     #             film_grain_synthesis: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -4780,7 +4803,7 @@ module Aws::MediaConvert
     #               quality_tuning_level: "SINGLE_PASS", # accepts SINGLE_PASS, MULTI_PASS
     #             },
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "PROGRESSIVE", # accepts PROGRESSIVE, TOP_FIELD, BOTTOM_FIELD, FOLLOW_TOP_FIELD, FOLLOW_BOTTOM_FIELD
@@ -4788,12 +4811,18 @@ module Aws::MediaConvert
     #             slow_pal: "DISABLED", # accepts DISABLED, ENABLED
     #             telecine: "NONE", # accepts NONE, HARD
     #           },
-    #           codec: "AV1", # accepts AV1, AVC_INTRA, FRAME_CAPTURE, H_264, H_265, MPEG2, PASSTHROUGH, PRORES, UNCOMPRESSED, VC3, VP8, VP9, XAVC
+    #           codec: "AV1", # accepts AV1, AVC_INTRA, FRAME_CAPTURE, GIF, H_264, H_265, MPEG2, PASSTHROUGH, PRORES, UNCOMPRESSED, VC3, VP8, VP9, XAVC
     #           frame_capture_settings: {
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             max_captures: 1,
     #             quality: 1,
+    #           },
+    #           gif_settings: {
+    #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE
+    #             framerate_denominator: 1,
+    #             framerate_numerator: 1,
     #           },
     #           h264_settings: {
     #             adaptive_quantization: "OFF", # accepts OFF, AUTO, LOW, MEDIUM, HIGH, HIGHER, MAX
@@ -4810,7 +4839,7 @@ module Aws::MediaConvert
     #             field_encoding: "PAFF", # accepts PAFF, FORCE_FIELD, MBAFF
     #             flicker_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_b_reference: "DISABLED", # accepts DISABLED, ENABLED
@@ -4864,7 +4893,7 @@ module Aws::MediaConvert
     #             end_of_stream_markers: "INCLUDE", # accepts INCLUDE, SUPPRESS
     #             flicker_adaptive_quantization: "DISABLED", # accepts DISABLED, ENABLED
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_b_reference: "DISABLED", # accepts DISABLED, ENABLED
@@ -4909,7 +4938,7 @@ module Aws::MediaConvert
     #             codec_profile: "MAIN", # accepts MAIN, PROFILE_422
     #             dynamic_sub_gop: "ADAPTIVE", # accepts ADAPTIVE, STATIC
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_closed_cadence: 1,
@@ -4941,7 +4970,7 @@ module Aws::MediaConvert
     #             chroma_sampling: "PRESERVE_444_SAMPLING", # accepts PRESERVE_444_SAMPLING, SUBSAMPLE_TO_422
     #             codec_profile: "APPLE_PRORES_422", # accepts APPLE_PRORES_422, APPLE_PRORES_422_HQ, APPLE_PRORES_422_LT, APPLE_PRORES_422_PROXY, APPLE_PRORES_4444, APPLE_PRORES_4444_XQ
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "PROGRESSIVE", # accepts PROGRESSIVE, TOP_FIELD, BOTTOM_FIELD, FOLLOW_TOP_FIELD, FOLLOW_BOTTOM_FIELD
@@ -4955,7 +4984,7 @@ module Aws::MediaConvert
     #           uncompressed_settings: {
     #             fourcc: "I420", # accepts I420, I422, I444
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "INTERLACED", # accepts INTERLACED, PROGRESSIVE
@@ -4965,7 +4994,7 @@ module Aws::MediaConvert
     #           },
     #           vc_3_settings: {
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             interlace_mode: "INTERLACED", # accepts INTERLACED, PROGRESSIVE
@@ -4977,7 +5006,7 @@ module Aws::MediaConvert
     #           vp_8_settings: {
     #             bitrate: 1,
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -4992,7 +5021,7 @@ module Aws::MediaConvert
     #           vp_9_settings: {
     #             bitrate: 1,
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             gop_size: 1.0,
@@ -5008,7 +5037,7 @@ module Aws::MediaConvert
     #             adaptive_quantization: "OFF", # accepts OFF, AUTO, LOW, MEDIUM, HIGH, HIGHER, MAX
     #             entropy_encoding: "AUTO", # accepts AUTO, CABAC, CAVLC
     #             framerate_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
-    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER
+    #             framerate_conversion_algorithm: "DUPLICATE_DROP", # accepts DUPLICATE_DROP, INTERPOLATE, FRAMEFORMER, MAINTAIN_FRAME_COUNT
     #             framerate_denominator: 1,
     #             framerate_numerator: 1,
     #             profile: "XAVC_HD_INTRA_CBG", # accepts XAVC_HD_INTRA_CBG, XAVC_4K_INTRA_CBG, XAVC_4K_INTRA_VBR, XAVC_HD, XAVC_4K
@@ -5276,7 +5305,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.audio_descriptions[0].codec_settings.vorbis_settings.vbr_quality #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.bit_depth #=> Integer
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.channels #=> Integer
-    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64"
+    #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.format #=> String, one of "RIFF", "RF64", "EXTENSIBLE"
     #   resp.preset.settings.audio_descriptions[0].codec_settings.wav_settings.sample_rate #=> Integer
     #   resp.preset.settings.audio_descriptions[0].custom_language_code #=> String
     #   resp.preset.settings.audio_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
@@ -5362,7 +5391,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.caption_descriptions[0].destination_settings.teletext_destination_settings.page_types[0] #=> String, one of "PAGE_TYPE_INITIAL", "PAGE_TYPE_SUBTITLE", "PAGE_TYPE_ADDL_INFO", "PAGE_TYPE_PROGRAM_SCHEDULE", "PAGE_TYPE_HEARING_IMPAIRED_SUBTITLE"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.ttml_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED"
     #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.accessibility #=> String, one of "DISABLED", "ENABLED"
-    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT"
+    #   resp.preset.settings.caption_descriptions[0].destination_settings.webvtt_destination_settings.style_passthrough #=> String, one of "ENABLED", "DISABLED", "STRICT", "MERGE"
     #   resp.preset.settings.caption_descriptions[0].language_code #=> String, one of "ENG", "SPA", "FRA", "DEU", "GER", "ZHO", "ARA", "HIN", "JPN", "RUS", "POR", "ITA", "URD", "VIE", "KOR", "PAN", "ABK", "AAR", "AFR", "AKA", "SQI", "AMH", "ARG", "HYE", "ASM", "AVA", "AVE", "AYM", "AZE", "BAM", "BAK", "EUS", "BEL", "BEN", "BIH", "BIS", "BOS", "BRE", "BUL", "MYA", "CAT", "KHM", "CHA", "CHE", "NYA", "CHU", "CHV", "COR", "COS", "CRE", "HRV", "CES", "DAN", "DIV", "NLD", "DZO", "ENM", "EPO", "EST", "EWE", "FAO", "FIJ", "FIN", "FRM", "FUL", "GLA", "GLG", "LUG", "KAT", "ELL", "GRN", "GUJ", "HAT", "HAU", "HEB", "HER", "HMO", "HUN", "ISL", "IDO", "IBO", "IND", "INA", "ILE", "IKU", "IPK", "GLE", "JAV", "KAL", "KAN", "KAU", "KAS", "KAZ", "KIK", "KIN", "KIR", "KOM", "KON", "KUA", "KUR", "LAO", "LAT", "LAV", "LIM", "LIN", "LIT", "LUB", "LTZ", "MKD", "MLG", "MSA", "MAL", "MLT", "GLV", "MRI", "MAR", "MAH", "MON", "NAU", "NAV", "NDE", "NBL", "NDO", "NEP", "SME", "NOR", "NOB", "NNO", "OCI", "OJI", "ORI", "ORM", "OSS", "PLI", "FAS", "POL", "PUS", "QUE", "QAA", "RON", "ROH", "RUN", "SMO", "SAG", "SAN", "SRD", "SRB", "SNA", "III", "SND", "SIN", "SLK", "SLV", "SOM", "SOT", "SUN", "SWA", "SSW", "SWE", "TGL", "TAH", "TGK", "TAM", "TAT", "TEL", "THA", "BOD", "TIR", "TON", "TSO", "TSN", "TUR", "TUK", "TWI", "UIG", "UKR", "UZB", "VEN", "VOL", "WLN", "CYM", "FRY", "WOL", "XHO", "YID", "YOR", "ZHA", "ZUL", "ORJ", "QPC", "TNG", "SRP"
     #   resp.preset.settings.caption_descriptions[0].language_description #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -5379,7 +5408,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_box_version #=> String, one of "VERSION_0", "VERSION_1"
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_scheme_id_uri #=> String
     #   resp.preset.settings.container_settings.cmfc_settings.timed_metadata_value #=> String
-    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
+    #   resp.preset.settings.container_settings.container #=> String, one of "F4V", "GIF", "ISMV", "M2TS", "M3U8", "CMFC", "MOV", "MP4", "MPD", "MXF", "OGG", "WEBM", "RAW", "Y4M"
     #   resp.preset.settings.container_settings.f4v_settings.moov_placement #=> String, one of "PROGRESSIVE_DOWNLOAD", "NORMAL"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_buffer_model #=> String, one of "DVB", "ATSC"
     #   resp.preset.settings.container_settings.m2ts_settings.audio_duration #=> String, one of "DEFAULT_CODEC_DURATION", "MATCH_VIDEO_DURATION"
@@ -5480,11 +5509,12 @@ module Aws::MediaConvert
     #   resp.preset.settings.container_settings.mxf_settings.xavc_profile_settings.max_anc_data_size #=> Integer
     #   resp.preset.settings.video_description.afd_signaling #=> String, one of "NONE", "AUTO", "FIXED"
     #   resp.preset.settings.video_description.anti_alias #=> String, one of "DISABLED", "ENABLED"
+    #   resp.preset.settings.video_description.chroma_position_mode #=> String, one of "AUTO", "FORCE_CENTER", "FORCE_TOP_LEFT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.adaptive_quantization #=> String, one of "OFF", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.bit_depth #=> String, one of "BIT_8", "BIT_10"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.film_grain_synthesis #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.av_1_settings.gop_size #=> Float
@@ -5498,18 +5528,22 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_class #=> String, one of "CLASS_50", "CLASS_100", "CLASS_200", "CLASS_4K_2K"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.avc_intra_uhd_settings.quality_tuning_level #=> String, one of "SINGLE_PASS", "MULTI_PASS"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.scan_type_conversion_mode #=> String, one of "INTERLACED", "INTERLACED_OPTIMIZE"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.avc_intra_settings.telecine #=> String, one of "NONE", "HARD"
-    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
+    #   resp.preset.settings.video_description.codec_settings.codec #=> String, one of "AV1", "AVC_INTRA", "FRAME_CAPTURE", "GIF", "H_264", "H_265", "MPEG2", "PASSTHROUGH", "PRORES", "UNCOMPRESSED", "VC3", "VP8", "VP9", "XAVC"
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.max_captures #=> Integer
     #   resp.preset.settings.video_description.codec_settings.frame_capture_settings.quality #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE"
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_denominator #=> Integer
+    #   resp.preset.settings.video_description.codec_settings.gif_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.sharpening #=> String, one of "LOW", "MEDIUM", "HIGH", "OFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.bandwidth_reduction_filter.strength #=> String, one of "LOW", "MEDIUM", "HIGH", "AUTO", "OFF"
@@ -5522,7 +5556,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h264_settings.field_encoding #=> String, one of "PAFF", "FORCE_FIELD", "MBAFF"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h264_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -5570,7 +5604,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.h265_settings.end_of_stream_markers #=> String, one of "INCLUDE", "SUPPRESS"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.flicker_adaptive_quantization #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.h265_settings.gop_b_reference #=> String, one of "DISABLED", "ENABLED"
@@ -5611,7 +5645,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.codec_profile #=> String, one of "MAIN", "PROFILE_422"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.dynamic_sub_gop #=> String, one of "ADAPTIVE", "STATIC"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.mpeg_2_settings.gop_closed_cadence #=> Integer
@@ -5641,7 +5675,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.chroma_sampling #=> String, one of "PRESERVE_444_SAMPLING", "SUBSAMPLE_TO_422"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.codec_profile #=> String, one of "APPLE_PRORES_422", "APPLE_PRORES_422_HQ", "APPLE_PRORES_422_LT", "APPLE_PRORES_422_PROXY", "APPLE_PRORES_4444", "APPLE_PRORES_4444_XQ"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.prores_settings.interlace_mode #=> String, one of "PROGRESSIVE", "TOP_FIELD", "BOTTOM_FIELD", "FOLLOW_TOP_FIELD", "FOLLOW_BOTTOM_FIELD"
@@ -5653,7 +5687,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.prores_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.fourcc #=> String, one of "I420", "I422", "I444"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -5661,7 +5695,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.slow_pal #=> String, one of "DISABLED", "ENABLED"
     #   resp.preset.settings.video_description.codec_settings.uncompressed_settings.telecine #=> String, one of "NONE", "HARD"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.interlace_mode #=> String, one of "INTERLACED", "PROGRESSIVE"
@@ -5671,7 +5705,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vc_3_settings.vc_3_class #=> String, one of "CLASS_145_8BIT", "CLASS_220_8BIT", "CLASS_220_10BIT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.gop_size #=> Float
@@ -5684,7 +5718,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.vp_8_settings.rate_control_mode #=> String, one of "VBR"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.bitrate #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.vp_9_settings.gop_size #=> Float
@@ -5698,7 +5732,7 @@ module Aws::MediaConvert
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.adaptive_quantization #=> String, one of "OFF", "AUTO", "LOW", "MEDIUM", "HIGH", "HIGHER", "MAX"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.entropy_encoding #=> String, one of "AUTO", "CABAC", "CAVLC"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_control #=> String, one of "INITIALIZE_FROM_SOURCE", "SPECIFIED"
-    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER"
+    #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_conversion_algorithm #=> String, one of "DUPLICATE_DROP", "INTERPOLATE", "FRAMEFORMER", "MAINTAIN_FRAME_COUNT"
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_denominator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.framerate_numerator #=> Integer
     #   resp.preset.settings.video_description.codec_settings.xavc_settings.profile #=> String, one of "XAVC_HD_INTRA_CBG", "XAVC_4K_INTRA_CBG", "XAVC_4K_INTRA_VBR", "XAVC_HD", "XAVC_4K"
@@ -5920,7 +5954,7 @@ module Aws::MediaConvert
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconvert'
-      context[:gem_version] = '1.150.0'
+      context[:gem_version] = '1.151.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,9 @@
 Unreleased Changes
 ------------------
 
+3.218.1 (2025-02-07)
+------------------
+
 * Issue - Add handling of block in ExtendedSession delegation (#3178).
 
 3.218.0 (2025-02-06)

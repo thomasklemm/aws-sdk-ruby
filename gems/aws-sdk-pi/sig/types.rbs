@@ -300,6 +300,7 @@ module Aws::PI
       attr_accessor metric: ::String
       attr_accessor display_name: ::String
       attr_accessor dimensions: ::Hash[::String, ::String]
+      attr_accessor filter: ::Hash[::String, ::String]
       attr_accessor value: ::Float
       SENSITIVE: []
     end

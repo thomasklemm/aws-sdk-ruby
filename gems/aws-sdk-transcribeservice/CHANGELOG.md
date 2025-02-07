@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.114.0 (2025-02-07)
+------------------
+
+* Feature - This release adds support for the Clinical Note Template Customization feature for the AWS HealthScribe APIs within Amazon Transcribe.
+
 1.113.0 (2025-02-06)
 ------------------
 

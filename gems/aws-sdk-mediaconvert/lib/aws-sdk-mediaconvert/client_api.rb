@@ -115,6 +115,7 @@ module Aws::MediaConvert
     CaptionSourceSettings = Shapes::StructureShape.new(name: 'CaptionSourceSettings')
     CaptionSourceType = Shapes::StringShape.new(name: 'CaptionSourceType')
     ChannelMapping = Shapes::StructureShape.new(name: 'ChannelMapping')
+    ChromaPositionMode = Shapes::StringShape.new(name: 'ChromaPositionMode')
     ClipLimits = Shapes::StructureShape.new(name: 'ClipLimits')
     CmafAdditionalManifest = Shapes::StructureShape.new(name: 'CmafAdditionalManifest')
     CmafClientCache = Shapes::StringShape.new(name: 'CmafClientCache')
@@ -289,6 +290,9 @@ module Aws::MediaConvert
     GetPresetResponse = Shapes::StructureShape.new(name: 'GetPresetResponse')
     GetQueueRequest = Shapes::StructureShape.new(name: 'GetQueueRequest')
     GetQueueResponse = Shapes::StructureShape.new(name: 'GetQueueResponse')
+    GifFramerateControl = Shapes::StringShape.new(name: 'GifFramerateControl')
+    GifFramerateConversionAlgorithm = Shapes::StringShape.new(name: 'GifFramerateConversionAlgorithm')
+    GifSettings = Shapes::StructureShape.new(name: 'GifSettings')
     H264AdaptiveQuantization = Shapes::StringShape.new(name: 'H264AdaptiveQuantization')
     H264CodecLevel = Shapes::StringShape.new(name: 'H264CodecLevel')
     H264CodecProfile = Shapes::StringShape.new(name: 'H264CodecProfile')
@@ -1620,6 +1624,12 @@ module Aws::MediaConvert
     GetQueueResponse.add_member(:queue, Shapes::ShapeRef.new(shape: Queue, location_name: "queue"))
     GetQueueResponse.struct_class = Types::GetQueueResponse
 
+    GifSettings.add_member(:framerate_control, Shapes::ShapeRef.new(shape: GifFramerateControl, location_name: "framerateControl"))
+    GifSettings.add_member(:framerate_conversion_algorithm, Shapes::ShapeRef.new(shape: GifFramerateConversionAlgorithm, location_name: "framerateConversionAlgorithm"))
+    GifSettings.add_member(:framerate_denominator, Shapes::ShapeRef.new(shape: __integerMin1Max2147483647, location_name: "framerateDenominator"))
+    GifSettings.add_member(:framerate_numerator, Shapes::ShapeRef.new(shape: __integerMin1Max2147483647, location_name: "framerateNumerator"))
+    GifSettings.struct_class = Types::GifSettings
+
     H264QvbrSettings.add_member(:max_average_bitrate, Shapes::ShapeRef.new(shape: __integerMin1000Max1152000000, location_name: "maxAverageBitrate"))
     H264QvbrSettings.add_member(:qvbr_quality_level, Shapes::ShapeRef.new(shape: __integerMin1Max10, location_name: "qvbrQualityLevel"))
     H264QvbrSettings.add_member(:qvbr_quality_level_fine_tune, Shapes::ShapeRef.new(shape: __doubleMin0Max1, location_name: "qvbrQualityLevelFineTune"))
@@ -2623,6 +2633,7 @@ module Aws::MediaConvert
     VideoCodecSettings.add_member(:avc_intra_settings, Shapes::ShapeRef.new(shape: AvcIntraSettings, location_name: "avcIntraSettings"))
     VideoCodecSettings.add_member(:codec, Shapes::ShapeRef.new(shape: VideoCodec, location_name: "codec"))
     VideoCodecSettings.add_member(:frame_capture_settings, Shapes::ShapeRef.new(shape: FrameCaptureSettings, location_name: "frameCaptureSettings"))
+    VideoCodecSettings.add_member(:gif_settings, Shapes::ShapeRef.new(shape: GifSettings, location_name: "gifSettings"))
     VideoCodecSettings.add_member(:h264_settings, Shapes::ShapeRef.new(shape: H264Settings, location_name: "h264Settings"))
     VideoCodecSettings.add_member(:h265_settings, Shapes::ShapeRef.new(shape: H265Settings, location_name: "h265Settings"))
     VideoCodecSettings.add_member(:mpeg_2_settings, Shapes::ShapeRef.new(shape: Mpeg2Settings, location_name: "mpeg2Settings"))
@@ -2636,6 +2647,7 @@ module Aws::MediaConvert
 
     VideoDescription.add_member(:afd_signaling, Shapes::ShapeRef.new(shape: AfdSignaling, location_name: "afdSignaling"))
     VideoDescription.add_member(:anti_alias, Shapes::ShapeRef.new(shape: AntiAlias, location_name: "antiAlias"))
+    VideoDescription.add_member(:chroma_position_mode, Shapes::ShapeRef.new(shape: ChromaPositionMode, location_name: "chromaPositionMode"))
     VideoDescription.add_member(:codec_settings, Shapes::ShapeRef.new(shape: VideoCodecSettings, location_name: "codecSettings"))
     VideoDescription.add_member(:color_metadata, Shapes::ShapeRef.new(shape: ColorMetadata, location_name: "colorMetadata"))
     VideoDescription.add_member(:crop, Shapes::ShapeRef.new(shape: Rectangle, location_name: "crop"))

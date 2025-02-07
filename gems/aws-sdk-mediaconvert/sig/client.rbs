@@ -850,7 +850,7 @@ module Aws
                                         wav_settings: {
                                           bit_depth: ::Integer?,
                                           channels: ::Integer?,
-                                          format: ("RIFF" | "RF64")?,
+                                          format: ("RIFF" | "RF64" | "EXTENSIBLE")?,
                                           sample_rate: ::Integer?
                                         }?
                                       }?,
@@ -964,7 +964,7 @@ module Aws
                                         }?,
                                         webvtt_destination_settings: {
                                           accessibility: ("DISABLED" | "ENABLED")?,
-                                          style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")?
+                                          style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")?
                                         }?
                                       }?,
                                       language_code: ("ENG" | "SPA" | "FRA" | "DEU" | "GER" | "ZHO" | "ARA" | "HIN" | "JPN" | "RUS" | "POR" | "ITA" | "URD" | "VIE" | "KOR" | "PAN" | "ABK" | "AAR" | "AFR" | "AKA" | "SQI" | "AMH" | "ARG" | "HYE" | "ASM" | "AVA" | "AVE" | "AYM" | "AZE" | "BAM" | "BAK" | "EUS" | "BEL" | "BEN" | "BIH" | "BIS" | "BOS" | "BRE" | "BUL" | "MYA" | "CAT" | "KHM" | "CHA" | "CHE" | "NYA" | "CHU" | "CHV" | "COR" | "COS" | "CRE" | "HRV" | "CES" | "DAN" | "DIV" | "NLD" | "DZO" | "ENM" | "EPO" | "EST" | "EWE" | "FAO" | "FIJ" | "FIN" | "FRM" | "FUL" | "GLA" | "GLG" | "LUG" | "KAT" | "ELL" | "GRN" | "GUJ" | "HAT" | "HAU" | "HEB" | "HER" | "HMO" | "HUN" | "ISL" | "IDO" | "IBO" | "IND" | "INA" | "ILE" | "IKU" | "IPK" | "GLE" | "JAV" | "KAL" | "KAN" | "KAU" | "KAS" | "KAZ" | "KIK" | "KIN" | "KIR" | "KOM" | "KON" | "KUA" | "KUR" | "LAO" | "LAT" | "LAV" | "LIM" | "LIN" | "LIT" | "LUB" | "LTZ" | "MKD" | "MLG" | "MSA" | "MAL" | "MLT" | "GLV" | "MRI" | "MAR" | "MAH" | "MON" | "NAU" | "NAV" | "NDE" | "NBL" | "NDO" | "NEP" | "SME" | "NOR" | "NOB" | "NNO" | "OCI" | "OJI" | "ORI" | "ORM" | "OSS" | "PLI" | "FAS" | "POL" | "PUS" | "QUE" | "QAA" | "RON" | "ROH" | "RUN" | "SMO" | "SAG" | "SAN" | "SRD" | "SRB" | "SNA" | "III" | "SND" | "SIN" | "SLK" | "SLV" | "SOM" | "SOT" | "SUN" | "SWA" | "SSW" | "SWE" | "TGL" | "TAH" | "TGK" | "TAM" | "TAT" | "TEL" | "THA" | "BOD" | "TIR" | "TON" | "TSO" | "TSN" | "TUR" | "TUK" | "TWI" | "UIG" | "UKR" | "UZB" | "VEN" | "VOL" | "WLN" | "CYM" | "FRY" | "WOL" | "XHO" | "YID" | "YOR" | "ZHA" | "ZUL" | "ORJ" | "QPC" | "TNG" | "SRP")?,
@@ -988,7 +988,7 @@ module Aws
                                       timed_metadata_scheme_id_uri: ::String?,
                                       timed_metadata_value: ::String?
                                     }?,
-                                    container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
+                                    container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
                                     f4v_settings: {
                                       moov_placement: ("PROGRESSIVE_DOWNLOAD" | "NORMAL")?
                                     }?,
@@ -1126,13 +1126,14 @@ module Aws
                                   video_description: {
                                     afd_signaling: ("NONE" | "AUTO" | "FIXED")?,
                                     anti_alias: ("DISABLED" | "ENABLED")?,
+                                    chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")?,
                                     codec_settings: {
                                       av_1_settings: {
                                         adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                         bit_depth: ("BIT_8" | "BIT_10")?,
                                         film_grain_synthesis: ("DISABLED" | "ENABLED")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_size: ::Float?,
@@ -1152,7 +1153,7 @@ module Aws
                                           quality_tuning_level: ("SINGLE_PASS" | "MULTI_PASS")?
                                         }?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -1160,12 +1161,18 @@ module Aws
                                         slow_pal: ("DISABLED" | "ENABLED")?,
                                         telecine: ("NONE" | "HARD")?
                                       }?,
-                                      codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
+                                      codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
                                       frame_capture_settings: {
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         max_captures: ::Integer?,
                                         quality: ::Integer?
+                                      }?,
+                                      gif_settings: {
+                                        framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")?,
+                                        framerate_denominator: ::Integer?,
+                                        framerate_numerator: ::Integer?
                                       }?,
                                       h264_settings: {
                                         adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
@@ -1182,7 +1189,7 @@ module Aws
                                         field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")?,
                                         flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -1236,7 +1243,7 @@ module Aws
                                         end_of_stream_markers: ("INCLUDE" | "SUPPRESS")?,
                                         flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -1281,7 +1288,7 @@ module Aws
                                         codec_profile: ("MAIN" | "PROFILE_422")?,
                                         dynamic_sub_gop: ("ADAPTIVE" | "STATIC")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_closed_cadence: ::Integer?,
@@ -1313,7 +1320,7 @@ module Aws
                                         chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")?,
                                         codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -1327,7 +1334,7 @@ module Aws
                                       uncompressed_settings: {
                                         fourcc: ("I420" | "I422" | "I444")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -1337,7 +1344,7 @@ module Aws
                                       }?,
                                       vc_3_settings: {
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -1349,7 +1356,7 @@ module Aws
                                       vp_8_settings: {
                                         bitrate: ::Integer?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_size: ::Float?,
@@ -1364,7 +1371,7 @@ module Aws
                                       vp_9_settings: {
                                         bitrate: ::Integer?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         gop_size: ::Float?,
@@ -1380,7 +1387,7 @@ module Aws
                                         adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                         entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")?,
                                         framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                        framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                         framerate_denominator: ::Integer?,
                                         framerate_numerator: ::Integer?,
                                         profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")?,
@@ -2307,7 +2314,7 @@ module Aws
                                                  wav_settings: {
                                                    bit_depth: ::Integer?,
                                                    channels: ::Integer?,
-                                                   format: ("RIFF" | "RF64")?,
+                                                   format: ("RIFF" | "RF64" | "EXTENSIBLE")?,
                                                    sample_rate: ::Integer?
                                                  }?
                                                }?,
@@ -2421,7 +2428,7 @@ module Aws
                                                  }?,
                                                  webvtt_destination_settings: {
                                                    accessibility: ("DISABLED" | "ENABLED")?,
-                                                   style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")?
+                                                   style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")?
                                                  }?
                                                }?,
                                                language_code: ("ENG" | "SPA" | "FRA" | "DEU" | "GER" | "ZHO" | "ARA" | "HIN" | "JPN" | "RUS" | "POR" | "ITA" | "URD" | "VIE" | "KOR" | "PAN" | "ABK" | "AAR" | "AFR" | "AKA" | "SQI" | "AMH" | "ARG" | "HYE" | "ASM" | "AVA" | "AVE" | "AYM" | "AZE" | "BAM" | "BAK" | "EUS" | "BEL" | "BEN" | "BIH" | "BIS" | "BOS" | "BRE" | "BUL" | "MYA" | "CAT" | "KHM" | "CHA" | "CHE" | "NYA" | "CHU" | "CHV" | "COR" | "COS" | "CRE" | "HRV" | "CES" | "DAN" | "DIV" | "NLD" | "DZO" | "ENM" | "EPO" | "EST" | "EWE" | "FAO" | "FIJ" | "FIN" | "FRM" | "FUL" | "GLA" | "GLG" | "LUG" | "KAT" | "ELL" | "GRN" | "GUJ" | "HAT" | "HAU" | "HEB" | "HER" | "HMO" | "HUN" | "ISL" | "IDO" | "IBO" | "IND" | "INA" | "ILE" | "IKU" | "IPK" | "GLE" | "JAV" | "KAL" | "KAN" | "KAU" | "KAS" | "KAZ" | "KIK" | "KIN" | "KIR" | "KOM" | "KON" | "KUA" | "KUR" | "LAO" | "LAT" | "LAV" | "LIM" | "LIN" | "LIT" | "LUB" | "LTZ" | "MKD" | "MLG" | "MSA" | "MAL" | "MLT" | "GLV" | "MRI" | "MAR" | "MAH" | "MON" | "NAU" | "NAV" | "NDE" | "NBL" | "NDO" | "NEP" | "SME" | "NOR" | "NOB" | "NNO" | "OCI" | "OJI" | "ORI" | "ORM" | "OSS" | "PLI" | "FAS" | "POL" | "PUS" | "QUE" | "QAA" | "RON" | "ROH" | "RUN" | "SMO" | "SAG" | "SAN" | "SRD" | "SRB" | "SNA" | "III" | "SND" | "SIN" | "SLK" | "SLV" | "SOM" | "SOT" | "SUN" | "SWA" | "SSW" | "SWE" | "TGL" | "TAH" | "TGK" | "TAM" | "TAT" | "TEL" | "THA" | "BOD" | "TIR" | "TON" | "TSO" | "TSN" | "TUR" | "TUK" | "TWI" | "UIG" | "UKR" | "UZB" | "VEN" | "VOL" | "WLN" | "CYM" | "FRY" | "WOL" | "XHO" | "YID" | "YOR" | "ZHA" | "ZUL" | "ORJ" | "QPC" | "TNG" | "SRP")?,
@@ -2445,7 +2452,7 @@ module Aws
                                                timed_metadata_scheme_id_uri: ::String?,
                                                timed_metadata_value: ::String?
                                              }?,
-                                             container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
+                                             container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
                                              f4v_settings: {
                                                moov_placement: ("PROGRESSIVE_DOWNLOAD" | "NORMAL")?
                                              }?,
@@ -2583,13 +2590,14 @@ module Aws
                                            video_description: {
                                              afd_signaling: ("NONE" | "AUTO" | "FIXED")?,
                                              anti_alias: ("DISABLED" | "ENABLED")?,
+                                             chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")?,
                                              codec_settings: {
                                                av_1_settings: {
                                                  adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                                  bit_depth: ("BIT_8" | "BIT_10")?,
                                                  film_grain_synthesis: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -2609,7 +2617,7 @@ module Aws
                                                    quality_tuning_level: ("SINGLE_PASS" | "MULTI_PASS")?
                                                  }?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -2617,12 +2625,18 @@ module Aws
                                                  slow_pal: ("DISABLED" | "ENABLED")?,
                                                  telecine: ("NONE" | "HARD")?
                                                }?,
-                                               codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
+                                               codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
                                                frame_capture_settings: {
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  max_captures: ::Integer?,
                                                  quality: ::Integer?
+                                               }?,
+                                               gif_settings: {
+                                                 framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")?,
+                                                 framerate_denominator: ::Integer?,
+                                                 framerate_numerator: ::Integer?
                                                }?,
                                                h264_settings: {
                                                  adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
@@ -2639,7 +2653,7 @@ module Aws
                                                  field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")?,
                                                  flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -2693,7 +2707,7 @@ module Aws
                                                  end_of_stream_markers: ("INCLUDE" | "SUPPRESS")?,
                                                  flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -2738,7 +2752,7 @@ module Aws
                                                  codec_profile: ("MAIN" | "PROFILE_422")?,
                                                  dynamic_sub_gop: ("ADAPTIVE" | "STATIC")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_closed_cadence: ::Integer?,
@@ -2770,7 +2784,7 @@ module Aws
                                                  chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")?,
                                                  codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -2784,7 +2798,7 @@ module Aws
                                                uncompressed_settings: {
                                                  fourcc: ("I420" | "I422" | "I444")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -2794,7 +2808,7 @@ module Aws
                                                }?,
                                                vc_3_settings: {
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -2806,7 +2820,7 @@ module Aws
                                                vp_8_settings: {
                                                  bitrate: ::Integer?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -2821,7 +2835,7 @@ module Aws
                                                vp_9_settings: {
                                                  bitrate: ::Integer?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -2837,7 +2851,7 @@ module Aws
                                                  adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                                  entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")?,
@@ -3154,7 +3168,7 @@ module Aws
                                    wav_settings: {
                                      bit_depth: ::Integer?,
                                      channels: ::Integer?,
-                                     format: ("RIFF" | "RF64")?,
+                                     format: ("RIFF" | "RF64" | "EXTENSIBLE")?,
                                      sample_rate: ::Integer?
                                    }?
                                  }?,
@@ -3267,7 +3281,7 @@ module Aws
                                    }?,
                                    webvtt_destination_settings: {
                                      accessibility: ("DISABLED" | "ENABLED")?,
-                                     style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")?
+                                     style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")?
                                    }?
                                  }?,
                                  language_code: ("ENG" | "SPA" | "FRA" | "DEU" | "GER" | "ZHO" | "ARA" | "HIN" | "JPN" | "RUS" | "POR" | "ITA" | "URD" | "VIE" | "KOR" | "PAN" | "ABK" | "AAR" | "AFR" | "AKA" | "SQI" | "AMH" | "ARG" | "HYE" | "ASM" | "AVA" | "AVE" | "AYM" | "AZE" | "BAM" | "BAK" | "EUS" | "BEL" | "BEN" | "BIH" | "BIS" | "BOS" | "BRE" | "BUL" | "MYA" | "CAT" | "KHM" | "CHA" | "CHE" | "NYA" | "CHU" | "CHV" | "COR" | "COS" | "CRE" | "HRV" | "CES" | "DAN" | "DIV" | "NLD" | "DZO" | "ENM" | "EPO" | "EST" | "EWE" | "FAO" | "FIJ" | "FIN" | "FRM" | "FUL" | "GLA" | "GLG" | "LUG" | "KAT" | "ELL" | "GRN" | "GUJ" | "HAT" | "HAU" | "HEB" | "HER" | "HMO" | "HUN" | "ISL" | "IDO" | "IBO" | "IND" | "INA" | "ILE" | "IKU" | "IPK" | "GLE" | "JAV" | "KAL" | "KAN" | "KAU" | "KAS" | "KAZ" | "KIK" | "KIN" | "KIR" | "KOM" | "KON" | "KUA" | "KUR" | "LAO" | "LAT" | "LAV" | "LIM" | "LIN" | "LIT" | "LUB" | "LTZ" | "MKD" | "MLG" | "MSA" | "MAL" | "MLT" | "GLV" | "MRI" | "MAR" | "MAH" | "MON" | "NAU" | "NAV" | "NDE" | "NBL" | "NDO" | "NEP" | "SME" | "NOR" | "NOB" | "NNO" | "OCI" | "OJI" | "ORI" | "ORM" | "OSS" | "PLI" | "FAS" | "POL" | "PUS" | "QUE" | "QAA" | "RON" | "ROH" | "RUN" | "SMO" | "SAG" | "SAN" | "SRD" | "SRB" | "SNA" | "III" | "SND" | "SIN" | "SLK" | "SLV" | "SOM" | "SOT" | "SUN" | "SWA" | "SSW" | "SWE" | "TGL" | "TAH" | "TGK" | "TAM" | "TAT" | "TEL" | "THA" | "BOD" | "TIR" | "TON" | "TSO" | "TSN" | "TUR" | "TUK" | "TWI" | "UIG" | "UKR" | "UZB" | "VEN" | "VOL" | "WLN" | "CYM" | "FRY" | "WOL" | "XHO" | "YID" | "YOR" | "ZHA" | "ZUL" | "ORJ" | "QPC" | "TNG" | "SRP")?,
@@ -3291,7 +3305,7 @@ module Aws
                                  timed_metadata_scheme_id_uri: ::String?,
                                  timed_metadata_value: ::String?
                                }?,
-                               container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
+                               container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
                                f4v_settings: {
                                  moov_placement: ("PROGRESSIVE_DOWNLOAD" | "NORMAL")?
                                }?,
@@ -3415,13 +3429,14 @@ module Aws
                              video_description: {
                                afd_signaling: ("NONE" | "AUTO" | "FIXED")?,
                                anti_alias: ("DISABLED" | "ENABLED")?,
+                               chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")?,
                                codec_settings: {
                                  av_1_settings: {
                                    adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                    bit_depth: ("BIT_8" | "BIT_10")?,
                                    film_grain_synthesis: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -3441,7 +3456,7 @@ module Aws
                                      quality_tuning_level: ("SINGLE_PASS" | "MULTI_PASS")?
                                    }?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -3449,12 +3464,18 @@ module Aws
                                    slow_pal: ("DISABLED" | "ENABLED")?,
                                    telecine: ("NONE" | "HARD")?
                                  }?,
-                                 codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
+                                 codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
                                  frame_capture_settings: {
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    max_captures: ::Integer?,
                                    quality: ::Integer?
+                                 }?,
+                                 gif_settings: {
+                                   framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")?,
+                                   framerate_denominator: ::Integer?,
+                                   framerate_numerator: ::Integer?
                                  }?,
                                  h264_settings: {
                                    adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
@@ -3471,7 +3492,7 @@ module Aws
                                    field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")?,
                                    flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -3525,7 +3546,7 @@ module Aws
                                    end_of_stream_markers: ("INCLUDE" | "SUPPRESS")?,
                                    flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -3570,7 +3591,7 @@ module Aws
                                    codec_profile: ("MAIN" | "PROFILE_422")?,
                                    dynamic_sub_gop: ("ADAPTIVE" | "STATIC")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_closed_cadence: ::Integer?,
@@ -3602,7 +3623,7 @@ module Aws
                                    chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")?,
                                    codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -3616,7 +3637,7 @@ module Aws
                                  uncompressed_settings: {
                                    fourcc: ("I420" | "I422" | "I444")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -3626,7 +3647,7 @@ module Aws
                                  }?,
                                  vc_3_settings: {
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -3638,7 +3659,7 @@ module Aws
                                  vp_8_settings: {
                                    bitrate: ::Integer?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -3653,7 +3674,7 @@ module Aws
                                  vp_9_settings: {
                                    bitrate: ::Integer?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -3669,7 +3690,7 @@ module Aws
                                    adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                    entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")?,
@@ -4834,7 +4855,7 @@ module Aws
                                                  wav_settings: {
                                                    bit_depth: ::Integer?,
                                                    channels: ::Integer?,
-                                                   format: ("RIFF" | "RF64")?,
+                                                   format: ("RIFF" | "RF64" | "EXTENSIBLE")?,
                                                    sample_rate: ::Integer?
                                                  }?
                                                }?,
@@ -4948,7 +4969,7 @@ module Aws
                                                  }?,
                                                  webvtt_destination_settings: {
                                                    accessibility: ("DISABLED" | "ENABLED")?,
-                                                   style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")?
+                                                   style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")?
                                                  }?
                                                }?,
                                                language_code: ("ENG" | "SPA" | "FRA" | "DEU" | "GER" | "ZHO" | "ARA" | "HIN" | "JPN" | "RUS" | "POR" | "ITA" | "URD" | "VIE" | "KOR" | "PAN" | "ABK" | "AAR" | "AFR" | "AKA" | "SQI" | "AMH" | "ARG" | "HYE" | "ASM" | "AVA" | "AVE" | "AYM" | "AZE" | "BAM" | "BAK" | "EUS" | "BEL" | "BEN" | "BIH" | "BIS" | "BOS" | "BRE" | "BUL" | "MYA" | "CAT" | "KHM" | "CHA" | "CHE" | "NYA" | "CHU" | "CHV" | "COR" | "COS" | "CRE" | "HRV" | "CES" | "DAN" | "DIV" | "NLD" | "DZO" | "ENM" | "EPO" | "EST" | "EWE" | "FAO" | "FIJ" | "FIN" | "FRM" | "FUL" | "GLA" | "GLG" | "LUG" | "KAT" | "ELL" | "GRN" | "GUJ" | "HAT" | "HAU" | "HEB" | "HER" | "HMO" | "HUN" | "ISL" | "IDO" | "IBO" | "IND" | "INA" | "ILE" | "IKU" | "IPK" | "GLE" | "JAV" | "KAL" | "KAN" | "KAU" | "KAS" | "KAZ" | "KIK" | "KIN" | "KIR" | "KOM" | "KON" | "KUA" | "KUR" | "LAO" | "LAT" | "LAV" | "LIM" | "LIN" | "LIT" | "LUB" | "LTZ" | "MKD" | "MLG" | "MSA" | "MAL" | "MLT" | "GLV" | "MRI" | "MAR" | "MAH" | "MON" | "NAU" | "NAV" | "NDE" | "NBL" | "NDO" | "NEP" | "SME" | "NOR" | "NOB" | "NNO" | "OCI" | "OJI" | "ORI" | "ORM" | "OSS" | "PLI" | "FAS" | "POL" | "PUS" | "QUE" | "QAA" | "RON" | "ROH" | "RUN" | "SMO" | "SAG" | "SAN" | "SRD" | "SRB" | "SNA" | "III" | "SND" | "SIN" | "SLK" | "SLV" | "SOM" | "SOT" | "SUN" | "SWA" | "SSW" | "SWE" | "TGL" | "TAH" | "TGK" | "TAM" | "TAT" | "TEL" | "THA" | "BOD" | "TIR" | "TON" | "TSO" | "TSN" | "TUR" | "TUK" | "TWI" | "UIG" | "UKR" | "UZB" | "VEN" | "VOL" | "WLN" | "CYM" | "FRY" | "WOL" | "XHO" | "YID" | "YOR" | "ZHA" | "ZUL" | "ORJ" | "QPC" | "TNG" | "SRP")?,
@@ -4972,7 +4993,7 @@ module Aws
                                                timed_metadata_scheme_id_uri: ::String?,
                                                timed_metadata_value: ::String?
                                              }?,
-                                             container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
+                                             container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
                                              f4v_settings: {
                                                moov_placement: ("PROGRESSIVE_DOWNLOAD" | "NORMAL")?
                                              }?,
@@ -5110,13 +5131,14 @@ module Aws
                                            video_description: {
                                              afd_signaling: ("NONE" | "AUTO" | "FIXED")?,
                                              anti_alias: ("DISABLED" | "ENABLED")?,
+                                             chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")?,
                                              codec_settings: {
                                                av_1_settings: {
                                                  adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                                  bit_depth: ("BIT_8" | "BIT_10")?,
                                                  film_grain_synthesis: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -5136,7 +5158,7 @@ module Aws
                                                    quality_tuning_level: ("SINGLE_PASS" | "MULTI_PASS")?
                                                  }?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -5144,12 +5166,18 @@ module Aws
                                                  slow_pal: ("DISABLED" | "ENABLED")?,
                                                  telecine: ("NONE" | "HARD")?
                                                }?,
-                                               codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
+                                               codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
                                                frame_capture_settings: {
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  max_captures: ::Integer?,
                                                  quality: ::Integer?
+                                               }?,
+                                               gif_settings: {
+                                                 framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")?,
+                                                 framerate_denominator: ::Integer?,
+                                                 framerate_numerator: ::Integer?
                                                }?,
                                                h264_settings: {
                                                  adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
@@ -5166,7 +5194,7 @@ module Aws
                                                  field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")?,
                                                  flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -5220,7 +5248,7 @@ module Aws
                                                  end_of_stream_markers: ("INCLUDE" | "SUPPRESS")?,
                                                  flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -5265,7 +5293,7 @@ module Aws
                                                  codec_profile: ("MAIN" | "PROFILE_422")?,
                                                  dynamic_sub_gop: ("ADAPTIVE" | "STATIC")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_closed_cadence: ::Integer?,
@@ -5297,7 +5325,7 @@ module Aws
                                                  chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")?,
                                                  codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -5311,7 +5339,7 @@ module Aws
                                                uncompressed_settings: {
                                                  fourcc: ("I420" | "I422" | "I444")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -5321,7 +5349,7 @@ module Aws
                                                }?,
                                                vc_3_settings: {
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -5333,7 +5361,7 @@ module Aws
                                                vp_8_settings: {
                                                  bitrate: ::Integer?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -5348,7 +5376,7 @@ module Aws
                                                vp_9_settings: {
                                                  bitrate: ::Integer?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  gop_size: ::Float?,
@@ -5364,7 +5392,7 @@ module Aws
                                                  adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                                  entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")?,
                                                  framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                                 framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                                  framerate_denominator: ::Integer?,
                                                  framerate_numerator: ::Integer?,
                                                  profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")?,
@@ -5680,7 +5708,7 @@ module Aws
                                    wav_settings: {
                                      bit_depth: ::Integer?,
                                      channels: ::Integer?,
-                                     format: ("RIFF" | "RF64")?,
+                                     format: ("RIFF" | "RF64" | "EXTENSIBLE")?,
                                      sample_rate: ::Integer?
                                    }?
                                  }?,
@@ -5793,7 +5821,7 @@ module Aws
                                    }?,
                                    webvtt_destination_settings: {
                                      accessibility: ("DISABLED" | "ENABLED")?,
-                                     style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")?
+                                     style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")?
                                    }?
                                  }?,
                                  language_code: ("ENG" | "SPA" | "FRA" | "DEU" | "GER" | "ZHO" | "ARA" | "HIN" | "JPN" | "RUS" | "POR" | "ITA" | "URD" | "VIE" | "KOR" | "PAN" | "ABK" | "AAR" | "AFR" | "AKA" | "SQI" | "AMH" | "ARG" | "HYE" | "ASM" | "AVA" | "AVE" | "AYM" | "AZE" | "BAM" | "BAK" | "EUS" | "BEL" | "BEN" | "BIH" | "BIS" | "BOS" | "BRE" | "BUL" | "MYA" | "CAT" | "KHM" | "CHA" | "CHE" | "NYA" | "CHU" | "CHV" | "COR" | "COS" | "CRE" | "HRV" | "CES" | "DAN" | "DIV" | "NLD" | "DZO" | "ENM" | "EPO" | "EST" | "EWE" | "FAO" | "FIJ" | "FIN" | "FRM" | "FUL" | "GLA" | "GLG" | "LUG" | "KAT" | "ELL" | "GRN" | "GUJ" | "HAT" | "HAU" | "HEB" | "HER" | "HMO" | "HUN" | "ISL" | "IDO" | "IBO" | "IND" | "INA" | "ILE" | "IKU" | "IPK" | "GLE" | "JAV" | "KAL" | "KAN" | "KAU" | "KAS" | "KAZ" | "KIK" | "KIN" | "KIR" | "KOM" | "KON" | "KUA" | "KUR" | "LAO" | "LAT" | "LAV" | "LIM" | "LIN" | "LIT" | "LUB" | "LTZ" | "MKD" | "MLG" | "MSA" | "MAL" | "MLT" | "GLV" | "MRI" | "MAR" | "MAH" | "MON" | "NAU" | "NAV" | "NDE" | "NBL" | "NDO" | "NEP" | "SME" | "NOR" | "NOB" | "NNO" | "OCI" | "OJI" | "ORI" | "ORM" | "OSS" | "PLI" | "FAS" | "POL" | "PUS" | "QUE" | "QAA" | "RON" | "ROH" | "RUN" | "SMO" | "SAG" | "SAN" | "SRD" | "SRB" | "SNA" | "III" | "SND" | "SIN" | "SLK" | "SLV" | "SOM" | "SOT" | "SUN" | "SWA" | "SSW" | "SWE" | "TGL" | "TAH" | "TGK" | "TAM" | "TAT" | "TEL" | "THA" | "BOD" | "TIR" | "TON" | "TSO" | "TSN" | "TUR" | "TUK" | "TWI" | "UIG" | "UKR" | "UZB" | "VEN" | "VOL" | "WLN" | "CYM" | "FRY" | "WOL" | "XHO" | "YID" | "YOR" | "ZHA" | "ZUL" | "ORJ" | "QPC" | "TNG" | "SRP")?,
@@ -5817,7 +5845,7 @@ module Aws
                                  timed_metadata_scheme_id_uri: ::String?,
                                  timed_metadata_value: ::String?
                                }?,
-                               container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
+                               container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")?,
                                f4v_settings: {
                                  moov_placement: ("PROGRESSIVE_DOWNLOAD" | "NORMAL")?
                                }?,
@@ -5941,13 +5969,14 @@ module Aws
                              video_description: {
                                afd_signaling: ("NONE" | "AUTO" | "FIXED")?,
                                anti_alias: ("DISABLED" | "ENABLED")?,
+                               chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")?,
                                codec_settings: {
                                  av_1_settings: {
                                    adaptive_quantization: ("OFF" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                    bit_depth: ("BIT_8" | "BIT_10")?,
                                    film_grain_synthesis: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -5967,7 +5996,7 @@ module Aws
                                      quality_tuning_level: ("SINGLE_PASS" | "MULTI_PASS")?
                                    }?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -5975,12 +6004,18 @@ module Aws
                                    slow_pal: ("DISABLED" | "ENABLED")?,
                                    telecine: ("NONE" | "HARD")?
                                  }?,
-                                 codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
+                                 codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")?,
                                  frame_capture_settings: {
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    max_captures: ::Integer?,
                                    quality: ::Integer?
+                                 }?,
+                                 gif_settings: {
+                                   framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")?,
+                                   framerate_denominator: ::Integer?,
+                                   framerate_numerator: ::Integer?
                                  }?,
                                  h264_settings: {
                                    adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
@@ -5997,7 +6032,7 @@ module Aws
                                    field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")?,
                                    flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -6051,7 +6086,7 @@ module Aws
                                    end_of_stream_markers: ("INCLUDE" | "SUPPRESS")?,
                                    flicker_adaptive_quantization: ("DISABLED" | "ENABLED")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_b_reference: ("DISABLED" | "ENABLED")?,
@@ -6096,7 +6131,7 @@ module Aws
                                    codec_profile: ("MAIN" | "PROFILE_422")?,
                                    dynamic_sub_gop: ("ADAPTIVE" | "STATIC")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_closed_cadence: ::Integer?,
@@ -6128,7 +6163,7 @@ module Aws
                                    chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")?,
                                    codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")?,
@@ -6142,7 +6177,7 @@ module Aws
                                  uncompressed_settings: {
                                    fourcc: ("I420" | "I422" | "I444")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -6152,7 +6187,7 @@ module Aws
                                  }?,
                                  vc_3_settings: {
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    interlace_mode: ("INTERLACED" | "PROGRESSIVE")?,
@@ -6164,7 +6199,7 @@ module Aws
                                  vp_8_settings: {
                                    bitrate: ::Integer?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -6179,7 +6214,7 @@ module Aws
                                  vp_9_settings: {
                                    bitrate: ::Integer?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    gop_size: ::Float?,
@@ -6195,7 +6230,7 @@ module Aws
                                    adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")?,
                                    entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")?,
                                    framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")?,
-                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")?,
+                                   framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")?,
                                    framerate_denominator: ::Integer?,
                                    framerate_numerator: ::Integer?,
                                    profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")?,

@@ -1051,6 +1051,13 @@ module Aws::EKS
     #   @return [Time]
     #
     # @!attribute [rw] status
+    #   This field is deprecated. Use `versionStatus` instead, as that field
+    #   matches for input and output of this action.
+    #
+    #   Current status of this cluster version.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_status
     #   Current status of this cluster version.
     #   @return [String]
     #
@@ -1069,6 +1076,7 @@ module Aws::EKS
       :end_of_standard_support_date,
       :end_of_extended_support_date,
       :status,
+      :version_status,
       :kubernetes_patch_version)
       SENSITIVE = []
       include Aws::Structure
@@ -1483,7 +1491,7 @@ module Aws::EKS
     #     Amazon EKS doesn't change the add-on resource properties.
     #     Creation of the add-on might fail if conflicts are detected. This
     #     option works differently during the update operation. For more
-    #     information, see [UpdateAddon][1].
+    #     information, see [ `UpdateAddon` ][1].
     #
     #   If you don't currently have the self-managed version of the add-on
     #   installed on your cluster, the Amazon EKS add-on is installed.
@@ -2780,6 +2788,13 @@ module Aws::EKS
     #   @return [Array<String>]
     #
     # @!attribute [rw] status
+    #   This field is deprecated. Use `versionStatus` instead, as that field
+    #   matches for input and output of this action.
+    #
+    #   Filter versions by their current status.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_status
     #   Filter versions by their current status.
     #   @return [String]
     #
@@ -2792,7 +2807,8 @@ module Aws::EKS
       :default_only,
       :include_all,
       :cluster_versions,
-      :status)
+      :status,
+      :version_status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4761,7 +4777,7 @@ module Aws::EKS
     #   the cluster and match any filters that you provided.
     #
     #   Each summary is simplified by removing these fields compared to the
-    #   full ` PodIdentityAssociation `:
+    #   full [ `PodIdentityAssociation` ][1]:
     #
     #   * The IAM role: `roleArn`
     #
@@ -4771,6 +4787,10 @@ module Aws::EKS
     #     `modifiedAt`
     #
     #   * The tags on the association: `tags`
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_PodIdentityAssociation.html
     #   @return [Array<Types::PodIdentityAssociationSummary>]
     #
     # @!attribute [rw] next_token
@@ -5256,8 +5276,8 @@ module Aws::EKS
     # @!attribute [rw] update_strategy
     #   The configuration for the behavior to follow during a node group
     #   version update of this managed node group. You choose between two
-    #   possible strategies for replacing nodes during an
-    #   [UpdateNodegroupVersion][1] action.
+    #   possible strategies for replacing nodes during an [
+    #   `UpdateNodegroupVersion` ][1] action.
     #
     #   An Amazon EKS managed node group updates by replacing nodes with new
     #   nodes of newer AMI versions in parallel. The *update strategy*
@@ -5272,7 +5292,7 @@ module Aws::EKS
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/latest/APIReference/API_UpdateNodegroupVersion.html
+    #   [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_UpdateNodegroupVersion.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/NodegroupUpdateConfig AWS API Documentation
@@ -5674,7 +5694,7 @@ module Aws::EKS
     # The summarized description of the association.
     #
     # Each summary is simplified by removing these fields compared to the
-    # full ` PodIdentityAssociation `:
+    # full [ `PodIdentityAssociation` ][1]:
     #
     # * The IAM role: `roleArn`
     #
@@ -5684,6 +5704,10 @@ module Aws::EKS
     #   `modifiedAt`
     #
     # * The tags on the association: `tags`
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eks/latest/APIReference/API_PodIdentityAssociation.html
     #
     # @!attribute [rw] cluster_name
     #   The name of the cluster that the association is in.

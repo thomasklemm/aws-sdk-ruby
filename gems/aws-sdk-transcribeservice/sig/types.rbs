@@ -94,6 +94,11 @@ module Aws::TranscribeService
       SENSITIVE: []
     end
 
+    class ClinicalNoteGenerationSettings
+      attr_accessor note_template: ("HISTORY_AND_PHYSICAL" | "GIRPP")
+      SENSITIVE: []
+    end
+
     class ConflictException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -595,6 +600,7 @@ module Aws::TranscribeService
       attr_accessor vocabulary_name: ::String
       attr_accessor vocabulary_filter_name: ::String
       attr_accessor vocabulary_filter_method: ("remove" | "mask" | "tag")
+      attr_accessor clinical_note_generation_settings: Types::ClinicalNoteGenerationSettings
       SENSITIVE: []
     end
 

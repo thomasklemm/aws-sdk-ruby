@@ -324,6 +324,8 @@ module Aws::PI
     #   you can specify per-SQL metrics to get the values for the top `N`
     #   SQL digests. The response syntax is as follows: `"AdditionalMetrics"
     #   \: { "string" : "string" }`.
+    #
+    #   The only supported statistic function is `.avg`.
     #   @return [Array<String>]
     #
     # @!attribute [rw] partition_by
@@ -481,7 +483,17 @@ module Aws::PI
     #     * Amazon RDS PostgreSQL
     #
     #     * Amazon DocumentDB
+    #   * `db.blocking_sql` - The SQL queries blocking the most DB load.
+    #
+    #   * `db.blocking_session` - The sessions blocking the most DB load.
+    #
+    #   * `db.blocking_object` - The object resources acquired by other
+    #     sessions that are blocking the most DB load.
+    #
     #   * `db.host` - The host name of the connected client (all engines).
+    #
+    #   * `db.plans` - The execution plans for the query (only Aurora
+    #     PostgreSQL).
     #
     #   * `db.query` - The query that is currently running (only Amazon
     #     DocumentDB).
@@ -526,6 +538,26 @@ module Aws::PI
     #     * Amazon RDS PostgreSQL
     #
     #     * Amazon DocumentDB
+    #   * `db.blocking_sql.id` - The ID for each of the SQL queries blocking
+    #     the most DB load.
+    #
+    #   * `db.blocking_sql.sql` - The SQL text for each of the SQL queries
+    #     blocking the most DB load.
+    #
+    #   * `db.blocking_session.id` - The ID for each of the sessions
+    #     blocking the most DB load.
+    #
+    #   * `db.blocking_object.id` - The ID for each of the object resources
+    #     acquired by other sessions that are blocking the most DB load.
+    #
+    #   * `db.blocking_object.type` - The object type for each of the object
+    #     resources acquired by other sessions that are blocking the most DB
+    #     load.
+    #
+    #   * `db.blocking_object.value` - The value for each of the object
+    #     resources acquired by other sessions that are blocking the most DB
+    #     load.
+    #
     #   * `db.host.id` - The host ID of the connected client (all engines).
     #
     #   * `db.host.name` - The host name of the connected client (all
@@ -780,6 +812,8 @@ module Aws::PI
     #   specified group for the dimension group ID. The following group name
     #   values are valid:
     #
+    #   * `db.lock_snapshot` (Aurora only)
+    #
     #   * `db.query` (Amazon DocumentDB only)
     #
     #   * `db.sql` (Amazon RDS and Aurora only)
@@ -793,6 +827,11 @@ module Aws::PI
     #   * `db.sql.id` for dimension group `db.sql` (Aurora and RDS only)
     #
     #   * `db.query.id` for dimension group `db.query` (DocumentDB only)
+    #
+    #   * For the dimension group `db.lock_snapshot`, the `GroupIdentifier`
+    #     is the epoch timestamp when Performance Insights captured the
+    #     snapshot, in seconds. You can retrieve this value with the
+    #     `GetResourceMetrics` operation for a 1 second period.
     #   @return [String]
     #
     # @!attribute [rw] requested_dimensions
@@ -801,6 +840,9 @@ module Aws::PI
     #   Performance Insights returns all dimension data within the specified
     #   dimension group. Specify dimension names for the following dimension
     #   groups:
+    #
+    #   * `db.lock_trees` - Specify the dimension name `db.lock_trees`.
+    #     (Aurora only)
     #
     #   * `db.sql` - Specify either the full dimension name
     #     `db.sql.statement` or the short dimension name `statement` (Aurora
@@ -1007,10 +1049,7 @@ module Aws::PI
     #   @return [Integer]
     #
     # @!attribute [rw] max_results
-    #   The maximum number of items to return in the response. If more items
-    #   exist than the specified `MaxRecords` value, a pagination token is
-    #   included in the response so that the remaining results can be
-    #   retrieved.
+    #   The maximum number of items to return in the response.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -1579,6 +1618,10 @@ module Aws::PI
     #   A dimension map that contains the dimensions for this partition.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] filter
+    #   The filter for the Performance Insights metric.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] value
     #   The value of the metric. For example, `9` for `db.load.avg`.
     #   @return [Float]
@@ -1589,6 +1632,7 @@ module Aws::PI
       :metric,
       :display_name,
       :dimensions,
+      :filter,
       :value)
       SENSITIVE = []
       include Aws::Structure

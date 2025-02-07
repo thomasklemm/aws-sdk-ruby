@@ -543,6 +543,12 @@
         "StartMedicalScribeStreamResponse$MediaSampleRateHertz": "<p>The sample rate (in hertz) that you specified in your request. Same as provided in the <code>StartMedicalScribeStreamRequest</code> </p>"
       }
     },
+    "MedicalScribeNoteTemplate": {
+      "base": null,
+      "refs": {
+        "ClinicalNoteGenerationSettings$NoteTemplate": "<p>Specify one of the following templates to use for the clinical note summary. The default is <code>HISTORY_AND_PHYSICAL</code>.</p> <ul> <li> <p>HISTORY_AND_PHYSICAL: Provides summaries for key sections of the clinical documentation. Sections include Chief Complaint, History of Present Illness, Review of Systems, Past Medical History, Assessment, and Plan.</p> </li> <li> <p>GIRPP: Provides summaries based on the patients progress toward goals. Sections include Goal, Intervention, Response, Progress, and Plan.</p> </li> </ul>"
+      }
+    },
     "MedicalScribeParticipantRole": {
       "base": null,
       "refs": {

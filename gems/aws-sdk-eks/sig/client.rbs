@@ -527,7 +527,8 @@ module Aws
                                        ?default_only: bool,
                                        ?include_all: bool,
                                        ?cluster_versions: Array[::String],
-                                       ?status: ("unsupported" | "standard-support" | "extended-support")
+                                       ?status: ("unsupported" | "standard-support" | "extended-support"),
+                                       ?version_status: ("UNSUPPORTED" | "STANDARD_SUPPORT" | "EXTENDED_SUPPORT")
                                      ) -> _DescribeClusterVersionsResponseSuccess
                                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeClusterVersionsResponseSuccess
 

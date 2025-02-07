@@ -177,7 +177,7 @@ module Aws::MediaConvert
       attr_accessor bit_depth: ("BIT_8" | "BIT_10")
       attr_accessor film_grain_synthesis: ("DISABLED" | "ENABLED")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_size: ::Float
@@ -199,7 +199,7 @@ module Aws::MediaConvert
       attr_accessor avc_intra_class: ("CLASS_50" | "CLASS_100" | "CLASS_200" | "CLASS_4K_2K")
       attr_accessor avc_intra_uhd_settings: Types::AvcIntraUhdSettings
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")
@@ -439,7 +439,7 @@ module Aws::MediaConvert
 
     class ContainerSettings
       attr_accessor cmfc_settings: Types::CmfcSettings
-      attr_accessor container: ("F4V" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")
+      attr_accessor container: ("F4V" | "GIF" | "ISMV" | "M2TS" | "M3U8" | "CMFC" | "MOV" | "MP4" | "MPD" | "MXF" | "OGG" | "WEBM" | "RAW" | "Y4M")
       attr_accessor f4v_settings: Types::F4vSettings
       attr_accessor m2ts_settings: Types::M2tsSettings
       attr_accessor m3u_8_settings: Types::M3u8Settings
@@ -911,6 +911,14 @@ module Aws::MediaConvert
       SENSITIVE: []
     end
 
+    class GifSettings
+      attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE")
+      attr_accessor framerate_denominator: ::Integer
+      attr_accessor framerate_numerator: ::Integer
+      SENSITIVE: []
+    end
+
     class H264QvbrSettings
       attr_accessor max_average_bitrate: ::Integer
       attr_accessor qvbr_quality_level: ::Integer
@@ -930,7 +938,7 @@ module Aws::MediaConvert
       attr_accessor field_encoding: ("PAFF" | "FORCE_FIELD" | "MBAFF")
       attr_accessor flicker_adaptive_quantization: ("DISABLED" | "ENABLED")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_b_reference: ("DISABLED" | "ENABLED")
@@ -986,7 +994,7 @@ module Aws::MediaConvert
       attr_accessor end_of_stream_markers: ("INCLUDE" | "SUPPRESS")
       attr_accessor flicker_adaptive_quantization: ("DISABLED" | "ENABLED")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_b_reference: ("DISABLED" | "ENABLED")
@@ -1622,7 +1630,7 @@ module Aws::MediaConvert
       attr_accessor codec_profile: ("MAIN" | "PROFILE_422")
       attr_accessor dynamic_sub_gop: ("ADAPTIVE" | "STATIC")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_closed_cadence: ::Integer
@@ -1847,7 +1855,7 @@ module Aws::MediaConvert
       attr_accessor chroma_sampling: ("PRESERVE_444_SAMPLING" | "SUBSAMPLE_TO_422")
       attr_accessor codec_profile: ("APPLE_PRORES_422" | "APPLE_PRORES_422_HQ" | "APPLE_PRORES_422_LT" | "APPLE_PRORES_422_PROXY" | "APPLE_PRORES_4444" | "APPLE_PRORES_4444_XQ")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor interlace_mode: ("PROGRESSIVE" | "TOP_FIELD" | "BOTTOM_FIELD" | "FOLLOW_TOP_FIELD" | "FOLLOW_BOTTOM_FIELD")
@@ -2079,7 +2087,7 @@ module Aws::MediaConvert
     class UncompressedSettings
       attr_accessor fourcc: ("I420" | "I422" | "I444")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor interlace_mode: ("INTERLACED" | "PROGRESSIVE")
@@ -2145,7 +2153,7 @@ module Aws::MediaConvert
 
     class Vc3Settings
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor interlace_mode: ("INTERLACED" | "PROGRESSIVE")
@@ -2159,8 +2167,9 @@ module Aws::MediaConvert
     class VideoCodecSettings
       attr_accessor av_1_settings: Types::Av1Settings
       attr_accessor avc_intra_settings: Types::AvcIntraSettings
-      attr_accessor codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")
+      attr_accessor codec: ("AV1" | "AVC_INTRA" | "FRAME_CAPTURE" | "GIF" | "H_264" | "H_265" | "MPEG2" | "PASSTHROUGH" | "PRORES" | "UNCOMPRESSED" | "VC3" | "VP8" | "VP9" | "XAVC")
       attr_accessor frame_capture_settings: Types::FrameCaptureSettings
+      attr_accessor gif_settings: Types::GifSettings
       attr_accessor h264_settings: Types::H264Settings
       attr_accessor h265_settings: Types::H265Settings
       attr_accessor mpeg_2_settings: Types::Mpeg2Settings
@@ -2176,6 +2185,7 @@ module Aws::MediaConvert
     class VideoDescription
       attr_accessor afd_signaling: ("NONE" | "AUTO" | "FIXED")
       attr_accessor anti_alias: ("DISABLED" | "ENABLED")
+      attr_accessor chroma_position_mode: ("AUTO" | "FORCE_CENTER" | "FORCE_TOP_LEFT")
       attr_accessor codec_settings: Types::VideoCodecSettings
       attr_accessor color_metadata: ("IGNORE" | "INSERT")
       attr_accessor crop: Types::Rectangle
@@ -2276,7 +2286,7 @@ module Aws::MediaConvert
     class Vp8Settings
       attr_accessor bitrate: ::Integer
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_size: ::Float
@@ -2293,7 +2303,7 @@ module Aws::MediaConvert
     class Vp9Settings
       attr_accessor bitrate: ::Integer
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor gop_size: ::Float
@@ -2316,14 +2326,14 @@ module Aws::MediaConvert
     class WavSettings
       attr_accessor bit_depth: ::Integer
       attr_accessor channels: ::Integer
-      attr_accessor format: ("RIFF" | "RF64")
+      attr_accessor format: ("RIFF" | "RF64" | "EXTENSIBLE")
       attr_accessor sample_rate: ::Integer
       SENSITIVE: []
     end
 
     class WebvttDestinationSettings
       attr_accessor accessibility: ("DISABLED" | "ENABLED")
-      attr_accessor style_passthrough: ("ENABLED" | "DISABLED" | "STRICT")
+      attr_accessor style_passthrough: ("ENABLED" | "DISABLED" | "STRICT" | "MERGE")
       SENSITIVE: []
     end
 
@@ -2378,7 +2388,7 @@ module Aws::MediaConvert
       attr_accessor adaptive_quantization: ("OFF" | "AUTO" | "LOW" | "MEDIUM" | "HIGH" | "HIGHER" | "MAX")
       attr_accessor entropy_encoding: ("AUTO" | "CABAC" | "CAVLC")
       attr_accessor framerate_control: ("INITIALIZE_FROM_SOURCE" | "SPECIFIED")
-      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER")
+      attr_accessor framerate_conversion_algorithm: ("DUPLICATE_DROP" | "INTERPOLATE" | "FRAMEFORMER" | "MAINTAIN_FRAME_COUNT")
       attr_accessor framerate_denominator: ::Integer
       attr_accessor framerate_numerator: ::Integer
       attr_accessor profile: ("XAVC_HD_INTRA_CBG" | "XAVC_4K_INTRA_CBG" | "XAVC_4K_INTRA_VBR" | "XAVC_HD" | "XAVC_4K")

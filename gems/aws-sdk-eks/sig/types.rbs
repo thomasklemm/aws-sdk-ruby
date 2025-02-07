@@ -249,6 +249,7 @@ module Aws::EKS
       attr_accessor end_of_standard_support_date: ::Time
       attr_accessor end_of_extended_support_date: ::Time
       attr_accessor status: ("unsupported" | "standard-support" | "extended-support")
+      attr_accessor version_status: ("UNSUPPORTED" | "STANDARD_SUPPORT" | "EXTENDED_SUPPORT")
       attr_accessor kubernetes_patch_version: ::String
       SENSITIVE: []
     end
@@ -604,6 +605,7 @@ module Aws::EKS
       attr_accessor include_all: bool
       attr_accessor cluster_versions: ::Array[::String]
       attr_accessor status: ("unsupported" | "standard-support" | "extended-support")
+      attr_accessor version_status: ("UNSUPPORTED" | "STANDARD_SUPPORT" | "EXTENDED_SUPPORT")
       SENSITIVE: []
     end
 

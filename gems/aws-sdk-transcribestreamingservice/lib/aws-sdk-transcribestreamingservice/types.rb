@@ -348,10 +348,25 @@ module Aws::TranscribeStreamingService
     #   [2]: https://docs.aws.amazon.com/transcribe/latest/dg/security_iam_id-based-policy-examples.html#auth-role-iam-user
     #   @return [String]
     #
+    # @!attribute [rw] note_template
+    #   Specify one of the following templates to use for the clinical note
+    #   summary. The default is `HISTORY_AND_PHYSICAL`.
+    #
+    #   * HISTORY\_AND\_PHYSICAL: Provides summaries for key sections of the
+    #     clinical documentation. Sections include Chief Complaint, History
+    #     of Present Illness, Review of Systems, Past Medical History,
+    #     Assessment, and Plan.
+    #
+    #   * GIRPP: Provides summaries based on the patients progress toward
+    #     goals. Sections include Goal, Intervention, Response, Progress,
+    #     and Plan.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-streaming-2017-10-26/ClinicalNoteGenerationSettings AWS API Documentation
     #
     class ClinicalNoteGenerationSettings < Struct.new(
-      :output_bucket_name)
+      :output_bucket_name,
+      :note_template)
       SENSITIVE = []
       include Aws::Structure
     end

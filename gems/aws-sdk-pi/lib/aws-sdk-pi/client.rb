@@ -666,6 +666,8 @@ module Aws::PI
     #   digests. The response syntax is as follows: `"AdditionalMetrics" : {
     #   "string" : "string" }`.
     #
+    #   The only supported statistic function is `.avg`.
+    #
     # @option params [Types::DimensionGroup] :partition_by
     #   For each dimension specified in `GroupBy`, specify a secondary
     #   dimension to further subdivide the partition keys in the response.
@@ -762,7 +764,8 @@ module Aws::PI
     # `GetDimensionKeyDetails` retrieves the full text of the dimension
     # `db.sql.statement` associated with this ID. This operation is useful
     # because `GetResourceMetrics` and `DescribeDimensionKeys` don't
-    # support retrieval of large SQL statement text.
+    # support retrieval of large SQL statement text, lock snapshots, and
+    # execution plans.
     #
     # @option params [required, String] :service_type
     #   The Amazon Web Services service for which Performance Insights returns
@@ -779,6 +782,8 @@ module Aws::PI
     #   specified group for the dimension group ID. The following group name
     #   values are valid:
     #
+    #   * `db.lock_snapshot` (Aurora only)
+    #
     #   * `db.query` (Amazon DocumentDB only)
     #
     #   * `db.sql` (Amazon RDS and Aurora only)
@@ -792,11 +797,19 @@ module Aws::PI
     #
     #   * `db.query.id` for dimension group `db.query` (DocumentDB only)
     #
+    #   * For the dimension group `db.lock_snapshot`, the `GroupIdentifier` is
+    #     the epoch timestamp when Performance Insights captured the snapshot,
+    #     in seconds. You can retrieve this value with the
+    #     `GetResourceMetrics` operation for a 1 second period.
+    #
     # @option params [Array<String>] :requested_dimensions
     #   A list of dimensions to retrieve the detail data for within the given
     #   dimension group. If you don't specify this parameter, Performance
     #   Insights returns all dimension data within the specified dimension
     #   group. Specify dimension names for the following dimension groups:
+    #
+    #   * `db.lock_trees` - Specify the dimension name `db.lock_trees`.
+    #     (Aurora only)
     #
     #   * `db.sql` - Specify either the full dimension name `db.sql.statement`
     #     or the short dimension name `statement` (Aurora and RDS only).
@@ -906,12 +919,16 @@ module Aws::PI
     #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.display_name #=> String
     #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.dimensions #=> Hash
     #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.dimensions["DescriptiveString"] #=> String
+    #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.filter #=> Hash
+    #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.filter["DescriptiveString"] #=> String
     #   resp.analysis_report.insights[0].insight_data[0].performance_insights_metric.value #=> Float
     #   resp.analysis_report.insights[0].baseline_data #=> Array
     #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.metric #=> String
     #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.display_name #=> String
     #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.dimensions #=> Hash
     #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.dimensions["DescriptiveString"] #=> String
+    #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.filter #=> Hash
+    #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.filter["DescriptiveString"] #=> String
     #   resp.analysis_report.insights[0].baseline_data[0].performance_insights_metric.value #=> Float
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/pi-2018-02-27/GetPerformanceAnalysisReport AWS API Documentation
@@ -1040,10 +1057,7 @@ module Aws::PI
     #   data points in the response.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of items to return in the response. If more items
-    #   exist than the specified `MaxRecords` value, a pagination token is
-    #   included in the response so that the remaining results can be
-    #   retrieved.
+    #   The maximum number of items to return in the response.
     #
     # @option params [String] :next_token
     #   An optional pagination token provided by a previous request. If this
@@ -1476,7 +1490,7 @@ module Aws::PI
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-pi'
-      context[:gem_version] = '1.74.0'
+      context[:gem_version] = '1.75.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

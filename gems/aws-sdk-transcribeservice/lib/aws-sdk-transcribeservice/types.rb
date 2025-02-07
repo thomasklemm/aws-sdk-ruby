@@ -357,8 +357,11 @@ module Aws::TranscribeService
     #   For a list of languages supported with Call Analytics, refer to the
     #   [Supported languages][1] table.
     #
-    #   To transcribe speech in Modern Standard Arabic (`ar-SA`), your media
-    #   file must be encoded at a sample rate of 16,000 Hz or higher.
+    #   To transcribe speech in Modern Standard Arabic (`ar-SA`) in Amazon
+    #   Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web
+    #   Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary)
+    #   ca-west-1 and Africa (Cape Town) af-south-1, your media file must be
+    #   encoded at a sample rate of 16,000 Hz or higher.
     #
     #
     #
@@ -612,6 +615,30 @@ module Aws::TranscribeService
     class ChannelDefinition < Struct.new(
       :channel_id,
       :participant_role)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The output configuration for clinical note generation.
+    #
+    # @!attribute [rw] note_template
+    #   Specify one of the following templates to use for the clinical note
+    #   summary. The default is `HISTORY_AND_PHYSICAL`.
+    #
+    #   * HISTORY\_AND\_PHYSICAL: Provides summaries for key sections of the
+    #     clinical documentation. Sections include Chief Complaint, History
+    #     of Present Illness, Review of Systems, Past Medical History,
+    #     Assessment, and Plan.
+    #
+    #   * GIRPP: Provides summaries based on the patients progress toward
+    #     goals. Sections include Goal, Intervention, Response, Progress,
+    #     and Plan.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/ClinicalNoteGenerationSettings AWS API Documentation
+    #
+    class ClinicalNoteGenerationSettings < Struct.new(
+      :note_template)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3107,6 +3134,10 @@ module Aws::TranscribeService
     #   To flag words without changing them, choose `tag`.
     #   @return [String]
     #
+    # @!attribute [rw] clinical_note_generation_settings
+    #   Specify settings for the clinical note generation.
+    #   @return [Types::ClinicalNoteGenerationSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/MedicalScribeSettings AWS API Documentation
     #
     class MedicalScribeSettings < Struct.new(
@@ -3115,7 +3146,8 @@ module Aws::TranscribeService
       :channel_identification,
       :vocabulary_name,
       :vocabulary_filter_name,
-      :vocabulary_filter_method)
+      :vocabulary_filter_method,
+      :clinical_note_generation_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4525,8 +4557,11 @@ module Aws::TranscribeService
     #   For a list of supported languages and their associated language
     #   codes, refer to the [Supported languages][1] table.
     #
-    #   <note markdown="1"> To transcribe speech in Modern Standard Arabic (`ar-SA`), your media
-    #   file must be encoded at a sample rate of 16,000 Hz or higher.
+    #   <note markdown="1"> To transcribe speech in Modern Standard Arabic (`ar-SA`) in Amazon
+    #   Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web
+    #   Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary,
+    #   ca-west-1) and Africa (Cape Town, af-south-1), your media file must
+    #   be encoded at a sample rate of 16,000 Hz or higher.
     #
     #    </note>
     #
@@ -4783,8 +4818,11 @@ module Aws::TranscribeService
     #
     #   For more information, refer to [Supported languages][1].
     #
-    #   To transcribe speech in Modern Standard Arabic (`ar-SA`), your media
-    #   file must be encoded at a sample rate of 16,000 Hz or higher.
+    #   To transcribe speech in Modern Standard Arabic (`ar-SA`)in Amazon
+    #   Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web
+    #   Services GovCloud (US) (US-East, us-gov-east-1), in Canada (Calgary)
+    #   ca-west-1 and Africa (Cape Town) af-south-1, your media file must be
+    #   encoded at a sample rate of 16,000 Hz or higher.
     #
     #
     #

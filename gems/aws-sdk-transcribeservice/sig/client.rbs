@@ -635,7 +635,10 @@ module Aws
                                         channel_identification: bool?,
                                         vocabulary_name: ::String?,
                                         vocabulary_filter_name: ::String?,
-                                        vocabulary_filter_method: ("remove" | "mask" | "tag")?
+                                        vocabulary_filter_method: ("remove" | "mask" | "tag")?,
+                                        clinical_note_generation_settings: {
+                                          note_template: ("HISTORY_AND_PHYSICAL" | "GIRPP")?
+                                        }?
                                       },
                                       ?channel_definitions: Array[
                                         {

@@ -579,7 +579,7 @@ module Aws::ECR
     end
 
     class ImageScanStatus
-      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED" | "UNSUPPORTED_IMAGE" | "ACTIVE" | "PENDING" | "SCAN_ELIGIBILITY_EXPIRED" | "FINDINGS_UNAVAILABLE")
+      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED" | "UNSUPPORTED_IMAGE" | "ACTIVE" | "PENDING" | "SCAN_ELIGIBILITY_EXPIRED" | "FINDINGS_UNAVAILABLE" | "LIMIT_EXCEEDED")
       attr_accessor description: ::String
       SENSITIVE: []
     end
